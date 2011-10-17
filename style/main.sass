@@ -1,0 +1,139 @@
+/* Animating Search Algorithms
+ *
+ * (C) Ian Brown, 
+ *     Jack Histon, 
+ *     Colin Jackson, 
+ *     Jennifer Jones &
+ *     John Sanderson 
+ * 2011 All Rights Reserved.
+ *
+ * Do not modify or distribute without permission.
+ */
+
+$colour1 = #bd0
+$colour2 = #fa0
+$copytext = #666
+$imgloc = ../../../resources/img/developpers/PNG/
+
+@mixin linear-gradient($from, $to)
+    background-color: $from
+    background-image: -webkit-gradient(linear, left top, left bottom, from($from), to($to))
+    background-image: -webkit-linear-gradient(top, $from, $to)
+    background-image: -moz-linear-gradient(top, $from, $to)
+    background-image: -ms-linear-gradient(top, $from, $to)
+    background-image: -o-linear-gradient(top, $from, $to)
+    background-image: linear-gradient(top, $from, $to)
+    
+@mixin box-shadow($options)
+    -webkit-box-shadow: $options
+    -moz-box-shadow: $options
+    box-shadow: $options
+    
+@mixin border-radius($radius)
+    -webkit-border-radius: $radius
+    -moz-border-radius: $radius
+    border-radius: $radius
+    -moz-background-clip: padding
+    -webkit-background-clip: padding-box
+    background-clip: padding-box
+    
+@mixin transition($options)
+    -webkit-transition: $options
+    -moz-transition: $options
+    -ms-transition: $options
+    -o-transition: $options
+    transition: $options
+
+@mixin reset1
+    padding: 0
+    margin: 0
+
+html
+    height: 100%
+
+body
+    height: 100%
+    width: 100%
+    font-family: sans-serif
+    -moz-user-select: none
+    -webkit-user-select: none
+    user-select: none
+    @include reset1
+    @include linear-gradient(#fff, #ccc)
+    
+#copyright
+    position: absolute
+    right: 5px
+    bottom: 5px
+    color: $copytext
+    font-size: 8pt
+    
+    a
+        color: $copytext
+        text-decoration: none
+        
+        &:hover
+            text-decoration: underline
+    
+#toolbar
+    position: absolute
+    left: 0
+    top: 0
+    padding: 2px 10px
+    height: 40px
+    @include linear-gradient(#333, #999)
+    @include box-shadow(0 0 10px rgba(0,0,0,0.4))
+    @include border-radius(0 0 16px 0)
+    
+    h1
+        float: left
+        color: $colour1
+        height: 36px
+        text-shadow: 0 0 10px rgba(187, 221, 0, 0.4)
+        @include reset1
+        padding-right: 20px
+        
+        span
+            color: $colour2
+            text-shadow: 0 0 10px rgba(255, 170, 0, 0.4)
+    
+    ul
+        list-style: none
+        float:left
+        @include reset1
+
+    li
+        float: left
+        width: 32px
+        height: 32px
+        background-repeat: no-repeat
+        background-position: 50% 50%
+        padding: 2px
+        margin: 2px
+        @include transition(all 0.2s ease-out)
+        
+        &:hover
+            opacity: 0.5
+            cursor: pointer
+            
+#helptext
+    line-height: 40px
+    font-size: 14pt
+    color: $colour1
+
+// Button Images
+// TODO: Convert to a sprite
+#new
+    background-image: url( "#{$imgloc}New%20Document.png")
+#save
+    background-image: url( "#{$imgloc}Get%20Document.png")
+#load
+    background-image: url( "#{$imgloc}Send%20Document.png")
+#add
+    background-image: url( "#{$imgloc}Add%20Green%20Button.png")
+#remove
+    background-image: url( "#{$imgloc}Minus%20Green%20Button.png")
+#connect
+    background-image: url( "#{$imgloc}Plugin%20Green%20Button.png")
+#search
+    background-image: url( "#{$imgloc}Spotlight%20Blue%20Button.png")

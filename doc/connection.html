@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>connection.coffee</title>
+  <link rel="stylesheet" href="http://jashkenas.github.com/docco/resources/docco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <div id="jump_to">
+    Jump To &hellip;
+    <div id="jump_wrapper">
+      <div id="jump_page">
+          <a class="source" href="connection.html">connection.coffee</a>
+          <a class="source" href="main.html">main.coffee</a>
+          <a class="source" href="point.html">point.coffee</a>
+          <a class="source" href="z-other.html">z-other.coffee</a>
+      </div>
+    </div>
+  </div>
+  <table cellspacing=0 cellpadding=0>
+  <thead>
+    <tr>
+      <th class=docs><h1>connection.coffee</h1></th>
+      <th class=code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id='section-Developers'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Developers">&#182;</a>
+        </div>
+        <p>Part of the <strong>Animating Search Algorithms</strong> project</p>
+
+<h2>Developers</h2>
+
+<ul>
+<li><a href="http://www.csc.liv.ac.uk/~cs8ib/">Ian Brown</a></li>
+<li><a href="http://www.csc.liv.ac.uk/~cs8jrh/">Jack Histon</a></li>
+<li><a href="http://www.csc.liv.ac.uk/~cs8cj/">Colin Jackson</a></li>
+<li><a href="http://www.csc.liv.ac.uk/~cs8jlj/">Jennifer Jones</a></li>
+<li><a href="http://www.csc.liv.ac.uk/~cs8js/">John Sanderson</a></li>
+</ul>
+
+<p>Do not modify or distribute without permission.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-Main_Documentation'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Main_Documentation">&#182;</a>
+        </div>
+        <h2>Main Documentation</h2>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-3'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-3">&#182;</a>
+        </div>
+        <p>Graph edge class</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="k">class</span> <span class="n">connection</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-connection.constructor(_)'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-connection.constructor(_)">&#182;</a>
+        </div>
+        <h3>connection.constructor( )</h3>
+
+<p>Constructor for an edge</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>raphael</code> &ndash; The current paper object. needed for drawing the line</li>
+<li><code>pointa</code> &ndash; The first node</li>
+<li><code>pointb</code> &ndash; The second node</li>
+<li><code>[weight]</code> &ndash; Weight of the the edge</li>
+<li><code>[direction]</code> &ndash; The direction of the edge</li>
+</ul>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="n">constructor</span><span class="p">:</span> <span class="p">(</span> <span class="vi">@raphael</span><span class="p">,</span> <span class="vi">@pointa</span><span class="p">,</span> <span class="vi">@pointb</span><span class="p">,</span> <span class="vi">@weight</span><span class="p">,</span> <span class="vi">@direction</span> <span class="p">)</span> <span class="o">-&gt;</span>
+        <span class="vi">@pointa</span><span class="o">.</span><span class="n">connect</span> <span class="vi">@pointb</span><span class="p">,</span> <span class="err">@</span>
+        <span class="vi">@pointb</span><span class="o">.</span><span class="n">connect</span> <span class="vi">@pointa</span><span class="p">,</span> <span class="err">@</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-5'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-5">&#182;</a>
+        </div>
+        <p>Draw line</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>        <span class="vi">@r</span> <span class="o">=</span> <span class="vi">@raphael</span><span class="o">.</span><span class="n">path</span><span class="p">(</span> <span class="p">)</span>
+        <span class="vi">@r</span><span class="o">.</span><span class="n">attr</span>
+            <span class="n">stroke</span><span class="p">:</span> <span class="s2">&quot;#666&quot;</span>
+        <span class="vi">@update_path</span><span class="p">(</span> <span class="p">)</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-6'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-6">&#182;</a>
+        </div>
+        <p>Set event handlers</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>        <span class="vi">@r</span><span class="o">.</span><span class="n">hover</span> <span class="vi">@hover_in</span><span class="p">,</span> <span class="vi">@hover_out</span>
+        <span class="vi">@r</span><span class="o">.</span><span class="n">click</span> <span class="vi">@click</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-connection.update_path(_)'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-connection.update_path(_)">&#182;</a>
+        </div>
+        <h3>connection.update_path( )</h3>
+
+<p>Updates the connection path. To be used when <code>pointa</code> or <code>pointb</code> have
+changed location.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="n">update_path</span><span class="p">:</span> <span class="o">-&gt;</span>
+        <span class="vi">@r</span><span class="o">.</span><span class="n">attr</span>
+            <span class="n">path</span><span class="p">:</span> <span class="s2">&quot;M</span><span class="si">#{</span><span class="vi">@pointa</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s2"> </span><span class="si">#{</span><span class="vi">@pointa</span><span class="o">.</span><span class="n">y</span><span class="si">}</span><span class="s2">L</span><span class="si">#{</span><span class="vi">@pointb</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s2"> </span><span class="si">#{</span><span class="vi">@pointb</span><span class="o">.</span><span class="n">y</span><span class="si">}</span><span class="s2">&quot;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-connection.remove(_)'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-connection.remove(_)">&#182;</a>
+        </div>
+        <h3>connection.remove( )</h3>
+
+<p>Removes the point from the graph</p>
+
+<h4>TODO</h4>
+
+<ul>
+<li>Some of this might be better suited in the <code>app</code> class&hellip;</li>
+<li>Remove redundant code</li>
+</ul>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="n">remove</span><span class="p">:</span> <span class="o">=&gt;</span>
+        <span class="vi">@r</span><span class="o">.</span><span class="n">animate</span>
+           <span class="n">opacity</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+           <span class="mi">50</span><span class="p">,</span> <span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="o">=&gt;</span>
+                <span class="vi">@r</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span> <span class="p">)</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-9'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-9">&#182;</a>
+        </div>
+        <p>Remove from connections in <code>pointa</code></p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>                <span class="n">newcons</span> <span class="o">=</span> <span class="o">[]</span>
+                <span class="k">for</span> <span class="n">con</span> <span class="k">in</span> <span class="vi">@pointa</span><span class="o">.</span><span class="n">connections</span>
+                    <span class="k">if</span> <span class="n">con</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">id</span> <span class="n">isnt</span> <span class="vi">@pointb</span><span class="o">.</span><span class="n">id</span>
+                        <span class="n">newcons</span><span class="o">.</span><span class="n">push</span> <span class="n">con</span>
+                <span class="vi">@pointa</span><span class="o">.</span><span class="n">connections</span> <span class="o">=</span> <span class="n">newcons</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-10'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-10">&#182;</a>
+        </div>
+        <p>Remove from connections in <code>pointb</code></p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>                <span class="n">newcons</span> <span class="o">=</span> <span class="o">[]</span>
+                <span class="k">for</span> <span class="n">con</span> <span class="k">in</span> <span class="vi">@pointb</span><span class="o">.</span><span class="n">connections</span>
+                    <span class="k">if</span> <span class="n">con</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">id</span> <span class="n">isnt</span> <span class="vi">@pointa</span><span class="o">.</span><span class="n">id</span>
+                        <span class="n">newcons</span><span class="o">.</span><span class="n">push</span> <span class="n">con</span>
+                <span class="vi">@pointb</span><span class="o">.</span><span class="n">connections</span> <span class="o">=</span> <span class="n">newcons</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-11'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-11">&#182;</a>
+        </div>
+        <p>Remove from connections list in <code>app</code> object</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>                <span class="n">newcons</span> <span class="o">=</span> <span class="o">[]</span>
+                <span class="k">for</span> <span class="n">con</span> <span class="k">in</span> <span class="n">a</span><span class="o">.</span><span class="n">connections</span>
+                    <span class="k">if</span> <span class="n">con</span><span class="o">.</span><span class="n">pointa</span><span class="o">.</span><span class="n">id</span> <span class="n">isnt</span> <span class="vi">@pointa</span><span class="o">.</span><span class="n">id</span> <span class="ow">or</span> <span class="n">con</span><span class="o">.</span><span class="n">pointb</span><span class="o">.</span><span class="n">id</span> <span class="n">isnt</span> <span class="vi">@pointb</span><span class="o">.</span><span class="n">id</span>
+                        <span class="n">newcons</span><span class="o">.</span><span class="n">push</span> <span class="n">con</span>
+                <span class="n">a</span><span class="o">.</span><span class="n">connections</span> <span class="o">=</span> <span class="n">newcons</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-connection.hover_in(_)'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-connection.hover_in(_)">&#182;</a>
+        </div>
+        <h3>connection.hover_in( )</h3>
+
+<p>Show hover effect</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>e</code> &ndash; Mouse event object</li>
+</ul>
+
+<h4>TODO</h4>
+
+<ul>
+<li>Convert this and <code>hover_in</code> into a single method with a toggle</li>
+</ul>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="n">hover_in</span><span class="p">:</span> <span class="p">(</span> <span class="n">e</span> <span class="p">)</span> <span class="o">=&gt;</span>
+        <span class="vi">@r</span><span class="o">.</span><span class="n">attr</span>
+            <span class="n">cursor</span><span class="p">:</span> <span class="s1">&#39;pointer&#39;</span>
+        <span class="vi">@r</span><span class="o">.</span><span class="n">animate</span>
+            <span class="s2">&quot;stroke-width&quot;</span><span class="p">:</span> <span class="mi">3</span>
+            <span class="n">stroke</span><span class="p">:</span> <span class="s2">&quot;#f00&quot;</span><span class="p">,</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-connection.hover_out(_)'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-connection.hover_out(_)">&#182;</a>
+        </div>
+        <h3>connection.hover_out( )</h3>
+
+<p>Remove hover effect</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>e</code> &ndash; Mouse event object</li>
+</ul>
+
+<h4>TODO</h4>
+
+<ul>
+<li>Convert this and <code>hover_out</code> into a single method with a toggle</li>
+</ul>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="n">hover_out</span><span class="p">:</span> <span class="p">(</span> <span class="n">e</span> <span class="p">)</span> <span class="o">=&gt;</span>
+        <span class="vi">@r</span><span class="o">.</span><span class="n">attr</span>
+            <span class="n">cursor</span><span class="p">:</span> <span class="s1">&#39;normal&#39;</span>
+        <span class="vi">@r</span><span class="o">.</span><span class="n">animate</span>
+            <span class="s2">&quot;stroke-width&quot;</span><span class="p">:</span> <span class="mi">1</span>
+            <span class="n">stroke</span><span class="p">:</span> <span class="s2">&quot;#666&quot;</span><span class="p">,</span>
+            <span class="mi">100</span>
+ </pre></div>
+      </td>
+    </tr>
+    <tr id='section-connection.click(_)'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-connection.click(_)">&#182;</a>
+        </div>
+        <h3>connection.click( )</h3>
+
+<p>Connection click handler. Currently just does a spark animation.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>e</code> &ndash; Mouse event object</li>
+</ul>
+
+<h4>TODO</h4>
+
+<ul>
+<li>Bring up a context menu to edit/remove the connection</li>
+</ul>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="n">click</span><span class="p">:</span> <span class="p">(</span> <span class="n">e</span> <span class="p">)</span> <span class="o">=&gt;</span>
+        <span class="vi">@spark</span><span class="p">(</span> <span class="p">)</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-connection.spark(_)'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-connection.spark(_)">&#182;</a>
+        </div>
+        <h3>connection.spark( )</h3>
+
+<p>Performs an animation along the edge. To be used when demonstrating the
+process of an algorithm, etc.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>[a2b]</code> &ndash; Animate from A to B?</li>
+</ul>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="n">spark</span><span class="p">:</span> <span class="p">(</span> <span class="n">a2b</span> <span class="o">=</span> <span class="kp">true</span> <span class="p">)</span> <span class="o">-&gt;</span>
+        <span class="n">start_point</span> <span class="o">=</span> <span class="k">if</span> <span class="n">a_to_b</span> <span class="k">then</span> <span class="vi">@pointa</span> <span class="k">else</span> <span class="vi">@pointb</span>
+        <span class="n">window</span><span class="o">.</span><span class="n">spark</span> <span class="o">=</span> <span class="vi">@raphael</span><span class="o">.</span><span class="n">ellipse</span> <span class="n">start_point</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">start_point</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span>
+        <span class="n">window</span><span class="o">.</span><span class="n">spark</span><span class="o">.</span><span class="n">attr</span>
+            <span class="n">fill</span><span class="p">:</span> <span class="s2">&quot;r#f00-#fff&quot;</span>
+            <span class="n">stroke</span><span class="p">:</span> <span class="s2">&quot;transparent&quot;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-16'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-16">&#182;</a>
+        </div>
+        <p>Raphael does not currently support alpha gradients, but SVG and VML
+both do. This code changes the necessary elements to do this manually</p>
+
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>        <span class="n">grad</span> <span class="o">=</span> <span class="err">$</span><span class="p">(</span> <span class="n">spark</span><span class="o">.</span><span class="n">node</span> <span class="p">)</span><span class="o">.</span><span class="n">attr</span> <span class="s2">&quot;fill&quot;</span>
+        <span class="n">grad</span> <span class="o">=</span> <span class="n">grad</span><span class="o">.</span><span class="n">substring</span> <span class="mi">4</span><span class="p">,</span> <span class="n">grad</span><span class="o">.</span><span class="n">length</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="n">stops</span> <span class="o">=</span> <span class="err">$</span><span class="p">(</span> <span class="n">grad</span> <span class="p">)</span><span class="o">.</span><span class="n">children</span><span class="p">(</span> <span class="p">)</span>
+        <span class="err">$</span><span class="p">(</span> <span class="n">stops</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="p">)</span><span class="o">.</span><span class="n">attr</span> <span class="s2">&quot;stop-opacity&quot;</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span>
+        <span class="err">$</span><span class="p">(</span> <span class="n">stops</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="p">)</span><span class="o">.</span><span class="n">attr</span> <span class="s2">&quot;stop-opacity&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span>
+
+        <span class="n">window</span><span class="o">.</span><span class="n">spark</span><span class="o">.</span><span class="n">animateAlong</span> <span class="vi">@r</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="kp">false</span><span class="p">,</span> <span class="o">=&gt;</span>
+            <span class="n">spark</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span> <span class="p">)</span></pre></div>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>

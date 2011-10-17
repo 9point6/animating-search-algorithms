@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>z-other.coffee</title>
+  <link rel="stylesheet" href="http://jashkenas.github.com/docco/resources/docco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <div id="jump_to">
+    Jump To &hellip;
+    <div id="jump_wrapper">
+      <div id="jump_page">
+          <a class="source" href="connection.html">connection.coffee</a>
+          <a class="source" href="main.html">main.coffee</a>
+          <a class="source" href="point.html">point.coffee</a>
+          <a class="source" href="z-other.html">z-other.coffee</a>
+      </div>
+    </div>
+  </div>
+  <table cellspacing=0 cellpadding=0>
+  <thead>
+    <tr>
+      <th class=docs><h1>z-other.coffee</h1></th>
+      <th class=code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id='section-Developers'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Developers">&#182;</a>
+        </div>
+        <p>Part of the <strong>Animating Search Algorithms</strong> project</p>
+
+<h2>Developers</h2>
+
+<ul>
+<li><a href="http://www.csc.liv.ac.uk/~cs8ib/">Ian Brown</a></li>
+<li><a href="http://www.csc.liv.ac.uk/~cs8jrh/">Jack Histon</a></li>
+<li><a href="http://www.csc.liv.ac.uk/~cs8cj/">Colin Jackson</a></li>
+<li><a href="http://www.csc.liv.ac.uk/~cs8jlj/">Jennifer Jones</a></li>
+<li><a href="http://www.csc.liv.ac.uk/~cs8js/">John Sanderson</a></li>
+</ul>
+
+<p>Do not modify or distribute without permission.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-Helper_Functions'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Helper_Functions">&#182;</a>
+        </div>
+        <h2>Helper Functions</h2>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-window.uniqueId(_)'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-window.uniqueId(_)">&#182;</a>
+        </div>
+        <h3>window.uniqueId( )</h3>
+
+<p>Generates a Unique ID. Taken from <a href="http://coffeescriptcookbook.com/chapters/strings/generating-a-unique-id">here</a></p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>length</code> &ndash; Length of generated id string</li>
+</ul>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="n">window</span><span class="o">.</span><span class="n">uniqueId</span> <span class="o">=</span> <span class="p">(</span> <span class="n">length</span> <span class="o">=</span> <span class="mi">8</span> <span class="p">)</span> <span class="o">-&gt;</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="nb">id</span> <span class="o">+=</span> <span class="no">Math</span><span class="o">.</span><span class="n">random</span><span class="p">(</span> <span class="p">)</span><span class="o">.</span><span class="n">toString</span><span class="p">(</span> <span class="mi">36</span> <span class="p">)</span><span class="o">.</span><span class="n">substr</span><span class="p">(</span> <span class="mi">2</span> <span class="p">)</span> <span class="k">while</span> <span class="nb">id</span><span class="o">.</span><span class="n">length</span> <span class="o">&lt;</span> <span class="n">length</span>
+    <span class="nb">id</span><span class="o">.</span><span class="n">substr</span> <span class="mi">0</span><span class="p">,</span> <span class="n">length</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-window.base64Encode(_)'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-window.base64Encode(_)">&#182;</a>
+        </div>
+        <h3>window.base64Encode( )</h3>
+
+<p>Base64 Encode. Adapted from <a href="https://gist.github.com/776329#file_base64_conversion_coffeescript_test_suite.html">here</a></p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>text</code> &ndash; Base 64 string to encode</li>
+</ul>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="n">window</span><span class="o">.</span><span class="n">base64</span> <span class="o">=</span> <span class="s2">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/&quot;</span>
+<span class="n">window</span><span class="o">.</span><span class="n">base64Encode</span> <span class="o">=</span> <span class="p">(</span> <span class="n">text</span> <span class="p">)</span> <span class="o">-&gt;</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="o">[]</span>
+
+    <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">text</span><span class="o">.</span><span class="n">length</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">charCodeAt</span> <span class="n">i</span>
+        <span class="n">byteNum</span> <span class="o">=</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">3</span>
+
+        <span class="n">switch</span> <span class="n">byteNum</span>
+            <span class="k">when</span> <span class="mi">0</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">push</span> <span class="n">base64</span><span class="o">.</span><span class="n">charAt</span> <span class="n">cur</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span>
+            <span class="k">when</span> <span class="mi">1</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">push</span> <span class="n">base64</span><span class="o">.</span><span class="n">charAt</span> <span class="p">(</span> <span class="n">prev</span> <span class="o">&amp;</span> <span class="mi">3</span> <span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span> <span class="o">|</span> <span class="p">(</span> <span class="n">cur</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span> <span class="p">)</span>
+            <span class="k">when</span> <span class="mi">2</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">push</span> <span class="n">base64</span><span class="o">.</span><span class="n">charAt</span> <span class="p">(</span> <span class="n">prev</span> <span class="o">&amp;</span> <span class="mh">0x0f</span> <span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span> <span class="o">|</span> <span class="p">(</span> <span class="n">cur</span> <span class="o">&gt;&gt;</span> <span class="mi">6</span> <span class="p">)</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">push</span> <span class="n">base64</span><span class="o">.</span><span class="n">charAt</span> <span class="n">cur</span> <span class="o">&amp;</span> <span class="mh">0x3f</span>
+
+        <span class="n">prev</span> <span class="o">=</span> <span class="n">cur</span>
+        <span class="n">i</span><span class="o">++</span>
+
+    <span class="k">if</span> <span class="n">byteNum</span> <span class="n">is</span> <span class="mi">0</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">push</span> <span class="n">base64</span><span class="o">.</span><span class="n">charAt</span> <span class="p">(</span> <span class="n">prev</span> <span class="o">&amp;</span> <span class="mi">3</span> <span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">push</span> <span class="s2">&quot;==&quot;</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="n">byteNum</span> <span class="n">is</span> <span class="mi">1</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">push</span> <span class="n">base64</span><span class="o">.</span><span class="n">charAt</span> <span class="p">(</span> <span class="n">prev</span> <span class="o">&amp;</span> <span class="mh">0x0f</span> <span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">push</span> <span class="s2">&quot;=&quot;</span>
+
+    <span class="n">result</span><span class="o">.</span><span class="n">join</span> <span class="s2">&quot;&quot;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-window.base64Decode(_)'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-window.base64Decode(_)">&#182;</a>
+        </div>
+        <h3>window.base64Decode( )</h3>
+
+<p>Base64 Decode. Adapted from <a href="https://gist.github.com/776329#file_base64_conversion_coffeescript_test_suite.html">here</a></p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>text</code> &ndash; Base 64 string to decode</li>
+</ul>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="n">window</span><span class="o">.</span><span class="n">base64Decode</span> <span class="o">=</span> <span class="p">(</span> <span class="n">text</span> <span class="p">)</span> <span class="o">-&gt;</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="sr"> /\s/</span><span class="n">g</span><span class="p">,</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="ow">not</span><span class="sr"> /^[a-z0-9\+\/\s]+\={0,2}$/i</span><span class="o">.</span><span class="n">test</span> <span class="n">text</span> <span class="ow">or</span> <span class="n">text</span><span class="o">.</span><span class="n">length</span> <span class="o">%</span> <span class="mi">4</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="kp">throw</span> <span class="kp">new</span> <span class="no">Error</span> <span class="s2">&quot;Not a base64-encoded string.&quot;</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="o">[]</span>
+
+    <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="sr"> /\=/</span><span class="n">g</span><span class="p">,</span> <span class="s2">&quot;&quot;</span>
+
+    <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">text</span><span class="o">.</span><span class="n">length</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">indexOf</span> <span class="n">text</span><span class="o">.</span><span class="n">charAt</span> <span class="n">i</span>
+        <span class="n">digitNum</span> <span class="o">=</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">4</span><span class="p">;</span>
+
+        <span class="n">switch</span> <span class="n">digitNum</span>
+            <span class="k">when</span> <span class="mi">1</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">push</span> <span class="nb">String</span><span class="o">.</span><span class="n">fromCharCode</span> <span class="n">prev</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span> <span class="o">|</span> <span class="n">cur</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span>
+            <span class="k">when</span> <span class="mi">2</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">push</span> <span class="nb">String</span><span class="o">.</span><span class="n">fromCharCode</span> <span class="p">(</span><span class="n">prev</span> <span class="o">&amp;</span> <span class="mh">0x0f</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span> <span class="o">|</span> <span class="n">cur</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span>
+            <span class="k">when</span> <span class="mi">3</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">push</span> <span class="nb">String</span><span class="o">.</span><span class="n">fromCharCode</span> <span class="p">(</span><span class="n">prev</span> <span class="o">&amp;</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">6</span> <span class="o">|</span> <span class="n">cur</span>
+
+        <span class="n">prev</span> <span class="o">=</span> <span class="n">cur</span>
+        <span class="n">i</span><span class="o">++</span>
+
+    <span class="n">result</span><span class="o">.</span><span class="n">join</span> <span class="s2">&quot;&quot;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-Bootstrap_Code'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Bootstrap_Code">&#182;</a>
+        </div>
+        <h2>Bootstrap Code</h2>
+
+<p>The stuff needed to get everything started!</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-7'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-7">&#182;</a>
+        </div>
+        <p>Executes on document.ready event</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="err">$</span> <span class="o">-&gt;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-8'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-8">&#182;</a>
+        </div>
+        <p>Stop IE text selection</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="err">$</span><span class="p">(</span> <span class="s1">&#39;body&#39;</span> <span class="p">)</span><span class="o">.</span><span class="n">onselectstart</span> <span class="o">=</span> <span class="o">-&gt;</span> <span class="kp">false</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-9'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-9">&#182;</a>
+        </div>
+        <p>Instantiates the main class and starts the program</p>
+
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="n">window</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="kp">new</span> <span class="n">app</span></pre></div>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>
