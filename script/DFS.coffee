@@ -2,7 +2,7 @@ class DFS extends algorithm
 
     # executes a depth first search given
     # a particular set of nodes, starting from 
-    # the root_node
+    # the root_node (only works on a tree graph)
     search: ->
         #stack for nodes to be searched
         todo_list = []
