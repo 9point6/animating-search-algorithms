@@ -1,17 +1,24 @@
 class DFS extends algorithm
 
     search: ->
-        explored_nodes.push root_node.id
-        root_node.animate "working"
+        todo_list = []
 
-        for connection in root_node.connections
-          if connection.p.id not in explored_nodes
-             
-            
-          # for looking at the point
-          connection.p
-          # for looking at the connection
-          connection.c
+        todo_list.push root_node
+
+        while todo_list.length is not 0
+          current_node = todo_list.pull
+
+          if current_node is goal_node
+            explored_nodes.push current_node
+            break
+
+          neighbours = current_node.connections
+          
+          for neighbour in neighbours
+            todo_list.push neighbour.p
+
+          explored_nodes.push current_node
+
 
     gen_info: ->
         alert "general information"
