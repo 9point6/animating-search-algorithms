@@ -135,3 +135,24 @@ class connection
 
         window.spark.animateAlong @r, 500, false, =>
             spark.remove( )
+
+    # ### connection.animate( )
+    # Perform animatrions on the connection. Used by search algorithms.
+    # #### Parameters
+    # * `ani_name` - Name of animation
+    #
+    # #### TODO
+    # * Add all needed animations
+    # * Maybe enumerate?
+    animate: ( ani_name ) ->
+        switch ani_name
+            # The connection is currently being 'looked at'
+            when "working"
+                @r.animate
+                    color: "#00f",
+                    100
+            # The node has been visited by the algorithm
+            when "visited"
+                @r.animate
+                    color: "#999",
+                    100
