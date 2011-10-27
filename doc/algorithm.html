@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>algorithm.coffee</title>
+  <link rel="stylesheet" href="http://jashkenas.github.com/docco/resources/docco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <div id="jump_to">
+    Jump To &hellip;
+    <div id="jump_wrapper">
+      <div id="jump_page">
+          <a class="source" href="BFS.html">BFS.coffee</a>
+          <a class="source" href="DFS.html">DFS.coffee</a>
+          <a class="source" href="DFS2.html">DFS2.coffee</a>
+          <a class="source" href="DLS.html">DLS.coffee</a>
+          <a class="source" href="algorithm.html">algorithm.coffee</a>
+          <a class="source" href="animate.html">animate.coffee</a>
+          <a class="source" href="connection.html">connection.coffee</a>
+          <a class="source" href="main.html">main.coffee</a>
+          <a class="source" href="point.html">point.coffee</a>
+          <a class="source" href="z-other.html">z-other.coffee</a>
+      </div>
+    </div>
+  </div>
+  <table cellspacing=0 cellpadding=0>
+  <thead>
+    <tr>
+      <th class=docs><h1>algorithm.coffee</h1></th>
+      <th class=code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id='section-Developers'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Developers">&#182;</a>
+        </div>
+        <p>Part of the <strong>Animating Search Algorithms</strong> project</p>
+
+<h2>Developers</h2>
+
+<ul>
+<li><a href="http://www.csc.liv.ac.uk/~cs8ib/">Ian Brown</a></li>
+<li><a href="http://www.csc.liv.ac.uk/~cs8jrh/">Jack Histon</a></li>
+<li><a href="http://www.csc.liv.ac.uk/~cs8cj/">Colin Jackson</a></li>
+<li><a href="http://www.csc.liv.ac.uk/~cs8jlj/">Jennifer Jones</a></li>
+<li><a href="http://www.csc.liv.ac.uk/~cs8js/">John Sanderson</a></li>
+</ul>
+
+<p>Do not modify or distribute without permission</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-Main_Documentation'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Main_Documentation">&#182;</a>
+        </div>
+        <h2>Main Documentation</h2>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-3'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-3">&#182;</a>
+        </div>
+        <p>Algorithm abstract class</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="k">class</span> <span class="n">algorithm</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-4'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-4">&#182;</a>
+        </div>
+        <p>Base node object</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="n">root_node</span><span class="p">:</span> <span class="n">null</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-5'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-5">&#182;</a>
+        </div>
+        <p>Goal node object</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="n">goal_node</span><span class="p">:</span> <span class="n">null</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-6'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-6">&#182;</a>
+        </div>
+        <p>List of explored node IDs</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="n">explored_nodes</span><span class="p">:</span> <span class="o">[]</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-algorithm.constructor(_)'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-algorithm.constructor(_)">&#182;</a>
+        </div>
+        <h3>algorithm.constructor( )</h3>
+
+<p>Constructor for an algorithm. Not neccesarily needed in the derrived
+classes, but here for completeness.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="n">constructor</span><span class="p">:</span> <span class="o">-&gt;</span>
+        <span class="kp">false</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-algorithm.search(_)'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-algorithm.search(_)">&#182;</a>
+        </div>
+        <h3>algorithm.search( )</h3>
+
+<p>Will be the main bulk of the class. Runs and animates the search
+algorithm.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="n">search</span><span class="p">:</span> <span class="o">-&gt;</span>
+        <span class="kp">throw</span> <span class="s2">&quot;Search not implemented&quot;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-algorithm.gen_info(_)'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-algorithm.gen_info(_)">&#182;</a>
+        </div>
+        <h3>algorithm.gen_info( )</h3>
+
+<p>returns an object containing the general information relating to an
+algorithm. (Such as time complexity, etc)</p>
+
+<p><strong>Return</strong> &ndash;&gt; Array containing the information</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="n">gen_info</span><span class="p">:</span> <span class="o">-&gt;</span>
+        <span class="kp">throw</span> <span class="s2">&quot;General info not implemented&quot;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-algorithm.run_info(_)'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-algorithm.run_info(_)">&#182;</a>
+        </div>
+        <h3>algorithm.run_info( )</h3>
+
+<p>returns an object containing the information relating generated from
+running the algorithm. (Such as run time, etc)</p>
+
+<p><strong>Return</strong> &ndash;&gt; Array containing the information</p>
+
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="n">run_info</span><span class="p">:</span> <span class="o">-&gt;</span>
+        <span class="kp">throw</span> <span class="s2">&quot;Run info not implemented&quot;</span></pre></div>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>

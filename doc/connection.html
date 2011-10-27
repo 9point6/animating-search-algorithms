@@ -12,6 +12,12 @@
     Jump To &hellip;
     <div id="jump_wrapper">
       <div id="jump_page">
+          <a class="source" href="BFS.html">BFS.coffee</a>
+          <a class="source" href="DFS.html">DFS.coffee</a>
+          <a class="source" href="DFS2.html">DFS2.coffee</a>
+          <a class="source" href="DLS.html">DLS.coffee</a>
+          <a class="source" href="algorithm.html">algorithm.coffee</a>
+          <a class="source" href="animate.html">animate.coffee</a>
           <a class="source" href="connection.html">connection.coffee</a>
           <a class="source" href="main.html">main.coffee</a>
           <a class="source" href="point.html">point.coffee</a>
@@ -266,8 +272,7 @@ changed location.</p>
         <span class="vi">@r</span><span class="o">.</span><span class="n">animate</span>
             <span class="s2">&quot;stroke-width&quot;</span><span class="p">:</span> <span class="mi">1</span>
             <span class="n">stroke</span><span class="p">:</span> <span class="s2">&quot;#666&quot;</span><span class="p">,</span>
-            <span class="mi">100</span>
- </pre></div>
+            <span class="mi">100</span></pre></div>
       </td>
     </tr>
     <tr id='section-connection.click(_)'>
@@ -314,7 +319,7 @@ process of an algorithm, etc.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>    <span class="n">spark</span><span class="p">:</span> <span class="p">(</span> <span class="n">a2b</span> <span class="o">=</span> <span class="kp">true</span> <span class="p">)</span> <span class="o">-&gt;</span>
-        <span class="n">start_point</span> <span class="o">=</span> <span class="k">if</span> <span class="n">a_to_b</span> <span class="k">then</span> <span class="vi">@pointa</span> <span class="k">else</span> <span class="vi">@pointb</span>
+        <span class="n">start_point</span> <span class="o">=</span> <span class="k">if</span> <span class="n">a2b</span> <span class="k">then</span> <span class="vi">@pointa</span> <span class="k">else</span> <span class="vi">@pointb</span>
         <span class="n">window</span><span class="o">.</span><span class="n">spark</span> <span class="o">=</span> <span class="vi">@raphael</span><span class="o">.</span><span class="n">ellipse</span> <span class="n">start_point</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">start_point</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span>
         <span class="n">window</span><span class="o">.</span><span class="n">spark</span><span class="o">.</span><span class="n">attr</span>
             <span class="n">fill</span><span class="p">:</span> <span class="s2">&quot;r#f00-#fff&quot;</span>
@@ -328,7 +333,6 @@ process of an algorithm, etc.</p>
         </div>
         <p>Raphael does not currently support alpha gradients, but SVG and VML
 both do. This code changes the necessary elements to do this manually</p>
-
       </td>
       <td class=code>
         <div class='highlight'><pre>        <span class="n">grad</span> <span class="o">=</span> <span class="err">$</span><span class="p">(</span> <span class="n">spark</span><span class="o">.</span><span class="n">node</span> <span class="p">)</span><span class="o">.</span><span class="n">attr</span> <span class="s2">&quot;fill&quot;</span>
@@ -339,6 +343,70 @@ both do. This code changes the necessary elements to do this manually</p>
 
         <span class="n">window</span><span class="o">.</span><span class="n">spark</span><span class="o">.</span><span class="n">animateAlong</span> <span class="vi">@r</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="kp">false</span><span class="p">,</span> <span class="o">=&gt;</span>
             <span class="n">spark</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span> <span class="p">)</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-connection.animate(_)'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-connection.animate(_)">&#182;</a>
+        </div>
+        <h3>connection.animate( )</h3>
+
+<p>Perform animatrions on the connection. Used by search algorithms.</p>
+
+<h4>Parameters</h4>
+
+<ul>
+<li><code>ani_name</code> &ndash; Name of animation</li>
+</ul>
+
+<h4>TODO</h4>
+
+<ul>
+<li>Add all needed animations</li>
+<li>Maybe enumerate?</li>
+</ul>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="n">update_style</span><span class="p">:</span> <span class="p">(</span> <span class="n">style_type</span> <span class="p">)</span> <span class="o">-&gt;</span>
+        <span class="n">switch</span> <span class="n">style_type</span>
+      <span class="k">when</span> <span class="s2">&quot;normal&quot;</span>
+        <span class="vi">@r</span><span class="o">.</span><span class="n">animate</span>
+          <span class="n">color</span><span class="p">:</span> <span class="s2">&quot;#fff&quot;</span> <span class="c1">#I&#39;m CJ and these need changing. I&#39;m on a horse.</span>
+          <span class="mi">100</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-18'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-18">&#182;</a>
+        </div>
+        <p>The connection is currently being &lsquo;looked at&rsquo;</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>            <span class="k">when</span> <span class="s2">&quot;viewing&quot;</span>
+                <span class="vi">@r</span><span class="o">.</span><span class="n">animate</span>
+                    <span class="n">color</span><span class="p">:</span> <span class="s2">&quot;#00f&quot;</span><span class="p">,</span>
+                    <span class="mi">100</span>
+      <span class="k">when</span> <span class="s2">&quot;potential&quot;</span>
+        <span class="vi">@r</span><span class="o">.</span><span class="n">animate</span>
+          <span class="n">color</span><span class="p">:</span> <span class="s2">&quot;#0f0&quot;</span><span class="p">,</span>
+          <span class="mi">100</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-19'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-19">&#182;</a>
+        </div>
+        <p>The connection has been visited by the algorithm</p>
+
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>            <span class="k">when</span> <span class="s2">&quot;visited&quot;</span>
+                <span class="vi">@r</span><span class="o">.</span><span class="n">animate</span>
+                    <span class="n">color</span><span class="p">:</span> <span class="s2">&quot;#999&quot;</span><span class="p">,</span>
+                    <span class="mi">100</span></pre></div>
       </td>
     </tr>
   </table>

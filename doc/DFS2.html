@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>DFS2.coffee</title>
+  <link rel="stylesheet" href="http://jashkenas.github.com/docco/resources/docco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <div id="jump_to">
+    Jump To &hellip;
+    <div id="jump_wrapper">
+      <div id="jump_page">
+          <a class="source" href="BFS.html">BFS.coffee</a>
+          <a class="source" href="DFS.html">DFS.coffee</a>
+          <a class="source" href="DFS2.html">DFS2.coffee</a>
+          <a class="source" href="DLS.html">DLS.coffee</a>
+          <a class="source" href="algorithm.html">algorithm.coffee</a>
+          <a class="source" href="animate.html">animate.coffee</a>
+          <a class="source" href="connection.html">connection.coffee</a>
+          <a class="source" href="main.html">main.coffee</a>
+          <a class="source" href="point.html">point.coffee</a>
+          <a class="source" href="z-other.html">z-other.coffee</a>
+      </div>
+    </div>
+  </div>
+  <table cellspacing=0 cellpadding=0>
+  <thead>
+    <tr>
+      <th class=docs><h1>DFS2.coffee</h1></th>
+      <th class=code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id='section-1'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-1">&#182;</a>
+        </div>
+        
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="k">class</span> <span class="nc">DFS2</span> <span class="n">extends</span> <span class="n">algorithm</span>
+    <span class="n">current_node</span><span class="p">:</span> <span class="n">root_node</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-2'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-2">&#182;</a>
+        </div>
+        <p>implementing the wiki-page DFS algorithm.
+made up the &lsquo;discover<em>edge&rsquo;, &lsquo;explored&rsquo; and &lsquo;back</em>edge&rsquo;
+properties for a connection.</p>
+
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="n">search</span><span class="p">:</span> <span class="o">-&gt;</span>
+        <span class="n">explored_nodes</span><span class="o">.</span><span class="n">push</span> <span class="n">root_node</span>
+
+        <span class="n">incident_edges</span> <span class="o">=</span> <span class="n">current_node</span><span class="o">.</span><span class="n">connections</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="k">in</span> <span class="n">incident_edge</span>
+          <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">explored</span> <span class="n">is</span> <span class="kp">false</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">edge</span><span class="o">.</span><span class="n">p</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">explored</span> <span class="n">is</span> <span class="kp">false</span>
+              <span class="n">c</span><span class="o">.</span><span class="n">discovery_edge</span> <span class="o">=</span> <span class="kp">true</span>
+              <span class="n">current_node</span> <span class="o">=</span> <span class="n">node</span>
+              <span class="vi">@search</span>
+          <span class="k">else</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">back_edge</span> <span class="o">=</span> <span class="kp">true</span>
+
+    <span class="n">gen_info</span><span class="p">:</span> <span class="o">-&gt;</span>
+        <span class="n">alert</span> <span class="s2">&quot;gen info&quot;</span>
+
+    <span class="n">run_info</span><span class="p">:</span> <span class="o">-&gt;</span>
+        <span class="n">alert</span> <span class="s2">&quot;run info&quot;</span></pre></div>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>DFS.coffee</title>
+  <link rel="stylesheet" href="http://jashkenas.github.com/docco/resources/docco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <div id="jump_to">
+    Jump To &hellip;
+    <div id="jump_wrapper">
+      <div id="jump_page">
+          <a class="source" href="BFS.html">BFS.coffee</a>
+          <a class="source" href="DFS.html">DFS.coffee</a>
+          <a class="source" href="DFS2.html">DFS2.coffee</a>
+          <a class="source" href="DLS.html">DLS.coffee</a>
+          <a class="source" href="algorithm.html">algorithm.coffee</a>
+          <a class="source" href="animate.html">animate.coffee</a>
+          <a class="source" href="connection.html">connection.coffee</a>
+          <a class="source" href="main.html">main.coffee</a>
+          <a class="source" href="point.html">point.coffee</a>
+          <a class="source" href="z-other.html">z-other.coffee</a>
+      </div>
+    </div>
+  </div>
+  <table cellspacing=0 cellpadding=0>
+  <thead>
+    <tr>
+      <th class=docs><h1>DFS.coffee</h1></th>
+      <th class=code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id='section-1'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-1">&#182;</a>
+        </div>
+        
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="k">class</span> <span class="nc">DFS</span> <span class="n">extends</span> <span class="n">algorithm</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-2'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-2">&#182;</a>
+        </div>
+        <p>executes a depth first search given
+a particular set of nodes, starting from 
+the root_node (only works on a tree graph)</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="n">search</span><span class="p">:</span> <span class="o">-&gt;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-3'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-3">&#182;</a>
+        </div>
+        <p>stack for nodes to be searched</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>        <span class="n">todo_list</span> <span class="o">=</span> <span class="o">[]</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-4'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-4">&#182;</a>
+        </div>
+        <p>push root (starting) node onto stack</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>        <span class="n">todo_list</span><span class="o">.</span><span class="n">push</span> <span class="n">root_node</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-5'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-5">&#182;</a>
+        </div>
+        <p>while there are nodes still left to check</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>        <span class="k">while</span> <span class="n">todo_list</span><span class="o">.</span><span class="n">length</span> <span class="n">is</span> <span class="ow">not</span> <span class="mi">0</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-6'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-6">&#182;</a>
+        </div>
+        <p>pull a node from the stack</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>          <span class="n">current_node</span> <span class="o">=</span> <span class="n">todo_list</span><span class="o">.</span><span class="n">pull</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-7'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-7">&#182;</a>
+        </div>
+        <p>if current node is goal node, end the search</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>          <span class="k">if</span> <span class="n">current_node</span> <span class="n">is</span> <span class="n">goal_node</span>
+            <span class="n">explored_nodes</span><span class="o">.</span><span class="n">push</span> <span class="n">current_node</span>
+            <span class="k">break</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-8'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-8">&#182;</a>
+        </div>
+        <p>get the connections of the current node</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>          <span class="n">neighbours</span> <span class="o">=</span> <span class="n">current_node</span><span class="o">.</span><span class="n">connections</span>
+          </pre></div>
+      </td>
+    </tr>
+    <tr id='section-9'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-9">&#182;</a>
+        </div>
+        <p>add to to-do stack</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>          <span class="k">for</span> <span class="n">neighbour</span> <span class="k">in</span> <span class="n">neighbours</span>
+            <span class="n">todo_list</span><span class="o">.</span><span class="n">push</span> <span class="n">neighbour</span><span class="o">.</span><span class="n">p</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-10'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-10">&#182;</a>
+        </div>
+        <p>add current node to explored nodes list</p>
+
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>          <span class="n">explored_nodes</span><span class="o">.</span><span class="n">push</span> <span class="n">current_node</span>
+
+
+    <span class="n">gen_info</span><span class="p">:</span> <span class="o">-&gt;</span>
+        <span class="n">alert</span> <span class="s2">&quot;general information&quot;</span>
+
+    <span class="n">run_info</span><span class="p">:</span> <span class="o">-&gt;</span>
+        <span class="n">alert</span> <span class="s2">&quot;runtime information&quot;</span></pre></div>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>
