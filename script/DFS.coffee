@@ -4,13 +4,6 @@ class DFS extends algorithm
     # a particular set of nodes, starting from 
     # the root_node (only works on a tree graph)
     search: ->
-        todo_list = []
-
-        todo_list.push root_node
-
-        while todo_list.length is not 0
-          current_node = todo_list.pull
-
         #stack for nodes to be searched
         todo_list = []
 
@@ -26,11 +19,6 @@ class DFS extends algorithm
           if current_node is goal_node
             explored_nodes.push current_node
             break
-
-          neighbours = current_node.connections
-          
-          for neighbour in neighbours
-            todo_list.push neighbour.p
 
           #get the connections of the current node
           neighbours = current_node.connections
