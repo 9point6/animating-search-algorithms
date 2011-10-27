@@ -144,14 +144,22 @@ class connection
     # #### TODO
     # * Add all needed animations
     # * Maybe enumerate?
-    animate: ( ani_name ) ->
-        switch ani_name
+    update_style: ( style_type ) ->
+        switch style_type
+			when "normal"
+				@r.animate
+					color: "#fff" #I'm CJ and these need changing. I'm on a horse.
+					100
             # The connection is currently being 'looked at'
-            when "working"
+            when "viewing"
                 @r.animate
                     color: "#00f",
                     100
-            # The node has been visited by the algorithm
+			when "potential"
+				@r.animate
+					color: "#0f0",
+					100
+            # The connection has been visited by the algorithm
             when "visited"
                 @r.animate
                     color: "#999",
