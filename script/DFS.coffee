@@ -13,22 +13,24 @@ class DFS extends algorithm
         # while there are nodes still left to check
         while todo_list.length is not 0
           #pull a node from the stack
-          current_node = todo_list.pull
+          current_node = todo_list.pop
 
           #if current node is goal node, end the search
           if current_node is goal_node
             explored_nodes.push current_node
             break
 
-          #get the connections of the current node
-          neighbours = current_node.connections
-          
           #add to to-do stack
-          for neighbour in neighbours
+          for neighbour in current_node.connections
             todo_list.push neighbour.p
-
+            
           #add current node to explored nodes list
           explored_nodes.push current_node
+
+          traverse_info.push
+            connection: con.p.id is todo_list[todo_list.length].id for con in current_node.connections
+            a_to_b: conn.c.pointa.id is current_node.id
+            style_name: "visited"
 
 
     gen_info: ->
