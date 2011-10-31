@@ -19,6 +19,13 @@ class algorithm
     goal_node: null
     # List of explored node IDs
     explored_nodes: []
+    # List of explored edges for animation.
+    # Object to be pushed to this array should be in the format:
+    # traverse_info.push
+    #       connection: conn.c
+    #       a_to_b: conn.c.pointa.id is current_node.id
+    #       style_name: "Visited"
+    traverse_info: []
 
     # ### algorithm.constructor( )
     # Constructor for an algorithm. Not neccesarily needed in the derrived
