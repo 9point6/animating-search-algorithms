@@ -1,5 +1,4 @@
 class animate
-
     constructor: ( @raphael ) ->
         @r = @raphael
 
@@ -13,13 +12,11 @@ class animate
     # * MAKE IT WORK!!
     traverse: (algorithm) ->
         for connection in algorithm.explored_connections
-            connection.p.
-        node(algorithm.explored_nodes[0], red, 10)
+            connection.p
+        node algorithm.explored_nodes[0], red, 10
 
     node: (node, colour, size) ->
-
+        false
 
     connection: (connection, colour) ->
-
-
-
+        false

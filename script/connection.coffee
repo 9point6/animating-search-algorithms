@@ -25,6 +25,10 @@ class connection
         @pointa.connect @pointb, @
         @pointb.connect @pointa, @
 
+        # Used to indicate direction for animating nodes.
+        # If true point a is animated, then the connection, then potentially B
+        @anim_atob = true
+
         # Draw line
         @r = @raphael.path( )
         @r.attr
@@ -136,31 +140,38 @@ class connection
         window.spark.animateAlong @r, 500, false, =>
             spark.remove( )
 
-    # ### connection.animate( )
+    # ### connection.update_style( )
     # Perform animatrions on the connection. Used by search algorithms.
     # #### Parameters
-    # * `ani_name` - Name of animation
+    # * `style_name` - Name of preset style used to update the look of the connection.
     #
     # #### TODO
     # * Add all needed animations
     # * Maybe enumerate?
-    update_style: ( style_type ) ->
-        switch style_type
+    update_style: ( style_name ) ->
+        anim_speed = 100
+        switch style_name
+            # The connection is to be reset back to 'default'
             when "normal"
                 @r.animate
-                    color: "#fff", #I'm CJ and these need changing. I'm on a horse.
-                    100
+                    stroke: "#666"
+                    "stroke-width": 1,
+                    anim_speed
             # The connection is currently being 'looked at'
             when "viewing"
                 @r.animate
-                    color: "#00f",
-                    100
+                    stroke: "#008000"
+                    "stroke-width": 10,
+                    anim_speed
+            # The connection is an option for later in the algorithm
             when "potential"
                 @r.animate
-                    color: "#0f0",
-                    100
+                    stroke: "#0247FE"
+                    "stroke-width": 5,
+                    anim_speed
             # The connection has been visited by the algorithm
             when "visited"
                 @r.animate
-                    color: "#999",
-                    100
+                    stroke: "#A40000"
+                    "stroke-width": 3,
+                    anim_speed

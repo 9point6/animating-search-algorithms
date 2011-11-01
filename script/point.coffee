@@ -190,23 +190,28 @@ class point
             opacity: 0,
             100
 
-    # ### point.animate( )
-    # Perform animations on the node. Used by search algorithms.
+    # ### point.update_style( )
+    # Changes the look of the node. Used by search algorithms.
     # #### Parameters
-    # * `ani_name` - Name of animation
+    # * `style_name` - Style from presets ('visited,'working',etc) to change the point properties to.
     #
     # #### TODO
     # * Add all needed animations
     # * Maybe enumerate?
-    animate: ( ani_name ) ->
-        switch ani_name
+    update_style: ( style_name ) ->
+        anim_speed = 100
+        switch style_name
+            when "normal"
+                @r.animate
+                    fill: "#000",
+                    anim_speed
             # The node is currently being 'looked at'
             when "working"
                 @r.animate
-                    color: "#00f",
-                    100
+                    fill: "#008000",
+                    anim_speed
             # The node has been visited by the algorithm
             when "visited"
                 @r.animate
-                    color: "#999",
-                    100
+                    fill: "#999",
+                    anim_speed
