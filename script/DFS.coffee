@@ -1,8 +1,24 @@
+# Part of the **Animating Search Algorithms** project
+#
+# ## Developers
+# * [Ian Brown] (http://www.csc.liv.ac.uk/~cs8jb/)
+# * [Jack Histon] (http://www.csc.liv.ac.uk/~cs8jrh/)
+# * [Colin Jackson] (http://www.csc.liv.ac.uk/~cs8cj/)
+# * [Jennifer Jones] (http://www.csc.liv.ac.uk/~cs8jlj/)
+# * [John Sanderson] (http://www.csc.liv.ac.uk/~cs8js/)
+#
+# Do not modify or distribute without permission.
+
+# ## Main Documentation
+
+# DFS algorithm class
 class DFS extends algorithm
 
+    # ### DFS.search( )
     # executes a depth first search given
     # a particular set of nodes, starting from 
     # the root_node (only works on a tree graph)
+    # ### Parameters
     search: ->
         #stack for nodes to be searched
         todo_list = []
