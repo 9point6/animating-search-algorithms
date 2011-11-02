@@ -1,4 +1,7 @@
 class DFS2 extends algorithm
+
+    name: "DFS2"
+
     current_node: root_node
 
     # implementing the wiki-page DFS algorithm.

@@ -1,5 +1,7 @@
 class DLS extends algorithm
 
+    name: "DLS"
+
     # depth-limited search starting form a root node
     # User gives a limit upon clicking animate.
     search: ->
