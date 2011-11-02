@@ -470,19 +470,19 @@ because it&rsquo;s used in the new <code>point</code> method to allow the user t
             <span class="mi">100</span></pre></div>
       </td>
     </tr>
-    <tr id='section-point.animate(_)'>
+    <tr id='section-point.update_style(_)'>
       <td class=docs>
         <div class="pilwrap">
-          <a class="pilcrow" href="#section-point.animate(_)">&#182;</a>
+          <a class="pilcrow" href="#section-point.update_style(_)">&#182;</a>
         </div>
-        <h3>point.animate( )</h3>
+        <h3>point.update_style( )</h3>
 
-<p>Perform animations on the node. Used by search algorithms.</p>
+<p>Changes the look of the node. Used by search algorithms.</p>
 
 <h4>Parameters</h4>
 
 <ul>
-<li><code>ani_name</code> &ndash; Name of animation</li>
+<li><code>style_name</code> &ndash; Style from presets (&lsquo;visited,'working&rsquo;,etc) to change the point properties to.</li>
 </ul>
 
 <h4>TODO</h4>
@@ -493,8 +493,13 @@ because it&rsquo;s used in the new <code>point</code> method to allow the user t
 </ul>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">animate</span><span class="p">:</span> <span class="p">(</span> <span class="n">ani_name</span> <span class="p">)</span> <span class="o">-&gt;</span>
-        <span class="n">switch</span> <span class="n">ani_name</span></pre></div>
+        <div class='highlight'><pre>    <span class="n">update_style</span><span class="p">:</span> <span class="p">(</span> <span class="n">style_name</span> <span class="p">)</span> <span class="o">-&gt;</span>
+        <span class="n">anim_speed</span> <span class="o">=</span> <span class="mi">100</span>
+        <span class="n">switch</span> <span class="n">style_name</span>
+            <span class="k">when</span> <span class="s2">&quot;normal&quot;</span>
+                <span class="vi">@r</span><span class="o">.</span><span class="n">animate</span>
+                    <span class="n">fill</span><span class="p">:</span> <span class="s2">&quot;#000&quot;</span><span class="p">,</span>
+                    <span class="n">anim_speed</span></pre></div>
       </td>
     </tr>
     <tr id='section-25'>
@@ -507,8 +512,8 @@ because it&rsquo;s used in the new <code>point</code> method to allow the user t
       <td class=code>
         <div class='highlight'><pre>            <span class="k">when</span> <span class="s2">&quot;working&quot;</span>
                 <span class="vi">@r</span><span class="o">.</span><span class="n">animate</span>
-                    <span class="n">color</span><span class="p">:</span> <span class="s2">&quot;#00f&quot;</span><span class="p">,</span>
-                    <span class="mi">100</span></pre></div>
+                    <span class="n">fill</span><span class="p">:</span> <span class="s2">&quot;#008000&quot;</span><span class="p">,</span>
+                    <span class="n">anim_speed</span></pre></div>
       </td>
     </tr>
     <tr id='section-26'>
@@ -522,8 +527,8 @@ because it&rsquo;s used in the new <code>point</code> method to allow the user t
       <td class=code>
         <div class='highlight'><pre>            <span class="k">when</span> <span class="s2">&quot;visited&quot;</span>
                 <span class="vi">@r</span><span class="o">.</span><span class="n">animate</span>
-                    <span class="n">color</span><span class="p">:</span> <span class="s2">&quot;#999&quot;</span><span class="p">,</span>
-                    <span class="mi">100</span></pre></div>
+                    <span class="n">fill</span><span class="p">:</span> <span class="s2">&quot;#999&quot;</span><span class="p">,</span>
+                    <span class="n">anim_speed</span></pre></div>
       </td>
     </tr>
   </table>
