@@ -65,14 +65,11 @@ class DFS extends algorithm
       # remove the element from the array.
       current_node = exp_nodes.pop
 
-      # push the current_node onto the start of the array. Push
-      # was not used here, as the animate class would have to
-      # go through the array in reverse. Makes building the animate
-      # class easier
+      # push the current_node onto the start of the array.
       traverse_info.push current_node
     
       # if this the last node in exp_nodes array, then there is
-      # no need to loop through its connections.
+      # no need to loop through its connections
       if exp_nodes.length is not 0
 
         # loop through the nodes connections, and pick out the
