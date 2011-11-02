@@ -19,7 +19,7 @@
       queue.push(root_node);
       explored_nodes.push(root_node);
       if (root_node === goal_node) {
-        break;
+        return;
       }
       _results = [];
       while (queue.length === !0) {
