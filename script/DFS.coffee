@@ -14,6 +14,8 @@
 # DFS algorithm class
 class DFS extends algorithm
 
+  name: "DFS"
+
   # ### DFS.search( )
   # executes a depth first search given
   # a particular set of nodes, starting from 
