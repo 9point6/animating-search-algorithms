@@ -62,18 +62,7 @@ class animate
         else
           current_item.update_style "visited"
       
-    traverse: (traverse_info_a, traverse_info_b) ->
-
-
-    node: (node, colour, size) ->
-        false
-
-    connection: (connection, colour) ->
-        false
-    
-    
-    
-    ###
+    traverse_BiDi: (algorithm) ->
       path = algorithm.traverse_info
       while path.length is not 0
         item = path.pop
@@ -108,4 +97,3 @@ class animate
           item.update_style "visited"
           item = previous_item.shift()
           item.update_style "visited"
-    ###
