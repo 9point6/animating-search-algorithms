@@ -12,7 +12,7 @@ class BFS extends algorithm
 
         #if the root node is the goal then end search
         if root_node is goal_node
-            break
+            return
 
         #while there are still nodes in the queue
         while queue.length is not 0
