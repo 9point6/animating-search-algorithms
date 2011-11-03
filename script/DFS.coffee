@@ -87,3 +87,5 @@ class DFS extends algorithm
             traverse_info.push con
       else
         break
+
+    traverse_info.reverse()
