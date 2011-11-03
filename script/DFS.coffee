@@ -18,7 +18,7 @@ class DFS extends algorithm
 
   # ### DFS.search( )
   # executes a depth first search given
-  # a particular set of nodes, starting from 
+  # a particular set of nodes, starting from
   # the root_node (only works on a tree graph)
   # ### Parameters
   search: ->
@@ -26,7 +26,7 @@ class DFS extends algorithm
     todo_list = []
 
     #push root (starting) node onto stack
-    todo_list.push root_node
+    todo_list.push @root_node
 
     # while there are nodes still left to check
     while todo_list.length is not 0
@@ -34,14 +34,14 @@ class DFS extends algorithm
       current_node = todo_list.pop
 
       #if current node is goal node, end the search
-      if current_node is goal_node
+      if current_node is @goal_node
         explored_nodes.push current_node
         break
 
       #add to to-do stack
       for neighbour in current_node.connections
         todo_list.push neighbour.p
-            
+
       #add current node to explored nodes list
       explored_nodes.push current_node
 
@@ -58,7 +58,7 @@ class DFS extends algorithm
   #
   create_traverse_info: ->
     exp_nodes = explored_nodes
-      
+
     # if the array reaches zero then all the elements
     # have been added to the traverse_info array.
     while exp_nodes.length is not 0
@@ -69,7 +69,7 @@ class DFS extends algorithm
 
       # push the current_node onto the start of the array.
       traverse_info.push current_node
-    
+
       # if this the last node in exp_nodes array, then there is
       # no need to loop through its connections
       if exp_nodes.length is not 0
