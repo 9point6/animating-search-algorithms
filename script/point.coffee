@@ -193,7 +193,7 @@ class point
     # ### point.update_style( )
     # Changes the look of the node. Used by search algorithms.
     # #### Parameters
-    # * `style_name` - Style from presets ('visited,'working',etc) to change the point properties to.
+    # * `style_name` - Style from presets ('visited,'viewing',etc) to change the point properties to.
     #
     # #### TODO
     # * Add all needed animations
@@ -206,7 +206,7 @@ class point
                     fill: "#000",
                     anim_speed
             # The node is currently being 'looked at'
-            when "working"
+            when "viewing"
                 @r.animate
                     fill: "#008000",
                     anim_speed

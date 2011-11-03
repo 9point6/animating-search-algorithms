@@ -1,5 +1,7 @@
 class BFS extends algorithm
 
+    name: "BFS"
+
     search: ->
         #queue of nodes to be searched
         queue = []
