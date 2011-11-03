@@ -1,4 +1,53 @@
 class animate
+   
+    pointer: 0
+
+    step_forward: (algorithm)
+        #
+        if algorithm.traverse_info is not null and pointer < algorithm.traverse_info.length
+
+            @traverse_info = algorithm.traverse_info
+            current_item = @traverse_info[pointer]
+
+            current_item.update_style "viewing"
+            if current_item instanceof Point
+                for con in current_item.connections
+                    if con.style is not "viewing"
+                        con.update_style "potential"
+
+            if pointer is not 0
+                previous_item = @traverse_info[pointer-1]
+                if previous_item.style is "viewing"
+                    previous_item.update_style "visited"
+                    if previous_item instanceof Point
+                        for con in previous_item.connections
+                            if con.style is "potential" and algorithm.name is not "AStar"
+                                con.update_style "normal"
+            pointer++
+
+    step_backward: (algorithm)
+        if algortithm.traverse_info is not null and pointer > 0
+            
+            pointer--
+            
+            @traverse_info = algorithm.traverse_info
+            current_item = @traverse_info[pointer]
+            
+
+            current_item.update_style "normal"
+            if current_item instanceof Point
+                for con in current_item.connections
+                    if con.style is "potential"
+                        con.update_style "normal"
+
+            if pointer is not 0
+                previous_item = @traverse_info[pointer-1]
+                previous_item.update_style "viewing"
+                if previous_item instanceof Point
+                    for con in current_item.connections
+                        if con.style is not "viewing"
+                            con.update_style "potential"
+
     # ### animate.traverse( )
     # Loop through the given array, animating each given
     # node and connection in order. the traverse_info object should
