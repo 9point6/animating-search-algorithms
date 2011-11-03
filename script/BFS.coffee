@@ -29,6 +29,7 @@ class BFS extends algorithm
             for neighbour in neighbours
                 #add the neighbour to the set of explored nodes
                 explored_nodes.push neighbour.p
+                queue.push neighbour.p
 
                 #if the nieghbour is the goal node end search
                 if neighbour.p is goal_node
