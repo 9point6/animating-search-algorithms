@@ -1,48 +1,109 @@
-class animate
-   
-    pointer: 0
+# Part of the **Animating Search Algorithms** project
+#
+# ## Developers
+# * [Ian Brown](http://www.csc.liv.ac.uk/~cs8ib/)
+# * [Jack Histon](http://www.csc.liv.ac.uk/~cs8jrh/)
+# * [Colin Jackson](http://www.csc.liv.ac.uk/~cs8cj/)
+# * [Jennifer Jones](http://www.csc.liv.ac.uk/~cs8jlj/)
+# * [John Sanderson](http://www.csc.liv.ac.uk/~cs8js/)
+#
+# Do not modify or distribute without permission.
 
-    step_forward: (algorithm)
-        #
+# ## Main Documentation
+
+# Animate class
+class animate
+    # Stores pointer value for current position in traverse_info array
+    pointer: 0
+    # Stores the algorithm currently being worked on in the UI environment.
+    algorithm: null
+
+    # ### animate.step_forward( )
+    # move forward one step in the traverse_info array for a given algorithm.
+    # ### Parameters
+    #
+    # #### TODO
+    step_forward: ->
+        # check for null value in traverse_info. if the pointer has not
+        # reached the last element of the array already, then run the code.
         if algorithm.traverse_info is not null and pointer < algorithm.traverse_info.length
 
+            # create local variable for storing the array of points/connections
             @traverse_info = algorithm.traverse_info
+            # create a variable for storing the element the pointer represents
             current_item = @traverse_info[pointer]
 
+            # update the current item pointed at to "viewing"
             current_item.update_style "viewing"
+            # if the current_item selected is a point object
             if current_item instanceof Point
+                # loop through all of the points connections
                 for con in current_item.connections
+                    # This stops overwriting the style of the previous element in the
+                    # traverse_info array as it should be the only connection in the
+                    # "viewing" state.
                     if con.style is not "viewing"
                         con.update_style "potential"
 
+            # the current_item is not the first element in the array
             if pointer is not 0
+                # create a variable for storing the previous element.
                 previous_item = @traverse_info[pointer-1]
+                # if the previous item is in the "viewing" style (which it should
+                # be)
                 if previous_item.style is "viewing"
+                    # update previous items style to visited
                     previous_item.update_style "visited"
                     if previous_item instanceof Point
+                        # change all of its connections back to normal unless it
+                        # is an AStar algorithm. AStar works by keeping previous
+                        # connections as "potentials" in an open set.
                         for con in previous_item.connections
                             if con.style is "potential" and algorithm.name is not "AStar"
                                 con.update_style "normal"
+
+            # increase the pointer value                                
             pointer++
 
-    step_backward: (algorithm)
+    ### animate.step_backward( )
+    # move backward one step in the traverse_info array for a given algorithm.
+    # ### Parameters
+    #
+    # #### TODO
+    step_backward: ->
+        
+        # Check for null value in traverse_info. Pointer has to be greater than
+        # zero, as the pointer is decremented immediately after this comparison.
         if algortithm.traverse_info is not null and pointer > 0
             
+            # Decrement the pointer property
             pointer--
-            
+           
+            # create variable for storing array
             @traverse_info = algorithm.traverse_info
+            # create variable for current item pointer looks at in the array
             current_item = @traverse_info[pointer]
             
-
+            # change the current item to a "normal" style
             current_item.update_style "normal"
+           
+            # if the current item is a point then change all of it's potential
+            # connections back to a normal style.
             if current_item instanceof Point
                 for con in current_item.connections
                     if con.style is "potential"
                         con.update_style "normal"
 
+            # If there is an item before the current item in the traverse_info
+            # array
             if pointer is not 0
+                # Create a variable for storing the previous item
                 previous_item = @traverse_info[pointer-1]
+                # Change it's style to "viewing"
                 previous_item.update_style "viewing"
+
+                # if the previous item is a point change all of its connections
+                # to now be in a "potential" style.
                 if previous_item instanceof Point
                     for con in current_item.connections
                         if con.style is not "viewing"
@@ -50,77 +111,26 @@ class animate
 
     # ### animate.traverse( )
     # Loop through the given array, animating each given
-    # node and connection in order. the traverse_info object should
-    # be in reverse order, so when pop occurs, the animation is forwards.
+    # node and connection in order.
     # ### Parameters
-    # * `algorithm` - the algorithm containing the array for traversing
     #
     # #### TODO
-    # * add .style attribute to connection/node classes
-    # * add "goal" style for the point class
-    traverse: (algorithm) ->
-      # if the list to iterate over is not null
-      if algorithm.traverse_info is not null
-        # create local variable for list
-        @traverse_info = algorithm.traverse_info
-        # this will keep a record of the previous item in the list
-        previous_item = null
-
-        # while there are still items to iterate over
-        while @traverse_info.length is not 0
-          # this keeps a record of the current item.
-          current_item = @traverse_info.pop
-
-          # update the item we are currently looking at to viewing state.
-          current_item.update_style "viewing"
-
-          # if the current item is a point we should change each of it's
-          # connections to a "potential" style.
-          if current_item instanceof Point
-            for con in current_item.connections
-              if con.style is not "viewing"
-                con.update_style "potential"
-
-          # if there is a previous item
-          if previous_item is not null
-            # if the previous item is in the viewing style
-            if previous_item.style is "viewing"
-              # change the previous item to the visited style
-              previous_item.update_style "visited"
-              # if the previous item is a point
-              if previous_item instanceof Point
-                # loop through the previous items connections and change each
-                # connection which is in a "potential" style to a "normal"
-                # style. The A* is not going to do this, as A* may still
-                # visit potentials that previously were unexplored.
-                for con in previous_item.connections
-                  if con.style is "potential" and algorithm.name is not "AStar"
-                    con.update_style "normal"
-
-          # assign the previous item to the current item. Current item
-          # will be updated at the start of the array
-          previous_item = current_item
-
-        # the last item visited should be the goal node unless the algorithm
-        # did not complete.
-        if current_item is algorithm.goal_node
-          current_item.update_style "goal"
-        else
-          current_item.update_style "visited"
-
+    traverse: ->
+        # if the list to iterate over is not null
+        if algorithm.traverse_info is not null
+            while pointer is <= algorithm.traverse_info.length
+                this.step_foward
 
     # ### animate.traverse_BiDi(algorithm )
     # Loop through the given array, animating each given
     # node and connection in order. the traverse_info object should
     # be in reverse order, so when pop occurs, the animation is forwards.
     # ### Parameters
-    # * `algorithm` - the algorithm containing the array for traversing
     #
     # #### TODO
     # * add .style attribute to connection/node classes
     # * add "goal" style for the point class
-
-    traverse_BiDi: (algorithm) ->
+    traverse_BiDi: ->
         if algorithm.traverse_info or algorithm.traverse_from_goal is not null
 
             traverse_r = algorithm.traverse_info
@@ -208,45 +218,46 @@ class animate
                     else
                         current_item_r.update_style "visited"
 
-      ###
-      # Takes an array of all the nodes and connections visited by the algorithm in search order
-      path = algorithm.traverse_info
+###
+# while there are still items to iterate over
+        while @traverse_info.length is not 0
+          # this keeps a record of the current item.
+          current_item = @traverse_info.pop
 
-      # If the list of ordered objects to animate is not null
-      while path.length is not 0
-        #Take the first item visited and remove from list
-        item = path.pop
-        prev_item = null
+          # update the item we are currently looking at to viewing state.
+          current_item.update_style "viewing"
 
-        # If
-        if previous_item.length > 1
-          prev_item = previous_item.shift()
+          # if the current item is a point we should change each of it's
+          # connections to a "potential" style.
+          if current_item instanceof Point
+            for con in current_item.connections
+              if con.style is not "viewing"
+                con.update_style "potential"
 
-        if item instanceof Point
+          # if there is a previous item
+          if previous_item is not null
+            # if the previous item is in the viewing style
+            if previous_item.style is "viewing"
+              # change the previous item to the visited style
+              previous_item.update_style "visited"
+              # if the previous item is a point
+              if previous_item instanceof Point
+                # loop through the previous items connections and change each
+                # connection which is in a "potential" style to a "normal"
+                # style. The A* is not going to do this, as A* may still
+                # visit potentials that previously were unexplored.
+                for con in previous_item.connections
+                  if con.style is "potential" and algorithm.name is not "AStar"
+                    con.update_style "normal"
 
-          if prev_item is not null and prev_item instanceof Connection
-            prev_item.update_style "visited"
+          # assign the previous item to the current item. Current item
+          # will be updated at the start of the array
+          previous_item = current_item
 
-          item.update_style "viewing"
-          for con in item.connections
-            if con.state is "normal"
-              con.update_style "potential"
-
-        else if item instanceof Connection
-
-          if prev_item is not null and prev_item instanceof Point
-            prev_item.update_style "visited"
-            for con in prev_item.connections
-              if con.state is "potential"
-                con.update_style "normal"
-
-          item.update_style "viewing"
-
-        previous_item.push item
-
-        if path.length is 0
-          item = previous_item.shift()
-          item.update_style "visited"
-          item = previous_item.shift()
-          item.update_style "visited"
-        ###
+        # the last item visited should be the goal node unless the algorithm
+        # did not complete.
+        if current_item is algorithm.goal_node
+          current_item.update_style "goal"
+        else
+          current_item.update_style "visited"
+###
