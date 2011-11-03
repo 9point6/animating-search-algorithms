@@ -4,6 +4,7 @@ algorithm = (function() {
   algorithm.prototype.goal_node = null;
   algorithm.prototype.explored_nodes = [];
   algorithm.prototype.traverse_info = [];
+  algorithm.prototype.name = "Algorithm";
   function algorithm() {
     false;
   }

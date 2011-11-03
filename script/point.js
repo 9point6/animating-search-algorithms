@@ -158,7 +158,7 @@ point = (function() {
         return this.r.animate({
           fill: "#000"
         }, anim_speed);
-      case "working":
+      case "viewing":
         return this.r.animate({
           fill: "#008000"
         }, anim_speed);

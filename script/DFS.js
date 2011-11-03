@@ -12,6 +12,7 @@ DFS = (function() {
   function DFS() {
     DFS.__super__.constructor.apply(this, arguments);
   }
+  DFS.prototype.name = "DFS";
   DFS.prototype.search = function() {
     var current_node, neighbour, todo_list, _i, _len, _ref, _results;
     todo_list = [];

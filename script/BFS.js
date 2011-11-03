@@ -12,6 +12,7 @@ BFS = (function() {
   function BFS() {
     BFS.__super__.constructor.apply(this, arguments);
   }
+  BFS.prototype.name = "BFS";
   BFS.prototype.search = function() {
     var neighbour, neighbours, queue, root_node, _results;
     queue = [];

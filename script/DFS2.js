@@ -12,6 +12,7 @@ DFS2 = (function() {
   function DFS2() {
     DFS2.__super__.constructor.apply(this, arguments);
   }
+  DFS2.prototype.name = "DFS2";
   DFS2.prototype.current_node = root_node;
   DFS2.prototype.search = function() {
     var c, current_node, incident_edges, node, _i, _len, _results;

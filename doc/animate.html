@@ -41,9 +41,7 @@
         
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="k">class</span> <span class="n">animate</span>
-    <span class="n">constructor</span><span class="p">:</span> <span class="p">(</span> <span class="vi">@raphael</span> <span class="p">)</span> <span class="o">-&gt;</span>
-        <span class="vi">@r</span> <span class="o">=</span> <span class="vi">@raphael</span></pre></div>
+        <div class='highlight'><pre><span class="k">class</span> <span class="n">animate</span></pre></div>
       </td>
     </tr>
     <tr id='section-animate.traverse(_)'>
@@ -54,7 +52,8 @@
         <h3>animate.traverse( )</h3>
 
 <p>Loop through the given array, animating each given
-node and connection in order.</p>
+node and connection in order. the traverse_info object should
+be in reverse order, so when pop occurs, the animation is forwards.</p>
 
 <h3>Parameters</h3>
 
@@ -65,20 +64,503 @@ node and connection in order.</p>
 <h4>TODO</h4>
 
 <ul>
-<li>MAKE IT WORK!!</li>
+<li>add .style attribute to connection/node classes</li>
+<li>add &ldquo;goal&rdquo; style for the point class</li>
 </ul>
-
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">traverse</span><span class="p">:</span> <span class="p">(</span><span class="n">algorithm</span><span class="p">)</span> <span class="o">-&gt;</span>
-        <span class="k">for</span> <span class="n">connection</span> <span class="k">in</span> <span class="n">algorithm</span><span class="o">.</span><span class="n">explored_connections</span>
-            <span class="n">connection</span><span class="o">.</span><span class="n">p</span>
+        <div class='highlight'><pre>    <span class="n">traverse</span><span class="p">:</span> <span class="p">(</span><span class="n">algorithm</span><span class="p">)</span> <span class="o">-&gt;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-3'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-3">&#182;</a>
+        </div>
+        <p>if the list to iterate over is not null</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>      <span class="k">if</span> <span class="n">algorithm</span><span class="o">.</span><span class="n">traverse_info</span> <span class="n">is</span> <span class="ow">not</span> <span class="n">null</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-4'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-4">&#182;</a>
+        </div>
+        <p>create local variable for list</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>        <span class="vi">@traverse_info</span> <span class="o">=</span> <span class="n">algorithm</span><span class="o">.</span><span class="n">traverse_info</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-5'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-5">&#182;</a>
+        </div>
+        <p>this will keep a record of the previous item in the list</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>        <span class="n">previous_item</span> <span class="o">=</span> <span class="n">null</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-6'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-6">&#182;</a>
+        </div>
+        <p>while there are still items to iterate over</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>        <span class="k">while</span> <span class="vi">@traverse_info</span><span class="o">.</span><span class="n">length</span> <span class="n">is</span> <span class="ow">not</span> <span class="mi">0</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-7'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-7">&#182;</a>
+        </div>
+        <p>this keeps a record of the current item.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>          <span class="n">current_item</span> <span class="o">=</span> <span class="vi">@traverse_info</span><span class="o">.</span><span class="n">pop</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-8'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-8">&#182;</a>
+        </div>
+        <p>update the item we are currently looking at to viewing state.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>          <span class="n">current_item</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;viewing&quot;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-9'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-9">&#182;</a>
+        </div>
+        <p>if the current item is a point we should change each of it&rsquo;s
+connections to a &ldquo;potential&rdquo; style.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>          <span class="k">if</span> <span class="n">current_item</span> <span class="n">instanceof</span> <span class="no">Point</span>
+            <span class="k">for</span> <span class="n">con</span> <span class="k">in</span> <span class="n">current_item</span><span class="o">.</span><span class="n">connections</span>
+              <span class="k">if</span> <span class="n">con</span><span class="o">.</span><span class="n">style</span> <span class="n">is</span> <span class="ow">not</span> <span class="s2">&quot;viewing&quot;</span>
+                <span class="n">con</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;potential&quot;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-10'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-10">&#182;</a>
+        </div>
+        <p>if there is a previous item</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>          <span class="k">if</span> <span class="n">previous_item</span> <span class="n">is</span> <span class="ow">not</span> <span class="n">null</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-11'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-11">&#182;</a>
+        </div>
+        <p>if the previous item is in the viewing style</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>            <span class="k">if</span> <span class="n">previous_item</span><span class="o">.</span><span class="n">style</span> <span class="n">is</span> <span class="s2">&quot;viewing&quot;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-12'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-12">&#182;</a>
+        </div>
+        <p>change the previous item to the visited style</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>              <span class="n">previous_item</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;visited&quot;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-13'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-13">&#182;</a>
+        </div>
+        <p>if the previous item is a point</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>              <span class="k">if</span> <span class="n">previous_item</span> <span class="n">instanceof</span> <span class="no">Point</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-14'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-14">&#182;</a>
+        </div>
+        <p>loop through the previous items connections and change each
+connection which is in a &ldquo;potential&rdquo; style to a &ldquo;normal&rdquo;
+style. The A* is not going to do this, as A* may still
+visit potentials that previously were unexplored.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>                <span class="k">for</span> <span class="n">con</span> <span class="k">in</span> <span class="n">previous_item</span><span class="o">.</span><span class="n">connections</span>
+                  <span class="k">if</span> <span class="n">con</span><span class="o">.</span><span class="n">style</span> <span class="n">is</span> <span class="s2">&quot;potential&quot;</span> <span class="ow">and</span> <span class="n">algorithm</span><span class="o">.</span><span class="n">name</span> <span class="n">is</span> <span class="ow">not</span> <span class="s2">&quot;AStar&quot;</span>
+                    <span class="n">con</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;normal&quot;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-15'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-15">&#182;</a>
+        </div>
+        <p>assign the previous item to the current item. Current item
+will be updated at the start of the array</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>          <span class="n">previous_item</span> <span class="o">=</span> <span class="n">current_item</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-16'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-16">&#182;</a>
+        </div>
+        <p>the last item visited should be the goal node unless the algorithm
+did not complete.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>        <span class="k">if</span> <span class="n">current_item</span> <span class="n">is</span> <span class="n">algorithm</span><span class="o">.</span><span class="n">goal_node</span>
+          <span class="n">current_item</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;goal&quot;</span>
+        <span class="k">else</span>
+          <span class="n">current_item</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;visited&quot;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-animate.traverse_BiDi(algorithm_)'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-animate.traverse_BiDi(algorithm_)">&#182;</a>
+        </div>
+        <h3>animate.traverse_BiDi(algorithm )</h3>
 
-    <span class="n">node</span><span class="p">:</span> <span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">colour</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span> <span class="o">-&gt;</span>
-        <span class="kp">false</span>
+<p>Loop through the given array, animating each given
+node and connection in order. the traverse_info object should
+be in reverse order, so when pop occurs, the animation is forwards.</p>
 
-    <span class="n">connection</span><span class="p">:</span> <span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="n">colour</span><span class="p">)</span> <span class="o">-&gt;</span>
-        <span class="kp">false</span></pre></div>
+<h3>Parameters</h3>
+
+<ul>
+<li><code>algorithm</code> &ndash; the algorithm containing the array for traversing</li>
+</ul>
+
+<h4>TODO</h4>
+
+<ul>
+<li>add .style attribute to connection/node classes</li>
+<li>add &ldquo;goal&rdquo; style for the point class</li>
+</ul>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="n">traverse_BiDi</span><span class="p">:</span> <span class="p">(</span><span class="n">algorithm</span><span class="p">)</span> <span class="o">-&gt;</span>
+        <span class="k">if</span> <span class="n">algorithm</span><span class="o">.</span><span class="n">traverse_info</span> <span class="ow">or</span> <span class="n">algorithm</span><span class="o">.</span><span class="n">traverse_from_goal</span> <span class="n">is</span> <span class="ow">not</span> <span class="n">null</span>
+
+            <span class="n">traverse_r</span> <span class="o">=</span> <span class="n">algorithm</span><span class="o">.</span><span class="n">traverse_info</span>
+            <span class="n">traverse_g</span> <span class="o">=</span> <span class="n">algorithm</span><span class="o">.</span><span class="n">traverse_from_goal</span>
+
+            <span class="n">previous_item_r</span> <span class="o">=</span> <span class="n">null</span>
+            <span class="n">previous_item_g</span> <span class="o">=</span> <span class="n">null</span>
+
+            <span class="k">while</span> <span class="n">traverse_r</span><span class="o">.</span><span class="n">length</span> <span class="ow">or</span> <span class="n">traverse_g</span><span class="o">.</span><span class="n">length</span> <span class="n">is</span> <span class="ow">not</span> <span class="mi">0</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-18'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-18">&#182;</a>
+        </div>
+        <p>This updates the current, potential and visited nodes for the search algorithm
+  travelling from the ROOT node</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>                <span class="k">if</span> <span class="n">traverse_r</span><span class="o">.</span><span class="n">length</span> <span class="n">is</span> <span class="ow">not</span> <span class="mi">0</span>
+                    <span class="n">current_item_r</span> <span class="o">=</span> <span class="n">traverse_r</span><span class="o">.</span><span class="n">pop</span>
+                    <span class="n">current_item_r</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;viewing&quot;</span>
+
+                    <span class="k">if</span> <span class="n">current_item_r</span> <span class="n">instanceof</span> <span class="no">Point</span>
+                        <span class="k">for</span> <span class="n">con</span> <span class="k">in</span> <span class="n">current_item_r</span><span class="o">.</span><span class="n">connections</span>
+                            <span class="k">if</span> <span class="n">con</span><span class="o">.</span><span class="n">style</span> <span class="n">is</span> <span class="ow">not</span> <span class="s2">&quot;viewing&quot;</span>
+                                <span class="n">con</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;potential&quot;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-19'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-19">&#182;</a>
+        </div>
+        <p>if there is a previous item</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>                    <span class="k">if</span> <span class="n">previous_item_r</span> <span class="n">is</span> <span class="ow">not</span> <span class="n">null</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-20'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-20">&#182;</a>
+        </div>
+        <p>if the previous item is in the viewing style</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>                        <span class="k">if</span> <span class="n">previous_item_r</span><span class="o">.</span><span class="n">style</span> <span class="n">is</span> <span class="s2">&quot;viewing&quot;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-21'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-21">&#182;</a>
+        </div>
+        <p>change the previous item to the visited style</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>                            <span class="n">previous_item_r</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;visited&quot;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-22'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-22">&#182;</a>
+        </div>
+        <p>if the previous item is a point</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>                            <span class="k">if</span> <span class="n">previous_item_r</span> <span class="n">instanceof</span> <span class="no">Point</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-23'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-23">&#182;</a>
+        </div>
+        <p>loop through the previous items connections and change each
+connection which is in a &ldquo;potential&rdquo; style to a &ldquo;normal&rdquo;
+style. The A* is not going to do this, as A* may still
+visit potentials that previously were unexplored.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>                                <span class="k">for</span> <span class="n">con</span> <span class="k">in</span> <span class="n">previous_item_r</span><span class="o">.</span><span class="n">connections</span>
+                                    <span class="k">if</span> <span class="n">con</span><span class="o">.</span><span class="n">style</span> <span class="n">is</span> <span class="s2">&quot;potential&quot;</span> <span class="ow">and</span> <span class="n">algorithm</span><span class="o">.</span><span class="n">name</span> <span class="n">is</span> <span class="ow">not</span> <span class="s2">&quot;AStar&quot;</span>
+                                        <span class="n">con</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;normal&quot;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-24'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-24">&#182;</a>
+        </div>
+        <p>assign the previous item to the current item. Current item
+will be updated at the start of the array</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>                    <span class="n">previous_item_r</span> <span class="o">=</span> <span class="n">current_item_r</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-25'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-25">&#182;</a>
+        </div>
+        <p>the last item visited should be the goal node unless the algorithm
+did not complete.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>                    <span class="k">if</span> <span class="n">current_item_r</span> <span class="n">is</span> <span class="n">algorithm</span><span class="o">.</span><span class="n">goal_node</span>
+                        <span class="n">current_item_r</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;goal&quot;</span>
+                    <span class="k">else</span>
+                        <span class="n">current_item_r</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;visited&quot;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-26'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-26">&#182;</a>
+        </div>
+        <p>This updates the current, potential and visited nodes for the search algorithm
+  travelling from the GOAL node</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>                <span class="k">if</span> <span class="n">traverse_g</span><span class="o">.</span><span class="n">length</span> <span class="n">is</span> <span class="ow">not</span> <span class="mi">0</span>
+                    <span class="n">current_item_g</span> <span class="o">=</span> <span class="n">traverse_g</span><span class="o">.</span><span class="n">pop</span>
+                    <span class="n">current_item_g</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;viewing&quot;</span>
+
+                    <span class="k">if</span> <span class="n">current_item_g</span> <span class="n">instanceof</span> <span class="no">Point</span>
+                        <span class="k">for</span> <span class="n">con</span> <span class="k">in</span> <span class="n">current_item_g</span><span class="o">.</span><span class="n">connections</span>
+                            <span class="k">if</span> <span class="n">con</span><span class="o">.</span><span class="n">style</span> <span class="n">is</span> <span class="ow">not</span> <span class="s2">&quot;viewing&quot;</span>
+                                <span class="n">con</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;potential&quot;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-27'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-27">&#182;</a>
+        </div>
+        <p>if there is a previous item</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>                    <span class="k">if</span> <span class="n">previous_item_g</span> <span class="n">is</span> <span class="ow">not</span> <span class="n">null</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-28'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-28">&#182;</a>
+        </div>
+        <p>if the previous item is in the viewing style</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>                        <span class="k">if</span> <span class="n">previous_item_g</span><span class="o">.</span><span class="n">style</span> <span class="n">is</span> <span class="s2">&quot;viewing&quot;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-29'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-29">&#182;</a>
+        </div>
+        <p>change the previous item to the visited style</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>                            <span class="n">previous_item_g</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;visited&quot;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-30'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-30">&#182;</a>
+        </div>
+        <p>if the previous item is a point</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>                            <span class="k">if</span> <span class="n">previous_item_g</span> <span class="n">instanceof</span> <span class="no">Point</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-31'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-31">&#182;</a>
+        </div>
+        <p>loop through the previous items connections and change each
+connection which is in a &ldquo;potential&rdquo; style to a &ldquo;normal&rdquo;
+style. The A* is not going to do this, as A* may still
+visit potentials that previously were unexplored.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>                                <span class="k">for</span> <span class="n">con</span> <span class="k">in</span> <span class="n">previous_item_g</span><span class="o">.</span><span class="n">connections</span>
+                                    <span class="k">if</span> <span class="n">con</span><span class="o">.</span><span class="n">style</span> <span class="n">is</span> <span class="s2">&quot;potential&quot;</span> <span class="ow">and</span> <span class="n">algorithm</span><span class="o">.</span><span class="n">name</span> <span class="n">is</span> <span class="ow">not</span> <span class="s2">&quot;AStar&quot;</span>
+                                        <span class="n">con</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;normal&quot;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-32'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-32">&#182;</a>
+        </div>
+        <p>assign the previous item to the current item. Current item
+will be updated at the start of the array</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>                    <span class="n">previous_item_r</span> <span class="o">=</span> <span class="n">current_item_r</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-33'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-33">&#182;</a>
+        </div>
+        <p>the last item visited should be the goal node unless the algorithm
+did not complete.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>                    <span class="k">if</span> <span class="n">current_item_r</span> <span class="n">is</span> <span class="n">algorithm</span><span class="o">.</span><span class="n">goal_node</span>
+                        <span class="n">current_item_r</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;goal&quot;</span>
+                    <span class="k">else</span>
+                        <span class="n">current_item_r</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;visited&quot;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-34'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-34">&#182;</a>
+        </div>
+        <p>Takes an array of all the nodes and connections visited by the algorithm in search order</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>      <span class="n">path</span> <span class="o">=</span> <span class="n">algorithm</span><span class="o">.</span><span class="n">traverse_info</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-35'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-35">&#182;</a>
+        </div>
+        <p>If the list of ordered objects to animate is not null</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>      <span class="k">while</span> <span class="n">path</span><span class="o">.</span><span class="n">length</span> <span class="n">is</span> <span class="ow">not</span> <span class="mi">0</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-36'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-36">&#182;</a>
+        </div>
+        <p>Take the first item visited and remove from list</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>        <span class="n">item</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">pop</span>
+        <span class="n">prev_item</span> <span class="o">=</span> <span class="n">null</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-37'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-37">&#182;</a>
+        </div>
+        <p>If</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>        <span class="k">if</span> <span class="n">previous_item</span><span class="o">.</span><span class="n">length</span> <span class="o">&gt;</span> <span class="mi">1</span>
+          <span class="n">prev_item</span> <span class="o">=</span> <span class="n">previous_item</span><span class="o">.</span><span class="n">shift</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">item</span> <span class="n">instanceof</span> <span class="no">Point</span>
+
+          <span class="k">if</span> <span class="n">prev_item</span> <span class="n">is</span> <span class="ow">not</span> <span class="n">null</span> <span class="ow">and</span> <span class="n">prev_item</span> <span class="n">instanceof</span> <span class="no">Connection</span>
+            <span class="n">prev_item</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;visited&quot;</span>
+
+          <span class="n">item</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;viewing&quot;</span>
+          <span class="k">for</span> <span class="n">con</span> <span class="k">in</span> <span class="n">item</span><span class="o">.</span><span class="n">connections</span>
+            <span class="k">if</span> <span class="n">con</span><span class="o">.</span><span class="n">state</span> <span class="n">is</span> <span class="s2">&quot;normal&quot;</span>
+              <span class="n">con</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;potential&quot;</span>
+
+        <span class="k">else</span> <span class="k">if</span> <span class="n">item</span> <span class="n">instanceof</span> <span class="no">Connection</span>
+
+          <span class="k">if</span> <span class="n">prev_item</span> <span class="n">is</span> <span class="ow">not</span> <span class="n">null</span> <span class="ow">and</span> <span class="n">prev_item</span> <span class="n">instanceof</span> <span class="no">Point</span>
+            <span class="n">prev_item</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;visited&quot;</span>
+            <span class="k">for</span> <span class="n">con</span> <span class="k">in</span> <span class="n">prev_item</span><span class="o">.</span><span class="n">connections</span>
+              <span class="k">if</span> <span class="n">con</span><span class="o">.</span><span class="n">state</span> <span class="n">is</span> <span class="s2">&quot;potential&quot;</span>
+                <span class="n">con</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;normal&quot;</span>
+
+          <span class="n">item</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;viewing&quot;</span>
+
+        <span class="n">previous_item</span><span class="o">.</span><span class="n">push</span> <span class="n">item</span>
+
+        <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">length</span> <span class="n">is</span> <span class="mi">0</span>
+          <span class="n">item</span> <span class="o">=</span> <span class="n">previous_item</span><span class="o">.</span><span class="n">shift</span><span class="p">()</span>
+          <span class="n">item</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;visited&quot;</span>
+          <span class="n">item</span> <span class="o">=</span> <span class="n">previous_item</span><span class="o">.</span><span class="n">shift</span><span class="p">()</span>
+          <span class="n">item</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;visited&quot;</span></pre></div>
       </td>
     </tr>
   </table>

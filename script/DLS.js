@@ -12,6 +12,7 @@ DLS = (function() {
   function DLS() {
     DLS.__super__.constructor.apply(this, arguments);
   }
+  DLS.prototype.name = "DLS";
   DLS.prototype.search = function() {
     var current_node, limit, neighbour, neighbours, todo_list, _results;
     todo_list = [];
