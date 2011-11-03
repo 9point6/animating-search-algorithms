@@ -26,6 +26,8 @@ class algorithm
     #       a_to_b: conn.c.pointa.id is current_node.id
     #       style_name: "Visited"
     traverse_info: []
+    # Name of the algorithm
+    name: "Algorithm"
 
     # ### algorithm.constructor( )
     # Constructor for an algorithm. Not neccesarily needed in the derrived
