@@ -33,3 +33,9 @@ class DLS extends algorithm
                 # the connection to the explored connections array
                 explored_nodes.push neighbour.p
                 explored_connections.push neighbour.c
+	
+	gen_info: ->
+      alert "general information"
+
+	run_info: ->
+      alert "runtime information"
