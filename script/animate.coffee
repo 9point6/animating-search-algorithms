@@ -107,7 +107,7 @@ class animate
                 # if the previous item is a point change all of its connections
                 # to now be in a "potential" style.
                 if previous_item instanceof Point
-                    for con in current_item.connections
+                    for con in previous_item.connections
                         if con.style is not "viewing"
                             con.update_style "potential"
 
