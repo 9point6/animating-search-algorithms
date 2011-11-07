@@ -76,13 +76,7 @@ class animate
 
         # Check for null value in traverse_info. Pointer has to be greater than
         # zero, as the pointer is decremented immediately after this comparison.
-<<<<<<< HEAD
-        if algortithm.traverse_info is not null and pointer > 0
-
-=======
         if algorithm.traverse_info is not null and pointer > 0
-
->>>>>>> 69228827ec72bdfba419fb64f10c14fa5c5ecfa6
             # Decrement the pointer property
             pointer--
 
