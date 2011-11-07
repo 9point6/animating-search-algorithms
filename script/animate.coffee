@@ -76,8 +76,13 @@ class animate
 
         # Check for null value in traverse_info. Pointer has to be greater than
         # zero, as the pointer is decremented immediately after this comparison.
+<<<<<<< HEAD
         if algortithm.traverse_info is not null and pointer > 0
 
+=======
+        if algorithm.traverse_info is not null and pointer > 0
+
+>>>>>>> 69228827ec72bdfba419fb64f10c14fa5c5ecfa6
             # Decrement the pointer property
             pointer--
 
@@ -107,7 +112,7 @@ class animate
                 # if the previous item is a point change all of its connections
                 # to now be in a "potential" style.
                 if previous_item instanceof Point
-                    for con in current_item.connections
+                    for con in previous_item.connections
                         if con.style is not "viewing"
                             con.update_style "potential"
 
@@ -120,5 +125,5 @@ class animate
     traverse: ->
         # if the list to iterate over is not null
         if algorithm.traverse_info is not null
-            while pointer is <= algorithm.traverse_info.length
+            while pointer <= algorithm.traverse_info.length
                 this.step_foward

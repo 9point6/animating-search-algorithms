@@ -19,6 +19,7 @@
           <a class="source" href="algorithm.html">algorithm.coffee</a>
           <a class="source" href="animate.html">animate.coffee</a>
           <a class="source" href="connection.html">connection.coffee</a>
+          <a class="source" href="itarative_deepening.html">itarative_deepening.coffee</a>
           <a class="source" href="main.html">main.coffee</a>
           <a class="source" href="point.html">point.coffee</a>
           <a class="source" href="z-other.html">z-other.coffee</a>
@@ -41,9 +42,9 @@
         
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="k">class</span> <span class="nc">DLS</span> <span class="n">extends</span> <span class="n">algorithm</span>
+        <div class='highlight'><pre><span class="k">class</span> <span class="nx">DLS</span> <span class="k">extends</span> <span class="nx">algorithm</span>
 
-    <span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;DLS&quot;</span></pre></div>
+    <span class="nv">name: </span><span class="s2">&quot;DLS&quot;</span></pre></div>
       </td>
     </tr>
     <tr id='section-2'>
@@ -55,7 +56,7 @@
 User gives a limit upon clicking animate.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">search</span><span class="p">:</span> <span class="o">-&gt;</span></pre></div>
+        <div class='highlight'><pre>    <span class="nv">search: </span><span class="o">-&gt;</span></pre></div>
       </td>
     </tr>
     <tr id='section-3'>
@@ -66,7 +67,7 @@ User gives a limit upon clicking animate.</p>
         <p>stack for nodes to be searched</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="n">todo_list</span> <span class="o">=</span> <span class="o">[]</span></pre></div>
+        <div class='highlight'><pre>        <span class="nv">todo_list = </span><span class="p">[]</span></pre></div>
       </td>
     </tr>
     <tr id='section-4'>
@@ -77,7 +78,7 @@ User gives a limit upon clicking animate.</p>
         <p>limit of search</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="n">limit</span> <span class="o">=</span> <span class="mi">4</span></pre></div>
+        <div class='highlight'><pre>        <span class="nv">limit = </span><span class="mi">4</span></pre></div>
       </td>
     </tr>
     <tr id='section-5'>
@@ -88,7 +89,7 @@ User gives a limit upon clicking animate.</p>
         <p>push root node onto the stack</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="n">todo_list</span><span class="o">.</span><span class="n">push</span> <span class="n">root_node</span></pre></div>
+        <div class='highlight'><pre>        <span class="nx">todo_list</span><span class="p">.</span><span class="nx">push</span> <span class="nx">root_node</span></pre></div>
       </td>
     </tr>
     <tr id='section-6'>
@@ -99,8 +100,8 @@ User gives a limit upon clicking animate.</p>
         <p>while there are nodes still left to check</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="k">while</span> <span class="p">(</span><span class="n">todo_list</span><span class="o">.</span><span class="n">length</span> <span class="n">is</span> <span class="ow">not</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">todo_list</span><span class="o">.</span><span class="n">length</span> <span class="o">&lt;</span> <span class="n">limit</span><span class="p">)</span>
-            <span class="n">current_node</span> <span class="o">=</span> <span class="n">todo_list</span><span class="o">.</span><span class="n">pull</span></pre></div>
+        <div class='highlight'><pre>        <span class="k">while</span> <span class="p">(</span><span class="nx">todo_list</span><span class="p">.</span><span class="nx">length</span> <span class="o">is</span> <span class="o">not</span> <span class="mi">0</span><span class="p">)</span> <span class="o">and</span> <span class="p">(</span><span class="nx">todo_list</span><span class="p">.</span><span class="nx">length</span> <span class="o">&lt;</span> <span class="nx">limit</span><span class="p">)</span>
+            <span class="nv">current_node = </span><span class="nx">todo_list</span><span class="p">.</span><span class="nx">pull</span></pre></div>
       </td>
     </tr>
     <tr id='section-7'>
@@ -111,8 +112,8 @@ User gives a limit upon clicking animate.</p>
         <p>If the goal node is the current node, end the search</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>            <span class="k">if</span> <span class="n">current_node</span> <span class="n">is</span> <span class="n">goal_node</span>
-                <span class="n">explored_nodes</span><span class="o">.</span><span class="n">push</span> <span class="n">current_node</span>
+        <div class='highlight'><pre>            <span class="k">if</span> <span class="nx">current_node</span> <span class="o">is</span> <span class="nx">goal_node</span>
+                <span class="nx">explored_nodes</span><span class="p">.</span><span class="nx">push</span> <span class="nx">current_node</span>
                 <span class="k">break</span></pre></div>
       </td>
     </tr>
@@ -124,10 +125,10 @@ User gives a limit upon clicking animate.</p>
         <p>get the connections of the current node</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>            <span class="n">neighbours</span> <span class="o">=</span> <span class="n">current_node</span><span class="o">.</span><span class="n">connections</span>
+        <div class='highlight'><pre>            <span class="nv">neighbours = </span><span class="nx">current_node</span><span class="p">.</span><span class="nx">connections</span>
 
-            <span class="k">for</span> <span class="n">neighbour</span> <span class="k">in</span> <span class="n">neighbours</span>
-                <span class="n">todo_list</span><span class="o">.</span><span class="n">push</span> <span class="n">neighbour</span><span class="o">.</span><span class="n">p</span></pre></div>
+            <span class="k">for</span> <span class="nx">neighbour</span> <span class="k">in</span> <span class="nx">neighbours</span>
+                <span class="nx">todo_list</span><span class="p">.</span><span class="nx">push</span> <span class="nx">neighbour</span><span class="p">.</span><span class="nx">p</span></pre></div>
       </td>
     </tr>
     <tr id='section-9'>
@@ -140,8 +141,14 @@ the connection to the explored connections array</p>
 
       </td>
       <td class=code>
-        <div class='highlight'><pre>                <span class="n">explored_nodes</span><span class="o">.</span><span class="n">push</span> <span class="n">neighbour</span><span class="o">.</span><span class="n">p</span>
-                <span class="n">explored_connections</span><span class="o">.</span><span class="n">push</span> <span class="n">neighbour</span><span class="o">.</span><span class="n">c</span></pre></div>
+        <div class='highlight'><pre>                <span class="nx">explored_nodes</span><span class="p">.</span><span class="nx">push</span> <span class="nx">neighbour</span><span class="p">.</span><span class="nx">p</span>
+                <span class="nx">explored_connections</span><span class="p">.</span><span class="nx">push</span> <span class="nx">neighbour</span><span class="p">.</span><span class="nx">c</span>
+  
+  <span class="nv">gen_info: </span><span class="o">-&gt;</span>
+      <span class="nx">alert</span> <span class="s2">&quot;general information&quot;</span>
+
+  <span class="nv">run_info: </span><span class="o">-&gt;</span>
+      <span class="nx">alert</span> <span class="s2">&quot;runtime information&quot;</span></pre></div>
       </td>
     </tr>
   </table>

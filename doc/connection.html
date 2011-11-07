@@ -19,6 +19,7 @@
           <a class="source" href="algorithm.html">algorithm.coffee</a>
           <a class="source" href="animate.html">animate.coffee</a>
           <a class="source" href="connection.html">connection.coffee</a>
+          <a class="source" href="itarative_deepening.html">itarative_deepening.coffee</a>
           <a class="source" href="main.html">main.coffee</a>
           <a class="source" href="point.html">point.coffee</a>
           <a class="source" href="z-other.html">z-other.coffee</a>
@@ -75,7 +76,7 @@
         <p>Graph edge class</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="k">class</span> <span class="n">connection</span></pre></div>
+        <div class='highlight'><pre><span class="k">class</span> <span class="nx">connection</span></pre></div>
       </td>
     </tr>
     <tr id='section-connection.constructor(_)'>
@@ -98,9 +99,9 @@
 </ul>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">constructor</span><span class="p">:</span> <span class="p">(</span> <span class="vi">@raphael</span><span class="p">,</span> <span class="vi">@pointa</span><span class="p">,</span> <span class="vi">@pointb</span><span class="p">,</span> <span class="vi">@weight</span><span class="p">,</span> <span class="vi">@direction</span> <span class="p">)</span> <span class="o">-&gt;</span>
-        <span class="vi">@pointa</span><span class="o">.</span><span class="n">connect</span> <span class="vi">@pointb</span><span class="p">,</span> <span class="err">@</span>
-        <span class="vi">@pointb</span><span class="o">.</span><span class="n">connect</span> <span class="vi">@pointa</span><span class="p">,</span> <span class="err">@</span></pre></div>
+        <div class='highlight'><pre>    <span class="nv">constructor: </span><span class="nf">( @raphael, @pointa, @pointb, @weight, @direction ) -&gt;</span>
+        <span class="nx">@pointa</span><span class="p">.</span><span class="nx">connect</span> <span class="nx">@pointb</span><span class="p">,</span> <span class="err">@</span>
+        <span class="nx">@pointb</span><span class="p">.</span><span class="nx">connect</span> <span class="nx">@pointa</span><span class="p">,</span> <span class="err">@</span></pre></div>
       </td>
     </tr>
     <tr id='section-5'>
@@ -112,7 +113,7 @@
 If true point a is animated, then the connection, then potentially B</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="vi">@anim_atob</span> <span class="o">=</span> <span class="kp">true</span></pre></div>
+        <div class='highlight'><pre>        <span class="vi">@anim_atob = </span><span class="kc">true</span></pre></div>
       </td>
     </tr>
     <tr id='section-6'>
@@ -123,10 +124,10 @@ If true point a is animated, then the connection, then potentially B</p>
         <p>Draw line</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="vi">@r</span> <span class="o">=</span> <span class="vi">@raphael</span><span class="o">.</span><span class="n">path</span><span class="p">(</span> <span class="p">)</span>
-        <span class="vi">@r</span><span class="o">.</span><span class="n">attr</span>
-            <span class="n">stroke</span><span class="p">:</span> <span class="s2">&quot;#666&quot;</span>
-        <span class="vi">@update_path</span><span class="p">(</span> <span class="p">)</span></pre></div>
+        <div class='highlight'><pre>        <span class="vi">@r = </span><span class="nx">@raphael</span><span class="p">.</span><span class="nx">path</span><span class="p">(</span> <span class="p">)</span>
+        <span class="nx">@r</span><span class="p">.</span><span class="nx">attr</span>
+            <span class="nv">stroke: </span><span class="s2">&quot;#666&quot;</span>
+        <span class="nx">@update_path</span><span class="p">(</span> <span class="p">)</span></pre></div>
       </td>
     </tr>
     <tr id='section-7'>
@@ -137,8 +138,8 @@ If true point a is animated, then the connection, then potentially B</p>
         <p>Set event handlers</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="vi">@r</span><span class="o">.</span><span class="n">hover</span> <span class="vi">@hover_in</span><span class="p">,</span> <span class="vi">@hover_out</span>
-        <span class="vi">@r</span><span class="o">.</span><span class="n">click</span> <span class="vi">@click</span></pre></div>
+        <div class='highlight'><pre>        <span class="nx">@r</span><span class="p">.</span><span class="nx">hover</span> <span class="nx">@hover_in</span><span class="p">,</span> <span class="nx">@hover_out</span>
+        <span class="nx">@r</span><span class="p">.</span><span class="nx">click</span> <span class="nx">@click</span></pre></div>
       </td>
     </tr>
     <tr id='section-connection.update_path(_)'>
@@ -152,9 +153,9 @@ If true point a is animated, then the connection, then potentially B</p>
 changed location.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">update_path</span><span class="p">:</span> <span class="o">-&gt;</span>
-        <span class="vi">@r</span><span class="o">.</span><span class="n">attr</span>
-            <span class="n">path</span><span class="p">:</span> <span class="s2">&quot;M</span><span class="si">#{</span><span class="vi">@pointa</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s2"> </span><span class="si">#{</span><span class="vi">@pointa</span><span class="o">.</span><span class="n">y</span><span class="si">}</span><span class="s2">L</span><span class="si">#{</span><span class="vi">@pointb</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="s2"> </span><span class="si">#{</span><span class="vi">@pointb</span><span class="o">.</span><span class="n">y</span><span class="si">}</span><span class="s2">&quot;</span></pre></div>
+        <div class='highlight'><pre>    <span class="nv">update_path: </span><span class="o">-&gt;</span>
+        <span class="nx">@r</span><span class="p">.</span><span class="nx">attr</span>
+            <span class="nv">path: </span><span class="s2">&quot;M#{@pointa.x} #{@pointa.y}L#{@pointb.x} #{@pointb.y}&quot;</span></pre></div>
       </td>
     </tr>
     <tr id='section-connection.remove(_)'>
@@ -174,11 +175,11 @@ changed location.</p>
 </ul>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">remove</span><span class="p">:</span> <span class="o">=&gt;</span>
-        <span class="vi">@r</span><span class="o">.</span><span class="n">animate</span>
-           <span class="n">opacity</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <div class='highlight'><pre>    <span class="nv">remove: </span><span class="o">=&gt;</span>
+        <span class="nx">@r</span><span class="p">.</span><span class="nx">animate</span>
+           <span class="nv">opacity: </span><span class="mi">0</span><span class="p">,</span>
            <span class="mi">50</span><span class="p">,</span> <span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="o">=&gt;</span>
-                <span class="vi">@r</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span> <span class="p">)</span></pre></div>
+                <span class="nx">@r</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span> <span class="p">)</span></pre></div>
       </td>
     </tr>
     <tr id='section-10'>
@@ -189,11 +190,11 @@ changed location.</p>
         <p>Remove from connections in <code>pointa</code></p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>                <span class="n">newcons</span> <span class="o">=</span> <span class="o">[]</span>
-                <span class="k">for</span> <span class="n">con</span> <span class="k">in</span> <span class="vi">@pointa</span><span class="o">.</span><span class="n">connections</span>
-                    <span class="k">if</span> <span class="n">con</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">id</span> <span class="n">isnt</span> <span class="vi">@pointb</span><span class="o">.</span><span class="n">id</span>
-                        <span class="n">newcons</span><span class="o">.</span><span class="n">push</span> <span class="n">con</span>
-                <span class="vi">@pointa</span><span class="o">.</span><span class="n">connections</span> <span class="o">=</span> <span class="n">newcons</span></pre></div>
+        <div class='highlight'><pre>                <span class="nv">newcons = </span><span class="p">[]</span>
+                <span class="k">for</span> <span class="nx">con</span> <span class="k">in</span> <span class="nx">@pointa</span><span class="p">.</span><span class="nx">connections</span>
+                    <span class="k">if</span> <span class="nx">con</span><span class="p">.</span><span class="nx">p</span><span class="p">.</span><span class="nx">id</span> <span class="o">isnt</span> <span class="nx">@pointb</span><span class="p">.</span><span class="nx">id</span>
+                        <span class="nx">newcons</span><span class="p">.</span><span class="nx">push</span> <span class="nx">con</span>
+                <span class="vi">@pointa.connections = </span><span class="nx">newcons</span></pre></div>
       </td>
     </tr>
     <tr id='section-11'>
@@ -204,11 +205,11 @@ changed location.</p>
         <p>Remove from connections in <code>pointb</code></p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>                <span class="n">newcons</span> <span class="o">=</span> <span class="o">[]</span>
-                <span class="k">for</span> <span class="n">con</span> <span class="k">in</span> <span class="vi">@pointb</span><span class="o">.</span><span class="n">connections</span>
-                    <span class="k">if</span> <span class="n">con</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">id</span> <span class="n">isnt</span> <span class="vi">@pointa</span><span class="o">.</span><span class="n">id</span>
-                        <span class="n">newcons</span><span class="o">.</span><span class="n">push</span> <span class="n">con</span>
-                <span class="vi">@pointb</span><span class="o">.</span><span class="n">connections</span> <span class="o">=</span> <span class="n">newcons</span></pre></div>
+        <div class='highlight'><pre>                <span class="nv">newcons = </span><span class="p">[]</span>
+                <span class="k">for</span> <span class="nx">con</span> <span class="k">in</span> <span class="nx">@pointb</span><span class="p">.</span><span class="nx">connections</span>
+                    <span class="k">if</span> <span class="nx">con</span><span class="p">.</span><span class="nx">p</span><span class="p">.</span><span class="nx">id</span> <span class="o">isnt</span> <span class="nx">@pointa</span><span class="p">.</span><span class="nx">id</span>
+                        <span class="nx">newcons</span><span class="p">.</span><span class="nx">push</span> <span class="nx">con</span>
+                <span class="vi">@pointb.connections = </span><span class="nx">newcons</span></pre></div>
       </td>
     </tr>
     <tr id='section-12'>
@@ -219,11 +220,11 @@ changed location.</p>
         <p>Remove from connections list in <code>app</code> object</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>                <span class="n">newcons</span> <span class="o">=</span> <span class="o">[]</span>
-                <span class="k">for</span> <span class="n">con</span> <span class="k">in</span> <span class="n">a</span><span class="o">.</span><span class="n">connections</span>
-                    <span class="k">if</span> <span class="n">con</span><span class="o">.</span><span class="n">pointa</span><span class="o">.</span><span class="n">id</span> <span class="n">isnt</span> <span class="vi">@pointa</span><span class="o">.</span><span class="n">id</span> <span class="ow">or</span> <span class="n">con</span><span class="o">.</span><span class="n">pointb</span><span class="o">.</span><span class="n">id</span> <span class="n">isnt</span> <span class="vi">@pointb</span><span class="o">.</span><span class="n">id</span>
-                        <span class="n">newcons</span><span class="o">.</span><span class="n">push</span> <span class="n">con</span>
-                <span class="n">a</span><span class="o">.</span><span class="n">connections</span> <span class="o">=</span> <span class="n">newcons</span></pre></div>
+        <div class='highlight'><pre>                <span class="nv">newcons = </span><span class="p">[]</span>
+                <span class="k">for</span> <span class="nx">con</span> <span class="k">in</span> <span class="nx">a</span><span class="p">.</span><span class="nx">connections</span>
+                    <span class="k">if</span> <span class="nx">con</span><span class="p">.</span><span class="nx">pointa</span><span class="p">.</span><span class="nx">id</span> <span class="o">isnt</span> <span class="nx">@pointa</span><span class="p">.</span><span class="nx">id</span> <span class="o">or</span> <span class="nx">con</span><span class="p">.</span><span class="nx">pointb</span><span class="p">.</span><span class="nx">id</span> <span class="o">isnt</span> <span class="nx">@pointb</span><span class="p">.</span><span class="nx">id</span>
+                        <span class="nx">newcons</span><span class="p">.</span><span class="nx">push</span> <span class="nx">con</span>
+                <span class="nv">a.connections = </span><span class="nx">newcons</span></pre></div>
       </td>
     </tr>
     <tr id='section-connection.hover_in(_)'>
@@ -248,12 +249,12 @@ changed location.</p>
 </ul>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">hover_in</span><span class="p">:</span> <span class="p">(</span> <span class="n">e</span> <span class="p">)</span> <span class="o">=&gt;</span>
-        <span class="vi">@r</span><span class="o">.</span><span class="n">attr</span>
-            <span class="n">cursor</span><span class="p">:</span> <span class="s1">&#39;pointer&#39;</span>
-        <span class="vi">@r</span><span class="o">.</span><span class="n">animate</span>
-            <span class="s2">&quot;stroke-width&quot;</span><span class="p">:</span> <span class="mi">3</span>
-            <span class="n">stroke</span><span class="p">:</span> <span class="s2">&quot;#f00&quot;</span><span class="p">,</span></pre></div>
+        <div class='highlight'><pre>    <span class="nv">hover_in: </span><span class="p">(</span> <span class="nx">e</span> <span class="p">)</span> <span class="o">=&gt;</span>
+        <span class="nx">@r</span><span class="p">.</span><span class="nx">attr</span>
+            <span class="nv">cursor: </span><span class="s1">&#39;pointer&#39;</span>
+        <span class="nx">@r</span><span class="p">.</span><span class="nx">animate</span>
+            <span class="s2">&quot;stroke-width&quot;</span><span class="o">:</span> <span class="mi">3</span>
+            <span class="nv">stroke: </span><span class="s2">&quot;#f00&quot;</span><span class="p">,</span></pre></div>
       </td>
     </tr>
     <tr id='section-connection.hover_out(_)'>
@@ -278,12 +279,12 @@ changed location.</p>
 </ul>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">hover_out</span><span class="p">:</span> <span class="p">(</span> <span class="n">e</span> <span class="p">)</span> <span class="o">=&gt;</span>
-        <span class="vi">@r</span><span class="o">.</span><span class="n">attr</span>
-            <span class="n">cursor</span><span class="p">:</span> <span class="s1">&#39;normal&#39;</span>
-        <span class="vi">@r</span><span class="o">.</span><span class="n">animate</span>
-            <span class="s2">&quot;stroke-width&quot;</span><span class="p">:</span> <span class="mi">1</span>
-            <span class="n">stroke</span><span class="p">:</span> <span class="s2">&quot;#666&quot;</span><span class="p">,</span>
+        <div class='highlight'><pre>    <span class="nv">hover_out: </span><span class="p">(</span> <span class="nx">e</span> <span class="p">)</span> <span class="o">=&gt;</span>
+        <span class="nx">@r</span><span class="p">.</span><span class="nx">attr</span>
+            <span class="nv">cursor: </span><span class="s1">&#39;normal&#39;</span>
+        <span class="nx">@r</span><span class="p">.</span><span class="nx">animate</span>
+            <span class="s2">&quot;stroke-width&quot;</span><span class="o">:</span> <span class="mi">1</span>
+            <span class="nv">stroke: </span><span class="s2">&quot;#666&quot;</span><span class="p">,</span>
             <span class="mi">100</span></pre></div>
       </td>
     </tr>
@@ -309,8 +310,8 @@ changed location.</p>
 </ul>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">click</span><span class="p">:</span> <span class="p">(</span> <span class="n">e</span> <span class="p">)</span> <span class="o">=&gt;</span>
-        <span class="vi">@spark</span><span class="p">(</span> <span class="p">)</span></pre></div>
+        <div class='highlight'><pre>    <span class="nv">click: </span><span class="p">(</span> <span class="nx">e</span> <span class="p">)</span> <span class="o">=&gt;</span>
+        <span class="nx">@spark</span><span class="p">(</span> <span class="p">)</span></pre></div>
       </td>
     </tr>
     <tr id='section-connection.spark(_)'>
@@ -330,12 +331,12 @@ process of an algorithm, etc.</p>
 </ul>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">spark</span><span class="p">:</span> <span class="p">(</span> <span class="n">a2b</span> <span class="o">=</span> <span class="kp">true</span> <span class="p">)</span> <span class="o">-&gt;</span>
-        <span class="n">start_point</span> <span class="o">=</span> <span class="k">if</span> <span class="n">a2b</span> <span class="k">then</span> <span class="vi">@pointa</span> <span class="k">else</span> <span class="vi">@pointb</span>
-        <span class="n">window</span><span class="o">.</span><span class="n">spark</span> <span class="o">=</span> <span class="vi">@raphael</span><span class="o">.</span><span class="n">ellipse</span> <span class="n">start_point</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">start_point</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span>
-        <span class="n">window</span><span class="o">.</span><span class="n">spark</span><span class="o">.</span><span class="n">attr</span>
-            <span class="n">fill</span><span class="p">:</span> <span class="s2">&quot;r#f00-#fff&quot;</span>
-            <span class="n">stroke</span><span class="p">:</span> <span class="s2">&quot;transparent&quot;</span></pre></div>
+        <div class='highlight'><pre>    <span class="nv">spark: </span><span class="nf">( a2b = true ) -&gt;</span>
+        <span class="nv">start_point = </span><span class="k">if</span> <span class="nx">a2b</span> <span class="k">then</span> <span class="nx">@pointa</span> <span class="k">else</span> <span class="nx">@pointb</span>
+        <span class="nb">window</span><span class="p">.</span><span class="nv">spark = </span><span class="nx">@raphael</span><span class="p">.</span><span class="nx">ellipse</span> <span class="nx">start_point</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span> <span class="nx">start_point</span><span class="p">.</span><span class="nx">y</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">20</span>
+        <span class="nb">window</span><span class="p">.</span><span class="nx">spark</span><span class="p">.</span><span class="nx">attr</span>
+            <span class="nv">fill: </span><span class="s2">&quot;r#f00-#fff&quot;</span>
+            <span class="nv">stroke: </span><span class="s2">&quot;transparent&quot;</span></pre></div>
       </td>
     </tr>
     <tr id='section-17'>
@@ -347,14 +348,14 @@ process of an algorithm, etc.</p>
 both do. This code changes the necessary elements to do this manually</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="n">grad</span> <span class="o">=</span> <span class="err">$</span><span class="p">(</span> <span class="n">spark</span><span class="o">.</span><span class="n">node</span> <span class="p">)</span><span class="o">.</span><span class="n">attr</span> <span class="s2">&quot;fill&quot;</span>
-        <span class="n">grad</span> <span class="o">=</span> <span class="n">grad</span><span class="o">.</span><span class="n">substring</span> <span class="mi">4</span><span class="p">,</span> <span class="n">grad</span><span class="o">.</span><span class="n">length</span> <span class="o">-</span> <span class="mi">1</span>
-        <span class="n">stops</span> <span class="o">=</span> <span class="err">$</span><span class="p">(</span> <span class="n">grad</span> <span class="p">)</span><span class="o">.</span><span class="n">children</span><span class="p">(</span> <span class="p">)</span>
-        <span class="err">$</span><span class="p">(</span> <span class="n">stops</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="p">)</span><span class="o">.</span><span class="n">attr</span> <span class="s2">&quot;stop-opacity&quot;</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span>
-        <span class="err">$</span><span class="p">(</span> <span class="n">stops</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span> <span class="p">)</span><span class="o">.</span><span class="n">attr</span> <span class="s2">&quot;stop-opacity&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span>
+        <div class='highlight'><pre>        <span class="nv">grad = </span><span class="nx">$</span><span class="p">(</span> <span class="nx">spark</span><span class="p">.</span><span class="nx">node</span> <span class="p">).</span><span class="nx">attr</span> <span class="s2">&quot;fill&quot;</span>
+        <span class="nv">grad = </span><span class="nx">grad</span><span class="p">.</span><span class="nx">substring</span> <span class="mi">4</span><span class="p">,</span> <span class="nx">grad</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span>
+        <span class="nv">stops = </span><span class="nx">$</span><span class="p">(</span> <span class="nx">grad</span> <span class="p">).</span><span class="nx">children</span><span class="p">(</span> <span class="p">)</span>
+        <span class="nx">$</span><span class="p">(</span> <span class="nx">stops</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">).</span><span class="nx">attr</span> <span class="s2">&quot;stop-opacity&quot;</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span>
+        <span class="nx">$</span><span class="p">(</span> <span class="nx">stops</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">).</span><span class="nx">attr</span> <span class="s2">&quot;stop-opacity&quot;</span><span class="p">,</span> <span class="s2">&quot;0&quot;</span>
 
-        <span class="n">window</span><span class="o">.</span><span class="n">spark</span><span class="o">.</span><span class="n">animateAlong</span> <span class="vi">@r</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="kp">false</span><span class="p">,</span> <span class="o">=&gt;</span>
-            <span class="n">spark</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span> <span class="p">)</span></pre></div>
+        <span class="nb">window</span><span class="p">.</span><span class="nx">spark</span><span class="p">.</span><span class="nx">animateAlong</span> <span class="nx">@r</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="o">=&gt;</span>
+            <span class="nx">spark</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span> <span class="p">)</span></pre></div>
       </td>
     </tr>
     <tr id='section-connection.update_style(_)'>
@@ -380,9 +381,9 @@ both do. This code changes the necessary elements to do this manually</p>
 </ul>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">update_style</span><span class="p">:</span> <span class="p">(</span> <span class="n">style_name</span> <span class="p">)</span> <span class="o">-&gt;</span>
-        <span class="n">anim_speed</span> <span class="o">=</span> <span class="mi">100</span>
-        <span class="n">switch</span> <span class="n">style_name</span></pre></div>
+        <div class='highlight'><pre>    <span class="nv">update_style: </span><span class="nf">( style_name ) -&gt;</span>
+        <span class="nv">anim_speed = </span><span class="mi">100</span>
+        <span class="k">switch</span> <span class="nx">style_name</span></pre></div>
       </td>
     </tr>
     <tr id='section-19'>
@@ -394,10 +395,10 @@ both do. This code changes the necessary elements to do this manually</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>            <span class="k">when</span> <span class="s2">&quot;normal&quot;</span>
-                <span class="vi">@r</span><span class="o">.</span><span class="n">animate</span>
-                    <span class="n">stroke</span><span class="p">:</span> <span class="s2">&quot;#666&quot;</span>
-                    <span class="s2">&quot;stroke-width&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-                    <span class="n">anim_speed</span></pre></div>
+                <span class="nx">@r</span><span class="p">.</span><span class="nx">animate</span>
+                    <span class="nv">stroke: </span><span class="s2">&quot;#666&quot;</span>
+                    <span class="s2">&quot;stroke-width&quot;</span><span class="o">:</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="nx">anim_speed</span></pre></div>
       </td>
     </tr>
     <tr id='section-20'>
@@ -409,10 +410,10 @@ both do. This code changes the necessary elements to do this manually</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>            <span class="k">when</span> <span class="s2">&quot;viewing&quot;</span>
-                <span class="vi">@r</span><span class="o">.</span><span class="n">animate</span>
-                    <span class="n">stroke</span><span class="p">:</span> <span class="s2">&quot;#008000&quot;</span>
-                    <span class="s2">&quot;stroke-width&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
-                    <span class="n">anim_speed</span></pre></div>
+                <span class="nx">@r</span><span class="p">.</span><span class="nx">animate</span>
+                    <span class="nv">stroke: </span><span class="s2">&quot;#008000&quot;</span>
+                    <span class="s2">&quot;stroke-width&quot;</span><span class="o">:</span> <span class="mi">10</span><span class="p">,</span>
+                    <span class="nx">anim_speed</span></pre></div>
       </td>
     </tr>
     <tr id='section-21'>
@@ -424,10 +425,10 @@ both do. This code changes the necessary elements to do this manually</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>            <span class="k">when</span> <span class="s2">&quot;potential&quot;</span>
-                <span class="vi">@r</span><span class="o">.</span><span class="n">animate</span>
-                    <span class="n">stroke</span><span class="p">:</span> <span class="s2">&quot;#0247FE&quot;</span>
-                    <span class="s2">&quot;stroke-width&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
-                    <span class="n">anim_speed</span></pre></div>
+                <span class="nx">@r</span><span class="p">.</span><span class="nx">animate</span>
+                    <span class="nv">stroke: </span><span class="s2">&quot;#0247FE&quot;</span>
+                    <span class="s2">&quot;stroke-width&quot;</span><span class="o">:</span> <span class="mi">5</span><span class="p">,</span>
+                    <span class="nx">anim_speed</span></pre></div>
       </td>
     </tr>
     <tr id='section-22'>
@@ -440,10 +441,10 @@ both do. This code changes the necessary elements to do this manually</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>            <span class="k">when</span> <span class="s2">&quot;visited&quot;</span>
-                <span class="vi">@r</span><span class="o">.</span><span class="n">animate</span>
-                    <span class="n">stroke</span><span class="p">:</span> <span class="s2">&quot;#A40000&quot;</span>
-                    <span class="s2">&quot;stroke-width&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
-                    <span class="n">anim_speed</span></pre></div>
+                <span class="nx">@r</span><span class="p">.</span><span class="nx">animate</span>
+                    <span class="nv">stroke: </span><span class="s2">&quot;#A40000&quot;</span>
+                    <span class="s2">&quot;stroke-width&quot;</span><span class="o">:</span> <span class="mi">3</span><span class="p">,</span>
+                    <span class="nx">anim_speed</span></pre></div>
       </td>
     </tr>
   </table>

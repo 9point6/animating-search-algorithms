@@ -19,12 +19,10 @@ class algorithm
     goal_node: null
     # List of explored node IDs
     explored_nodes: []
-    # List of explored edges for animation.
-    # Object to be pushed to this array should be in the format:
-    # traverse_info.push
-    #       connection: conn.c
-    #       a_to_b: conn.c.pointa.id is current_node.id
-    #       style_name: "Visited"
+    # List of explored edges and connections for animation class.
+    # this will typically be an array of point/connection/point/...
+    # however for Bi-direcitonal search it will be doubled e.g.
+    # point/point/connection/connection/point...
     traverse_info: []
     # Name of the algorithm
     name: "Algorithm"
