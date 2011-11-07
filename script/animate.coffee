@@ -120,5 +120,5 @@ class animate
     traverse: ->
         # if the list to iterate over is not null
         if algorithm.traverse_info is not null
-            while pointer is <= algorithm.traverse_info.length
+            while pointer <= algorithm.traverse_info.length
                 this.step_foward
