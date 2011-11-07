@@ -59,12 +59,12 @@ class animate
                         # is an AStar algorithm. AStar works by keeping previous
                         # connections as "potentials" in an open set.
                         for con in previous_item.connections
-                            if con.style is "potential" and 
-                                algorithm.name is not "AStar" and 
+                            if con.style is "potential" and
+                                algorithm.name is not "AStar" and
                                     algorithm.name is not "BiDi"
                                         con.update_style "normal"
 
-            # increase the pointer value                                
+            # increase the pointer value
             pointer++
 
     ### animate.step_backward( )
@@ -73,22 +73,22 @@ class animate
     #
     # #### TODO
     step_backward: ->
-        
+
         # Check for null value in traverse_info. Pointer has to be greater than
         # zero, as the pointer is decremented immediately after this comparison.
         if algortithm.traverse_info is not null and pointer > 0
-            
+
             # Decrement the pointer property
             pointer--
-           
+
             # create variable for storing array
             @traverse_info = algorithm.traverse_info
             # create variable for current item pointer looks at in the array
             current_item = @traverse_info[pointer]
-            
+
             # change the current item to a "normal" style
             current_item.update_style "normal"
-           
+
             # if the current item is a point then change all of it's potential
             # connections back to a normal style.
             if current_item instanceof Point
