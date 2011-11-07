@@ -19,6 +19,7 @@
           <a class="source" href="algorithm.html">algorithm.coffee</a>
           <a class="source" href="animate.html">animate.coffee</a>
           <a class="source" href="connection.html">connection.coffee</a>
+          <a class="source" href="itarative_deepening.html">itarative_deepening.coffee</a>
           <a class="source" href="main.html">main.coffee</a>
           <a class="source" href="point.html">point.coffee</a>
           <a class="source" href="z-other.html">z-other.coffee</a>
@@ -75,7 +76,7 @@
         <p>Main app class</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="k">class</span> <span class="n">app</span></pre></div>
+        <div class='highlight'><pre><span class="k">class</span> <span class="nx">app</span></pre></div>
       </td>
     </tr>
     <tr id='section-Class_properties'>
@@ -97,7 +98,7 @@
         <p>Flag for if the user is connecting two points</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">connect_mode</span><span class="p">:</span> <span class="kp">false</span></pre></div>
+        <div class='highlight'><pre>    <span class="nv">connect_mode: </span><span class="kc">false</span></pre></div>
       </td>
     </tr>
     <tr id='section-6'>
@@ -108,7 +109,7 @@
         <p>Flag for if the user is removing a point</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">remove_mode</span><span class="p">:</span> <span class="kp">false</span></pre></div>
+        <div class='highlight'><pre>    <span class="nv">remove_mode: </span><span class="kc">false</span></pre></div>
       </td>
     </tr>
     <tr id='section-app.constructor(_)'>
@@ -129,9 +130,9 @@
 </ul>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">constructor</span><span class="p">:</span> <span class="o">-&gt;</span>
-        <span class="o">[</span><span class="vi">@points</span><span class="p">,</span><span class="vi">@connections</span><span class="o">]</span> <span class="o">=</span> <span class="o">[[]</span><span class="p">,</span><span class="o">[]]</span>
-        <span class="vi">@points_id_map</span> <span class="o">=</span> <span class="p">{}</span></pre></div>
+        <div class='highlight'><pre>    <span class="nv">constructor: </span><span class="o">-&gt;</span>
+        <span class="p">[</span><span class="nx">@points</span><span class="p">,</span><span class="nx">@connections</span><span class="p">]</span> <span class="o">=</span> <span class="p">[[],[]]</span>
+        <span class="vi">@points_id_map = </span><span class="p">{}</span></pre></div>
       </td>
     </tr>
     <tr id='section-8'>
@@ -142,7 +143,7 @@
         <p>Store the window height and width. <code>@</code> is an alias for <code>this.</code></p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="vi">@canvas_dimensions</span><span class="p">(</span> <span class="p">)</span></pre></div>
+        <div class='highlight'><pre>        <span class="nx">@canvas_dimensions</span><span class="p">(</span> <span class="p">)</span></pre></div>
       </td>
     </tr>
     <tr id='section-9'>
@@ -153,9 +154,9 @@
         <p>Resize canvas if window resizes</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="err">$</span><span class="p">(</span> <span class="n">window</span> <span class="p">)</span><span class="o">.</span><span class="n">resize</span> <span class="p">(</span> <span class="n">e</span> <span class="p">)</span> <span class="o">=&gt;</span>
-            <span class="vi">@canvas_dimensions</span><span class="p">(</span> <span class="p">)</span>
-            <span class="vi">@paper</span><span class="o">.</span><span class="n">setSize</span> <span class="vi">@wx</span><span class="p">,</span> <span class="vi">@wy</span></pre></div>
+        <div class='highlight'><pre>        <span class="nx">$</span><span class="p">(</span> <span class="nb">window</span> <span class="p">).</span><span class="nx">resize</span> <span class="p">(</span> <span class="nx">e</span> <span class="p">)</span> <span class="o">=&gt;</span>
+            <span class="nx">@canvas_dimensions</span><span class="p">(</span> <span class="p">)</span>
+            <span class="nx">@paper</span><span class="p">.</span><span class="nx">setSize</span> <span class="nx">@wx</span><span class="p">,</span> <span class="nx">@wy</span></pre></div>
       </td>
     </tr>
     <tr id='section-10'>
@@ -167,7 +168,7 @@
 coffeescript lets you leave out the brackets</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="vi">@paper</span> <span class="o">=</span> <span class="no">Raphael</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="vi">@wx</span><span class="p">,</span> <span class="vi">@wy</span></pre></div>
+        <div class='highlight'><pre>        <span class="vi">@paper = </span><span class="nx">Raphael</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">@wx</span><span class="p">,</span> <span class="nx">@wy</span></pre></div>
       </td>
     </tr>
     <tr id='section-11'>
@@ -178,7 +179,7 @@ coffeescript lets you leave out the brackets</p>
         <p>Build toolbar, etc</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="err">$</span><span class="p">(</span> <span class="s1">&#39;body&#39;</span> <span class="p">)</span><span class="o">.</span><span class="n">append</span> <span class="p">(</span> <span class="s1">&#39;&#39;&#39;</span>
+        <div class='highlight'><pre>        <span class="nx">$</span><span class="p">(</span> <span class="s1">&#39;body&#39;</span> <span class="p">).</span><span class="nx">append</span> <span class="p">(</span> <span class="s1">&#39;&#39;&#39;</span>
 <span class="s1">        &lt;div id=&quot;toolbar&quot;&gt;</span>
 <span class="s1">            &lt;h1&gt;search&lt;span&gt;r&lt;/span&gt;&lt;/h1&gt;</span>
 <span class="s1">            &lt;ul id=&quot;designmode&quot;&gt;</span>
@@ -206,8 +207,8 @@ coffeescript lets you leave out the brackets</p>
         <p>Set the helptext div to be invisible for animation.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="err">$</span><span class="p">(</span> <span class="s1">&#39;#helptext&#39;</span> <span class="p">)</span><span class="o">.</span><span class="n">prop</span>
-            <span class="n">opacity</span><span class="p">:</span> <span class="mi">0</span></pre></div>
+        <div class='highlight'><pre>        <span class="nx">$</span><span class="p">(</span> <span class="s1">&#39;#helptext&#39;</span> <span class="p">).</span><span class="nx">prop</span>
+            <span class="nv">opacity: </span><span class="mi">0</span></pre></div>
       </td>
     </tr>
     <tr id='section-13'>
@@ -218,21 +219,21 @@ coffeescript lets you leave out the brackets</p>
         <p>Set click events for toolbar buttons</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="err">$</span><span class="p">(</span> <span class="s1">&#39;#new&#39;</span> <span class="p">)</span><span class="o">.</span><span class="n">click</span> <span class="p">(</span> <span class="n">e</span> <span class="p">)</span> <span class="o">=&gt;</span>
-            <span class="vi">@clear_graph</span><span class="p">(</span> <span class="p">)</span>
-        <span class="err">$</span><span class="p">(</span> <span class="s1">&#39;#save&#39;</span> <span class="p">)</span><span class="o">.</span><span class="n">click</span> <span class="p">(</span> <span class="n">e</span> <span class="p">)</span> <span class="o">=&gt;</span>
-            <span class="n">prompt</span> <span class="s2">&quot;Copy this string to save the graph&quot;</span><span class="p">,</span> <span class="vi">@serialise_graph</span><span class="p">(</span> <span class="p">)</span>
-        <span class="err">$</span><span class="p">(</span> <span class="s1">&#39;#load&#39;</span> <span class="p">)</span><span class="o">.</span><span class="n">click</span> <span class="p">(</span> <span class="n">e</span> <span class="p">)</span> <span class="o">=&gt;</span>
-            <span class="vi">@parse_string</span> <span class="n">prompt</span> <span class="s2">&quot;Paste a saved graph string here&quot;</span>
-        <span class="err">$</span><span class="p">(</span> <span class="s1">&#39;#add&#39;</span> <span class="p">)</span><span class="o">.</span><span class="n">click</span> <span class="p">(</span> <span class="n">e</span> <span class="p">)</span> <span class="o">=&gt;</span>
-            <span class="n">pnt</span> <span class="o">=</span> <span class="vi">@add_point</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">prompt</span> <span class="s2">&quot;What will this point be named?&quot;</span>
-            <span class="n">pnt</span><span class="o">.</span><span class="n">move_with_mouse</span><span class="p">(</span> <span class="p">)</span>
-        <span class="err">$</span><span class="p">(</span> <span class="s1">&#39;#remove&#39;</span> <span class="p">)</span><span class="o">.</span><span class="n">click</span> <span class="p">(</span> <span class="n">e</span> <span class="p">)</span> <span class="o">=&gt;</span>
-            <span class="vi">@do_mouse_removal</span><span class="p">(</span> <span class="p">)</span>
-        <span class="err">$</span><span class="p">(</span> <span class="s1">&#39;#connect&#39;</span> <span class="p">)</span><span class="o">.</span><span class="n">click</span> <span class="p">(</span> <span class="n">e</span> <span class="p">)</span> <span class="o">=&gt;</span>
-            <span class="vi">@do_mouse_connection</span><span class="p">(</span> <span class="p">)</span>
-        <span class="err">$</span><span class="p">(</span> <span class="s1">&#39;#search&#39;</span> <span class="p">)</span><span class="o">.</span><span class="n">click</span> <span class="p">(</span> <span class="n">e</span> <span class="p">)</span> <span class="o">=&gt;</span>
-            <span class="n">alert</span> <span class="s2">&quot;Function not added yet!&quot;</span></pre></div>
+        <div class='highlight'><pre>        <span class="nx">$</span><span class="p">(</span> <span class="s1">&#39;#new&#39;</span> <span class="p">).</span><span class="nx">click</span> <span class="p">(</span> <span class="nx">e</span> <span class="p">)</span> <span class="o">=&gt;</span>
+            <span class="nx">@clear_graph</span><span class="p">(</span> <span class="p">)</span>
+        <span class="nx">$</span><span class="p">(</span> <span class="s1">&#39;#save&#39;</span> <span class="p">).</span><span class="nx">click</span> <span class="p">(</span> <span class="nx">e</span> <span class="p">)</span> <span class="o">=&gt;</span>
+            <span class="nx">prompt</span> <span class="s2">&quot;Copy this string to save the graph&quot;</span><span class="p">,</span> <span class="nx">@serialise_graph</span><span class="p">(</span> <span class="p">)</span>
+        <span class="nx">$</span><span class="p">(</span> <span class="s1">&#39;#load&#39;</span> <span class="p">).</span><span class="nx">click</span> <span class="p">(</span> <span class="nx">e</span> <span class="p">)</span> <span class="o">=&gt;</span>
+            <span class="nx">@parse_string</span> <span class="nx">prompt</span> <span class="s2">&quot;Paste a saved graph string here&quot;</span>
+        <span class="nx">$</span><span class="p">(</span> <span class="s1">&#39;#add&#39;</span> <span class="p">).</span><span class="nx">click</span> <span class="p">(</span> <span class="nx">e</span> <span class="p">)</span> <span class="o">=&gt;</span>
+            <span class="nv">pnt = </span><span class="nx">@add_point</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">prompt</span> <span class="s2">&quot;What will this point be named?&quot;</span>
+            <span class="nx">pnt</span><span class="p">.</span><span class="nx">move_with_mouse</span><span class="p">(</span> <span class="p">)</span>
+        <span class="nx">$</span><span class="p">(</span> <span class="s1">&#39;#remove&#39;</span> <span class="p">).</span><span class="nx">click</span> <span class="p">(</span> <span class="nx">e</span> <span class="p">)</span> <span class="o">=&gt;</span>
+            <span class="nx">@do_mouse_removal</span><span class="p">(</span> <span class="p">)</span>
+        <span class="nx">$</span><span class="p">(</span> <span class="s1">&#39;#connect&#39;</span> <span class="p">).</span><span class="nx">click</span> <span class="p">(</span> <span class="nx">e</span> <span class="p">)</span> <span class="o">=&gt;</span>
+            <span class="nx">@do_mouse_connection</span><span class="p">(</span> <span class="p">)</span>
+        <span class="nx">$</span><span class="p">(</span> <span class="s1">&#39;#search&#39;</span> <span class="p">).</span><span class="nx">click</span> <span class="p">(</span> <span class="nx">e</span> <span class="p">)</span> <span class="o">=&gt;</span>
+            <span class="nx">alert</span> <span class="s2">&quot;Function not added yet!&quot;</span></pre></div>
       </td>
     </tr>
     <tr id='section-14'>
@@ -243,17 +244,17 @@ coffeescript lets you leave out the brackets</p>
         <p>Preset test data</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="vi">@add_point</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">118</span><span class="p">,</span> <span class="s2">&quot;Alan&quot;</span>
-        <span class="vi">@add_point</span> <span class="mi">208</span><span class="p">,</span> <span class="mi">356</span><span class="p">,</span> <span class="s2">&quot;Beth&quot;</span>
-        <span class="vi">@add_point</span> <span class="mi">259</span><span class="p">,</span> <span class="mi">204</span><span class="p">,</span> <span class="s2">&quot;Carl&quot;</span>
-        <span class="vi">@add_point</span> <span class="mi">363</span><span class="p">,</span> <span class="mi">283</span><span class="p">,</span> <span class="s2">&quot;Dave&quot;</span>
-        <span class="vi">@add_point</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">85</span><span class="p">,</span> <span class="s2">&quot;Elle&quot;</span>
+        <div class='highlight'><pre>        <span class="nx">@add_point</span> <span class="mi">224</span><span class="p">,</span> <span class="mi">118</span><span class="p">,</span> <span class="s2">&quot;Alan&quot;</span>
+        <span class="nx">@add_point</span> <span class="mi">208</span><span class="p">,</span> <span class="mi">356</span><span class="p">,</span> <span class="s2">&quot;Beth&quot;</span>
+        <span class="nx">@add_point</span> <span class="mi">259</span><span class="p">,</span> <span class="mi">204</span><span class="p">,</span> <span class="s2">&quot;Carl&quot;</span>
+        <span class="nx">@add_point</span> <span class="mi">363</span><span class="p">,</span> <span class="mi">283</span><span class="p">,</span> <span class="s2">&quot;Dave&quot;</span>
+        <span class="nx">@add_point</span> <span class="mi">110</span><span class="p">,</span> <span class="mi">85</span><span class="p">,</span> <span class="s2">&quot;Elle&quot;</span>
 
-        <span class="vi">@connect</span> <span class="vi">@points</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span><span class="p">,</span> <span class="vi">@points</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span>
-        <span class="vi">@connect</span> <span class="vi">@points</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span><span class="p">,</span> <span class="vi">@points</span><span class="o">[</span><span class="mi">3</span><span class="o">]</span>
-        <span class="vi">@connect</span> <span class="vi">@points</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">,</span> <span class="vi">@points</span><span class="o">[</span><span class="mi">2</span><span class="o">]</span>
-        <span class="vi">@connect</span> <span class="vi">@points</span><span class="o">[</span><span class="mi">4</span><span class="o">]</span><span class="p">,</span> <span class="vi">@points</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span>
-        <span class="vi">@connect</span> <span class="vi">@points</span><span class="o">[</span><span class="mi">3</span><span class="o">]</span><span class="p">,</span> <span class="vi">@points</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span></pre></div>
+        <span class="nx">@connect</span> <span class="nx">@points</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="nx">@points</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="nx">@connect</span> <span class="nx">@points</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="nx">@points</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+        <span class="nx">@connect</span> <span class="nx">@points</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">@points</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="nx">@connect</span> <span class="nx">@points</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="nx">@points</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="nx">@connect</span> <span class="nx">@points</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="nx">@points</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span></pre></div>
       </td>
     </tr>
     <tr id='section-15'>
@@ -264,7 +265,7 @@ coffeescript lets you leave out the brackets</p>
         <p>Rearranges points so that they are above the connections in the canvas</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="vi">@sort_elements</span><span class="p">(</span> <span class="p">)</span></pre></div>
+        <div class='highlight'><pre>        <span class="nx">@sort_elements</span><span class="p">(</span> <span class="p">)</span></pre></div>
       </td>
     </tr>
     <tr id='section-app.sort_elements(_)'>
@@ -281,9 +282,9 @@ canvas element.</p>
 buggy hover behaviour.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">sort_elements</span><span class="p">:</span> <span class="o">-&gt;</span>
-        <span class="k">for</span> <span class="n">elem</span> <span class="k">in</span> <span class="err">$</span><span class="p">(</span> <span class="s1">&#39;svg circle&#39;</span> <span class="p">)</span>
-            <span class="err">$</span><span class="p">(</span> <span class="n">elem</span> <span class="p">)</span><span class="o">.</span><span class="n">appendTo</span> <span class="err">$</span><span class="p">(</span> <span class="s1">&#39;svg&#39;</span> <span class="p">)</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span></pre></div>
+        <div class='highlight'><pre>    <span class="nv">sort_elements: </span><span class="o">-&gt;</span>
+        <span class="k">for</span> <span class="nx">elem</span> <span class="k">in</span> <span class="nx">$</span><span class="p">(</span> <span class="s1">&#39;svg circle&#39;</span> <span class="p">)</span>
+            <span class="nx">$</span><span class="p">(</span> <span class="nx">elem</span> <span class="p">).</span><span class="nx">appendTo</span> <span class="nx">$</span><span class="p">(</span> <span class="s1">&#39;svg&#39;</span> <span class="p">)[</span><span class="mi">0</span><span class="p">]</span></pre></div>
       </td>
     </tr>
     <tr id='section-app.canvas_dimensions(_)'>
@@ -303,9 +304,9 @@ resized after this or buggy behaviour will occur.</p>
 </ul>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">canvas_dimensions</span><span class="p">:</span> <span class="o">-&gt;</span>
-        <span class="vi">@wx</span> <span class="o">=</span> <span class="err">$</span><span class="p">(</span> <span class="n">window</span> <span class="p">)</span><span class="o">.</span><span class="n">width</span><span class="p">(</span> <span class="p">)</span>
-        <span class="vi">@wy</span> <span class="o">=</span> <span class="err">$</span><span class="p">(</span> <span class="n">window</span> <span class="p">)</span><span class="o">.</span><span class="n">height</span><span class="p">(</span> <span class="p">)</span></pre></div>
+        <div class='highlight'><pre>    <span class="nv">canvas_dimensions: </span><span class="o">-&gt;</span>
+        <span class="vi">@wx = </span><span class="nx">$</span><span class="p">(</span> <span class="nb">window</span> <span class="p">).</span><span class="nx">width</span><span class="p">(</span> <span class="p">)</span>
+        <span class="vi">@wy = </span><span class="nx">$</span><span class="p">(</span> <span class="nb">window</span> <span class="p">).</span><span class="nx">height</span><span class="p">(</span> <span class="p">)</span></pre></div>
       </td>
     </tr>
     <tr id='section-app.add_point(_)'>
@@ -329,13 +330,13 @@ resized after this or buggy behaviour will occur.</p>
 <p><strong>Return</strong> &ndash;&gt; new <code>point</code> object</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">add_point</span><span class="p">:</span> <span class="p">(</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="nb">name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="nb">id</span> <span class="p">)</span> <span class="o">-&gt;</span>
-        <span class="n">newpoint</span> <span class="o">=</span> <span class="kp">new</span> <span class="n">point</span> <span class="vi">@paper</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="nb">name</span>
-        <span class="k">if</span> <span class="nb">id</span><span class="p">?</span>
-            <span class="n">newpoint</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
-        <span class="vi">@points_id_map</span><span class="o">[</span><span class="n">newpoint</span><span class="o">.</span><span class="n">id</span><span class="o">]</span> <span class="o">=</span> <span class="n">newpoint</span>
-        <span class="vi">@points</span><span class="o">.</span><span class="n">push</span> <span class="n">newpoint</span>
-        <span class="n">newpoint</span></pre></div>
+        <div class='highlight'><pre>    <span class="nv">add_point: </span><span class="nf">( x, y, name = &quot;&quot;, id ) -&gt;</span>
+        <span class="nv">newpoint = </span><span class="k">new</span> <span class="nx">point</span> <span class="nx">@paper</span><span class="p">,</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">name</span>
+        <span class="k">if</span> <span class="nx">id</span><span class="o">?</span>
+            <span class="nv">newpoint.id = </span><span class="nx">id</span>
+        <span class="nx">@points_id_map</span><span class="p">[</span><span class="nx">newpoint</span><span class="p">.</span><span class="nx">id</span><span class="p">]</span> <span class="o">=</span> <span class="nx">newpoint</span>
+        <span class="nx">@points</span><span class="p">.</span><span class="nx">push</span> <span class="nx">newpoint</span>
+        <span class="nx">newpoint</span></pre></div>
       </td>
     </tr>
     <tr id='section-app.connect(_)'>
@@ -359,11 +360,11 @@ resized after this or buggy behaviour will occur.</p>
 <p><strong>Return</strong> &ndash;&gt; new <code>connection</code> object</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">connect</span><span class="p">:</span> <span class="p">(</span> <span class="n">pointa</span><span class="p">,</span> <span class="n">pointb</span><span class="p">,</span> <span class="n">weight</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">direction</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">)</span> <span class="o">-&gt;</span>
-        <span class="n">newcon</span> <span class="o">=</span> <span class="kp">new</span> <span class="n">connection</span> <span class="vi">@paper</span><span class="p">,</span> <span class="n">pointa</span><span class="p">,</span> <span class="n">pointb</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">direction</span>
-        <span class="vi">@connections</span><span class="o">.</span><span class="n">push</span> <span class="n">newcon</span>
-        <span class="vi">@sort_elements</span><span class="p">(</span> <span class="p">)</span>
-        <span class="n">newcon</span></pre></div>
+        <div class='highlight'><pre>    <span class="nv">connect: </span><span class="nf">( pointa, pointb, weight = 0, direction = 0 ) -&gt;</span>
+        <span class="nv">newcon = </span><span class="k">new</span> <span class="nx">connection</span> <span class="nx">@paper</span><span class="p">,</span> <span class="nx">pointa</span><span class="p">,</span> <span class="nx">pointb</span><span class="p">,</span> <span class="nx">weight</span><span class="p">,</span> <span class="nx">direction</span>
+        <span class="nx">@connections</span><span class="p">.</span><span class="nx">push</span> <span class="nx">newcon</span>
+        <span class="nx">@sort_elements</span><span class="p">(</span> <span class="p">)</span>
+        <span class="nx">newcon</span></pre></div>
       </td>
     </tr>
     <tr id='section-app.do&lt;em&gt;_&lt;/em&gt;mouse_connection(_)'>
@@ -392,7 +393,7 @@ actually necessary</li>
 </ul>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">do_mouse_connection</span><span class="p">:</span> <span class="p">(</span> <span class="n">obj</span> <span class="p">)</span> <span class="o">=&gt;</span></pre></div>
+        <div class='highlight'><pre>    <span class="nv">do_mouse_connection: </span><span class="p">(</span> <span class="nx">obj</span> <span class="p">)</span> <span class="o">=&gt;</span></pre></div>
       </td>
     </tr>
     <tr id='section-21'>
@@ -403,10 +404,10 @@ actually necessary</li>
         <p>If not yet connecting, change state</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="k">if</span> <span class="vi">@connect_mode</span> <span class="n">is</span> <span class="kp">false</span>
-            <span class="o">[</span><span class="vi">@connectpointa</span><span class="p">,</span><span class="vi">@connectpointb</span><span class="o">]</span> <span class="o">=</span> <span class="o">[</span><span class="p">{</span><span class="nb">id</span><span class="ss">:&#39;0&#39;</span><span class="p">},{</span><span class="nb">id</span><span class="ss">:&#39;0&#39;</span><span class="p">}</span><span class="o">]</span>
-            <span class="vi">@connect_mode</span> <span class="o">=</span> <span class="kp">true</span>
-            <span class="vi">@fade_out_toolbar</span> <span class="s2">&quot;Click two nodes to connect them&quot;</span>
+        <div class='highlight'><pre>        <span class="k">if</span> <span class="nx">@connect_mode</span> <span class="o">is</span> <span class="kc">false</span>
+            <span class="p">[</span><span class="nx">@connectpointa</span><span class="p">,</span><span class="nx">@connectpointb</span><span class="p">]</span> <span class="o">=</span> <span class="p">[{</span><span class="nx">id</span><span class="o">:</span><span class="s1">&#39;0&#39;</span><span class="p">},{</span><span class="nx">id</span><span class="o">:</span><span class="s1">&#39;0&#39;</span><span class="p">}]</span>
+            <span class="vi">@connect_mode = </span><span class="kc">true</span>
+            <span class="nx">@fade_out_toolbar</span> <span class="s2">&quot;Click two nodes to connect them&quot;</span>
         <span class="k">else</span></pre></div>
       </td>
     </tr>
@@ -418,22 +419,22 @@ actually necessary</li>
         <p>If first point, save and contiune, else actually connect</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>            <span class="k">if</span> <span class="vi">@connectpointa</span><span class="o">.</span><span class="n">id</span> <span class="n">is</span> <span class="s1">&#39;0&#39;</span>
-                <span class="vi">@connectpointa</span> <span class="o">=</span> <span class="n">obj</span>
+        <div class='highlight'><pre>            <span class="k">if</span> <span class="nx">@connectpointa</span><span class="p">.</span><span class="nx">id</span> <span class="o">is</span> <span class="s1">&#39;0&#39;</span>
+                <span class="vi">@connectpointa = </span><span class="nx">obj</span>
             <span class="k">else</span>
-                <span class="vi">@connectpointb</span> <span class="o">=</span> <span class="n">obj</span>
-                <span class="n">newcon</span> <span class="o">=</span> <span class="vi">@connect</span> <span class="vi">@connectpointa</span><span class="p">,</span> <span class="vi">@connectpointb</span>
-                <span class="vi">@connectpointa</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">animate</span>
-                    <span class="n">r</span><span class="p">:</span> <span class="mi">5</span>
-                    <span class="n">fill</span><span class="p">:</span> <span class="s2">&quot;#000&quot;</span><span class="p">,</span>
+                <span class="vi">@connectpointb = </span><span class="nx">obj</span>
+                <span class="nv">newcon = </span><span class="nx">@connect</span> <span class="nx">@connectpointa</span><span class="p">,</span> <span class="nx">@connectpointb</span>
+                <span class="nx">@connectpointa</span><span class="p">.</span><span class="nx">r</span><span class="p">.</span><span class="nx">animate</span>
+                    <span class="nv">r: </span><span class="mi">5</span>
+                    <span class="nv">fill: </span><span class="s2">&quot;#000&quot;</span><span class="p">,</span>
                     <span class="mi">100</span>
-                <span class="vi">@connectpointb</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">animate</span>
-                    <span class="n">r</span><span class="p">:</span> <span class="mi">5</span>
-                    <span class="n">fill</span><span class="p">:</span> <span class="s2">&quot;#000&quot;</span><span class="p">,</span>
+                <span class="nx">@connectpointb</span><span class="p">.</span><span class="nx">r</span><span class="p">.</span><span class="nx">animate</span>
+                    <span class="nv">r: </span><span class="mi">5</span>
+                    <span class="nv">fill: </span><span class="s2">&quot;#000&quot;</span><span class="p">,</span>
                     <span class="mi">100</span>
-                <span class="n">newcon</span><span class="o">.</span><span class="n">spark</span><span class="p">(</span> <span class="p">)</span>
-                <span class="vi">@connect_mode</span> <span class="o">=</span> <span class="kp">false</span>
-                <span class="vi">@fade_in_toolbar</span><span class="p">(</span> <span class="p">)</span></pre></div>
+                <span class="nx">newcon</span><span class="p">.</span><span class="nx">spark</span><span class="p">(</span> <span class="p">)</span>
+                <span class="vi">@connect_mode = </span><span class="kc">false</span>
+                <span class="nx">@fade_in_toolbar</span><span class="p">(</span> <span class="p">)</span></pre></div>
       </td>
     </tr>
     <tr id='section-app.do&lt;em&gt;_&lt;/em&gt;mouse_removal(_)'>
@@ -454,14 +455,14 @@ to perform the actual removal</p>
 </ul>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">do_mouse_removal</span><span class="p">:</span> <span class="p">(</span> <span class="n">obj</span> <span class="p">)</span> <span class="o">=&gt;</span>
-        <span class="k">if</span> <span class="vi">@remove_mode</span> <span class="n">is</span> <span class="kp">false</span>
-            <span class="vi">@remove_mode</span> <span class="o">=</span> <span class="kp">true</span>
-            <span class="vi">@fade_out_toolbar</span> <span class="s2">&quot;Click a node to remove it&quot;</span>
+        <div class='highlight'><pre>    <span class="nv">do_mouse_removal: </span><span class="p">(</span> <span class="nx">obj</span> <span class="p">)</span> <span class="o">=&gt;</span>
+        <span class="k">if</span> <span class="nx">@remove_mode</span> <span class="o">is</span> <span class="kc">false</span>
+            <span class="vi">@remove_mode = </span><span class="kc">true</span>
+            <span class="nx">@fade_out_toolbar</span> <span class="s2">&quot;Click a node to remove it&quot;</span>
         <span class="k">else</span>
-            <span class="n">obj</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span> <span class="p">)</span>
-            <span class="vi">@remove_mode</span> <span class="o">=</span> <span class="kp">false</span>
-            <span class="vi">@fade_in_toolbar</span><span class="p">(</span> <span class="p">)</span></pre></div>
+            <span class="nx">obj</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span> <span class="p">)</span>
+            <span class="vi">@remove_mode = </span><span class="kc">false</span>
+            <span class="nx">@fade_in_toolbar</span><span class="p">(</span> <span class="p">)</span></pre></div>
       </td>
     </tr>
     <tr id='section-app.fade&lt;em&gt;_&lt;/em&gt;out_toolbar(_)'>
@@ -486,14 +487,14 @@ to perform the actual removal</p>
 </ul>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">fade_out_toolbar</span><span class="p">:</span> <span class="p">(</span> <span class="n">text</span> <span class="p">)</span> <span class="o">-&gt;</span>
-        <span class="err">$</span><span class="p">(</span> <span class="s1">&#39;#designmode&#39;</span> <span class="p">)</span><span class="o">.</span><span class="n">animate</span>
-            <span class="n">opacity</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                <span class="n">complete</span><span class="p">:</span> <span class="o">-&gt;</span>
-                    <span class="err">$</span><span class="p">(</span> <span class="err">@</span> <span class="p">)</span><span class="o">.</span><span class="n">css</span>
-                        <span class="n">height</span><span class="p">:</span> <span class="mi">1</span>
-                    <span class="err">$</span><span class="p">(</span> <span class="s1">&#39;#helptext&#39;</span> <span class="p">)</span><span class="o">.</span><span class="n">text</span><span class="p">(</span> <span class="n">text</span> <span class="p">)</span><span class="o">.</span><span class="n">animate</span>
-                        <span class="n">opacity</span><span class="p">:</span> <span class="mi">100</span></pre></div>
+        <div class='highlight'><pre>    <span class="nv">fade_out_toolbar: </span><span class="nf">( text ) -&gt;</span>
+        <span class="nx">$</span><span class="p">(</span> <span class="s1">&#39;#designmode&#39;</span> <span class="p">).</span><span class="nx">animate</span>
+            <span class="nv">opacity: </span><span class="mi">0</span><span class="p">,</span>
+                <span class="nv">complete: </span><span class="o">-&gt;</span>
+                    <span class="nx">$</span><span class="p">(</span> <span class="err">@</span> <span class="p">).</span><span class="nx">css</span>
+                        <span class="nv">height: </span><span class="mi">1</span>
+                    <span class="nx">$</span><span class="p">(</span> <span class="s1">&#39;#helptext&#39;</span> <span class="p">).</span><span class="nx">text</span><span class="p">(</span> <span class="nx">text</span> <span class="p">).</span><span class="nx">animate</span>
+                        <span class="nv">opacity: </span><span class="mi">100</span></pre></div>
       </td>
     </tr>
     <tr id='section-app.fade&lt;em&gt;_&lt;/em&gt;in_toolbar(_)'>
@@ -512,13 +513,13 @@ to perform the actual removal</p>
 </ul>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">fade_in_toolbar</span><span class="p">:</span> <span class="o">-&gt;</span>
-        <span class="err">$</span><span class="p">(</span> <span class="s1">&#39;#helptext&#39;</span> <span class="p">)</span><span class="o">.</span><span class="n">animate</span>
-            <span class="n">opacity</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
-                <span class="n">complete</span><span class="p">:</span> <span class="o">-&gt;</span>
-                    <span class="err">$</span><span class="p">(</span> <span class="err">@</span> <span class="p">)</span><span class="o">.</span><span class="n">text</span> <span class="s2">&quot;&quot;</span>
-                    <span class="err">$</span><span class="p">(</span> <span class="s1">&#39;#designmode&#39;</span> <span class="p">)</span><span class="o">.</span><span class="n">css</span><span class="p">(</span> <span class="s1">&#39;height&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span> <span class="p">)</span><span class="o">.</span><span class="n">animate</span>
-                        <span class="n">opacity</span><span class="p">:</span> <span class="mi">100</span></pre></div>
+        <div class='highlight'><pre>    <span class="nv">fade_in_toolbar: </span><span class="o">-&gt;</span>
+        <span class="nx">$</span><span class="p">(</span> <span class="s1">&#39;#helptext&#39;</span> <span class="p">).</span><span class="nx">animate</span>
+            <span class="nv">opacity: </span><span class="mi">0</span><span class="p">,</span>
+                <span class="nv">complete: </span><span class="o">-&gt;</span>
+                    <span class="nx">$</span><span class="p">(</span> <span class="err">@</span> <span class="p">).</span><span class="nx">text</span> <span class="s2">&quot;&quot;</span>
+                    <span class="nx">$</span><span class="p">(</span> <span class="s1">&#39;#designmode&#39;</span> <span class="p">).</span><span class="nx">css</span><span class="p">(</span> <span class="s1">&#39;height&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span> <span class="p">).</span><span class="nx">animate</span>
+                        <span class="nv">opacity: </span><span class="mi">100</span></pre></div>
       </td>
     </tr>
     <tr id='section-app.serialise_graph(_)'>
@@ -535,9 +536,9 @@ current state &ldquo;save-able&rdquo;</p>
 <p><strong>Return</strong> &ndash;&gt; Base64 encoded JSON string of graph state</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">serialise_graph</span><span class="p">:</span> <span class="o">-&gt;</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="s1">&#39;{ &quot;points&quot;: [&#39;</span>
-        <span class="n">comma</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span></pre></div>
+        <div class='highlight'><pre>    <span class="nv">serialise_graph: </span><span class="o">-&gt;</span>
+        <span class="nv">out = </span><span class="s1">&#39;{ &quot;points&quot;: [&#39;</span>
+        <span class="nv">comma = </span><span class="s2">&quot;&quot;</span></pre></div>
       </td>
     </tr>
     <tr id='section-27'>
@@ -548,13 +549,13 @@ current state &ldquo;save-able&rdquo;</p>
         <p>Serialise points</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="k">for</span> <span class="n">point</span> <span class="k">in</span> <span class="vi">@points</span>
-            <span class="n">point</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="k">if</span> <span class="n">point</span><span class="o">.</span><span class="n">id?</span> <span class="k">then</span> <span class="n">point</span><span class="o">.</span><span class="n">id</span> <span class="k">else</span> <span class="n">uniqueId</span><span class="p">(</span> <span class="p">)</span>
-            <span class="n">out</span> <span class="o">+=</span> <span class="n">comma</span> <span class="o">+</span> <span class="s2">&quot; { </span><span class="se">\&quot;</span><span class="s2">id</span><span class="se">\&quot;</span><span class="s2">: </span><span class="se">\&quot;</span><span class="si">#{</span><span class="n">point</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">x</span><span class="se">\&quot;</span><span class="s2">: </span><span class="se">\&quot;</span><span class="si">#{</span><span class="n">point</span><span class="o">.</span><span class="n">x</span><span class="si">}</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">y</span><span class="se">\&quot;</span><span class="s2">: </span><span class="se">\&quot;</span><span class="si">#{</span><span class="n">point</span><span class="o">.</span><span class="n">y</span><span class="si">}</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">name</span><span class="se">\&quot;</span><span class="s2">: </span><span class="se">\&quot;</span><span class="si">#{</span><span class="n">point</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="se">\&quot;</span><span class="s2"> }&quot;</span>
-            <span class="n">comma</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span>
-        <span class="n">out</span> <span class="o">+=</span> <span class="s1">&#39; ], &quot;connections&quot;: [&#39;</span>
+        <div class='highlight'><pre>        <span class="k">for</span> <span class="nx">point</span> <span class="k">in</span> <span class="nx">@points</span>
+            <span class="nv">point.id = </span><span class="k">if</span> <span class="nx">point</span><span class="p">.</span><span class="nx">id</span><span class="o">?</span> <span class="k">then</span> <span class="nx">point</span><span class="p">.</span><span class="nx">id</span> <span class="k">else</span> <span class="nx">uniqueId</span><span class="p">(</span> <span class="p">)</span>
+            <span class="nx">out</span> <span class="o">+=</span> <span class="nx">comma</span> <span class="o">+</span> <span class="s2">&quot; { \&quot;id\&quot;: \&quot;#{point.id}\&quot;, \&quot;x\&quot;: \&quot;#{point.x}\&quot;, \&quot;y\&quot;: \&quot;#{point.y}\&quot;, \&quot;name\&quot;: \&quot;#{point.name}\&quot; }&quot;</span>
+            <span class="nv">comma = </span><span class="s2">&quot;,&quot;</span>
+        <span class="nx">out</span> <span class="o">+=</span> <span class="s1">&#39; ], &quot;connections&quot;: [&#39;</span>
 
-        <span class="n">comma</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span></pre></div>
+        <span class="nv">comma = </span><span class="s2">&quot;&quot;</span></pre></div>
       </td>
     </tr>
     <tr id='section-28'>
@@ -565,12 +566,12 @@ current state &ldquo;save-able&rdquo;</p>
         <p>Serialise connections</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="k">for</span> <span class="n">con</span> <span class="k">in</span> <span class="vi">@connections</span>
-            <span class="n">out</span> <span class="o">+=</span> <span class="n">comma</span> <span class="o">+</span> <span class="s2">&quot; { </span><span class="se">\&quot;</span><span class="s2">a</span><span class="se">\&quot;</span><span class="s2">: </span><span class="se">\&quot;</span><span class="si">#{</span><span class="n">con</span><span class="o">.</span><span class="n">pointa</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">b</span><span class="se">\&quot;</span><span class="s2">: </span><span class="se">\&quot;</span><span class="si">#{</span><span class="n">con</span><span class="o">.</span><span class="n">pointb</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">weight</span><span class="se">\&quot;</span><span class="s2">: </span><span class="se">\&quot;</span><span class="si">#{</span><span class="n">con</span><span class="o">.</span><span class="n">weight</span><span class="si">}</span><span class="se">\&quot;</span><span class="s2">, </span><span class="se">\&quot;</span><span class="s2">direction</span><span class="se">\&quot;</span><span class="s2">: </span><span class="se">\&quot;</span><span class="si">#{</span><span class="n">con</span><span class="o">.</span><span class="n">direction</span><span class="si">}</span><span class="se">\&quot;</span><span class="s2"> }&quot;</span>
-            <span class="n">comma</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span>
-        <span class="n">out</span> <span class="o">+=</span> <span class="s2">&quot;] }&quot;</span>
+        <div class='highlight'><pre>        <span class="k">for</span> <span class="nx">con</span> <span class="k">in</span> <span class="nx">@connections</span>
+            <span class="nx">out</span> <span class="o">+=</span> <span class="nx">comma</span> <span class="o">+</span> <span class="s2">&quot; { \&quot;a\&quot;: \&quot;#{con.pointa.id}\&quot;, \&quot;b\&quot;: \&quot;#{con.pointb.id}\&quot;, \&quot;weight\&quot;: \&quot;#{con.weight}\&quot;, \&quot;direction\&quot;: \&quot;#{con.direction}\&quot; }&quot;</span>
+            <span class="nv">comma = </span><span class="s2">&quot;,&quot;</span>
+        <span class="nx">out</span> <span class="o">+=</span> <span class="s2">&quot;] }&quot;</span>
 
-        <span class="n">base64Encode</span> <span class="n">out</span></pre></div>
+        <span class="nx">base64Encode</span> <span class="nx">out</span></pre></div>
       </td>
     </tr>
     <tr id='section-app.clear_graph(_)'>
@@ -583,10 +584,10 @@ current state &ldquo;save-able&rdquo;</p>
 <p>Clears the current graph. Used by the &ldquo;New&rdquo; button and the restore method</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">clear_graph</span><span class="p">:</span> <span class="o">-&gt;</span>
-        <span class="vi">@points_id_map</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="o">[</span><span class="vi">@points</span><span class="p">,</span><span class="vi">@connections</span><span class="o">]</span> <span class="o">=</span> <span class="o">[[]</span><span class="p">,</span><span class="o">[]]</span>
-        <span class="vi">@paper</span><span class="o">.</span><span class="n">clear</span><span class="p">(</span> <span class="p">)</span></pre></div>
+        <div class='highlight'><pre>    <span class="nv">clear_graph: </span><span class="o">-&gt;</span>
+        <span class="vi">@points_id_map = </span><span class="p">{}</span>
+        <span class="p">[</span><span class="nx">@points</span><span class="p">,</span><span class="nx">@connections</span><span class="p">]</span> <span class="o">=</span> <span class="p">[[],[]]</span>
+        <span class="nx">@paper</span><span class="p">.</span><span class="nx">clear</span><span class="p">(</span> <span class="p">)</span></pre></div>
       </td>
     </tr>
     <tr id='section-app.parse_string(_)'>
@@ -605,8 +606,8 @@ current state &ldquo;save-able&rdquo;</p>
 </ul>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">parse_string</span><span class="p">:</span> <span class="p">(</span> <span class="n">str</span> <span class="p">)</span> <span class="o">-&gt;</span>
-        <span class="vi">@clear_graph</span><span class="p">(</span> <span class="p">)</span></pre></div>
+        <div class='highlight'><pre>    <span class="nv">parse_string: </span><span class="nf">( str ) -&gt;</span>
+        <span class="nx">@clear_graph</span><span class="p">(</span> <span class="p">)</span></pre></div>
       </td>
     </tr>
     <tr id='section-31'>
@@ -617,8 +618,8 @@ current state &ldquo;save-able&rdquo;</p>
         <p>Decode string to an object</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="n">json</span> <span class="o">=</span> <span class="n">base64Decode</span> <span class="n">str</span>
-        <span class="n">obj</span> <span class="o">=</span> <span class="vg">$.</span><span class="n">parseJSON</span> <span class="n">json</span></pre></div>
+        <div class='highlight'><pre>        <span class="nv">json = </span><span class="nx">base64Decode</span> <span class="nx">str</span>
+        <span class="nv">obj = </span><span class="nx">$</span><span class="p">.</span><span class="nx">parseJSON</span> <span class="nx">json</span></pre></div>
       </td>
     </tr>
     <tr id='section-32'>
@@ -629,8 +630,8 @@ current state &ldquo;save-able&rdquo;</p>
         <p>Restore points</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="k">for</span> <span class="n">point</span> <span class="k">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">points</span>
-            <span class="vi">@add_point</span> <span class="n">point</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">point</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">point</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">point</span><span class="o">.</span><span class="n">id</span></pre></div>
+        <div class='highlight'><pre>        <span class="k">for</span> <span class="nx">point</span> <span class="k">in</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">points</span>
+            <span class="nx">@add_point</span> <span class="nx">point</span><span class="p">.</span><span class="nx">x</span><span class="p">,</span> <span class="nx">point</span><span class="p">.</span><span class="nx">y</span><span class="p">,</span> <span class="nx">point</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="nx">point</span><span class="p">.</span><span class="nx">id</span></pre></div>
       </td>
     </tr>
     <tr id='section-33'>
@@ -642,8 +643,8 @@ current state &ldquo;save-able&rdquo;</p>
 
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="k">for</span> <span class="n">con</span> <span class="k">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">connections</span>
-            <span class="vi">@connect</span> <span class="vi">@points_id_map</span><span class="o">[</span><span class="n">con</span><span class="o">.</span><span class="n">a</span><span class="o">]</span><span class="p">,</span> <span class="vi">@points_id_map</span><span class="o">[</span><span class="n">con</span><span class="o">.</span><span class="n">b</span><span class="o">]</span><span class="p">,</span> <span class="n">con</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span> <span class="n">con</span><span class="o">.</span><span class="n">direction</span></pre></div>
+        <div class='highlight'><pre>        <span class="k">for</span> <span class="nx">con</span> <span class="k">in</span> <span class="nx">obj</span><span class="p">.</span><span class="nx">connections</span>
+            <span class="nx">@connect</span> <span class="nx">@points_id_map</span><span class="p">[</span><span class="nx">con</span><span class="p">.</span><span class="nx">a</span><span class="p">],</span> <span class="nx">@points_id_map</span><span class="p">[</span><span class="nx">con</span><span class="p">.</span><span class="nx">b</span><span class="p">],</span> <span class="nx">con</span><span class="p">.</span><span class="nx">weight</span><span class="p">,</span> <span class="nx">con</span><span class="p">.</span><span class="nx">direction</span></pre></div>
       </td>
     </tr>
   </table>

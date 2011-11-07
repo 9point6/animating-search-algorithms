@@ -15,33 +15,33 @@ class itarative_deepening extends algorithm
         todo_list.push root_node
 
         # while there are still nodes outside the
-		# boundary of the limit.
-        while (todo_list.length < limit)
-				
-				# while there are nodes still left to check
-				while (todo_list.length is not 0)
-				current_node = todo_list.pull
+        # boundary of the limit.
+        while todo_list.length < limit
 
-					# If the goal node is the current node, end the search
-					if current_node is goal_node
-						explored_nodes.push current_node
-						break
+            # while there are nodes still left to check
+            while todo_list.length is not 0
+                current_node = todo_list.pull
 
-					#get the connections of the current node
-					neighbours = current_node.connections
+                # If the goal node is the current node, end the search
+                if current_node is goal_node
+                    explored_nodes.push current_node
+                    break
 
-					for neighbour in neighbours
-						todo_list.push neighbour.p
+                #get the connections of the current node
+                neighbours = current_node.connections
 
-						# add the node to the explored nodes array and
-						# the connection to the explored connections array
-						explored_nodes.push neighbour.p
-						explored_connections.push neighbour.c
-						
-			limit++
-	
-	gen_info: ->
+                for neighbour in neighbours
+                    todo_list.push neighbour.p
+
+                    # add the node to the explored nodes array and
+                    # the connection to the explored connections array
+                    explored_nodes.push neighbour.p
+                    explored_connections.push neighbour.c
+
+            limit++
+
+    gen_info: ->
       alert "general information"
 
-	run_info: ->
+    run_info: ->
       alert "runtime information"

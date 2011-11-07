@@ -19,6 +19,7 @@
           <a class="source" href="algorithm.html">algorithm.coffee</a>
           <a class="source" href="animate.html">animate.coffee</a>
           <a class="source" href="connection.html">connection.coffee</a>
+          <a class="source" href="itarative_deepening.html">itarative_deepening.coffee</a>
           <a class="source" href="main.html">main.coffee</a>
           <a class="source" href="point.html">point.coffee</a>
           <a class="source" href="z-other.html">z-other.coffee</a>
@@ -75,7 +76,7 @@
         <p>Graph node class</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="k">class</span> <span class="n">point</span></pre></div>
+        <div class='highlight'><pre><span class="k">class</span> <span class="nx">point</span></pre></div>
       </td>
     </tr>
     <tr id='section-point.constructor(_)'>
@@ -97,9 +98,9 @@
 </ul>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">constructor</span><span class="p">:</span> <span class="p">(</span> <span class="vi">@raphael</span><span class="p">,</span> <span class="vi">@x</span><span class="p">,</span> <span class="vi">@y</span><span class="p">,</span> <span class="vi">@name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span> <span class="p">)</span> <span class="o">-&gt;</span>
-        <span class="vi">@move_mode</span> <span class="o">=</span> <span class="kp">false</span>
-        <span class="vi">@connections</span> <span class="o">=</span> <span class="o">[]</span></pre></div>
+        <div class='highlight'><pre>    <span class="nv">constructor: </span><span class="nf">( @raphael, @x, @y, @name = &quot;&quot; ) -&gt;</span>
+        <span class="vi">@move_mode = </span><span class="kc">false</span>
+        <span class="vi">@connections = </span><span class="p">[]</span></pre></div>
       </td>
     </tr>
     <tr id='section-5'>
@@ -110,8 +111,8 @@
         <p>Fixes a weird issue on reloading from JSON</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="vi">@x</span> <span class="o">=</span> <span class="n">parseInt</span> <span class="vi">@x</span>
-        <span class="vi">@y</span> <span class="o">=</span> <span class="n">parseInt</span> <span class="vi">@y</span></pre></div>
+        <div class='highlight'><pre>        <span class="vi">@x = </span><span class="nb">parseInt</span> <span class="nx">@x</span>
+        <span class="vi">@y = </span><span class="nb">parseInt</span> <span class="nx">@y</span></pre></div>
       </td>
     </tr>
     <tr id='section-6'>
@@ -122,8 +123,8 @@
         <p>Assign point an ID. Used for connections and save/restore</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="vi">@id</span> <span class="o">=</span> <span class="n">uniqueId</span><span class="p">(</span> <span class="p">)</span>
-        <span class="n">app</span><span class="o">.</span><span class="n">points_id_map</span></pre></div>
+        <div class='highlight'><pre>        <span class="vi">@id = </span><span class="nx">uniqueId</span><span class="p">(</span> <span class="p">)</span>
+        <span class="nx">app</span><span class="p">.</span><span class="nx">points_id_map</span></pre></div>
       </td>
     </tr>
     <tr id='section-7'>
@@ -134,13 +135,13 @@
         <p>Draw circle and label</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="vi">@r</span> <span class="o">=</span> <span class="vi">@raphael</span><span class="o">.</span><span class="n">circle</span> <span class="vi">@x</span><span class="p">,</span> <span class="vi">@y</span><span class="p">,</span> <span class="mi">5</span>
-        <span class="vi">@label</span> <span class="o">=</span> <span class="vi">@raphael</span><span class="o">.</span><span class="n">text</span> <span class="vi">@x</span><span class="p">,</span> <span class="vi">@y</span> <span class="o">-</span> <span class="mi">20</span><span class="p">,</span> <span class="vi">@name</span>
-        <span class="vi">@label</span><span class="o">.</span><span class="n">attr</span>
-            <span class="n">opacity</span><span class="p">:</span> <span class="mi">0</span>
-        <span class="vi">@r</span><span class="o">.</span><span class="n">attr</span>
-            <span class="n">fill</span><span class="p">:</span> <span class="s2">&quot;#000&quot;</span>
-            <span class="n">stroke</span><span class="p">:</span> <span class="s2">&quot;transparent&quot;</span></pre></div>
+        <div class='highlight'><pre>        <span class="vi">@r = </span><span class="nx">@raphael</span><span class="p">.</span><span class="nx">circle</span> <span class="nx">@x</span><span class="p">,</span> <span class="nx">@y</span><span class="p">,</span> <span class="mi">5</span>
+        <span class="vi">@label = </span><span class="nx">@raphael</span><span class="p">.</span><span class="nx">text</span> <span class="nx">@x</span><span class="p">,</span> <span class="nx">@y</span> <span class="o">-</span> <span class="mi">20</span><span class="p">,</span> <span class="nx">@name</span>
+        <span class="nx">@label</span><span class="p">.</span><span class="nx">attr</span>
+            <span class="nv">opacity: </span><span class="mi">0</span>
+        <span class="nx">@r</span><span class="p">.</span><span class="nx">attr</span>
+            <span class="nv">fill: </span><span class="s2">&quot;#000&quot;</span>
+            <span class="nv">stroke: </span><span class="s2">&quot;transparent&quot;</span></pre></div>
       </td>
     </tr>
     <tr id='section-8'>
@@ -151,9 +152,9 @@
         <p>Set event handlers</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="vi">@r</span><span class="o">.</span><span class="n">hover</span> <span class="vi">@hover_in</span><span class="p">,</span> <span class="vi">@hover_out</span>
-        <span class="vi">@r</span><span class="o">.</span><span class="n">click</span> <span class="vi">@click</span>
-        <span class="vi">@r</span><span class="o">.</span><span class="n">drag</span> <span class="vi">@drag_move</span><span class="p">,</span> <span class="vi">@drag_start</span><span class="p">,</span> <span class="vi">@drag_up</span></pre></div>
+        <div class='highlight'><pre>        <span class="nx">@r</span><span class="p">.</span><span class="nx">hover</span> <span class="nx">@hover_in</span><span class="p">,</span> <span class="nx">@hover_out</span>
+        <span class="nx">@r</span><span class="p">.</span><span class="nx">click</span> <span class="nx">@click</span>
+        <span class="nx">@r</span><span class="p">.</span><span class="nx">drag</span> <span class="nx">@drag_move</span><span class="p">,</span> <span class="nx">@drag_start</span><span class="p">,</span> <span class="nx">@drag_up</span></pre></div>
       </td>
     </tr>
     <tr id='section-point.connect(_)'>
@@ -174,10 +175,10 @@ app object. Used to allow easy navigation of connections from each node.</p>
 </ul>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">connect</span><span class="p">:</span> <span class="p">(</span> <span class="n">other_point</span><span class="p">,</span> <span class="n">connection</span> <span class="p">)</span> <span class="o">-&gt;</span>
-        <span class="vi">@connections</span><span class="o">.</span><span class="n">push</span>
-            <span class="nb">p</span><span class="p">:</span> <span class="n">other_point</span>
-            <span class="n">c</span><span class="p">:</span> <span class="n">connection</span></pre></div>
+        <div class='highlight'><pre>    <span class="nv">connect: </span><span class="nf">( other_point, connection ) -&gt;</span>
+        <span class="nx">@connections</span><span class="p">.</span><span class="nx">push</span>
+            <span class="nv">p: </span><span class="nx">other_point</span>
+            <span class="nv">c: </span><span class="nx">connection</span></pre></div>
       </td>
     </tr>
     <tr id='section-point.remove(_)'>
@@ -196,7 +197,7 @@ app object. Used to allow easy navigation of connections from each node.</p>
 </ul>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">remove</span><span class="p">:</span> <span class="o">=&gt;</span></pre></div>
+        <div class='highlight'><pre>    <span class="nv">remove: </span><span class="o">=&gt;</span></pre></div>
       </td>
     </tr>
     <tr id='section-11'>
@@ -207,8 +208,8 @@ app object. Used to allow easy navigation of connections from each node.</p>
         <p>Remove all connections involving the point first</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="k">for</span> <span class="n">con</span> <span class="k">in</span> <span class="vi">@connections</span>
-            <span class="n">con</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span> <span class="p">)</span></pre></div>
+        <div class='highlight'><pre>        <span class="k">for</span> <span class="nx">con</span> <span class="k">in</span> <span class="nx">@connections</span>
+            <span class="nx">con</span><span class="p">.</span><span class="nx">c</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span> <span class="p">)</span></pre></div>
       </td>
     </tr>
     <tr id='section-12'>
@@ -219,9 +220,9 @@ app object. Used to allow easy navigation of connections from each node.</p>
         <p>Animate the point disappearing</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="vi">@r</span><span class="o">.</span><span class="n">animate</span>
-           <span class="n">r</span><span class="p">:</span> <span class="mi">0</span>
-           <span class="n">opacity</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <div class='highlight'><pre>        <span class="nx">@r</span><span class="p">.</span><span class="nx">animate</span>
+           <span class="nv">r: </span><span class="mi">0</span>
+           <span class="nv">opacity: </span><span class="mi">0</span><span class="p">,</span>
            <span class="mi">200</span><span class="p">,</span> <span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="o">=&gt;</span></pre></div>
       </td>
     </tr>
@@ -234,8 +235,8 @@ app object. Used to allow easy navigation of connections from each node.</p>
 the canvas.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>                <span class="vi">@label</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span> <span class="p">)</span>
-                <span class="vi">@r</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span> <span class="p">)</span></pre></div>
+        <div class='highlight'><pre>                <span class="nx">@label</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span> <span class="p">)</span>
+                <span class="nx">@r</span><span class="p">.</span><span class="nx">remove</span><span class="p">(</span> <span class="p">)</span></pre></div>
       </td>
     </tr>
     <tr id='section-14'>
@@ -246,11 +247,11 @@ the canvas.</p>
         <p>Remove point from <code>app</code> class&rsquo;s list</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>                <span class="n">newpoints</span> <span class="o">=</span> <span class="o">[]</span>
-                <span class="k">for</span> <span class="n">point</span> <span class="k">in</span> <span class="n">a</span><span class="o">.</span><span class="n">points</span>
-                    <span class="k">if</span> <span class="n">point</span><span class="o">.</span><span class="n">id</span> <span class="n">isnt</span> <span class="vi">@id</span>
-                        <span class="n">newpoints</span><span class="o">.</span><span class="n">push</span> <span class="n">point</span>
-                <span class="n">a</span><span class="o">.</span><span class="n">points</span> <span class="o">=</span> <span class="n">newpoints</span></pre></div>
+        <div class='highlight'><pre>                <span class="nv">newpoints = </span><span class="p">[]</span>
+                <span class="k">for</span> <span class="nx">point</span> <span class="k">in</span> <span class="nx">a</span><span class="p">.</span><span class="nx">points</span>
+                    <span class="k">if</span> <span class="nx">point</span><span class="p">.</span><span class="nx">id</span> <span class="o">isnt</span> <span class="nx">@id</span>
+                        <span class="nx">newpoints</span><span class="p">.</span><span class="nx">push</span> <span class="nx">point</span>
+                <span class="nv">a.points = </span><span class="nx">newpoints</span></pre></div>
       </td>
     </tr>
     <tr id='section-point.move(_)'>
@@ -270,13 +271,13 @@ the canvas.</p>
 </ul>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">move</span><span class="p">:</span> <span class="p">(</span> <span class="vi">@x</span><span class="p">,</span> <span class="vi">@y</span> <span class="p">)</span> <span class="o">-&gt;</span>
-        <span class="vi">@r</span><span class="o">.</span><span class="n">attr</span>
-            <span class="n">cx</span><span class="p">:</span> <span class="vi">@x</span>
-            <span class="n">cy</span><span class="p">:</span> <span class="vi">@y</span>
-        <span class="vi">@label</span><span class="o">.</span><span class="n">attr</span>
-            <span class="n">x</span><span class="p">:</span> <span class="vi">@x</span>
-            <span class="n">y</span><span class="p">:</span> <span class="vi">@y</span> <span class="o">-</span> <span class="mi">20</span></pre></div>
+        <div class='highlight'><pre>    <span class="nv">move: </span><span class="nf">( @x, @y ) -&gt;</span>
+        <span class="nx">@r</span><span class="p">.</span><span class="nx">attr</span>
+            <span class="nv">cx: </span><span class="nx">@x</span>
+            <span class="nv">cy: </span><span class="nx">@y</span>
+        <span class="nx">@label</span><span class="p">.</span><span class="nx">attr</span>
+            <span class="nv">x: </span><span class="nx">@x</span>
+            <span class="nv">y: </span><span class="nx">@y</span> <span class="o">-</span> <span class="mi">20</span></pre></div>
       </td>
     </tr>
     <tr id='section-point.click(_)'>
@@ -303,17 +304,17 @@ the canvas.</p>
 </ul>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">click</span><span class="p">:</span> <span class="p">(</span> <span class="n">e</span> <span class="p">)</span> <span class="o">=&gt;</span>
-        <span class="k">if</span> <span class="n">a</span><span class="o">.</span><span class="n">connect_mode</span> <span class="n">is</span> <span class="kp">true</span>
-            <span class="vi">@r</span><span class="o">.</span><span class="n">animate</span>
-                <span class="n">r</span><span class="p">:</span> <span class="mi">10</span>
-                <span class="n">fill</span><span class="p">:</span> <span class="s2">&quot;#f00&quot;</span><span class="p">,</span>
+        <div class='highlight'><pre>    <span class="nv">click: </span><span class="p">(</span> <span class="nx">e</span> <span class="p">)</span> <span class="o">=&gt;</span>
+        <span class="k">if</span> <span class="nx">a</span><span class="p">.</span><span class="nx">connect_mode</span> <span class="o">is</span> <span class="kc">true</span>
+            <span class="nx">@r</span><span class="p">.</span><span class="nx">animate</span>
+                <span class="nv">r: </span><span class="mi">10</span>
+                <span class="nv">fill: </span><span class="s2">&quot;#f00&quot;</span><span class="p">,</span>
                 <span class="mi">100</span>
-            <span class="n">a</span><span class="o">.</span><span class="n">do_mouse_connection</span> <span class="err">@</span>
-        <span class="k">else</span> <span class="k">if</span> <span class="n">a</span><span class="o">.</span><span class="n">remove_mode</span> <span class="n">is</span> <span class="kp">true</span>
-            <span class="n">a</span><span class="o">.</span><span class="n">do_mouse_removal</span> <span class="err">@</span>
+            <span class="nx">a</span><span class="p">.</span><span class="nx">do_mouse_connection</span> <span class="err">@</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="nx">a</span><span class="p">.</span><span class="nx">remove_mode</span> <span class="o">is</span> <span class="kc">true</span>
+            <span class="nx">a</span><span class="p">.</span><span class="nx">do_mouse_removal</span> <span class="err">@</span>
         <span class="k">else</span>
-            <span class="kp">false</span></pre></div>
+            <span class="kc">false</span></pre></div>
       </td>
     </tr>
     <tr id='section-point.drag_start(_)'>
@@ -326,9 +327,9 @@ the canvas.</p>
 <p>Drag start handler. Sets the object into move mode.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">drag_start</span><span class="p">:</span> <span class="o">=&gt;</span>
-        <span class="k">if</span> <span class="vi">@move_mode</span> <span class="n">is</span> <span class="kp">false</span>
-            <span class="vi">@move_mode</span> <span class="o">=</span> <span class="kp">true</span></pre></div>
+        <div class='highlight'><pre>    <span class="nv">drag_start: </span><span class="o">=&gt;</span>
+        <span class="k">if</span> <span class="nx">@move_mode</span> <span class="o">is</span> <span class="kc">false</span>
+            <span class="vi">@move_mode = </span><span class="kc">true</span></pre></div>
       </td>
     </tr>
     <tr id='section-18'>
@@ -339,9 +340,9 @@ the canvas.</p>
         <p>Needed because the drag events work in relative co-ordinates</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>            <span class="o">[</span><span class="vi">@startx</span><span class="p">,</span> <span class="vi">@starty</span><span class="o">]</span> <span class="o">=</span> <span class="o">[</span><span class="mi">0</span> <span class="o">+</span> <span class="vi">@x</span><span class="p">,</span> <span class="mi">0</span> <span class="o">+</span> <span class="vi">@y</span><span class="o">]</span>
+        <div class='highlight'><pre>            <span class="p">[</span><span class="nx">@startx</span><span class="p">,</span> <span class="nx">@starty</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span> <span class="o">+</span> <span class="nx">@x</span><span class="p">,</span> <span class="mi">0</span> <span class="o">+</span> <span class="nx">@y</span><span class="p">]</span>
         <span class="k">else</span>
-            <span class="kp">false</span></pre></div>
+            <span class="kc">false</span></pre></div>
       </td>
     </tr>
     <tr id='section-point.drag_move(_)'>
@@ -361,11 +362,11 @@ the canvas.</p>
 </ul>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">drag_move</span><span class="p">:</span> <span class="p">(</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span> <span class="p">)</span> <span class="o">=&gt;</span>
-        <span class="vi">@move</span> <span class="vi">@startx</span> <span class="o">+</span> <span class="n">dx</span><span class="p">,</span> <span class="vi">@starty</span> <span class="o">+</span> <span class="n">dy</span>
-        <span class="k">for</span> <span class="n">connection</span> <span class="k">in</span> <span class="vi">@connections</span>
-            <span class="k">do</span> <span class="p">(</span> <span class="n">connection</span> <span class="p">)</span> <span class="o">-&gt;</span>
-                <span class="n">connection</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">update_path</span><span class="p">(</span> <span class="p">)</span></pre></div>
+        <div class='highlight'><pre>    <span class="nv">drag_move: </span><span class="p">(</span> <span class="nx">dx</span><span class="p">,</span> <span class="nx">dy</span> <span class="p">)</span> <span class="o">=&gt;</span>
+        <span class="nx">@move</span> <span class="nx">@startx</span> <span class="o">+</span> <span class="nx">dx</span><span class="p">,</span> <span class="nx">@starty</span> <span class="o">+</span> <span class="nx">dy</span>
+        <span class="k">for</span> <span class="nx">connection</span> <span class="k">in</span> <span class="nx">@connections</span>
+            <span class="nx">do</span> <span class="nf">( connection ) -&gt;</span>
+                <span class="nx">connection</span><span class="p">.</span><span class="nx">c</span><span class="p">.</span><span class="nx">update_path</span><span class="p">(</span> <span class="p">)</span></pre></div>
       </td>
     </tr>
     <tr id='section-point.drag_up(_)'>
@@ -378,8 +379,8 @@ the canvas.</p>
 <p>Drag finish handler. Takes the object out of move mode.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">drag_up</span><span class="p">:</span> <span class="o">=&gt;</span>
-        <span class="vi">@move_mode</span> <span class="o">=</span> <span class="kp">false</span></pre></div>
+        <div class='highlight'><pre>    <span class="nv">drag_up: </span><span class="o">=&gt;</span>
+        <span class="vi">@move_mode = </span><span class="kc">false</span></pre></div>
       </td>
     </tr>
     <tr id='section-point.move&lt;em&gt;_&lt;/em&gt;with_mouse(_)'>
@@ -393,15 +394,15 @@ the canvas.</p>
 because it&rsquo;s used in the new <code>point</code> method to allow the user to drop it</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">move_with_mouse</span><span class="p">:</span> <span class="o">=&gt;</span>
-        <span class="k">if</span> <span class="vi">@drag_start</span><span class="p">(</span> <span class="p">)</span>
-            <span class="o">[</span><span class="vi">@startx</span><span class="p">,</span> <span class="vi">@starty</span><span class="o">]</span> <span class="o">=</span> <span class="o">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="o">]</span>
-            <span class="err">$</span><span class="p">(</span> <span class="vi">@raphael</span><span class="o">.</span><span class="n">canvas</span> <span class="p">)</span><span class="o">.</span><span class="n">mousemove</span> <span class="p">(</span> <span class="n">e</span> <span class="p">)</span> <span class="o">=&gt;</span>
-                <span class="vi">@drag_move</span> <span class="n">e</span><span class="o">.</span><span class="n">pageX</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">pageY</span>
-                <span class="err">$</span><span class="p">(</span> <span class="vi">@raphael</span><span class="o">.</span><span class="n">canvas</span> <span class="p">)</span><span class="o">.</span><span class="n">click</span> <span class="p">(</span> <span class="n">e</span> <span class="p">)</span> <span class="o">=&gt;</span>
-                    <span class="vi">@drag_up</span><span class="p">(</span> <span class="p">)</span>
-                    <span class="err">$</span><span class="p">(</span> <span class="vi">@raphael</span><span class="o">.</span><span class="n">canvas</span> <span class="p">)</span><span class="o">.</span><span class="n">unbind</span><span class="p">(</span> <span class="s1">&#39;mousemove&#39;</span> <span class="p">)</span>
-                    <span class="err">$</span><span class="p">(</span> <span class="vi">@raphael</span><span class="o">.</span><span class="n">canvas</span> <span class="p">)</span><span class="o">.</span><span class="n">unbind</span><span class="p">(</span> <span class="s1">&#39;click&#39;</span> <span class="p">)</span></pre></div>
+        <div class='highlight'><pre>    <span class="nv">move_with_mouse: </span><span class="o">=&gt;</span>
+        <span class="k">if</span> <span class="nx">@drag_start</span><span class="p">(</span> <span class="p">)</span>
+            <span class="p">[</span><span class="nx">@startx</span><span class="p">,</span> <span class="nx">@starty</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="nx">$</span><span class="p">(</span> <span class="nx">@raphael</span><span class="p">.</span><span class="nx">canvas</span> <span class="p">).</span><span class="nx">mousemove</span> <span class="p">(</span> <span class="nx">e</span> <span class="p">)</span> <span class="o">=&gt;</span>
+                <span class="nx">@drag_move</span> <span class="nx">e</span><span class="p">.</span><span class="nx">pageX</span><span class="p">,</span> <span class="nx">e</span><span class="p">.</span><span class="nx">pageY</span>
+                <span class="nx">$</span><span class="p">(</span> <span class="nx">@raphael</span><span class="p">.</span><span class="nx">canvas</span> <span class="p">).</span><span class="nx">click</span> <span class="p">(</span> <span class="nx">e</span> <span class="p">)</span> <span class="o">=&gt;</span>
+                    <span class="nx">@drag_up</span><span class="p">(</span> <span class="p">)</span>
+                    <span class="nx">$</span><span class="p">(</span> <span class="nx">@raphael</span><span class="p">.</span><span class="nx">canvas</span> <span class="p">).</span><span class="nx">unbind</span><span class="p">(</span> <span class="s1">&#39;mousemove&#39;</span> <span class="p">)</span>
+                    <span class="nx">$</span><span class="p">(</span> <span class="nx">@raphael</span><span class="p">.</span><span class="nx">canvas</span> <span class="p">).</span><span class="nx">unbind</span><span class="p">(</span> <span class="s1">&#39;click&#39;</span> <span class="p">)</span></pre></div>
       </td>
     </tr>
     <tr id='section-point.hover_in(_)'>
@@ -426,14 +427,14 @@ because it&rsquo;s used in the new <code>point</code> method to allow the user t
 </ul>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">hover_in</span><span class="p">:</span> <span class="p">(</span> <span class="n">e</span> <span class="p">)</span> <span class="o">=&gt;</span>
-        <span class="vi">@r</span><span class="o">.</span><span class="n">attr</span>
-            <span class="n">cursor</span><span class="p">:</span> <span class="s1">&#39;pointer&#39;</span>
-        <span class="vi">@r</span><span class="o">.</span><span class="n">animate</span>
-            <span class="n">r</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+        <div class='highlight'><pre>    <span class="nv">hover_in: </span><span class="p">(</span> <span class="nx">e</span> <span class="p">)</span> <span class="o">=&gt;</span>
+        <span class="nx">@r</span><span class="p">.</span><span class="nx">attr</span>
+            <span class="nv">cursor: </span><span class="s1">&#39;pointer&#39;</span>
+        <span class="nx">@r</span><span class="p">.</span><span class="nx">animate</span>
+            <span class="nv">r: </span><span class="mi">10</span><span class="p">,</span>
             <span class="mi">100</span>
-        <span class="vi">@label</span><span class="o">.</span><span class="n">animate</span>
-            <span class="n">opacity</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="nx">@label</span><span class="p">.</span><span class="nx">animate</span>
+            <span class="nv">opacity: </span><span class="mi">1</span><span class="p">,</span>
             <span class="mi">100</span></pre></div>
       </td>
     </tr>
@@ -459,14 +460,14 @@ because it&rsquo;s used in the new <code>point</code> method to allow the user t
 </ul>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">hover_out</span><span class="p">:</span> <span class="p">(</span> <span class="n">e</span> <span class="p">)</span> <span class="o">=&gt;</span>
-        <span class="vi">@r</span><span class="o">.</span><span class="n">attr</span>
-            <span class="n">cursor</span><span class="p">:</span> <span class="s1">&#39;normal&#39;</span>
-        <span class="vi">@r</span><span class="o">.</span><span class="n">animate</span>
-            <span class="n">r</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+        <div class='highlight'><pre>    <span class="nv">hover_out: </span><span class="p">(</span> <span class="nx">e</span> <span class="p">)</span> <span class="o">=&gt;</span>
+        <span class="nx">@r</span><span class="p">.</span><span class="nx">attr</span>
+            <span class="nv">cursor: </span><span class="s1">&#39;normal&#39;</span>
+        <span class="nx">@r</span><span class="p">.</span><span class="nx">animate</span>
+            <span class="nv">r: </span><span class="mi">5</span><span class="p">,</span>
             <span class="mi">100</span>
-        <span class="vi">@label</span><span class="o">.</span><span class="n">animate</span>
-            <span class="n">opacity</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="nx">@label</span><span class="p">.</span><span class="nx">animate</span>
+            <span class="nv">opacity: </span><span class="mi">0</span><span class="p">,</span>
             <span class="mi">100</span></pre></div>
       </td>
     </tr>
@@ -493,13 +494,13 @@ because it&rsquo;s used in the new <code>point</code> method to allow the user t
 </ul>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">update_style</span><span class="p">:</span> <span class="p">(</span> <span class="n">style_name</span> <span class="p">)</span> <span class="o">-&gt;</span>
-        <span class="n">anim_speed</span> <span class="o">=</span> <span class="mi">100</span>
-        <span class="n">switch</span> <span class="n">style_name</span>
+        <div class='highlight'><pre>    <span class="nv">update_style: </span><span class="nf">( style_name ) -&gt;</span>
+        <span class="nv">anim_speed = </span><span class="mi">100</span>
+        <span class="k">switch</span> <span class="nx">style_name</span>
             <span class="k">when</span> <span class="s2">&quot;normal&quot;</span>
-                <span class="vi">@r</span><span class="o">.</span><span class="n">animate</span>
-                    <span class="n">fill</span><span class="p">:</span> <span class="s2">&quot;#000&quot;</span><span class="p">,</span>
-                    <span class="n">anim_speed</span></pre></div>
+                <span class="nx">@r</span><span class="p">.</span><span class="nx">animate</span>
+                    <span class="nv">fill: </span><span class="s2">&quot;#000&quot;</span><span class="p">,</span>
+                    <span class="nx">anim_speed</span></pre></div>
       </td>
     </tr>
     <tr id='section-25'>
@@ -511,9 +512,9 @@ because it&rsquo;s used in the new <code>point</code> method to allow the user t
       </td>
       <td class=code>
         <div class='highlight'><pre>            <span class="k">when</span> <span class="s2">&quot;viewing&quot;</span>
-                <span class="vi">@r</span><span class="o">.</span><span class="n">animate</span>
-                    <span class="n">fill</span><span class="p">:</span> <span class="s2">&quot;#008000&quot;</span><span class="p">,</span>
-                    <span class="n">anim_speed</span></pre></div>
+                <span class="nx">@r</span><span class="p">.</span><span class="nx">animate</span>
+                    <span class="nv">fill: </span><span class="s2">&quot;#008000&quot;</span><span class="p">,</span>
+                    <span class="nx">anim_speed</span></pre></div>
       </td>
     </tr>
     <tr id='section-26'>
@@ -526,9 +527,9 @@ because it&rsquo;s used in the new <code>point</code> method to allow the user t
       </td>
       <td class=code>
         <div class='highlight'><pre>            <span class="k">when</span> <span class="s2">&quot;visited&quot;</span>
-                <span class="vi">@r</span><span class="o">.</span><span class="n">animate</span>
-                    <span class="n">fill</span><span class="p">:</span> <span class="s2">&quot;#999&quot;</span><span class="p">,</span>
-                    <span class="n">anim_speed</span></pre></div>
+                <span class="nx">@r</span><span class="p">.</span><span class="nx">animate</span>
+                    <span class="nv">fill: </span><span class="s2">&quot;#999&quot;</span><span class="p">,</span>
+                    <span class="nx">anim_speed</span></pre></div>
       </td>
     </tr>
   </table>

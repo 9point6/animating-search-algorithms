@@ -19,6 +19,7 @@
           <a class="source" href="algorithm.html">algorithm.coffee</a>
           <a class="source" href="animate.html">animate.coffee</a>
           <a class="source" href="connection.html">connection.coffee</a>
+          <a class="source" href="itarative_deepening.html">itarative_deepening.coffee</a>
           <a class="source" href="main.html">main.coffee</a>
           <a class="source" href="point.html">point.coffee</a>
           <a class="source" href="z-other.html">z-other.coffee</a>
@@ -83,10 +84,10 @@
 </ul>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="n">window</span><span class="o">.</span><span class="n">uniqueId</span> <span class="o">=</span> <span class="p">(</span> <span class="n">length</span> <span class="o">=</span> <span class="mi">8</span> <span class="p">)</span> <span class="o">-&gt;</span>
-    <span class="nb">id</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-    <span class="nb">id</span> <span class="o">+=</span> <span class="no">Math</span><span class="o">.</span><span class="n">random</span><span class="p">(</span> <span class="p">)</span><span class="o">.</span><span class="n">toString</span><span class="p">(</span> <span class="mi">36</span> <span class="p">)</span><span class="o">.</span><span class="n">substr</span><span class="p">(</span> <span class="mi">2</span> <span class="p">)</span> <span class="k">while</span> <span class="nb">id</span><span class="o">.</span><span class="n">length</span> <span class="o">&lt;</span> <span class="n">length</span>
-    <span class="nb">id</span><span class="o">.</span><span class="n">substr</span> <span class="mi">0</span><span class="p">,</span> <span class="n">length</span></pre></div>
+        <div class='highlight'><pre><span class="nb">window</span><span class="p">.</span><span class="nv">uniqueId = </span><span class="nf">( length = 8 ) -&gt;</span>
+    <span class="nv">id = </span><span class="s2">&quot;&quot;</span>
+    <span class="nx">id</span> <span class="o">+=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">(</span> <span class="p">).</span><span class="nx">toString</span><span class="p">(</span> <span class="mi">36</span> <span class="p">).</span><span class="nx">substr</span><span class="p">(</span> <span class="mi">2</span> <span class="p">)</span> <span class="k">while</span> <span class="nx">id</span><span class="p">.</span><span class="nx">length</span> <span class="o">&lt;</span> <span class="nx">length</span>
+    <span class="nx">id</span><span class="p">.</span><span class="nx">substr</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">length</span></pre></div>
       </td>
     </tr>
     <tr id='section-window.base64Encode(_)'>
@@ -105,35 +106,35 @@
 </ul>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="n">window</span><span class="o">.</span><span class="n">base64</span> <span class="o">=</span> <span class="s2">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/&quot;</span>
-<span class="n">window</span><span class="o">.</span><span class="n">base64Encode</span> <span class="o">=</span> <span class="p">(</span> <span class="n">text</span> <span class="p">)</span> <span class="o">-&gt;</span>
-    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="o">[]</span>
+        <div class='highlight'><pre><span class="nb">window</span><span class="p">.</span><span class="nv">base64 = </span><span class="s2">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/&quot;</span>
+<span class="nb">window</span><span class="p">.</span><span class="nv">base64Encode = </span><span class="nf">( text ) -&gt;</span>
+    <span class="nv">i = </span><span class="mi">0</span>
+    <span class="nv">result = </span><span class="p">[]</span>
 
-    <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">text</span><span class="o">.</span><span class="n">length</span>
-        <span class="n">cur</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">charCodeAt</span> <span class="n">i</span>
-        <span class="n">byteNum</span> <span class="o">=</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">3</span>
+    <span class="k">while</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">text</span><span class="p">.</span><span class="nx">length</span>
+        <span class="nv">cur = </span><span class="nx">text</span><span class="p">.</span><span class="nx">charCodeAt</span> <span class="nx">i</span>
+        <span class="nv">byteNum = </span><span class="nx">i</span> <span class="o">%</span> <span class="mi">3</span>
 
-        <span class="n">switch</span> <span class="n">byteNum</span>
+        <span class="k">switch</span> <span class="nx">byteNum</span>
             <span class="k">when</span> <span class="mi">0</span>
-                <span class="n">result</span><span class="o">.</span><span class="n">push</span> <span class="n">base64</span><span class="o">.</span><span class="n">charAt</span> <span class="n">cur</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span>
+                <span class="nx">result</span><span class="p">.</span><span class="nx">push</span> <span class="nx">base64</span><span class="p">.</span><span class="nx">charAt</span> <span class="nx">cur</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span>
             <span class="k">when</span> <span class="mi">1</span>
-                <span class="n">result</span><span class="o">.</span><span class="n">push</span> <span class="n">base64</span><span class="o">.</span><span class="n">charAt</span> <span class="p">(</span> <span class="n">prev</span> <span class="o">&amp;</span> <span class="mi">3</span> <span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span> <span class="o">|</span> <span class="p">(</span> <span class="n">cur</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span> <span class="p">)</span>
+                <span class="nx">result</span><span class="p">.</span><span class="nx">push</span> <span class="nx">base64</span><span class="p">.</span><span class="nx">charAt</span> <span class="p">(</span> <span class="nx">prev</span> <span class="o">&amp;</span> <span class="mi">3</span> <span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span> <span class="o">|</span> <span class="p">(</span> <span class="nx">cur</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span> <span class="p">)</span>
             <span class="k">when</span> <span class="mi">2</span>
-                <span class="n">result</span><span class="o">.</span><span class="n">push</span> <span class="n">base64</span><span class="o">.</span><span class="n">charAt</span> <span class="p">(</span> <span class="n">prev</span> <span class="o">&amp;</span> <span class="mh">0x0f</span> <span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span> <span class="o">|</span> <span class="p">(</span> <span class="n">cur</span> <span class="o">&gt;&gt;</span> <span class="mi">6</span> <span class="p">)</span>
-                <span class="n">result</span><span class="o">.</span><span class="n">push</span> <span class="n">base64</span><span class="o">.</span><span class="n">charAt</span> <span class="n">cur</span> <span class="o">&amp;</span> <span class="mh">0x3f</span>
+                <span class="nx">result</span><span class="p">.</span><span class="nx">push</span> <span class="nx">base64</span><span class="p">.</span><span class="nx">charAt</span> <span class="p">(</span> <span class="nx">prev</span> <span class="o">&amp;</span> <span class="mh">0x0f</span> <span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span> <span class="o">|</span> <span class="p">(</span> <span class="nx">cur</span> <span class="o">&gt;&gt;</span> <span class="mi">6</span> <span class="p">)</span>
+                <span class="nx">result</span><span class="p">.</span><span class="nx">push</span> <span class="nx">base64</span><span class="p">.</span><span class="nx">charAt</span> <span class="nx">cur</span> <span class="o">&amp;</span> <span class="mh">0x3f</span>
 
-        <span class="n">prev</span> <span class="o">=</span> <span class="n">cur</span>
-        <span class="n">i</span><span class="o">++</span>
+        <span class="nv">prev = </span><span class="nx">cur</span>
+        <span class="nx">i</span><span class="o">++</span>
 
-    <span class="k">if</span> <span class="n">byteNum</span> <span class="n">is</span> <span class="mi">0</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">push</span> <span class="n">base64</span><span class="o">.</span><span class="n">charAt</span> <span class="p">(</span> <span class="n">prev</span> <span class="o">&amp;</span> <span class="mi">3</span> <span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">push</span> <span class="s2">&quot;==&quot;</span>
-    <span class="k">else</span> <span class="k">if</span> <span class="n">byteNum</span> <span class="n">is</span> <span class="mi">1</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">push</span> <span class="n">base64</span><span class="o">.</span><span class="n">charAt</span> <span class="p">(</span> <span class="n">prev</span> <span class="o">&amp;</span> <span class="mh">0x0f</span> <span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span>
-        <span class="n">result</span><span class="o">.</span><span class="n">push</span> <span class="s2">&quot;=&quot;</span>
+    <span class="k">if</span> <span class="nx">byteNum</span> <span class="o">is</span> <span class="mi">0</span>
+        <span class="nx">result</span><span class="p">.</span><span class="nx">push</span> <span class="nx">base64</span><span class="p">.</span><span class="nx">charAt</span> <span class="p">(</span> <span class="nx">prev</span> <span class="o">&amp;</span> <span class="mi">3</span> <span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span>
+        <span class="nx">result</span><span class="p">.</span><span class="nx">push</span> <span class="s2">&quot;==&quot;</span>
+    <span class="k">else</span> <span class="k">if</span> <span class="nx">byteNum</span> <span class="o">is</span> <span class="mi">1</span>
+        <span class="nx">result</span><span class="p">.</span><span class="nx">push</span> <span class="nx">base64</span><span class="p">.</span><span class="nx">charAt</span> <span class="p">(</span> <span class="nx">prev</span> <span class="o">&amp;</span> <span class="mh">0x0f</span> <span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span>
+        <span class="nx">result</span><span class="p">.</span><span class="nx">push</span> <span class="s2">&quot;=&quot;</span>
 
-    <span class="n">result</span><span class="o">.</span><span class="n">join</span> <span class="s2">&quot;&quot;</span></pre></div>
+    <span class="nx">result</span><span class="p">.</span><span class="nx">join</span> <span class="s2">&quot;&quot;</span></pre></div>
       </td>
     </tr>
     <tr id='section-window.base64Decode(_)'>
@@ -152,32 +153,32 @@
 </ul>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="n">window</span><span class="o">.</span><span class="n">base64Decode</span> <span class="o">=</span> <span class="p">(</span> <span class="n">text</span> <span class="p">)</span> <span class="o">-&gt;</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="sr"> /\s/</span><span class="n">g</span><span class="p">,</span> <span class="s2">&quot;&quot;</span>
+        <div class='highlight'><pre><span class="nb">window</span><span class="p">.</span><span class="nv">base64Decode = </span><span class="nf">( text ) -&gt;</span>
+    <span class="nv">text = </span><span class="nx">text</span><span class="p">.</span><span class="nx">replace</span> <span class="sr">/\s/g</span><span class="p">,</span> <span class="s2">&quot;&quot;</span>
 
-    <span class="k">if</span> <span class="ow">not</span><span class="sr"> /^[a-z0-9\+\/\s]+\={0,2}$/i</span><span class="o">.</span><span class="n">test</span> <span class="n">text</span> <span class="ow">or</span> <span class="n">text</span><span class="o">.</span><span class="n">length</span> <span class="o">%</span> <span class="mi">4</span> <span class="o">&gt;</span> <span class="mi">0</span>
-        <span class="kp">throw</span> <span class="kp">new</span> <span class="no">Error</span> <span class="s2">&quot;Not a base64-encoded string.&quot;</span>
-    <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="o">[]</span>
+    <span class="k">if</span> <span class="o">not</span> <span class="sr">/^[a-z0-9\+\/\s]+\={0,2}$/i</span><span class="p">.</span><span class="nx">test</span> <span class="nx">text</span> <span class="o">or</span> <span class="nx">text</span><span class="p">.</span><span class="nx">length</span> <span class="o">%</span> <span class="mi">4</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span> <span class="s2">&quot;Not a base64-encoded string.&quot;</span>
+    <span class="nv">i = </span><span class="mi">0</span>
+    <span class="nv">result = </span><span class="p">[]</span>
 
-    <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="sr"> /\=/</span><span class="n">g</span><span class="p">,</span> <span class="s2">&quot;&quot;</span>
+    <span class="nv">text = </span><span class="nx">text</span><span class="p">.</span><span class="nx">replace</span> <span class="sr">/\=/g</span><span class="p">,</span> <span class="s2">&quot;&quot;</span>
 
-    <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">text</span><span class="o">.</span><span class="n">length</span>
-        <span class="n">cur</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">indexOf</span> <span class="n">text</span><span class="o">.</span><span class="n">charAt</span> <span class="n">i</span>
-        <span class="n">digitNum</span> <span class="o">=</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">4</span><span class="p">;</span>
+    <span class="k">while</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">text</span><span class="p">.</span><span class="nx">length</span>
+        <span class="nv">cur = </span><span class="nx">base64</span><span class="p">.</span><span class="nx">indexOf</span> <span class="nx">text</span><span class="p">.</span><span class="nx">charAt</span> <span class="nx">i</span>
+        <span class="nv">digitNum = </span><span class="nx">i</span> <span class="o">%</span> <span class="mi">4</span><span class="p">;</span>
 
-        <span class="n">switch</span> <span class="n">digitNum</span>
+        <span class="k">switch</span> <span class="nx">digitNum</span>
             <span class="k">when</span> <span class="mi">1</span>
-                <span class="n">result</span><span class="o">.</span><span class="n">push</span> <span class="nb">String</span><span class="o">.</span><span class="n">fromCharCode</span> <span class="n">prev</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span> <span class="o">|</span> <span class="n">cur</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span>
+                <span class="nx">result</span><span class="p">.</span><span class="nx">push</span> <span class="nb">String</span><span class="p">.</span><span class="nx">fromCharCode</span> <span class="nx">prev</span> <span class="o">&lt;&lt;</span> <span class="mi">2</span> <span class="o">|</span> <span class="nx">cur</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span>
             <span class="k">when</span> <span class="mi">2</span>
-                <span class="n">result</span><span class="o">.</span><span class="n">push</span> <span class="nb">String</span><span class="o">.</span><span class="n">fromCharCode</span> <span class="p">(</span><span class="n">prev</span> <span class="o">&amp;</span> <span class="mh">0x0f</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span> <span class="o">|</span> <span class="n">cur</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span>
+                <span class="nx">result</span><span class="p">.</span><span class="nx">push</span> <span class="nb">String</span><span class="p">.</span><span class="nx">fromCharCode</span> <span class="p">(</span><span class="nx">prev</span> <span class="o">&amp;</span> <span class="mh">0x0f</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">4</span> <span class="o">|</span> <span class="nx">cur</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span>
             <span class="k">when</span> <span class="mi">3</span>
-                <span class="n">result</span><span class="o">.</span><span class="n">push</span> <span class="nb">String</span><span class="o">.</span><span class="n">fromCharCode</span> <span class="p">(</span><span class="n">prev</span> <span class="o">&amp;</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">6</span> <span class="o">|</span> <span class="n">cur</span>
+                <span class="nx">result</span><span class="p">.</span><span class="nx">push</span> <span class="nb">String</span><span class="p">.</span><span class="nx">fromCharCode</span> <span class="p">(</span><span class="nx">prev</span> <span class="o">&amp;</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mi">6</span> <span class="o">|</span> <span class="nx">cur</span>
 
-        <span class="n">prev</span> <span class="o">=</span> <span class="n">cur</span>
-        <span class="n">i</span><span class="o">++</span>
+        <span class="nv">prev = </span><span class="nx">cur</span>
+        <span class="nx">i</span><span class="o">++</span>
 
-    <span class="n">result</span><span class="o">.</span><span class="n">join</span> <span class="s2">&quot;&quot;</span></pre></div>
+    <span class="nx">result</span><span class="p">.</span><span class="nx">join</span> <span class="s2">&quot;&quot;</span></pre></div>
       </td>
     </tr>
     <tr id='section-Bootstrap_Code'>
@@ -201,7 +202,7 @@
         <p>Executes on document.ready event</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="err">$</span> <span class="o">-&gt;</span></pre></div>
+        <div class='highlight'><pre><span class="nx">$</span> <span class="o">-&gt;</span></pre></div>
       </td>
     </tr>
     <tr id='section-8'>
@@ -212,7 +213,7 @@
         <p>Stop IE text selection</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="err">$</span><span class="p">(</span> <span class="s1">&#39;body&#39;</span> <span class="p">)</span><span class="o">.</span><span class="n">onselectstart</span> <span class="o">=</span> <span class="o">-&gt;</span> <span class="kp">false</span></pre></div>
+        <div class='highlight'><pre>    <span class="nx">$</span><span class="p">(</span> <span class="s1">&#39;body&#39;</span> <span class="p">).</span><span class="nv">onselectstart = </span><span class="o">-&gt;</span> <span class="kc">false</span></pre></div>
       </td>
     </tr>
     <tr id='section-9'>
@@ -224,7 +225,7 @@
 
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">window</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="kp">new</span> <span class="n">app</span></pre></div>
+        <div class='highlight'><pre>    <span class="nb">window</span><span class="p">.</span><span class="nv">a = </span><span class="k">new</span> <span class="nx">app</span></pre></div>
       </td>
     </tr>
   </table>
