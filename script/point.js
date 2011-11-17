@@ -19,7 +19,6 @@ point = (function() {
     this.x = parseInt(this.x);
     this.y = parseInt(this.y);
     this.id = uniqueId();
-    a.graph.points_id_map;
     this.r = this.raphael.circle(this.x, this.y, 5);
     this.label = this.raphael.text(this.x, this.y - 20, this.name);
     this.label.attr({
