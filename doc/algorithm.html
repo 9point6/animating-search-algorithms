@@ -19,7 +19,8 @@
           <a class="source" href="algorithm.html">algorithm.coffee</a>
           <a class="source" href="animate.html">animate.coffee</a>
           <a class="source" href="connection.html">connection.coffee</a>
-          <a class="source" href="itarative_deepening.html">itarative_deepening.coffee</a>
+          <a class="source" href="graph.html">graph.coffee</a>
+          <a class="source" href="itterative_deepening.html">itterative_deepening.coffee</a>
           <a class="source" href="main.html">main.coffee</a>
           <a class="source" href="point.html">point.coffee</a>
           <a class="source" href="z-other.html">z-other.coffee</a>
@@ -76,7 +77,7 @@
         <p>Algorithm abstract class</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="k">class</span> <span class="nx">algorithm</span></pre></div>
+        <div class='highlight'><pre><span class="k">class</span> <span class="n">algorithm</span></pre></div>
       </td>
     </tr>
     <tr id='section-4'>
@@ -87,7 +88,7 @@
         <p>Base node object</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="nv">root_node: </span><span class="kc">null</span></pre></div>
+        <div class='highlight'><pre>    <span class="n">root_node</span><span class="p">:</span> <span class="n">null</span></pre></div>
       </td>
     </tr>
     <tr id='section-5'>
@@ -98,7 +99,7 @@
         <p>Goal node object</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="nv">goal_node: </span><span class="kc">null</span></pre></div>
+        <div class='highlight'><pre>    <span class="n">goal_node</span><span class="p">:</span> <span class="n">null</span></pre></div>
       </td>
     </tr>
     <tr id='section-6'>
@@ -109,7 +110,7 @@
         <p>List of explored node IDs</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="nv">explored_nodes: </span><span class="p">[]</span></pre></div>
+        <div class='highlight'><pre>    <span class="n">explored_nodes</span><span class="p">:</span> <span class="o">[]</span></pre></div>
       </td>
     </tr>
     <tr id='section-7'>
@@ -123,7 +124,7 @@ however for Bi-direcitonal search it will be doubled e.g.
 point/point/connection/connection/point&hellip;</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="nv">traverse_info: </span><span class="p">[]</span></pre></div>
+        <div class='highlight'><pre>    <span class="n">traverse_info</span><span class="p">:</span> <span class="o">[]</span></pre></div>
       </td>
     </tr>
     <tr id='section-8'>
@@ -134,7 +135,7 @@ point/point/connection/connection/point&hellip;</p>
         <p>Name of the algorithm</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="nv">name: </span><span class="s2">&quot;Algorithm&quot;</span></pre></div>
+        <div class='highlight'><pre>    <span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;Algorithm&quot;</span></pre></div>
       </td>
     </tr>
     <tr id='section-algorithm.constructor(_)'>
@@ -148,8 +149,8 @@ point/point/connection/connection/point&hellip;</p>
 classes, but here for completeness.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="nv">constructor: </span><span class="o">-&gt;</span>
-        <span class="kc">false</span></pre></div>
+        <div class='highlight'><pre>    <span class="n">constructor</span><span class="p">:</span> <span class="o">-&gt;</span>
+        <span class="kp">false</span></pre></div>
       </td>
     </tr>
     <tr id='section-algorithm.search(_)'>
@@ -163,8 +164,8 @@ classes, but here for completeness.</p>
 algorithm.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="nv">search: </span><span class="o">-&gt;</span>
-        <span class="k">throw</span> <span class="s2">&quot;Search not implemented&quot;</span></pre></div>
+        <div class='highlight'><pre>    <span class="n">search</span><span class="p">:</span> <span class="o">-&gt;</span>
+        <span class="kp">throw</span> <span class="s2">&quot;Search not implemented&quot;</span></pre></div>
       </td>
     </tr>
     <tr id='section-algorithm.gen_info(_)'>
@@ -180,8 +181,8 @@ algorithm. (Such as time complexity, etc)</p>
 <p><strong>Return</strong> &ndash;&gt; Array containing the information</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="nv">gen_info: </span><span class="o">-&gt;</span>
-        <span class="k">throw</span> <span class="s2">&quot;General info not implemented&quot;</span></pre></div>
+        <div class='highlight'><pre>    <span class="n">gen_info</span><span class="p">:</span> <span class="o">-&gt;</span>
+        <span class="kp">throw</span> <span class="s2">&quot;General info not implemented&quot;</span></pre></div>
       </td>
     </tr>
     <tr id='section-algorithm.run_info(_)'>
@@ -198,8 +199,8 @@ running the algorithm. (Such as run time, etc)</p>
 
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="nv">run_info: </span><span class="o">-&gt;</span>
-        <span class="k">throw</span> <span class="s2">&quot;Run info not implemented&quot;</span></pre></div>
+        <div class='highlight'><pre>    <span class="n">run_info</span><span class="p">:</span> <span class="o">-&gt;</span>
+        <span class="kp">throw</span> <span class="s2">&quot;Run info not implemented&quot;</span></pre></div>
       </td>
     </tr>
   </table>

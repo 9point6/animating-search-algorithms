@@ -19,7 +19,8 @@
           <a class="source" href="algorithm.html">algorithm.coffee</a>
           <a class="source" href="animate.html">animate.coffee</a>
           <a class="source" href="connection.html">connection.coffee</a>
-          <a class="source" href="itarative_deepening.html">itarative_deepening.coffee</a>
+          <a class="source" href="graph.html">graph.coffee</a>
+          <a class="source" href="itterative_deepening.html">itterative_deepening.coffee</a>
           <a class="source" href="main.html">main.coffee</a>
           <a class="source" href="point.html">point.coffee</a>
           <a class="source" href="z-other.html">z-other.coffee</a>
@@ -76,9 +77,9 @@
         <p>DFS algorithm class</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="k">class</span> <span class="nx">DFS</span> <span class="k">extends</span> <span class="nx">algorithm</span>
+        <div class='highlight'><pre><span class="k">class</span> <span class="nc">DFS</span> <span class="n">extends</span> <span class="n">algorithm</span>
 
-  <span class="nv">name: </span><span class="s2">&quot;DFS&quot;</span></pre></div>
+  <span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;DFS&quot;</span></pre></div>
       </td>
     </tr>
     <tr id='section-DFS.search(_)'>
@@ -95,7 +96,7 @@ the root_node (only works on a tree graph)</p>
 <h3>Parameters</h3>
       </td>
       <td class=code>
-        <div class='highlight'><pre>  <span class="nv">search: </span><span class="o">-&gt;</span></pre></div>
+        <div class='highlight'><pre>  <span class="n">search</span><span class="p">:</span> <span class="o">-&gt;</span></pre></div>
       </td>
     </tr>
     <tr id='section-5'>
@@ -106,7 +107,7 @@ the root_node (only works on a tree graph)</p>
         <p>stack for nodes to be searched</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="nv">todo_list = </span><span class="p">[]</span></pre></div>
+        <div class='highlight'><pre>    <span class="n">todo_list</span> <span class="o">=</span> <span class="o">[]</span></pre></div>
       </td>
     </tr>
     <tr id='section-6'>
@@ -117,7 +118,7 @@ the root_node (only works on a tree graph)</p>
         <p>push root (starting) node onto stack</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="nx">todo_list</span><span class="p">.</span><span class="nx">push</span> <span class="nx">@root_node</span></pre></div>
+        <div class='highlight'><pre>    <span class="n">todo_list</span><span class="o">.</span><span class="n">push</span> <span class="vi">@root_node</span></pre></div>
       </td>
     </tr>
     <tr id='section-7'>
@@ -128,7 +129,7 @@ the root_node (only works on a tree graph)</p>
         <p>while there are nodes still left to check</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="k">while</span> <span class="nx">todo_list</span><span class="p">.</span><span class="nx">length</span> <span class="o">is</span> <span class="o">not</span> <span class="mi">0</span></pre></div>
+        <div class='highlight'><pre>    <span class="k">while</span> <span class="n">todo_list</span><span class="o">.</span><span class="n">length</span> <span class="n">is</span> <span class="ow">not</span> <span class="mi">0</span></pre></div>
       </td>
     </tr>
     <tr id='section-8'>
@@ -139,7 +140,7 @@ the root_node (only works on a tree graph)</p>
         <p>pull a node from the stack</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>      <span class="nv">current_node = </span><span class="nx">todo_list</span><span class="p">.</span><span class="nx">pop</span></pre></div>
+        <div class='highlight'><pre>      <span class="n">current_node</span> <span class="o">=</span> <span class="n">todo_list</span><span class="o">.</span><span class="n">pop</span></pre></div>
       </td>
     </tr>
     <tr id='section-9'>
@@ -150,8 +151,8 @@ the root_node (only works on a tree graph)</p>
         <p>if current node is goal node, end the search</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>      <span class="k">if</span> <span class="nx">current_node</span> <span class="o">is</span> <span class="nx">@goal_node</span>
-        <span class="nx">explored_nodes</span><span class="p">.</span><span class="nx">push</span> <span class="nx">current_node</span>
+        <div class='highlight'><pre>      <span class="k">if</span> <span class="n">current_node</span> <span class="n">is</span> <span class="vi">@goal_node</span>
+        <span class="n">explored_nodes</span><span class="o">.</span><span class="n">push</span> <span class="n">current_node</span>
         <span class="k">break</span></pre></div>
       </td>
     </tr>
@@ -163,8 +164,8 @@ the root_node (only works on a tree graph)</p>
         <p>add to to-do stack</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>      <span class="k">for</span> <span class="nx">neighbour</span> <span class="k">in</span> <span class="nx">current_node</span><span class="p">.</span><span class="nx">connections</span>
-        <span class="nx">todo_list</span><span class="p">.</span><span class="nx">push</span> <span class="nx">neighbour</span><span class="p">.</span><span class="nx">p</span></pre></div>
+        <div class='highlight'><pre>      <span class="k">for</span> <span class="n">neighbour</span> <span class="k">in</span> <span class="n">current_node</span><span class="o">.</span><span class="n">connections</span>
+        <span class="n">todo_list</span><span class="o">.</span><span class="n">push</span> <span class="n">neighbour</span><span class="o">.</span><span class="n">p</span></pre></div>
       </td>
     </tr>
     <tr id='section-11'>
@@ -175,13 +176,13 @@ the root_node (only works on a tree graph)</p>
         <p>add current node to explored nodes list</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>      <span class="nx">explored_nodes</span><span class="p">.</span><span class="nx">push</span> <span class="nx">current_node</span>
+        <div class='highlight'><pre>      <span class="n">explored_nodes</span><span class="o">.</span><span class="n">push</span> <span class="n">current_node</span>
 
-  <span class="nv">gen_info: </span><span class="o">-&gt;</span>
-      <span class="nx">alert</span> <span class="s2">&quot;general information&quot;</span>
+  <span class="n">gen_info</span><span class="p">:</span> <span class="o">-&gt;</span>
+      <span class="n">alert</span> <span class="s2">&quot;general information&quot;</span>
 
-  <span class="nv">run_info: </span><span class="o">-&gt;</span>
-      <span class="nx">alert</span> <span class="s2">&quot;runtime information&quot;</span></pre></div>
+  <span class="n">run_info</span><span class="p">:</span> <span class="o">-&gt;</span>
+      <span class="n">alert</span> <span class="s2">&quot;runtime information&quot;</span></pre></div>
       </td>
     </tr>
     <tr id='section-DFS.create&lt;em&gt;traverse&lt;/em&gt;info'>
@@ -197,8 +198,8 @@ animate class</p>
 <h3>Parameters</h3>
       </td>
       <td class=code>
-        <div class='highlight'><pre>  <span class="nv">create_traverse_info: </span><span class="o">-&gt;</span>
-    <span class="nv">exp_nodes = </span><span class="nx">explored_nodes</span></pre></div>
+        <div class='highlight'><pre>  <span class="n">create_traverse_info</span><span class="p">:</span> <span class="o">-&gt;</span>
+    <span class="n">exp_nodes</span> <span class="o">=</span> <span class="n">explored_nodes</span></pre></div>
       </td>
     </tr>
     <tr id='section-13'>
@@ -210,7 +211,7 @@ animate class</p>
 have been added to the traverse_info array.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="k">while</span> <span class="nx">exp_nodes</span><span class="p">.</span><span class="nx">length</span> <span class="o">is</span> <span class="o">not</span> <span class="mi">0</span></pre></div>
+        <div class='highlight'><pre>    <span class="k">while</span> <span class="n">exp_nodes</span><span class="o">.</span><span class="n">length</span> <span class="n">is</span> <span class="ow">not</span> <span class="mi">0</span></pre></div>
       </td>
     </tr>
     <tr id='section-14'>
@@ -222,7 +223,7 @@ have been added to the traverse_info array.</p>
 remove the element from the array.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>      <span class="nv">current_node = </span><span class="nx">exp_nodes</span><span class="p">.</span><span class="nx">pop</span></pre></div>
+        <div class='highlight'><pre>      <span class="n">current_node</span> <span class="o">=</span> <span class="n">exp_nodes</span><span class="o">.</span><span class="n">pop</span></pre></div>
       </td>
     </tr>
     <tr id='section-15'>
@@ -233,7 +234,7 @@ remove the element from the array.</p>
         <p>push the current_node onto the start of the array.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>      <span class="nx">traverse_info</span><span class="p">.</span><span class="nx">push</span> <span class="nx">current_node</span></pre></div>
+        <div class='highlight'><pre>      <span class="n">traverse_info</span><span class="o">.</span><span class="n">push</span> <span class="n">current_node</span></pre></div>
       </td>
     </tr>
     <tr id='section-16'>
@@ -245,7 +246,7 @@ remove the element from the array.</p>
 no need to loop through its connections</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>      <span class="k">if</span> <span class="nx">exp_nodes</span><span class="p">.</span><span class="nx">length</span> <span class="o">is</span> <span class="o">not</span> <span class="mi">0</span></pre></div>
+        <div class='highlight'><pre>      <span class="k">if</span> <span class="n">exp_nodes</span><span class="o">.</span><span class="n">length</span> <span class="n">is</span> <span class="ow">not</span> <span class="mi">0</span></pre></div>
       </td>
     </tr>
     <tr id='section-17'>
@@ -258,7 +259,7 @@ correct connection which links to the next node in the
 exp_nodes array.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="k">for</span> <span class="nx">con</span> <span class="k">in</span> <span class="nx">current_node</span><span class="p">.</span><span class="nx">connections</span></pre></div>
+        <div class='highlight'><pre>        <span class="k">for</span> <span class="n">con</span> <span class="k">in</span> <span class="n">current_node</span><span class="o">.</span><span class="n">connections</span></pre></div>
       </td>
     </tr>
     <tr id='section-18'>
@@ -270,7 +271,7 @@ exp_nodes array.</p>
 the node we are looking for.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>          <span class="k">if</span> <span class="nx">con</span><span class="p">.</span><span class="nx">p</span><span class="p">.</span><span class="nx">id</span> <span class="o">is</span> <span class="nx">exp_nodes</span><span class="p">[</span><span class="nx">exp_nodes</span><span class="p">.</span><span class="nx">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">].</span><span class="nx">id</span></pre></div>
+        <div class='highlight'><pre>          <span class="k">if</span> <span class="n">con</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">id</span> <span class="n">is</span> <span class="n">exp_nodes</span><span class="o">[</span><span class="n">exp_nodes</span><span class="o">.</span><span class="n">length</span> <span class="o">-</span> <span class="mi">1</span><span class="o">].</span><span class="n">id</span></pre></div>
       </td>
     </tr>
     <tr id='section-19'>
@@ -282,11 +283,11 @@ the node we are looking for.</p>
 
       </td>
       <td class=code>
-        <div class='highlight'><pre>            <span class="nx">traverse_info</span><span class="p">.</span><span class="nx">push</span> <span class="nx">con</span>
+        <div class='highlight'><pre>            <span class="n">traverse_info</span><span class="o">.</span><span class="n">push</span> <span class="n">con</span>
       <span class="k">else</span>
         <span class="k">break</span>
 
-    <span class="nx">traverse_info</span><span class="p">.</span><span class="nx">reverse</span><span class="p">()</span></pre></div>
+    <span class="n">traverse_info</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span></pre></div>
       </td>
     </tr>
   </table>

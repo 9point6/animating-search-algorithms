@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta http-equiv="content-type" content="text/html;charset=utf-8">
-  <title>DLS.coffee</title>
+  <title>itterative_deepening.coffee</title>
   <link rel="stylesheet" href="http://jashkenas.github.com/docco/resources/docco.css">
 </head>
 <body>
@@ -30,7 +30,7 @@
   <table cellspacing=0 cellpadding=0>
   <thead>
     <tr>
-      <th class=docs><h1>DLS.coffee</h1></th>
+      <th class=docs><h1>itterative_deepening.coffee</h1></th>
       <th class=code></th>
     </tr>
   </thead>
@@ -43,9 +43,9 @@
         
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="k">class</span> <span class="nc">DLS</span> <span class="n">extends</span> <span class="n">algorithm</span>
+        <div class='highlight'><pre><span class="k">class</span> <span class="nc">ItterativeDeepening</span> <span class="n">extends</span> <span class="n">algorithm</span>
 
-    <span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;DLS&quot;</span></pre></div>
+    <span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;Itterative Deepening&quot;</span></pre></div>
       </td>
     </tr>
     <tr id='section-2'>
@@ -53,7 +53,7 @@
         <div class="pilwrap">
           <a class="pilcrow" href="#section-2">&#182;</a>
         </div>
-        <p>depth-limited search starting form a root node
+        <p>Itarative Deepening starting form a root node
 User gives a limit upon clicking animate.</p>
       </td>
       <td class=code>
@@ -79,7 +79,7 @@ User gives a limit upon clicking animate.</p>
         <p>limit of search</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="n">limit</span> <span class="o">=</span> <span class="mi">4</span></pre></div>
+        <div class='highlight'><pre>        <span class="n">limit</span> <span class="o">=</span> <span class="mi">1</span></pre></div>
       </td>
     </tr>
     <tr id='section-5'>
@@ -98,11 +98,11 @@ User gives a limit upon clicking animate.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-6">&#182;</a>
         </div>
-        <p>while there are nodes still left to check</p>
+        <p>while there are still nodes outside the
+boundary of the limit.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="k">while</span> <span class="p">(</span><span class="n">todo_list</span><span class="o">.</span><span class="n">length</span> <span class="n">is</span> <span class="ow">not</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">todo_list</span><span class="o">.</span><span class="n">length</span> <span class="o">&lt;</span> <span class="n">limit</span><span class="p">)</span>
-            <span class="n">current_node</span> <span class="o">=</span> <span class="n">todo_list</span><span class="o">.</span><span class="n">pull</span></pre></div>
+        <div class='highlight'><pre>        <span class="k">while</span> <span class="n">todo_list</span><span class="o">.</span><span class="n">length</span> <span class="o">&lt;</span> <span class="n">limit</span></pre></div>
       </td>
     </tr>
     <tr id='section-7'>
@@ -110,12 +110,11 @@ User gives a limit upon clicking animate.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-7">&#182;</a>
         </div>
-        <p>If the goal node is the current node, end the search</p>
+        <p>while there are nodes still left to check</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>            <span class="k">if</span> <span class="n">current_node</span> <span class="n">is</span> <span class="n">goal_node</span>
-                <span class="n">explored_nodes</span><span class="o">.</span><span class="n">push</span> <span class="n">current_node</span>
-                <span class="k">break</span></pre></div>
+        <div class='highlight'><pre>            <span class="k">while</span> <span class="n">todo_list</span><span class="o">.</span><span class="n">length</span> <span class="n">is</span> <span class="ow">not</span> <span class="mi">0</span>
+                <span class="n">current_node</span> <span class="o">=</span> <span class="n">todo_list</span><span class="o">.</span><span class="n">pull</span></pre></div>
       </td>
     </tr>
     <tr id='section-8'>
@@ -123,13 +122,12 @@ User gives a limit upon clicking animate.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-8">&#182;</a>
         </div>
-        <p>get the connections of the current node</p>
+        <p>If the goal node is the current node, end the search</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>            <span class="n">neighbours</span> <span class="o">=</span> <span class="n">current_node</span><span class="o">.</span><span class="n">connections</span>
-
-            <span class="k">for</span> <span class="n">neighbour</span> <span class="k">in</span> <span class="n">neighbours</span>
-                <span class="n">todo_list</span><span class="o">.</span><span class="n">push</span> <span class="n">neighbour</span><span class="o">.</span><span class="n">p</span></pre></div>
+        <div class='highlight'><pre>                <span class="k">if</span> <span class="n">current_node</span> <span class="n">is</span> <span class="n">goal_node</span>
+                    <span class="n">explored_nodes</span><span class="o">.</span><span class="n">push</span> <span class="n">current_node</span>
+                    <span class="k">break</span></pre></div>
       </td>
     </tr>
     <tr id='section-9'>
@@ -137,18 +135,34 @@ User gives a limit upon clicking animate.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-9">&#182;</a>
         </div>
+        <p>get the connections of the current node</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>                <span class="n">neighbours</span> <span class="o">=</span> <span class="n">current_node</span><span class="o">.</span><span class="n">connections</span>
+
+                <span class="k">for</span> <span class="n">neighbour</span> <span class="k">in</span> <span class="n">neighbours</span>
+                    <span class="n">todo_list</span><span class="o">.</span><span class="n">push</span> <span class="n">neighbour</span><span class="o">.</span><span class="n">p</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-10'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-10">&#182;</a>
+        </div>
         <p>add the node to the explored nodes array and
 the connection to the explored connections array</p>
 
       </td>
       <td class=code>
-        <div class='highlight'><pre>                <span class="n">explored_nodes</span><span class="o">.</span><span class="n">push</span> <span class="n">neighbour</span><span class="o">.</span><span class="n">p</span>
-                <span class="n">explored_connections</span><span class="o">.</span><span class="n">push</span> <span class="n">neighbour</span><span class="o">.</span><span class="n">c</span>
-  
-  <span class="n">gen_info</span><span class="p">:</span> <span class="o">-&gt;</span>
+        <div class='highlight'><pre>                    <span class="n">explored_nodes</span><span class="o">.</span><span class="n">push</span> <span class="n">neighbour</span><span class="o">.</span><span class="n">p</span>
+                    <span class="n">explored_connections</span><span class="o">.</span><span class="n">push</span> <span class="n">neighbour</span><span class="o">.</span><span class="n">c</span>
+
+            <span class="n">limit</span><span class="o">++</span>
+
+    <span class="n">gen_info</span><span class="p">:</span> <span class="o">-&gt;</span>
       <span class="n">alert</span> <span class="s2">&quot;general information&quot;</span>
 
-  <span class="n">run_info</span><span class="p">:</span> <span class="o">-&gt;</span>
+    <span class="n">run_info</span><span class="p">:</span> <span class="o">-&gt;</span>
       <span class="n">alert</span> <span class="s2">&quot;runtime information&quot;</span></pre></div>
       </td>
     </tr>

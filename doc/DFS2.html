@@ -19,7 +19,8 @@
           <a class="source" href="algorithm.html">algorithm.coffee</a>
           <a class="source" href="animate.html">animate.coffee</a>
           <a class="source" href="connection.html">connection.coffee</a>
-          <a class="source" href="itarative_deepening.html">itarative_deepening.coffee</a>
+          <a class="source" href="graph.html">graph.coffee</a>
+          <a class="source" href="itterative_deepening.html">itterative_deepening.coffee</a>
           <a class="source" href="main.html">main.coffee</a>
           <a class="source" href="point.html">point.coffee</a>
           <a class="source" href="z-other.html">z-other.coffee</a>
@@ -42,11 +43,11 @@
         
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="k">class</span> <span class="nx">DFS2</span> <span class="k">extends</span> <span class="nx">algorithm</span>
+        <div class='highlight'><pre><span class="k">class</span> <span class="nc">DFS2</span> <span class="n">extends</span> <span class="n">algorithm</span>
 
-    <span class="nv">name: </span><span class="s2">&quot;DFS2&quot;</span>
+    <span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;DFS2&quot;</span>
 
-    <span class="nv">current_node: </span><span class="nx">root_node</span></pre></div>
+    <span class="n">current_node</span><span class="p">:</span> <span class="n">root_node</span></pre></div>
       </td>
     </tr>
     <tr id='section-2'>
@@ -60,25 +61,25 @@ properties for a connection.</p>
 
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="nv">search: </span><span class="o">-&gt;</span>
-        <span class="nx">explored_nodes</span><span class="p">.</span><span class="nx">push</span> <span class="nx">root_node</span>
+        <div class='highlight'><pre>    <span class="n">search</span><span class="p">:</span> <span class="o">-&gt;</span>
+        <span class="n">explored_nodes</span><span class="o">.</span><span class="n">push</span> <span class="n">root_node</span>
 
-        <span class="nv">incident_edges = </span><span class="nx">current_node</span><span class="p">.</span><span class="nx">connections</span>
-        <span class="k">for</span> <span class="nx">c</span> <span class="k">in</span> <span class="nx">incident_edge</span>
-          <span class="k">if</span> <span class="nx">c</span><span class="p">.</span><span class="nx">explored</span> <span class="o">is</span> <span class="kc">false</span>
-            <span class="nv">node = </span><span class="nx">edge</span><span class="p">.</span><span class="nx">p</span>
-            <span class="k">if</span> <span class="nx">node</span><span class="p">.</span><span class="nx">explored</span> <span class="o">is</span> <span class="kc">false</span>
-              <span class="nv">c.discovery_edge = </span><span class="kc">true</span>
-              <span class="nv">current_node = </span><span class="nx">node</span>
-              <span class="nx">@search</span>
+        <span class="n">incident_edges</span> <span class="o">=</span> <span class="n">current_node</span><span class="o">.</span><span class="n">connections</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="k">in</span> <span class="n">incident_edge</span>
+          <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">explored</span> <span class="n">is</span> <span class="kp">false</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="n">edge</span><span class="o">.</span><span class="n">p</span>
+            <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">explored</span> <span class="n">is</span> <span class="kp">false</span>
+              <span class="n">c</span><span class="o">.</span><span class="n">discovery_edge</span> <span class="o">=</span> <span class="kp">true</span>
+              <span class="n">current_node</span> <span class="o">=</span> <span class="n">node</span>
+              <span class="vi">@search</span>
           <span class="k">else</span>
-            <span class="nv">c.back_edge = </span><span class="kc">true</span>
+            <span class="n">c</span><span class="o">.</span><span class="n">back_edge</span> <span class="o">=</span> <span class="kp">true</span>
 
-    <span class="nv">gen_info: </span><span class="o">-&gt;</span>
-        <span class="nx">alert</span> <span class="s2">&quot;gen info&quot;</span>
+    <span class="n">gen_info</span><span class="p">:</span> <span class="o">-&gt;</span>
+        <span class="n">alert</span> <span class="s2">&quot;gen info&quot;</span>
 
-    <span class="nv">run_info: </span><span class="o">-&gt;</span>
-        <span class="nx">alert</span> <span class="s2">&quot;run info&quot;</span></pre></div>
+    <span class="n">run_info</span><span class="p">:</span> <span class="o">-&gt;</span>
+        <span class="n">alert</span> <span class="s2">&quot;run info&quot;</span></pre></div>
       </td>
     </tr>
   </table>
