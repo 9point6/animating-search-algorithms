@@ -81,6 +81,7 @@ class app
         $( '#process' ).click ( e ) =>
             @current_algo = new algorithms[1]
             @current_algo.search( )
+            @current_algo.create_traverse_info( )
             console.log @current_algo.traverse_info
         $( '#run' ).click ( e ) =>
             alert "Function not added yet!"

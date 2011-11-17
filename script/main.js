@@ -48,6 +48,7 @@ app = (function() {
     $('#process').click(__bind(function(e) {
       this.current_algo = new algorithms[1];
       this.current_algo.search();
+      this.current_algo.create_traverse_info();
       return console.log(this.current_algo.traverse_info);
     }, this));
     $('#run').click(__bind(function(e) {
