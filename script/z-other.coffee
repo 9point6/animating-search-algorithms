@@ -98,3 +98,10 @@ $ ->
 
     # Instantiates the main class and starts the program
     window.a = new app
+
+    window.algorithms = [
+        BFS
+        DFS
+        DLS
+        ItterativeDeepening
+    ]

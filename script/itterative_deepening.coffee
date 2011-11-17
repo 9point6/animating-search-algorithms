@@ -1,6 +1,6 @@
-class itarative_deepening extends algorithm
+class ItterativeDeepening extends algorithm
 
-    name: "Itarative Deepening"
+    name: "Itterative Deepening"
 
     # Itarative Deepening starting form a root node
     # User gives a limit upon clicking animate.

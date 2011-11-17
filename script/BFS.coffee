@@ -34,5 +34,3 @@ class BFS extends algorithm
                 #if the nieghbour is the goal node end search
                 if neighbour.p is goal_node
                     break
-
-
