@@ -78,7 +78,9 @@ class app
                         $( '#runmode' ).animate
                             opacity: 100
         $( '#process' ).click ( e ) =>
-            alert "Function not added yet!"
+            @current_algo = new algorithms[0]
+            @current_algo.search( )
+            console.log @current_algo.traverse_info
         $( '#run' ).click ( e ) =>
             alert "Function not added yet!"
         $( '#design' ).click ( e ) =>
