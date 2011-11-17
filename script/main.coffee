@@ -75,7 +75,7 @@ class app
                 opacity: 0,
                     complete: ->
                         this.css
-                            display: none
+                            display: 'none'
                         $( '#runmode' ).css( 'display', 'block' ).animate
                             opacity: 100
         $( '#process' ).click ( e ) =>
@@ -89,7 +89,7 @@ class app
                 opacity: 0,
                     complete: ->
                         this.css
-                            display: none
+                            display: 'none'
                         $( '#designmode' ).css( 'display', 'block' ).animate
                             opacity: 100
 
