@@ -50,9 +50,9 @@ class app
         ''' );
 
         # Set the helptext div to be invisible for animation.
-        $( '#helptext' ).prop
+        $( '#helptext' ).css
             opacity: 0
-        $( '#runmode' ).prop
+        $( '#runmode' ).css
             opacity: 0
             display: "none"
 
@@ -71,12 +71,12 @@ class app
         $( '#connect' ).click ( e ) =>
             @graph.do_mouse_connection( )
         $( '#search' ).click ( e ) =>
-            $( '#designmode' ).prop.animate
+            $( '#designmode' ).animate
                 opacity: 0,
                     complete: ->
-                        this.prop
+                        this.css
                             display: none
-                        $( '#runmode' ).prop( 'display', 'block' ).animate
+                        $( '#runmode' ).css( 'display', 'block' ).animate
                             opacity: 100
         $( '#process' ).click ( e ) =>
             @current_algo = new algorithms[0]
@@ -88,9 +88,9 @@ class app
             $( '#runmode' ).animate
                 opacity: 0,
                     complete: ->
-                        this.prop
+                        this.css
                             display: none
-                        $( '#designmode' ).prop( 'display', 'block' ).animate
+                        $( '#designmode' ).css( 'display', 'block' ).animate
                             opacity: 100
 
         # Preset test data
