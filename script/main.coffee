@@ -37,6 +37,11 @@ class app
                 <li id="connect" title="Connect two nodes" />
                 <li id="search" title="Switch to search mode" />
             </ul>
+            <ul id="runmode">
+                <li id="process" title="Process Graph" />
+                <li id="run" title="Run Animation" />
+                <li id="design" title="Switch to design mode" />
+            </ul>
             <div id="helptext" />
         </div>
         <div id="copyright">
@@ -46,6 +51,8 @@ class app
 
         # Set the helptext div to be invisible for animation.
         $( '#helptext' ).prop
+            opacity: 0
+        $( '#runmode' ).prop
             opacity: 0
 
         # Set click events for toolbar buttons
@@ -63,7 +70,25 @@ class app
         $( '#connect' ).click ( e ) =>
             @graph.do_mouse_connection( )
         $( '#search' ).click ( e ) =>
+            $( '#designmode' ).animate
+                opacity: 0,
+                    complete: ->
+                        this.prop
+                            display: none
+                        $( '#runmode' ).animate
+                            opacity: 100
+        $( '#process' ).click ( e ) =>
             alert "Function not added yet!"
+        $( '#run' ).click ( e ) =>
+            alert "Function not added yet!"
+        $( '#design' ).click ( e ) =>
+            $( '#runmode' ).animate
+                opacity: 0,
+                    complete: ->
+                        this.prop
+                            display: none
+                        $( '#designmode' ).animate
+                            opacity: 100
 
         # Preset test data
         @graph.add_point 224, 118, "Alan"

@@ -1,10 +1,10 @@
 /* Animating Search Algorithms
  *
- * (C) Ian Brown, 
- *     Jack Histon, 
- *     Colin Jackson, 
+ * (C) Ian Brown,
+ *     Jack Histon,
+ *     Colin Jackson,
  *     Jennifer Jones &
- *     John Sanderson 
+ *     John Sanderson
  * 2011 All Rights Reserved.
  *
  * Do not modify or distribute without permission.
@@ -23,12 +23,12 @@ $imgloc = ../../../resources/img/developpers/PNG/
     background-image: -ms-linear-gradient(top, $from, $to)
     background-image: -o-linear-gradient(top, $from, $to)
     background-image: linear-gradient(top, $from, $to)
-    
+
 @mixin box-shadow($options)
     -webkit-box-shadow: $options
     -moz-box-shadow: $options
     box-shadow: $options
-    
+
 @mixin border-radius($radius)
     -webkit-border-radius: $radius
     -moz-border-radius: $radius
@@ -36,7 +36,7 @@ $imgloc = ../../../resources/img/developpers/PNG/
     -moz-background-clip: padding
     -webkit-background-clip: padding-box
     background-clip: padding-box
-    
+
 @mixin transition($options)
     -webkit-transition: $options
     -moz-transition: $options
@@ -60,21 +60,21 @@ body
     user-select: none
     @include reset1
     @include linear-gradient(#fff, #ccc)
-    
+
 #copyright
     position: absolute
     right: 5px
     bottom: 5px
     color: $copytext
     font-size: 8pt
-    
+
     a
         color: $copytext
         text-decoration: none
-        
+
         &:hover
             text-decoration: underline
-    
+
 #toolbar
     position: absolute
     left: 0
@@ -84,7 +84,7 @@ body
     @include linear-gradient(#333, #999)
     @include box-shadow(0 0 10px rgba(0,0,0,0.4))
     @include border-radius(0 0 16px 0)
-    
+
     h1
         float: left
         color: $colour1
@@ -92,11 +92,11 @@ body
         text-shadow: 0 0 10px rgba(187, 221, 0, 0.4)
         @include reset1
         padding-right: 20px
-        
+
         span
             color: $colour2
             text-shadow: 0 0 10px rgba(255, 170, 0, 0.4)
-    
+
     ul
         list-style: none
         float:left
@@ -111,11 +111,11 @@ body
         padding: 2px
         margin: 2px
         @include transition(all 0.2s ease-out)
-        
+
         &:hover
             opacity: 0.5
             cursor: pointer
-            
+
 #helptext
     line-height: 40px
     font-size: 14pt
@@ -137,3 +137,9 @@ body
     background-image: url( "#{$imgloc}Plugin%20Green%20Button.png")
 #search
     background-image: url( "#{$imgloc}Spotlight%20Blue%20Button.png")
+#run
+    background-image: url( "#{$imgloc}Play%20Blue%20Button.png")
+#process
+    background-image: url( "#{$imgloc}Run.png")
+#design
+    background-image: url( "#{$imgloc}Write%20Document.png")
