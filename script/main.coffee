@@ -74,7 +74,7 @@ class app
             $( '#designmode' ).animate
                 opacity: 0,
                     complete: ->
-                        this.css
+                        $( @ ).css
                             display: 'none'
                         $( '#runmode' ).css( 'display', 'block' ).animate
                             opacity: 100
@@ -88,7 +88,7 @@ class app
             $( '#runmode' ).animate
                 opacity: 0,
                     complete: ->
-                        this.css
+                        $( @ ).css
                             display: 'none'
                         $( '#designmode' ).css( 'display', 'block' ).animate
                             opacity: 100

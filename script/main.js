@@ -36,7 +36,7 @@ app = (function() {
         opacity: 0
       }, {
         complete: function() {
-          this.css({
+          $(this).css({
             display: 'none'
           });
           return $('#runmode').css('display', 'block').animate({
@@ -58,7 +58,7 @@ app = (function() {
         opacity: 0
       }, {
         complete: function() {
-          this.css({
+          $(this).css({
             display: 'none'
           });
           return $('#designmode').css('display', 'block').animate({
