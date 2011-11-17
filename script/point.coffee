@@ -30,7 +30,6 @@ class point
 
         # Assign point an ID. Used for connections and save/restore
         @id = uniqueId( )
-        a.graph.points_id_map
 
         # Draw circle and label
         @r = @raphael.circle @x, @y, 5
