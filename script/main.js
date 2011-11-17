@@ -4,10 +4,10 @@ app = (function() {
   function app() {
     this.graph = new graph();
     $('body').append('<div id="toolbar">\n    <h1>search<span>r</span></h1>\n    <ul id="designmode">\n        <li id="new" title="New Graph" />\n        <li id="save" title="Save Graph" />\n        <li id="load" title="Load Graph" />\n        <li id="add" title="Add a node" />\n        <li id="remove" title="Remove a node" />\n        <li id="connect" title="Connect two nodes" />\n        <li id="search" title="Switch to search mode" />\n    </ul>\n    <ul id="runmode">\n        <li id="process" title="Process Graph" />\n        <li id="run" title="Run Animation" />\n        <li id="design" title="Switch to design mode" />\n    </ul>\n    <div id="helptext" />\n</div>\n<div id="copyright">\n    <a href="doc">Project Home</a>\n<div>');
-    $('#helptext').prop({
+    $('#helptext').css({
       opacity: 0
     });
-    $('#runmode').prop({
+    $('#runmode').css({
       opacity: 0,
       display: "none"
     });
@@ -32,14 +32,14 @@ app = (function() {
       return this.graph.do_mouse_connection();
     }, this));
     $('#search').click(__bind(function(e) {
-      return $('#designmode').prop.animate({
+      return $('#designmode').animate({
         opacity: 0
       }, {
         complete: function() {
-          this.prop({
+          this.css({
             display: none
           });
-          return $('#runmode').prop('display', 'block').animate({
+          return $('#runmode').css('display', 'block').animate({
             opacity: 100
           });
         }
@@ -58,10 +58,10 @@ app = (function() {
         opacity: 0
       }, {
         complete: function() {
-          this.prop({
+          this.css({
             display: none
           });
-          return $('#designmode').prop('display', 'block').animate({
+          return $('#designmode').css('display', 'block').animate({
             opacity: 100
           });
         }
