@@ -35,7 +35,7 @@ class DFS extends algorithm
 
       #if current node is goal node, end the search
       if current_node is @goal_node
-        explored_nodes.push current_node
+        @explored_nodes.push current_node
         break
 
       #add to to-do stack
@@ -43,7 +43,7 @@ class DFS extends algorithm
         todo_list.push neighbour.p
 
       #add current node to explored nodes list
-      explored_nodes.push current_node
+      @explored_nodes.push current_node
 
   gen_info: ->
       alert "general information"
@@ -57,7 +57,7 @@ class DFS extends algorithm
   # ### Parameters
   #
   create_traverse_info: ->
-    exp_nodes = explored_nodes
+    exp_nodes = @explored_nodes
 
     # if the array reaches zero then all the elements
     # have been added to the traverse_info array.
@@ -68,7 +68,7 @@ class DFS extends algorithm
       current_node = exp_nodes.pop
 
       # push the current_node onto the start of the array.
-      traverse_info.push current_node
+      @traverse_info.push current_node
 
       # if this the last node in exp_nodes array, then there is
       # no need to loop through its connections
@@ -84,8 +84,8 @@ class DFS extends algorithm
           if con.p.id is exp_nodes[exp_nodes.length - 1].id
 
             # add connection to the traverse_info array.
-            traverse_info.push con
+            @traverse_info.push con
       else
         break
 
-    traverse_info.reverse()
+    @traverse_info.reverse()

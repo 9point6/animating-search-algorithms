@@ -21,7 +21,7 @@ DFS = (function() {
     while (todo_list.length === !0) {
       current_node = todo_list.pop;
       if (current_node === this.goal_node) {
-        explored_nodes.push(current_node);
+        this.explored_nodes.push(current_node);
         break;
       }
       _ref = current_node.connections;
@@ -29,7 +29,7 @@ DFS = (function() {
         neighbour = _ref[_i];
         todo_list.push(neighbour.p);
       }
-      _results.push(explored_nodes.push(current_node));
+      _results.push(this.explored_nodes.push(current_node));
     }
     return _results;
   };
@@ -41,23 +41,23 @@ DFS = (function() {
   };
   DFS.prototype.create_traverse_info = function() {
     var con, current_node, exp_nodes, _i, _len, _ref;
-    exp_nodes = explored_nodes;
+    exp_nodes = this.explored_nodes;
     while (exp_nodes.length === !0) {
       current_node = exp_nodes.pop;
-      traverse_info.push(current_node);
+      this.traverse_info.push(current_node);
       if (exp_nodes.length === !0) {
         _ref = current_node.connections;
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           con = _ref[_i];
           if (con.p.id === exp_nodes[exp_nodes.length - 1].id) {
-            traverse_info.push(con);
+            this.traverse_info.push(con);
           }
         }
       } else {
         break;
       }
     }
-    return traverse_info.reverse();
+    return this.traverse_info.reverse();
   };
   return DFS;
 })();
