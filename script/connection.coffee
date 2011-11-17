@@ -73,10 +73,10 @@ class connection
 
                 # Remove from connections list in `app` object
                 newcons = []
-                for con in a.connections
+                for con in a.graph.connections
                     if con.pointa.id isnt @pointa.id or con.pointb.id isnt @pointb.id
                         newcons.push con
-                a.connections = newcons
+                a.graph.connections = newcons
 
     # ### connection.hover_in( )
     # Show hover effect

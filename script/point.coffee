@@ -30,7 +30,7 @@ class point
 
         # Assign point an ID. Used for connections and save/restore
         @id = uniqueId( )
-        app.points_id_map
+        a.graph.points_id_map
 
         # Draw circle and label
         @r = @raphael.circle @x, @y, 5
@@ -78,10 +78,10 @@ class point
 
                 # Remove point from `app` class's list
                 newpoints = []
-                for point in a.points
+                for point in a.graph.points
                     if point.id isnt @id
                         newpoints.push point
-                a.points = newpoints
+                a.graph.points = newpoints
 
     # ### point.move( )
     # Moves a node.
@@ -106,14 +106,14 @@ class point
     # * Bring up a context menu to edit/remove the node
     # * Check if returning false is required
     click: ( e ) =>
-        if a.connect_mode is true
+        if a.graph.connect_mode is true
             @r.animate
                 r: 10
                 fill: "#f00",
                 100
-            a.do_mouse_connection @
-        else if a.remove_mode is true
-            a.do_mouse_removal @
+            a.graph.do_mouse_connection @
+        else if a.graph.remove_mode is true
+            a.graph.do_mouse_removal @
         else
             false
 
