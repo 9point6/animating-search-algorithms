@@ -8,7 +8,8 @@ app = (function() {
       opacity: 0
     });
     $('#runmode').prop({
-      opacity: 0
+      opacity: 0,
+      display: "none"
     });
     $('#new').click(__bind(function(e) {
       return this.graph.clear_graph();
@@ -31,14 +32,14 @@ app = (function() {
       return this.graph.do_mouse_connection();
     }, this));
     $('#search').click(__bind(function(e) {
-      return $('#designmode').animate({
+      return $('#designmode').prop.animate({
         opacity: 0
       }, {
         complete: function() {
           this.prop({
             display: none
           });
-          return $('#runmode').animate({
+          return $('#runmode').prop('display', 'block').animate({
             opacity: 100
           });
         }
@@ -60,7 +61,7 @@ app = (function() {
           this.prop({
             display: none
           });
-          return $('#designmode').animate({
+          return $('#designmode').prop('display', 'block').animate({
             opacity: 100
           });
         }
