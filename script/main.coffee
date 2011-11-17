@@ -83,6 +83,7 @@ class app
             @current_algo.search( )
             @current_algo.create_traverse_info( )
             console.log @current_algo.traverse_info
+            console.log @current_algo.explored_nodes
         $( '#run' ).click ( e ) =>
             alert "Function not added yet!"
         $( '#design' ).click ( e ) =>

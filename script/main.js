@@ -49,7 +49,8 @@ app = (function() {
       this.current_algo = new algorithms[1];
       this.current_algo.search();
       this.current_algo.create_traverse_info();
-      return console.log(this.current_algo.traverse_info);
+      console.log(this.current_algo.traverse_info);
+      return console.log(this.current_algo.explored_nodes);
     }, this));
     $('#run').click(__bind(function(e) {
       return alert("Function not added yet!");
