@@ -54,6 +54,7 @@ class app
             opacity: 0
         $( '#runmode' ).prop
             opacity: 0
+            display: "none"
 
         # Set click events for toolbar buttons
         $( '#new' ).click ( e ) =>
@@ -70,12 +71,12 @@ class app
         $( '#connect' ).click ( e ) =>
             @graph.do_mouse_connection( )
         $( '#search' ).click ( e ) =>
-            $( '#designmode' ).animate
+            $( '#designmode' ).prop.animate
                 opacity: 0,
                     complete: ->
                         this.prop
                             display: none
-                        $( '#runmode' ).animate
+                        $( '#runmode' ).prop( 'display', 'block' ).animate
                             opacity: 100
         $( '#process' ).click ( e ) =>
             @current_algo = new algorithms[0]
@@ -89,7 +90,7 @@ class app
                     complete: ->
                         this.prop
                             display: none
-                        $( '#designmode' ).animate
+                        $( '#designmode' ).prop( 'display', 'block' ).animate
                             opacity: 100
 
         # Preset test data
