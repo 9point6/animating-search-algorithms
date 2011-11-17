@@ -79,7 +79,7 @@ class app
                         $( '#runmode' ).css( 'display', 'block' ).animate
                             opacity: 100
         $( '#process' ).click ( e ) =>
-            @current_algo = new algorithms[0]
+            @current_algo = new algorithms[1]
             @current_algo.search( )
             console.log @current_algo.traverse_info
         $( '#run' ).click ( e ) =>

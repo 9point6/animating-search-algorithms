@@ -46,7 +46,7 @@ app = (function() {
       });
     }, this));
     $('#process').click(__bind(function(e) {
-      this.current_algo = new algorithms[0];
+      this.current_algo = new algorithms[1];
       this.current_algo.search();
       return console.log(this.current_algo.traverse_info);
     }, this));
