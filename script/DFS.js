@@ -16,14 +16,18 @@ DFS = (function() {
   DFS.prototype.search = function() {
     var current_node, neighbour, todo_list, _i, _len, _ref, _results;
     todo_list = [];
+    console.log(this.root_node);
+    console.log(this.goal_node);
     todo_list.push(this.root_node);
     _results = [];
-    while (todo_list.length === !0) {
-      current_node = todo_list.pop;
-      if (current_node === this.goal_node) {
+    while (todo_list.length !== 0) {
+      console.log(todo_list);
+      current_node = todo_list.pop();
+      if (current_node.id === this.goal_node.id) {
         this.explored_nodes.push(current_node);
         break;
       }
+      console.log(current_node);
       _ref = current_node.connections;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         neighbour = _ref[_i];
@@ -51,10 +55,10 @@ DFS = (function() {
           con = _ref[_i];
           if (con.p.id === exp_nodes[exp_nodes.length - 1].id) {
             this.traverse_info.push(con);
+          } else {
+            break;
           }
         }
-      } else {
-        break;
       }
     }
     return this.traverse_info.reverse();
