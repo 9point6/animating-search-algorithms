@@ -109,7 +109,7 @@ class graph
         if @connect_mode is false
             [@connectpointa,@connectpointb] = [{id:'0'},{id:'0'}]
             @connect_mode = true
-            app.fade_out_toolbar "Click two nodes to connect them"
+            a.fade_out_toolbar "Click two nodes to connect them"
         else
             # If first point, save and contiune, else actually connect
             if @connectpointa.id is '0'
@@ -127,7 +127,7 @@ class graph
                     100
                 newcon.spark( )
                 @connect_mode = false
-                app.fade_in_toolbar( )
+                a.fade_in_toolbar( )
 
     # ### graph.do*_*mouse_removal( )
     # Handle the removal of a node. Called with no parameters to start the
@@ -138,11 +138,11 @@ class graph
     do_mouse_removal: ( obj ) =>
         if @remove_mode is false
             @remove_mode = true
-            app.fade_out_toolbar "Click a node to remove it"
+            a.fade_out_toolbar "Click a node to remove it"
         else
             obj.remove( )
             @remove_mode = false
-            app.fade_in_toolbar( )
+            a.fade_in_toolbar( )
 
     # ### graph.serialise_graph( )
     # Takes the current state of the graph and serialises it into a JSON string

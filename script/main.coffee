@@ -80,8 +80,8 @@ class app
                             opacity: 100
         $( '#process' ).click ( e ) =>
             @current_algo = new algorithms[1]
-            @current_algo.root_node = @graph.points[3]
-            @current_algo.goal_node = @graph.points[4]
+            @current_algo.root_node = @graph.points[2]
+            @current_algo.goal_node = @graph.points[3]
             @current_algo.search( )
             @current_algo.create_traverse_info( )
             console.log @current_algo.traverse_info

@@ -66,7 +66,7 @@ graph = (function() {
         }
       ], this.connectpointa = _ref[0], this.connectpointb = _ref[1];
       this.connect_mode = true;
-      return app.fade_out_toolbar("Click two nodes to connect them");
+      return a.fade_out_toolbar("Click two nodes to connect them");
     } else {
       if (this.connectpointa.id === '0') {
         return this.connectpointa = obj;
@@ -83,18 +83,18 @@ graph = (function() {
         }, 100);
         newcon.spark();
         this.connect_mode = false;
-        return app.fade_in_toolbar();
+        return a.fade_in_toolbar();
       }
     }
   };
   graph.prototype.do_mouse_removal = function(obj) {
     if (this.remove_mode === false) {
       this.remove_mode = true;
-      return app.fade_out_toolbar("Click a node to remove it");
+      return a.fade_out_toolbar("Click a node to remove it");
     } else {
       obj.remove();
       this.remove_mode = false;
-      return app.fade_in_toolbar();
+      return a.fade_in_toolbar();
     }
   };
   graph.prototype.serialise_graph = function() {

@@ -47,8 +47,8 @@ app = (function() {
     }, this));
     $('#process').click(__bind(function(e) {
       this.current_algo = new algorithms[1];
-      this.current_algo.root_node = this.graph.points[3];
-      this.current_algo.goal_node = this.graph.points[4];
+      this.current_algo.root_node = this.graph.points[2];
+      this.current_algo.goal_node = this.graph.points[3];
       this.current_algo.search();
       this.current_algo.create_traverse_info();
       console.log(this.current_algo.traverse_info);

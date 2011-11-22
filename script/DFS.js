@@ -14,14 +14,11 @@ DFS = (function() {
   }
   DFS.prototype.name = "DFS";
   DFS.prototype.search = function() {
-    var current_node, neighbour, todo_list, _i, _len, _ref, _results;
+    var current_node, doodad, neighbour, node, todo_list, _i, _j, _len, _len2, _ref, _ref2, _results;
     todo_list = [];
-    console.log(this.root_node);
-    console.log(this.goal_node);
     todo_list.push(this.root_node);
     _results = [];
     while (todo_list.length !== 0) {
-      console.log(todo_list);
       current_node = todo_list.pop();
       if (current_node.id === this.goal_node.id) {
         this.explored_nodes.push(current_node);
@@ -31,7 +28,15 @@ DFS = (function() {
       _ref = current_node.connections;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         neighbour = _ref[_i];
-        todo_list.push(neighbour.p);
+        doodad = false;
+        _ref2 = this.explored_nodes;
+        for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
+          node = _ref2[_j];
+          doodad = node.id === neighbour.p.id;
+        }
+        if (!doodad) {
+          todo_list.push(neighbour.p);
+        }
       }
       _results.push(this.explored_nodes.push(current_node));
     }

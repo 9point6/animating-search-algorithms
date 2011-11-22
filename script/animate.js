@@ -36,10 +36,6 @@ animate = (function() {
       return pointer++;
     }
   };
-  /* animate.step_backward( )
-  # move backward one step in the traverse_info array for a given algorithm.
-  # */
-  Parameters;
   animate.prototype.step_backward = function() {
     var con, current_item, previous_item, _i, _j, _len, _len2, _ref, _ref2, _results;
     if (algorithm.traverse_info === !null && pointer > 0) {

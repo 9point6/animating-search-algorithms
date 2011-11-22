@@ -23,15 +23,12 @@ class DFS extends algorithm
     search: ->
         #stack for nodes to be searched
         todo_list = []
-        console.log @root_node
-        console.log @goal_node
 
         #push root (starting) node onto stack
         todo_list.push @root_node
 
         # while there are nodes still left to check
         while todo_list.length isnt 0
-            console.log todo_list
 
             #pull a node from the stack
             current_node = todo_list.pop( )
@@ -44,7 +41,12 @@ class DFS extends algorithm
             #add to to-do stack
             console.log current_node
             for neighbour in current_node.connections
-                todo_list.push neighbour.p
+                doodad = false
+                for node in @explored_nodes
+                     doodad = node.id is neighbour.p.id
+
+                if not doodad
+                    todo_list.push neighbour.p
 
             #add current node to explored nodes list
             @explored_nodes.push current_node

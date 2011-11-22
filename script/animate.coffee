@@ -67,7 +67,7 @@ class animate
             # increase the pointer value
             pointer++
 
-    ### animate.step_backward( )
+    # ## animate.step_backward( )
     # move backward one step in the traverse_info array for a given algorithm.
     # ### Parameters
     #
