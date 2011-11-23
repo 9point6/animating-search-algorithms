@@ -157,21 +157,25 @@ class connection
                     stroke: "#666"
                     "stroke-width": 1,
                     anim_speed
+                    @style = "normal"
             # The connection is currently being 'looked at'
             when "viewing"
                 @r.animate
                     stroke: "#008000"
                     "stroke-width": 10,
                     anim_speed
+                    @style = "viewing"
             # The connection is an option for later in the algorithm
             when "potential"
                 @r.animate
                     stroke: "#0247FE"
                     "stroke-width": 5,
                     anim_speed
+                    @style = "potential"
             # The connection has been visited by the algorithm
             when "visited"
                 @r.animate
                     stroke: "#A40000"
                     "stroke-width": 3,
                     anim_speed
+                    @style = "visited"

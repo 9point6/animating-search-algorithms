@@ -111,22 +111,22 @@ connection = (function() {
         return this.r.animate({
           stroke: "#666",
           "stroke-width": 1
-        }, anim_speed);
+        }, anim_speed, this.style = "normal");
       case "viewing":
         return this.r.animate({
           stroke: "#008000",
           "stroke-width": 10
-        }, anim_speed);
+        }, anim_speed, this.style = "viewing");
       case "potential":
         return this.r.animate({
           stroke: "#0247FE",
           "stroke-width": 5
-        }, anim_speed);
+        }, anim_speed, this.style = "potential");
       case "visited":
         return this.r.animate({
           stroke: "#A40000",
           "stroke-width": 3
-        }, anim_speed);
+        }, anim_speed, this.style = "visited");
     }
   };
   return connection;

@@ -156,15 +156,15 @@ point = (function() {
       case "normal":
         return this.r.animate({
           fill: "#000"
-        }, anim_speed);
+        }, anim_speed, this.style = "normal");
       case "viewing":
         return this.r.animate({
           fill: "#008000"
-        }, anim_speed);
+        }, anim_speed, this.style = "viewing");
       case "visited":
         return this.r.animate({
           fill: "#999"
-        }, anim_speed);
+        }, anim_speed, this.style = "visited");
     }
   };
   return point;

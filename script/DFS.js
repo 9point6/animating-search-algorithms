@@ -49,43 +49,44 @@ DFS = (function() {
     return alert("runtime information");
   };
   DFS.prototype.create_traverse_info = function() {
-    var con, current_node, exp_nodes, fork, node, pleh, _i, _j, _len, _len2, _ref, _ref2;
+    var con, current_node, exp_nodes, fork, node, pleh, _results;
     this.traverse_info = [];
     fork = [];
-    fork.push(this.root_node);
     exp_nodes = this.explored_nodes.slice(0);
+    _results = [];
     while (exp_nodes.length !== 0) {
-      current_node = exp_nodes.pop();
-      if (current_node.connections.length > 2) {
+      current_node = exp_nodes.shift();
+      this.traverse_info.push(current_node);
+      if (current_node.connections.length > 2 || current_node.id === this.root_node.id) {
         fork.push(current_node);
       }
-      this.traverse_info.push(current_node);
-      if (exp_nodes.length !== 0) {
-        _ref = current_node.connections;
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          con = _ref[_i];
-          if (con.p.id === exp_nodes[exp_nodes.length - 1].id) {
-            this.traverse_info.push(con.c);
+      _results.push((function() {
+        var _i, _j, _len, _len2, _ref, _ref2, _results2;
+        if (exp_nodes.length !== 0) {
+          _ref = current_node.connections;
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            con = _ref[_i];
+            if (con.p.id === exp_nodes[0].id) {
+              this.traverse_info.push(con.c);
+            }
           }
-        }
-        pleh = this.traverse_info[this.traverse_info.length - 1] instanceof connection;
-        if (!pleh) {
-          node = fork.pop();
-          if (node != null) {
-            console.log("current node" + current_node.id);
-            _ref2 = node.connections;
-            for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
-              con = _ref2[_j];
-              console.log("con id " + con.p.id);
-              if (con.p.id === current_node.id) {
-                this.traverse_info.push(con.c);
+          pleh = this.traverse_info[this.traverse_info.length - 1] instanceof connection;
+          if (!pleh) {
+            node = fork[fork.length - 1];
+            if (node != null) {
+              _ref2 = node.connections;
+              _results2 = [];
+              for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
+                con = _ref2[_j];
+                _results2.push(con.p.id === exp_nodes[0].id ? this.traverse_info.push(con.c) : void 0);
               }
+              return _results2;
             }
           }
         }
-      }
+      }).call(this));
     }
-    return this.traverse_info.reverse();
+    return _results;
   };
   return DFS;
 })();

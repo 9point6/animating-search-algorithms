@@ -24,8 +24,6 @@ class animate
     #
     # #### TODO
     step_forward: ->
-        console.log @pointer
-        console.log @algorithm.traverse_info.length
         # check for null value in traverse_info. if the pointer has not
         # reached the last element of the array already, then run the code.
         if @algorithm.traverse_info isnt null and @pointer < @algorithm.traverse_info.length
@@ -34,23 +32,28 @@ class animate
             @traverse_info = @algorithm.traverse_info
             # create a variable for storing the element the pointer represents
             current_item = @traverse_info[@pointer]
-            console.log current_item
+            console.log "current item " + current_item.name
             # update the current item pointed at to "viewing"
             current_item.update_style "viewing"
             # if the current_item selected is a point object
             if current_item instanceof point
                 # loop through all of the points connections
+                console.log "IT GOT HERE 1"
                 for con in current_item.connections
                     # This stops overwriting the style of the previous element in the
                     # traverse_info array as it should be the only connection in the
                     # "viewing" state.
-                    if con.style is not "viewing"
-                        con.update_style "potential"
+                    console.log "IT GOT HERE 2"
+                    if con.c.style isnt "viewing"
+                        console.log "IT GOT HERE 3"
+                        con.c.update_style "potential"
 
             # the current_item is not the first element in the array
-            if @pointer is not 0
+            console.log "pointer " + @pointer
+            if @pointer isnt 0
                 # create a variable for storing the previous element.
                 previous_item = @traverse_info[@pointer-1]
+                console.log "previous_item " + previous_item.name
                 # if the previous item is in the "viewing" style (which it should
                 # be)
                 if previous_item.style is "viewing"
@@ -61,10 +64,10 @@ class animate
                         # is an AStar algorithm. AStar works by keeping previous
                         # connections as "potentials" in an open set.
                         for con in previous_item.connections
-                            if con.style is "potential" and
-                                @algorithm.name is not "AStar" and
-                                    @algorithm.name is not "BiDi"
-                                        con.update_style "normal"
+                            if con.c.style is "potential" and
+                                @algorithm.name isnt "AStar" and
+                                    @algorithm.name isnt "BiDi"
+                                        con.c.update_style "normal"
 
             # increase the pointer value
             @pointer++
@@ -78,12 +81,12 @@ class animate
 
         # Check for null value in traverse_info. Pointer has to be greater than
         # zero, as the pointer is decremented immediately after this comparison.
-        if algorithm.traverse_info is not null and pointer > 0
+        if @algorithm.traverse_info isnt null and @pointer > 0
             # Decrement the pointer property
-            pointer--
+            @pointer--
 
             # create variable for storing array
-            @traverse_info = algorithm.traverse_info
+            @traverse_info = @algorithm.traverse_info
             # create variable for current item pointer looks at in the array
             current_item = @traverse_info[pointer]
 
@@ -92,25 +95,25 @@ class animate
 
             # if the current item is a point then change all of it's potential
             # connections back to a normal style.
-            if current_item instanceof Point
+            if current_item instanceof point
                 for con in current_item.connections
-                    if con.style is "potential"
-                        con.update_style "normal"
+                    if con.c.style is "potential"
+                        con.c.update_style "normal"
 
             # If there is an item before the current item in the traverse_info
             # array
-            if pointer is not 0
+            if @pointer is not 0
                 # Create a variable for storing the previous item
-                previous_item = @traverse_info[pointer-1]
+                previous_item = @traverse_info[@pointer-1]
                 # Change it's style to "viewing"
                 previous_item.update_style "viewing"
 
                 # if the previous item is a point change all of its connections
                 # to now be in a "potential" style.
-                if previous_item instanceof Point
+                if previous_item instanceof point
                     for con in previous_item.connections
-                        if con.style is not "viewing"
-                            con.update_style "potential"
+                        if con.c.style isnt "viewing"
+                            con.c.update_style "potential"
 
     # ### animate.traverse( )
     # Loop through the given array, animating each given

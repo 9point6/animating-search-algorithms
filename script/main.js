@@ -49,8 +49,17 @@ app = (function() {
       });
     }, this));
     $('#process').click(__bind(function(e) {
-      this.current_algo.root_node = this.graph.points[2];
-      this.current_algo.goal_node = this.graph.points[3];
+      var point, _i, _len, _ref;
+      _ref = this.graph.points;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        point = _ref[_i];
+        if (point.name === "Dave") {
+          this.current_algo.root_node = point;
+        }
+        if (point.name === "Elle") {
+          this.current_algo.goal_node = point;
+        }
+      }
       this.current_algo.search();
       this.current_algo.create_traverse_info();
       console.log(this.current_algo.traverse_info);

@@ -204,13 +204,16 @@ class point
                 @r.animate
                     fill: "#000",
                     anim_speed
+                    @style = "normal"
             # The node is currently being 'looked at'
             when "viewing"
                 @r.animate
                     fill: "#008000",
                     anim_speed
+                    @style = "viewing"
             # The node has been visited by the algorithm
             when "visited"
                 @r.animate
                     fill: "#999",
                     anim_speed
+                    @style = "visited"

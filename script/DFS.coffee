@@ -49,6 +49,7 @@ class DFS extends algorithm
             for neighbour in current_node.connections
                 if not neighbour.p.explored
                     todo_list.push neighbour.p
+                    
 
             #add current node to explored nodes list
             @explored_nodes.push current_node
@@ -67,20 +68,20 @@ class DFS extends algorithm
     create_traverse_info: ->
         @traverse_info = []
         fork = []
-        fork.push @root_node
-        exp_nodes = @explored_nodes.slice(0)
 
+        exp_nodes = @explored_nodes.slice(0)
         # if the array reaches zero then all the elements
         # have been added to the traverse_info array.
         while exp_nodes.length isnt 0
             # get an element of the exp_nodes array, and
             # remove the element from the array.
-            current_node = exp_nodes.pop( )
-           
-            if current_node.connections.length > 2
-                fork.push current_node
+            current_node = exp_nodes.shift( )
+
             # push the current_node onto the start of the array.
             @traverse_info.push current_node
+            
+            if current_node.connections.length > 2 or current_node.id is @root_node.id
+                fork.push current_node
 
             # if this the last node in exp_nodes array, then there is
             # no need to loop through its connections
@@ -91,20 +92,15 @@ class DFS extends algorithm
                 for con in current_node.connections
                     # if the other node for the current connection is
                     # the node we are looking for.
-                    if con.p.id is exp_nodes[exp_nodes.length - 1].id
+                    if con.p.id is exp_nodes[0].id
                         # add connection to the traverse_info array.
                         @traverse_info.push con.c
-               
+             
                 pleh = @traverse_info[@traverse_info.length-1] instanceof connection
 
                 if not pleh
-                    node = fork.pop( )
+                    node = fork[fork.length-1]
                     if node?
-                        console.log "current node" + current_node.id
                         for con in node.connections
-                            console.log "con id " + con.p.id
-                            if con.p.id is current_node.id
+                            if con.p.id is exp_nodes[0].id
                                 @traverse_info.push con.c
-                      
-
-        @traverse_info.reverse()
