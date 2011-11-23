@@ -24,19 +24,21 @@ class animate
     #
     # #### TODO
     step_forward: ->
+        console.log @pointer
+        console.log @algorithm.traverse_info.length
         # check for null value in traverse_info. if the pointer has not
         # reached the last element of the array already, then run the code.
-        if algorithm.traverse_info is not null and pointer < algorithm.traverse_info.length
+        if @algorithm.traverse_info isnt null and @pointer < @algorithm.traverse_info.length
 
             # create local variable for storing the array of points/connections
-            @traverse_info = algorithm.traverse_info
+            @traverse_info = @algorithm.traverse_info
             # create a variable for storing the element the pointer represents
-            current_item = @traverse_info[pointer]
-
+            current_item = @traverse_info[@pointer]
+            console.log current_item
             # update the current item pointed at to "viewing"
             current_item.update_style "viewing"
             # if the current_item selected is a point object
-            if current_item instanceof Point
+            if current_item instanceof point
                 # loop through all of the points connections
                 for con in current_item.connections
                     # This stops overwriting the style of the previous element in the
@@ -46,26 +48,26 @@ class animate
                         con.update_style "potential"
 
             # the current_item is not the first element in the array
-            if pointer is not 0
+            if @pointer is not 0
                 # create a variable for storing the previous element.
-                previous_item = @traverse_info[pointer-1]
+                previous_item = @traverse_info[@pointer-1]
                 # if the previous item is in the "viewing" style (which it should
                 # be)
                 if previous_item.style is "viewing"
                     # update previous items style to visited
                     previous_item.update_style "visited"
-                    if previous_item instanceof Point
+                    if previous_item instanceof point
                         # change all of its connections back to normal unless it
                         # is an AStar algorithm. AStar works by keeping previous
                         # connections as "potentials" in an open set.
                         for con in previous_item.connections
                             if con.style is "potential" and
-                                algorithm.name is not "AStar" and
-                                    algorithm.name is not "BiDi"
+                                @algorithm.name is not "AStar" and
+                                    @algorithm.name is not "BiDi"
                                         con.update_style "normal"
 
             # increase the pointer value
-            pointer++
+            @pointer++
 
     # ## animate.step_backward( )
     # move backward one step in the traverse_info array for a given algorithm.

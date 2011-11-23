@@ -32,6 +32,9 @@ app = (function() {
       return this.graph.do_mouse_connection();
     }, this));
     $('#search').click(__bind(function(e) {
+      this.current_algo = new algorithms[1];
+      this.animate_obj = new animate;
+      this.animate_obj.algorithm = this.current_algo;
       return $('#designmode').animate({
         opacity: 0
       }, {
@@ -46,13 +49,13 @@ app = (function() {
       });
     }, this));
     $('#process').click(__bind(function(e) {
-      this.current_algo = new algorithms[1];
       this.current_algo.root_node = this.graph.points[2];
       this.current_algo.goal_node = this.graph.points[3];
       this.current_algo.search();
       this.current_algo.create_traverse_info();
       console.log(this.current_algo.traverse_info);
-      return console.log(this.current_algo.explored_nodes);
+      console.log(this.current_algo.explored_nodes);
+      return this.animate_obj.step_forward();
     }, this));
     $('#run').click(__bind(function(e) {
       return alert("Function not added yet!");

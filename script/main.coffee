@@ -71,6 +71,9 @@ class app
         $( '#connect' ).click ( e ) =>
             @graph.do_mouse_connection( )
         $( '#search' ).click ( e ) =>
+            @current_algo = new algorithms[1]
+            @animate_obj = new animate
+            @animate_obj.algorithm = @current_algo
             $( '#designmode' ).animate
                 opacity: 0,
                     complete: ->
@@ -79,13 +82,16 @@ class app
                         $( '#runmode' ).css( 'display', 'block' ).animate
                             opacity: 100
         $( '#process' ).click ( e ) =>
-            @current_algo = new algorithms[1]
+            #@current_algo = new algorithms[1]
             @current_algo.root_node = @graph.points[2]
             @current_algo.goal_node = @graph.points[3]
             @current_algo.search( )
             @current_algo.create_traverse_info( )
             console.log @current_algo.traverse_info
             console.log @current_algo.explored_nodes
+            #@animate_obj = new animate
+            #@animate_obj.algorithm = @current_algo
+            @animate_obj.step_forward( )
         $( '#run' ).click ( e ) =>
             alert "Function not added yet!"
         $( '#design' ).click ( e ) =>
