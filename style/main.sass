@@ -13,7 +13,7 @@
 $colour1 = #bd0
 $colour2 = #fa0
 $copytext = #666
-$imgloc = ../../../resources/img/developpers/PNG/
+$imgloc = ../../img/developpers/PNG/
 
 @mixin linear-gradient($from, $to)
     background-color: $from
@@ -63,7 +63,7 @@ body
 
 #copyright
     position: absolute
-    right: 5px
+    right: 18px
     bottom: 5px
     color: $copytext
     font-size: 8pt
@@ -115,6 +115,73 @@ body
         &:hover
             opacity: 0.5
             cursor: pointer
+
+#slidewrap
+    position: absolute
+    bottom: 0
+    right: 0
+    z-index: 100
+    padding: 4px 0 0 12px
+    overflow: hidden
+    @include linear-gradient(#666, #999)
+    @include border-radius(40px 0 0 0)
+
+    #slidetoggle
+        display: block
+        position: absolute
+        top: 0
+        left: 1px
+        height: 100%
+
+        span
+            position: relative
+            left: 0
+            top: 50%
+            display: block
+
+        &:hover
+            color: #09f
+            cursor: pointer
+
+#slideout
+    padding: 10px
+    @include linear-gradient(#000, #333)
+    @include border-radius(40px 0 0 0)
+
+    h2, h3
+        color: #09f
+        text-shadow: 0 0 10px rgba(0, 153, 255, 0.8)
+
+    h2
+        text-align: right
+        font-size: 1.6em
+        margin: 0
+
+
+    ul#list
+        list-style: none
+        padding: 0
+
+        li
+            margin: 0
+
+            h3
+                font-weight: normal
+                font-size: 0.85em
+                margin: 10px 0 0 0
+
+            p
+                color: #fff
+                font-size: 1.2em
+                margin: 0
+
+            select
+                width: 200px
+                padding: 2px
+                outline: 0px
+                font-size: 1.2em
+                @include linear-gradient(#ccc, #000)
+                @include border-radius(5px)
 
 #helptext
     line-height: 40px

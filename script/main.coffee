@@ -44,6 +44,34 @@ class app
             </ul>
             <div id="helptext" />
         </div>
+        <div id="slidewrap">
+            <a id="slidetoggle"><span>&#9679;</span></a>
+            <div id="slideout">
+                <h2 id="title">Algorithm</h2>
+                <ul id="list">
+                    <li>
+                        <h3>Algorithm:</h3>
+                        <select id="algoselection" />
+                    </li>
+                    <li>
+                        <h3>Completeness:</h3>
+                        <p id="algodata_completeness">Blah</p>
+                    </li>
+                    <li>
+                        <h3>Time Complexity:</h3>
+                        <p id="algodata_time">Blah</p>
+                    </li>
+                    <li>
+                        <h3>Space Complexity:</h3>
+                        <p id="algodata_space">Blah</p>
+                    </li>
+                    <li>
+                        <h3>Optimality:</h3>
+                        <p id="algodata_optimality">Blah</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
         <div id="copyright">
             <a href="doc">Project Home</a>
         <div>
@@ -55,6 +83,8 @@ class app
         $( '#runmode' ).css
             opacity: 0
             display: "none"
+        $( '#slideout' ).css
+            "margin-right": -300
 
         # Set click events for toolbar buttons
         $( '#new' ).click ( e ) =>
@@ -82,23 +112,17 @@ class app
                         $( '#runmode' ).css( 'display', 'block' ).animate
                             opacity: 100
         $( '#process' ).click ( e ) =>
-            #@current_algo = new algorithms[1]
             for point in @graph.points
                 if point.name is "Dave"
                     @current_algo.root_node = point
                 if point.name is "Elle"
                     @current_algo.goal_node = point
-            #@current_algo.root_node = @graph.points[2]
-            #@current_algo.goal_node = @graph.points[3]
             @current_algo.search( )
             @current_algo.create_traverse_info( )
             console.log @current_algo.traverse_info
             console.log @current_algo.explored_nodes
-            #@animate_obj = new animate
-            #@animate_obj.algorithm = @current_algo
-            @animate_obj.step_forward( )
         $( '#run' ).click ( e ) =>
-            alert "Function not added yet!"
+            @animate_obj.step_forward( )
         $( '#design' ).click ( e ) =>
             $( '#runmode' ).animate
                 opacity: 0,
@@ -107,6 +131,13 @@ class app
                             display: 'none'
                         $( '#designmode' ).css( 'display', 'block' ).animate
                             opacity: 100
+        $( '#slidetoggle' ).click ( e ) =>
+            if $( '#slideout' ).css( "margin-right" ) is "-300px"
+                $( '#slideout' ).animate
+                    "margin-right": 0
+            else
+                $( '#slideout' ).animate
+                    "margin-right": -300
 
         # Preset test data
         @graph.add_point 224, 118, "Alan"
