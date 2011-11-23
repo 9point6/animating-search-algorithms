@@ -139,7 +139,7 @@ graph = (function() {
     _results = [];
     for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
       con = _ref2[_j];
-      _results.push(aconnect(this.points_id_map[con.a], this.points_id_map[con.b], con.weight, con.direction));
+      _results.push(this.connect(this.points_id_map[con.a], this.points_id_map[con.b], con.weight, con.direction));
     }
     return _results;
   };

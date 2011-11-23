@@ -192,4 +192,4 @@ class graph
             @add_point point.x, point.y, point.name, point.id
         # Restore connections
         for con in obj.connections
-            aconnect @points_id_map[con.a], @points_id_map[con.b], con.weight, con.direction
+            @connect @points_id_map[con.a], @points_id_map[con.b], con.weight, con.direction

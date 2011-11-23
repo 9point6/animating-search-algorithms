@@ -15,9 +15,7 @@ animate = (function() {
         _ref = current_item.connections;
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           con = _ref[_i];
-          console.log("IT GOT HERE 2");
-          if (con.c.style !== "viewing") {
-            console.log("IT GOT HERE 3");
+          if (con.c.style === "normal") {
             con.c.update_style("potential");
           }
         }

@@ -13,6 +13,7 @@ connection = (function() {
     this.remove = __bind(this.remove, this);
     this.pointa.connect(this.pointb, this);
     this.pointb.connect(this.pointa, this);
+    this.style = "normal";
     this.anim_atob = true;
     this.r = this.raphael.path();
     this.r.attr({

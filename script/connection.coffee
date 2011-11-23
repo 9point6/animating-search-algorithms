@@ -24,6 +24,8 @@ class connection
     constructor: ( @raphael, @pointa, @pointb, @weight, @direction ) ->
         @pointa.connect @pointb, @
         @pointb.connect @pointa, @
+        
+        @style = "normal"
 
         # Used to indicate direction for animating nodes.
         # If true point a is animated, then the connection, then potentially B

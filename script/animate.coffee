@@ -43,9 +43,7 @@ class animate
                     # This stops overwriting the style of the previous element in the
                     # traverse_info array as it should be the only connection in the
                     # "viewing" state.
-                    console.log "IT GOT HERE 2"
-                    if con.c.style isnt "viewing"
-                        console.log "IT GOT HERE 3"
+                    if con.c.style is "normal"
                         con.c.update_style "potential"
 
             # the current_item is not the first element in the array
