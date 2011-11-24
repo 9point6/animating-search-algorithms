@@ -111,7 +111,7 @@ class Point
                 fill: "#f00",
                 100
             APP.graph.do_mouse_connection @
-        else if a.graph.remove_mode is true
+        else if APP.graph.remove_mode is true
             APP.graph.do_mouse_removal @
         else
             false

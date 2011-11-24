@@ -83,7 +83,7 @@
           fill: "#f00"
         }, 100);
         return APP.graph.do_mouse_connection(this);
-      } else if (a.graph.remove_mode === true) {
+      } else if (APP.graph.remove_mode === true) {
         return APP.graph.do_mouse_removal(this);
       } else {
         return false;
