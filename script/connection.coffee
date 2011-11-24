@@ -89,11 +89,12 @@ class Connection
     # #### TODO
     # * Convert this and `hover_in` into a single method with a toggle
     hover_in: ( e ) =>
-        @r.attr
-            cursor: 'pointer'
-        @r.animate
-            "stroke-width": 3
-            stroke: "#f00",
+        if APP.design_mode
+            @r.attr
+                cursor: 'pointer'
+            @r.animate
+                "stroke-width": 3
+                stroke: "#f00",
 
     # ### connection.hover_out( )
     # Remove hover effect
@@ -103,12 +104,13 @@ class Connection
     # #### TODO
     # * Convert this and `hover_out` into a single method with a toggle
     hover_out: ( e ) =>
-        @r.attr
-            cursor: 'normal'
-        @r.animate
-            "stroke-width": 1
-            stroke: "#666",
-            100
+        if APP.design_mode
+            @r.attr
+                cursor: 'normal'
+            @r.animate
+                "stroke-width": 1
+                stroke: "#666",
+                100
 
     # ### connection.click( )
     # Connection click handler. Currently just does a spark animation.

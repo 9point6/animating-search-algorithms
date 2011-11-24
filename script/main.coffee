@@ -22,6 +22,7 @@ class Main
     # * Write a better system for preset data
     # * Replace JS prompt dialogs with nice modal ones
     constructor: ->
+        @design_mode = true
         @graph = new Graph( )
 
         # Build toolbar, etc
@@ -108,6 +109,7 @@ class Main
         $( '#connect' ).click ( e ) =>
             @graph.do_mouse_connection( )
         $( '#search' ).click ( e ) =>
+            @design_mode = false
             @current_algo = new ALGORITHMS[$( '#algoselection' ).prop "value"]
             @animate_obj = new Animate
             @animate_obj.algorithm = @current_algo
@@ -129,6 +131,7 @@ class Main
         $( '#run' ).click ( e ) =>
             @animate_obj.step_forward( )
         $( '#design' ).click ( e ) =>
+            @design_mode = true
             @animate_obj.destroy( )
             @current_algo.destroy( )
             $( '#runmode' ).animate

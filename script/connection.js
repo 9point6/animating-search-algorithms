@@ -65,22 +65,26 @@
       }, this));
     };
     Connection.prototype.hover_in = function(e) {
-      this.r.attr({
-        cursor: 'pointer'
-      });
-      return this.r.animate({
-        "stroke-width": 3,
-        stroke: "#f00"
-      });
+      if (APP.design_mode) {
+        this.r.attr({
+          cursor: 'pointer'
+        });
+        return this.r.animate({
+          "stroke-width": 3,
+          stroke: "#f00"
+        });
+      }
     };
     Connection.prototype.hover_out = function(e) {
-      this.r.attr({
-        cursor: 'normal'
-      });
-      return this.r.animate({
-        "stroke-width": 1,
-        stroke: "#666"
-      }, 100);
+      if (APP.design_mode) {
+        this.r.attr({
+          cursor: 'normal'
+        });
+        return this.r.animate({
+          "stroke-width": 1,
+          stroke: "#666"
+        }, 100);
+      }
     };
     Connection.prototype.click = function(e) {
       return this.spark();

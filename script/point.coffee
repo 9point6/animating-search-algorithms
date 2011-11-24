@@ -77,7 +77,7 @@ class Point
 
                 # Remove point from `app` class's list
                 newpoints = []
-                for point in a.graph.points
+                for point in APP.graph.points
                     if point.id isnt @id
                         newpoints.push point
                 APP.graph.points = newpoints
@@ -119,12 +119,13 @@ class Point
     # ### point.drag_start( )
     # Drag start handler. Sets the object into move mode.
     drag_start: =>
-        if @move_mode is false
-            @move_mode = true
-            # Needed because the drag events work in relative co-ordinates
-            [@startx, @starty] = [0 + @x, 0 + @y]
-        else
-            false
+        if APP.design_mode
+            if @move_mode is false
+                @move_mode = true
+                # Needed because the drag events work in relative co-ordinates
+                [@startx, @starty] = [0 + @x, 0 + @y]
+            else
+                false
 
     # ### point.drag_move( )
     # Drag move handler. Performs movement on the node.
@@ -132,15 +133,17 @@ class Point
     # * `dx` - Difference in X co-ordinates
     # * `dy` - Difference in Y co-ordinates
     drag_move: ( dx, dy ) =>
-        @move @startx + dx, @starty + dy
-        for connection in @connections
-            do ( connection ) ->
-                connection.c.update_path( )
+        if APP.design_mode
+            @move @startx + dx, @starty + dy
+            for connection in @connections
+                do ( connection ) ->
+                    connection.c.update_path( )
 
     # ### point.drag_up( )
     # Drag finish handler. Takes the object out of move mode.
     drag_up: =>
-        @move_mode = false
+        if APP.design_mode
+            @move_mode = false
 
     # ### point.move*_*with_mouse( )
     # Mostly for the old move method. (click to pick up, click to drop). Kept

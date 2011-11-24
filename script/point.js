@@ -54,7 +54,7 @@
         this.label.remove();
         this.r.remove();
         newpoints = [];
-        _ref2 = a.graph.points;
+        _ref2 = APP.graph.points;
         for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
           point = _ref2[_j];
           if (point.id !== this.id) {
@@ -91,28 +91,34 @@
     };
     Point.prototype.drag_start = function() {
       var _ref;
-      if (this.move_mode === false) {
-        this.move_mode = true;
-        return _ref = [0 + this.x, 0 + this.y], this.startx = _ref[0], this.starty = _ref[1], _ref;
-      } else {
-        return false;
+      if (APP.design_mode) {
+        if (this.move_mode === false) {
+          this.move_mode = true;
+          return _ref = [0 + this.x, 0 + this.y], this.startx = _ref[0], this.starty = _ref[1], _ref;
+        } else {
+          return false;
+        }
       }
     };
     Point.prototype.drag_move = function(dx, dy) {
       var connection, _i, _len, _ref, _results;
-      this.move(this.startx + dx, this.starty + dy);
-      _ref = this.connections;
-      _results = [];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        connection = _ref[_i];
-        _results.push((function(connection) {
-          return connection.c.update_path();
-        })(connection));
+      if (APP.design_mode) {
+        this.move(this.startx + dx, this.starty + dy);
+        _ref = this.connections;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          connection = _ref[_i];
+          _results.push((function(connection) {
+            return connection.c.update_path();
+          })(connection));
+        }
+        return _results;
       }
-      return _results;
     };
     Point.prototype.drag_up = function() {
-      return this.move_mode = false;
+      if (APP.design_mode) {
+        return this.move_mode = false;
+      }
     };
     Point.prototype.move_with_mouse = function() {
       var _ref;

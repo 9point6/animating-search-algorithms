@@ -112,31 +112,40 @@ class Graph
     # #### TODO
     # * See if insantiation of `@connectpointa` and `@connectpointb` is
     # actually necessary
-    # * Test if two points are already connected
     do_mouse_connection: ( obj ) =>
         # If not yet connecting, change state
         if @connect_mode is false
-            [@connectpointa,@connectpointb] = [{id:'0'},{id:'0'}]
+            [@conpa,@conpb] = [{id:'0'},{id:'0'}]
             @connect_mode = true
-            APP.fade_out_toolbar "Click two nodes to connect them"
+            APP.fade_out_toolbar "Click two nodes to connect"
         else
             # If first point, save and contiune, else actually connect
-            if @connectpointa.id is '0'
-                @connectpointa = obj
+            if @conpa.id is '0'
+                @conpa = obj
             else
-                @connectpointb = obj
-                newcon = @connect @connectpointa, @connectpointb
-                @connectpointa.r.animate
-                    r: 5
-                    fill: "#000",
-                    100
-                @connectpointb.r.animate
-                    r: 5
-                    fill: "#000",
-                    100
-                newcon.spark( )
-                @connect_mode = false
-                APP.fade_in_toolbar( )
+                if @conpa.id isnt obj.id
+                    not_connected = true
+                    for con in @connections
+                        a = con.pointa.id
+                        b = con.pointb.id
+                        if ( a is @conpa.id and b is obj.id ) or ( b is @conpa.id and a is obj.id )
+                            not_connected = false
+                    if not_connected
+                        @conpb = obj
+                        newcon = @connect @conpa, @conpb
+                        @conpa.r.animate
+                            r: 5
+                            fill: "#000",
+                            100
+                        @conpb.r.animate
+                            r: 5
+                            fill: "#000",
+                            100
+                        newcon.spark( )
+                        @connect_mode = false
+                        APP.fade_in_toolbar( )
+                    else
+                        obj.update_style "normal"
 
     # ### graph.do*_*mouse_removal( )
     # Handle the removal of a node. Called with no parameters to start the
@@ -183,6 +192,11 @@ class Graph
     # ### graph.clear_graph( )
     # Clears the current graph. Used by the "New" button and the restore method
     clear_graph: ->
+        for points in @points
+            delete point
+        for connection in @connections
+            delete connection
+
         @points_id_map = {}
         [@points,@connections] = [[],[]]
         @paper.clear( )

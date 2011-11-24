@@ -72,7 +72,7 @@
       return newcon;
     };
     Graph.prototype.do_mouse_connection = function(obj) {
-      var newcon, _ref;
+      var a, b, con, newcon, not_connected, _i, _len, _ref, _ref2;
       if (this.connect_mode === false) {
         _ref = [
           {
@@ -80,26 +80,42 @@
           }, {
             id: '0'
           }
-        ], this.connectpointa = _ref[0], this.connectpointb = _ref[1];
+        ], this.conpa = _ref[0], this.conpb = _ref[1];
         this.connect_mode = true;
-        return APP.fade_out_toolbar("Click two nodes to connect them");
+        return APP.fade_out_toolbar("Click two nodes to connect");
       } else {
-        if (this.connectpointa.id === '0') {
-          return this.connectpointa = obj;
+        if (this.conpa.id === '0') {
+          return this.conpa = obj;
         } else {
-          this.connectpointb = obj;
-          newcon = this.connect(this.connectpointa, this.connectpointb);
-          this.connectpointa.r.animate({
-            r: 5,
-            fill: "#000"
-          }, 100);
-          this.connectpointb.r.animate({
-            r: 5,
-            fill: "#000"
-          }, 100);
-          newcon.spark();
-          this.connect_mode = false;
-          return APP.fade_in_toolbar();
+          if (this.conpa.id !== obj.id) {
+            not_connected = true;
+            _ref2 = this.connections;
+            for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
+              con = _ref2[_i];
+              a = con.pointa.id;
+              b = con.pointb.id;
+              if ((a === this.conpa.id && b === obj.id) || (b === this.conpa.id && a === obj.id)) {
+                not_connected = false;
+              }
+            }
+            if (not_connected) {
+              this.conpb = obj;
+              newcon = this.connect(this.conpa, this.conpb);
+              this.conpa.r.animate({
+                r: 5,
+                fill: "#000"
+              }, 100);
+              this.conpb.r.animate({
+                r: 5,
+                fill: "#000"
+              }, 100);
+              newcon.spark();
+              this.connect_mode = false;
+              return APP.fade_in_toolbar();
+            } else {
+              return obj.update_style("normal");
+            }
+          }
         }
       }
     };
@@ -136,9 +152,19 @@
       return base64Encode(out);
     };
     Graph.prototype.clear_graph = function() {
-      var _ref;
+      var connection, points, _i, _j, _len, _len2, _ref, _ref2, _ref3;
+      _ref = this.points;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        points = _ref[_i];
+        delete point;
+      }
+      _ref2 = this.connections;
+      for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
+        connection = _ref2[_j];
+        delete connection;
+      }
       this.points_id_map = {};
-      _ref = [[], []], this.points = _ref[0], this.connections = _ref[1];
+      _ref3 = [[], []], this.points = _ref3[0], this.connections = _ref3[1];
       return this.paper.clear();
     };
     Graph.prototype.parse_string = function(str) {
