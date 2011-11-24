@@ -82,7 +82,11 @@
           }
         ], this.conpa = _ref[0], this.conpb = _ref[1];
         this.connect_mode = true;
-        return APP.fade_out_toolbar("Click two nodes to connect");
+        return APP.fade_out_toolbar("Click two nodes to connect", __bind(function() {
+          this.remove_styles();
+          this.connect_mode = false;
+          return APP.fade_in_toolbar();
+        }, this));
       } else {
         if (this.conpa.id === '0') {
           return this.conpa = obj;
@@ -122,7 +126,10 @@
     Graph.prototype.do_mouse_removal = function(obj) {
       if (this.remove_mode === false) {
         this.remove_mode = true;
-        return APP.fade_out_toolbar("Click a node to remove it");
+        return APP.fade_out_toolbar("Click a node to remove it", __bind(function() {
+          this.remove_mode = false;
+          return APP.fade_in_toolbar();
+        }, this));
       } else {
         obj.remove();
         this.remove_mode = false;

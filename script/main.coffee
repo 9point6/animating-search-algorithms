@@ -186,17 +186,24 @@ class Main
     # Fades out toolbar and shows help text for the user when necessary.
     # #### Parameters
     # * `text` - Text to display
+    # * `cancel_callback` - Function to call if cancel is clicked
     #
     # #### TODO
     # * Convert these two methods to a single method and toggle.
-    fade_out_toolbar: ( text ) ->
+    fade_out_toolbar: ( text, cancel_callback ) ->
         $( '#designmode' ).animate
             opacity: 0,
                 complete: ->
                     $( @ ).css
                         height: 1
-                    $( '#helptext' ).text( text ).animate
+                    $( '#helptext' ).text( text ).append( '''
+                        <ul>
+                            <li id="cancel" title="Cancel operation" />
+                        </ul>
+                        ''' ).animate
                         opacity: 100
+                    $( '#cancel' ).click ( e ) =>
+                        cancel_callback( )
 
     # ### app.fade*_*in_toolbar( )
     # Fades toolbar back in when it's hidden.
@@ -206,7 +213,7 @@ class Main
         $( '#helptext' ).animate
             opacity: 0,
                 complete: ->
-                    $( @ ).text ""
+                    $( @ ).html ""
                     $( '#designmode' ).css( 'height', '' ).animate
                         opacity: 100
 

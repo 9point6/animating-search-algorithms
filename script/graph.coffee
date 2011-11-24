@@ -117,7 +117,10 @@ class Graph
         if @connect_mode is false
             [@conpa,@conpb] = [{id:'0'},{id:'0'}]
             @connect_mode = true
-            APP.fade_out_toolbar "Click two nodes to connect"
+            APP.fade_out_toolbar "Click two nodes to connect", =>
+                @remove_styles( )
+                @connect_mode = false
+                APP.fade_in_toolbar( )
         else
             # If first point, save and contiune, else actually connect
             if @conpa.id is '0'
@@ -156,7 +159,9 @@ class Graph
     do_mouse_removal: ( obj ) =>
         if @remove_mode is false
             @remove_mode = true
-            APP.fade_out_toolbar "Click a node to remove it"
+            APP.fade_out_toolbar "Click a node to remove it", =>
+                @remove_mode = false
+                APP.fade_in_toolbar( )
         else
             obj.remove( )
             @remove_mode = false

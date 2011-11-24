@@ -137,7 +137,7 @@
       this.graph.connect(this.graph.points[3], this.graph.points[1]);
       this.graph.sort_elements();
     }
-    Main.prototype.fade_out_toolbar = function(text) {
+    Main.prototype.fade_out_toolbar = function(text, cancel_callback) {
       return $('#designmode').animate({
         opacity: 0
       }, {
@@ -145,9 +145,12 @@
           $(this).css({
             height: 1
           });
-          return $('#helptext').text(text).animate({
+          $('#helptext').text(text).append('<ul>\n    <li id="cancel" title="Cancel operation" />\n</ul>').animate({
             opacity: 100
           });
+          return $('#cancel').click(__bind(function(e) {
+            return cancel_callback();
+          }, this));
         }
       });
     };
@@ -156,7 +159,7 @@
         opacity: 0
       }, {
         complete: function() {
-          $(this).text("");
+          $(this).html("");
           return $('#designmode').css('height', '').animate({
             opacity: 100
           });
