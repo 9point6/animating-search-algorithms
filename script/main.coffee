@@ -46,7 +46,9 @@ class Main
             <div id="helptext" />
         </div>
         <div id="slidewrap">
-            <a id="slidetoggle"><span>&#9679;</span></a>
+            <a id="slidetoggle">
+                <span>&#9679;</span>
+            </a>
             <div id="slideout">
                 <h2 id="title">Algorithm</h2>
                 <ul id="list">
@@ -73,6 +75,7 @@ class Main
                 </ul>
             </div>
         </div>
+        <div id="algohelptext">Click for algorithm properties</div>
         <div id="copyright">
             <a href="doc">Project Home</a>
         <div>
@@ -88,6 +91,11 @@ class Main
             "margin-right": -300
 
         # Set events all UI stuff
+        $( '#slidetoggle' ).hover ( ( e ) ->
+            $( '#algohelptext' ).css "display", "block"
+            $( '#algohelptext' ).css "opacity", 100
+        ), ( e ) ->
+            $( '#algohelptext' ).css "opacity", 0
         $( '#algoselection' ).change ( e ) ->
             alg = new ALGORITHMS[$( @ ).attr "value"]
             $( '#algodata_completeness' ).html alg.gen_info( )[0]

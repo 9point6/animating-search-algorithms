@@ -44,6 +44,13 @@ $imgloc = ../../img/developpers/PNG/
     -o-transition: $options
     transition: $options
 
+@mixin rotate($options)
+    -webkit-transform: rotate($options)
+    -moz-transform: rotate($options)
+    -ms-transform: rotate($options)
+    -o-transform: rotate($options)
+    transform: rotate($options)
+
 @mixin reset1
     padding: 0
     margin: 0
@@ -144,6 +151,17 @@ body
             color: #09f
             text-shadow: 0 0 10px rgba(0, 153, 255, 0.8)
             cursor: pointer
+
+div#algohelptext
+    display: none
+    position: absolute
+    right: -70px
+    bottom: 150px
+    opacity: 0
+    margin-left: -20px
+    text-align: center
+    @include rotate(-90deg)
+    @include transition(all 0.5s ease-out)
 
 #slideout
     padding: 10px
