@@ -90,6 +90,22 @@ class Main
         $( '#slideout' ).css
             "margin-right": -300
 
+        # jQuery One-Click Upload for loading
+        @upload_obj = $( '<a />' ).css(
+            width: "32px"
+            height: "32px"
+            display: "block"
+        ).appendTo( '#load' ).upload
+            name: 'fileup'
+            action: "io.php"
+            params:
+                action: "load"
+            onComplete: ( response ) =>
+                data = $.parseJSON response
+                @graph.parse_string data.data
+            onSelect: ( ) ->
+                @submit( )
+
         # Set events all UI stuff
         $( '#slidetoggle' ).hover ( ( e ) ->
             $( '#algohelptext' ).css "display", "block"
@@ -106,9 +122,18 @@ class Main
         $( '#new' ).click ( e ) =>
             @graph.clear_graph( )
         $( '#save' ).click ( e ) =>
-            prompt "Copy this string to save the graph", @graph.serialise_graph( )
-        $( '#load' ).click ( e ) =>
-            @graph.parse_string prompt "Paste a saved graph string here"
+            # prompt "Copy this string to save the graph", @graph.serialise_graph( )
+            $( '<iframe name="download" id="download" />' ).appendTo( 'body' ).hide( )
+            $( """
+                <form method="POST" action="io.php" target="download">
+                    <input name="action" value="save" />
+                    <input name="content" value="#{@graph.serialise_graph( )}" />
+                    <input id="dlsubmit" type="submit" />
+                </form>
+            """ ).appendTo( 'body' ).hide( )
+            $( '#dlsubmit' ).click( )
+        #$( '#load' ).click ( e ) =>
+        #    @graph.parse_string prompt "Paste a saved graph string here"
         $( '#add' ).click ( e ) =>
             pnt = @graph.add_point 1, 1, prompt "What will this point be named?"
             pnt.move_with_mouse( )

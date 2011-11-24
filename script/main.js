@@ -17,6 +17,25 @@
       $('#slideout').css({
         "margin-right": -300
       });
+      this.upload_obj = $('<a />').css({
+        width: "32px",
+        height: "32px",
+        display: "block"
+      }).appendTo('#load').upload({
+        name: 'fileup',
+        action: "io.php",
+        params: {
+          action: "load"
+        },
+        onComplete: __bind(function(response) {
+          var data;
+          data = $.parseJSON(response);
+          return this.graph.parse_string(data.data);
+        }, this),
+        onSelect: function() {
+          return this.submit();
+        }
+      });
       $('#slidetoggle').hover((function(e) {
         $('#algohelptext').css("display", "block");
         return $('#algohelptext').css("opacity", 100);
@@ -36,10 +55,9 @@
         return this.graph.clear_graph();
       }, this));
       $('#save').click(__bind(function(e) {
-        return prompt("Copy this string to save the graph", this.graph.serialise_graph());
-      }, this));
-      $('#load').click(__bind(function(e) {
-        return this.graph.parse_string(prompt("Paste a saved graph string here"));
+        $('<iframe name="download" id="download" />').appendTo('body').hide();
+        $("<form method=\"POST\" action=\"io.php\" target=\"download\">\n    <input name=\"action\" value=\"save\" />\n    <input name=\"content\" value=\"" + (this.graph.serialise_graph()) + "\" />\n    <input id=\"dlsubmit\" type=\"submit\" />\n</form>").appendTo('body').hide();
+        return $('#dlsubmit').click();
       }, this));
       $('#add').click(__bind(function(e) {
         var pnt;
