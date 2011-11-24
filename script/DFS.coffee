@@ -51,7 +51,9 @@ class DFS extends Algorithm
                 break
 
             #add to to-do stack
+            console.log "***" + current_node.name
             for neighbour in current_node.connections
+                console.log neighbour.p.name + " " + neighbour.p.explored
                 if not neighbour.p.explored
                     neighbour.p.explored = true
                     todo_list.push neighbour.p
@@ -59,7 +61,9 @@ class DFS extends Algorithm
 
             #add current node to explored nodes list
             @explored_nodes.push current_node
-    
+
+        console.log @explored_nodes
+
     gen_info: ->
         [
             "Complete"
@@ -90,7 +94,7 @@ class DFS extends Algorithm
             # push the current_node onto the start of the array.
             @traverse_info.push current_node
 
-            fork.push current_node
+            fork.unshift current_node
 
             # if this the last node in exp_nodes array, then there is
             # no need to loop through its connections
@@ -105,7 +109,7 @@ class DFS extends Algorithm
                         # add connection to the traverse_info array.
                         @traverse_info.push con.c
 
-                if @traverse_info[@traverse_info.length-1] instanceof Point
+                if @traverse_info.slice(-1)[0] instanceof Point
                     while fork.length isnt 0
                         node = fork.pop( )
                         for con in node.connections
