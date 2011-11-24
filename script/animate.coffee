@@ -36,13 +36,11 @@ class Animate
             @traverse_info = @algorithm.traverse_info
             # create a variable for storing the element the pointer represents
             current_item = @traverse_info[@pointer]
-            console.log "current item " + current_item.name
             # update the current item pointed at to "viewing"
             current_item.update_style "viewing"
             # if the current_item selected is a point object
             if current_item instanceof Point
                 # loop through all of the points connections
-                console.log "IT GOT HERE 1"
                 for con in current_item.connections
                     # This stops overwriting the style of the previous element in the
                     # traverse_info array as it should be the only connection in the
@@ -51,11 +49,9 @@ class Animate
                         con.c.update_style "potential"
 
             # the current_item is not the first element in the array
-            console.log "pointer " + @pointer
             if @pointer isnt 0
                 # create a variable for storing the previous element.
                 previous_item = @traverse_info[@pointer-1]
-                console.log "previous_item " + previous_item.name
                 # if the previous item is in the "viewing" style (which it should
                 # be)
                 if previous_item.style is "viewing"

@@ -90,8 +90,8 @@ class DFS extends Algorithm
             # push the current_node onto the start of the array.
             @traverse_info.push current_node
 
-            if current_node.connections.length > 2 or current_node.id is @root_node.id
-                fork.push current_node
+            #if current_node.connections.length > 2 or current_node.id is @root_node.id
+            fork.unshift current_node
 
             # if this the last node in exp_nodes array, then there is
             # no need to loop through its connections
@@ -107,10 +107,17 @@ class DFS extends Algorithm
                         @traverse_info.push con.c
 
                 if not @traverse_info[@traverse_info.length-1] instanceof Connection
+                    for node in fork
+                        if node?
+                            for con in node.connections
+                                if con.p.id is exp_nodes[0].id
+                                    @traverse_info.push con.c
+###    
+                if not @traverse_info[@traverse_info.length-1] instanceof Connection
                     node = fork[fork.length-1]
                     if node?
                         for con in node.connections
                             if con.p.id is exp_nodes[0].id
                                 @traverse_info.push con.c
-
+###
 this.DFS = DFS
