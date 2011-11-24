@@ -14,13 +14,12 @@
       <div id="jump_page">
           <a class="source" href="BFS.html">BFS.coffee</a>
           <a class="source" href="DFS.html">DFS.coffee</a>
-          <a class="source" href="DFS2.html">DFS2.coffee</a>
           <a class="source" href="DLS.html">DLS.coffee</a>
           <a class="source" href="algorithm.html">algorithm.coffee</a>
           <a class="source" href="animate.html">animate.coffee</a>
           <a class="source" href="connection.html">connection.coffee</a>
           <a class="source" href="graph.html">graph.coffee</a>
-          <a class="source" href="itterative_deepening.html">itterative_deepening.coffee</a>
+          <a class="source" href="iterative_deepening.html">iterative_deepening.coffee</a>
           <a class="source" href="main.html">main.coffee</a>
           <a class="source" href="point.html">point.coffee</a>
           <a class="source" href="z-other.html">z-other.coffee</a>
@@ -77,7 +76,7 @@
         <p>Graph class</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="k">class</span> <span class="n">graph</span></pre></div>
+        <div class='highlight'><pre><span class="k">class</span> <span class="nc">Graph</span></pre></div>
       </td>
     </tr>
     <tr id='section-Class_properties'>
@@ -213,6 +212,24 @@ resized after this or buggy behaviour will occur.</p>
         <span class="vi">@wy</span> <span class="o">=</span> <span class="err">$</span><span class="p">(</span> <span class="n">window</span> <span class="p">)</span><span class="o">.</span><span class="n">height</span><span class="p">(</span> <span class="p">)</span></pre></div>
       </td>
     </tr>
+    <tr id='section-graph.remove_styles(_)'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-graph.remove_styles(_)">&#182;</a>
+        </div>
+        <h3>graph.remove_styles( )</h3>
+
+<p>Removes any styles set to any graph elements during the animation of an
+algorithm.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="n">remove_styles</span><span class="p">:</span> <span class="o">-&gt;</span>
+        <span class="k">for</span> <span class="n">point</span> <span class="k">in</span> <span class="vi">@points</span>
+            <span class="n">point</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;normal&quot;</span>
+        <span class="k">for</span> <span class="n">connection</span> <span class="k">in</span> <span class="vi">@connections</span>
+            <span class="n">connection</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;normal&quot;</span></pre></div>
+      </td>
+    </tr>
     <tr id='section-graph.add_point(_)'>
       <td class=docs>
         <div class="pilwrap">
@@ -235,7 +252,7 @@ resized after this or buggy behaviour will occur.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>    <span class="n">add_point</span><span class="p">:</span> <span class="p">(</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="nb">name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="nb">id</span> <span class="p">)</span> <span class="o">-&gt;</span>
-        <span class="n">newpoint</span> <span class="o">=</span> <span class="kp">new</span> <span class="n">point</span> <span class="vi">@paper</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="nb">name</span>
+        <span class="n">newpoint</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">Point</span> <span class="vi">@paper</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="nb">name</span>
         <span class="k">if</span> <span class="nb">id</span><span class="p">?</span>
             <span class="n">newpoint</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
         <span class="vi">@points_id_map</span><span class="o">[</span><span class="n">newpoint</span><span class="o">.</span><span class="n">id</span><span class="o">]</span> <span class="o">=</span> <span class="n">newpoint</span>
@@ -265,7 +282,7 @@ resized after this or buggy behaviour will occur.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>    <span class="n">connect</span><span class="p">:</span> <span class="p">(</span> <span class="n">pointa</span><span class="p">,</span> <span class="n">pointb</span><span class="p">,</span> <span class="n">weight</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">direction</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">)</span> <span class="o">-&gt;</span>
-        <span class="n">newcon</span> <span class="o">=</span> <span class="kp">new</span> <span class="n">connection</span> <span class="vi">@paper</span><span class="p">,</span> <span class="n">pointa</span><span class="p">,</span> <span class="n">pointb</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">direction</span>
+        <span class="n">newcon</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">Connection</span> <span class="vi">@paper</span><span class="p">,</span> <span class="n">pointa</span><span class="p">,</span> <span class="n">pointb</span><span class="p">,</span> <span class="n">weight</span><span class="p">,</span> <span class="n">direction</span>
         <span class="vi">@connections</span><span class="o">.</span><span class="n">push</span> <span class="n">newcon</span>
         <span class="vi">@sort_elements</span><span class="p">(</span> <span class="p">)</span>
         <span class="n">newcon</span></pre></div>
@@ -293,26 +310,10 @@ as the parameter from each nodes on-click handler.</p>
 <ul>
 <li>See if insantiation of <code>@connectpointa</code> and <code>@connectpointb</code> is
 actually necessary</li>
-<li>Test if two points are already connected</li>
 </ul>
       </td>
       <td class=code>
         <div class='highlight'><pre>    <span class="n">do_mouse_connection</span><span class="p">:</span> <span class="p">(</span> <span class="n">obj</span> <span class="p">)</span> <span class="o">=&gt;</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-16'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-16">&#182;</a>
-        </div>
-        <p>If not yet connecting, change state</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre>        <span class="k">if</span> <span class="vi">@connect_mode</span> <span class="n">is</span> <span class="kp">false</span>
-            <span class="o">[</span><span class="vi">@connectpointa</span><span class="p">,</span><span class="vi">@connectpointb</span><span class="o">]</span> <span class="o">=</span> <span class="o">[</span><span class="p">{</span><span class="nb">id</span><span class="ss">:&#39;0&#39;</span><span class="p">},{</span><span class="nb">id</span><span class="ss">:&#39;0&#39;</span><span class="p">}</span><span class="o">]</span>
-            <span class="vi">@connect_mode</span> <span class="o">=</span> <span class="kp">true</span>
-            <span class="n">app</span><span class="o">.</span><span class="n">fade_out_toolbar</span> <span class="s2">&quot;Click two nodes to connect them&quot;</span>
-        <span class="k">else</span></pre></div>
       </td>
     </tr>
     <tr id='section-17'>
@@ -320,25 +321,50 @@ actually necessary</li>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-17">&#182;</a>
         </div>
+        <p>If not yet connecting, change state</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>        <span class="k">if</span> <span class="vi">@connect_mode</span> <span class="n">is</span> <span class="kp">false</span>
+            <span class="o">[</span><span class="vi">@conpa</span><span class="p">,</span><span class="vi">@conpb</span><span class="o">]</span> <span class="o">=</span> <span class="o">[</span><span class="p">{</span><span class="nb">id</span><span class="ss">:&#39;0&#39;</span><span class="p">},{</span><span class="nb">id</span><span class="ss">:&#39;0&#39;</span><span class="p">}</span><span class="o">]</span>
+            <span class="vi">@connect_mode</span> <span class="o">=</span> <span class="kp">true</span>
+            <span class="no">APP</span><span class="o">.</span><span class="n">fade_out_toolbar</span> <span class="s2">&quot;Click two nodes to connect&quot;</span>
+        <span class="k">else</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-18'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-18">&#182;</a>
+        </div>
         <p>If first point, save and contiune, else actually connect</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>            <span class="k">if</span> <span class="vi">@connectpointa</span><span class="o">.</span><span class="n">id</span> <span class="n">is</span> <span class="s1">&#39;0&#39;</span>
-                <span class="vi">@connectpointa</span> <span class="o">=</span> <span class="n">obj</span>
+        <div class='highlight'><pre>            <span class="k">if</span> <span class="vi">@conpa</span><span class="o">.</span><span class="n">id</span> <span class="n">is</span> <span class="s1">&#39;0&#39;</span>
+                <span class="vi">@conpa</span> <span class="o">=</span> <span class="n">obj</span>
             <span class="k">else</span>
-                <span class="vi">@connectpointb</span> <span class="o">=</span> <span class="n">obj</span>
-                <span class="n">newcon</span> <span class="o">=</span> <span class="vi">@connect</span> <span class="vi">@connectpointa</span><span class="p">,</span> <span class="vi">@connectpointb</span>
-                <span class="vi">@connectpointa</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">animate</span>
-                    <span class="n">r</span><span class="p">:</span> <span class="mi">5</span>
-                    <span class="n">fill</span><span class="p">:</span> <span class="s2">&quot;#000&quot;</span><span class="p">,</span>
-                    <span class="mi">100</span>
-                <span class="vi">@connectpointb</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">animate</span>
-                    <span class="n">r</span><span class="p">:</span> <span class="mi">5</span>
-                    <span class="n">fill</span><span class="p">:</span> <span class="s2">&quot;#000&quot;</span><span class="p">,</span>
-                    <span class="mi">100</span>
-                <span class="n">newcon</span><span class="o">.</span><span class="n">spark</span><span class="p">(</span> <span class="p">)</span>
-                <span class="vi">@connect_mode</span> <span class="o">=</span> <span class="kp">false</span>
-                <span class="n">app</span><span class="o">.</span><span class="n">fade_in_toolbar</span><span class="p">(</span> <span class="p">)</span></pre></div>
+                <span class="k">if</span> <span class="vi">@conpa</span><span class="o">.</span><span class="n">id</span> <span class="n">isnt</span> <span class="n">obj</span><span class="o">.</span><span class="n">id</span>
+                    <span class="n">not_connected</span> <span class="o">=</span> <span class="kp">true</span>
+                    <span class="k">for</span> <span class="n">con</span> <span class="k">in</span> <span class="vi">@connections</span>
+                        <span class="n">a</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">pointa</span><span class="o">.</span><span class="n">id</span>
+                        <span class="n">b</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">pointb</span><span class="o">.</span><span class="n">id</span>
+                        <span class="k">if</span> <span class="p">(</span> <span class="n">a</span> <span class="n">is</span> <span class="vi">@conpa</span><span class="o">.</span><span class="n">id</span> <span class="ow">and</span> <span class="n">b</span> <span class="n">is</span> <span class="n">obj</span><span class="o">.</span><span class="n">id</span> <span class="p">)</span> <span class="ow">or</span> <span class="p">(</span> <span class="n">b</span> <span class="n">is</span> <span class="vi">@conpa</span><span class="o">.</span><span class="n">id</span> <span class="ow">and</span> <span class="n">a</span> <span class="n">is</span> <span class="n">obj</span><span class="o">.</span><span class="n">id</span> <span class="p">)</span>
+                            <span class="n">not_connected</span> <span class="o">=</span> <span class="kp">false</span>
+                    <span class="k">if</span> <span class="n">not_connected</span>
+                        <span class="vi">@conpb</span> <span class="o">=</span> <span class="n">obj</span>
+                        <span class="n">newcon</span> <span class="o">=</span> <span class="vi">@connect</span> <span class="vi">@conpa</span><span class="p">,</span> <span class="vi">@conpb</span>
+                        <span class="vi">@conpa</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">animate</span>
+                            <span class="n">r</span><span class="p">:</span> <span class="mi">5</span>
+                            <span class="n">fill</span><span class="p">:</span> <span class="s2">&quot;#000&quot;</span><span class="p">,</span>
+                            <span class="mi">100</span>
+                        <span class="vi">@conpb</span><span class="o">.</span><span class="n">r</span><span class="o">.</span><span class="n">animate</span>
+                            <span class="n">r</span><span class="p">:</span> <span class="mi">5</span>
+                            <span class="n">fill</span><span class="p">:</span> <span class="s2">&quot;#000&quot;</span><span class="p">,</span>
+                            <span class="mi">100</span>
+                        <span class="n">newcon</span><span class="o">.</span><span class="n">spark</span><span class="p">(</span> <span class="p">)</span>
+                        <span class="vi">@connect_mode</span> <span class="o">=</span> <span class="kp">false</span>
+                        <span class="no">APP</span><span class="o">.</span><span class="n">fade_in_toolbar</span><span class="p">(</span> <span class="p">)</span>
+                    <span class="k">else</span>
+                        <span class="n">obj</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;normal&quot;</span></pre></div>
       </td>
     </tr>
     <tr id='section-graph.do&lt;em&gt;_&lt;/em&gt;mouse_removal(_)'>
@@ -362,11 +388,11 @@ to perform the actual removal</p>
         <div class='highlight'><pre>    <span class="n">do_mouse_removal</span><span class="p">:</span> <span class="p">(</span> <span class="n">obj</span> <span class="p">)</span> <span class="o">=&gt;</span>
         <span class="k">if</span> <span class="vi">@remove_mode</span> <span class="n">is</span> <span class="kp">false</span>
             <span class="vi">@remove_mode</span> <span class="o">=</span> <span class="kp">true</span>
-            <span class="n">app</span><span class="o">.</span><span class="n">fade_out_toolbar</span> <span class="s2">&quot;Click a node to remove it&quot;</span>
+            <span class="no">APP</span><span class="o">.</span><span class="n">fade_out_toolbar</span> <span class="s2">&quot;Click a node to remove it&quot;</span>
         <span class="k">else</span>
             <span class="n">obj</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span> <span class="p">)</span>
             <span class="vi">@remove_mode</span> <span class="o">=</span> <span class="kp">false</span>
-            <span class="n">app</span><span class="o">.</span><span class="n">fade_in_toolbar</span><span class="p">(</span> <span class="p">)</span></pre></div>
+            <span class="no">APP</span><span class="o">.</span><span class="n">fade_in_toolbar</span><span class="p">(</span> <span class="p">)</span></pre></div>
       </td>
     </tr>
     <tr id='section-graph.serialise_graph(_)'>
@@ -388,10 +414,10 @@ current state &ldquo;save-able&rdquo;</p>
         <span class="n">comma</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span></pre></div>
       </td>
     </tr>
-    <tr id='section-20'>
+    <tr id='section-21'>
       <td class=docs>
         <div class="pilwrap">
-          <a class="pilcrow" href="#section-20">&#182;</a>
+          <a class="pilcrow" href="#section-21">&#182;</a>
         </div>
         <p>Serialise points</p>
       </td>
@@ -405,10 +431,10 @@ current state &ldquo;save-able&rdquo;</p>
         <span class="n">comma</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span></pre></div>
       </td>
     </tr>
-    <tr id='section-21'>
+    <tr id='section-22'>
       <td class=docs>
         <div class="pilwrap">
-          <a class="pilcrow" href="#section-21">&#182;</a>
+          <a class="pilcrow" href="#section-22">&#182;</a>
         </div>
         <p>Serialise connections</p>
       </td>
@@ -432,6 +458,11 @@ current state &ldquo;save-able&rdquo;</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>    <span class="n">clear_graph</span><span class="p">:</span> <span class="o">-&gt;</span>
+        <span class="k">for</span> <span class="n">points</span> <span class="k">in</span> <span class="vi">@points</span>
+            <span class="n">delete</span> <span class="n">point</span>
+        <span class="k">for</span> <span class="n">connection</span> <span class="k">in</span> <span class="vi">@connections</span>
+            <span class="n">delete</span> <span class="n">connection</span>
+
         <span class="vi">@points_id_map</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="o">[</span><span class="vi">@points</span><span class="p">,</span><span class="vi">@connections</span><span class="o">]</span> <span class="o">=</span> <span class="o">[[]</span><span class="p">,</span><span class="o">[]]</span>
         <span class="vi">@paper</span><span class="o">.</span><span class="n">clear</span><span class="p">(</span> <span class="p">)</span></pre></div>
@@ -457,10 +488,10 @@ current state &ldquo;save-able&rdquo;</p>
         <span class="vi">@clear_graph</span><span class="p">(</span> <span class="p">)</span></pre></div>
       </td>
     </tr>
-    <tr id='section-24'>
+    <tr id='section-25'>
       <td class=docs>
         <div class="pilwrap">
-          <a class="pilcrow" href="#section-24">&#182;</a>
+          <a class="pilcrow" href="#section-25">&#182;</a>
         </div>
         <p>Decode string to an object</p>
       </td>
@@ -469,10 +500,10 @@ current state &ldquo;save-able&rdquo;</p>
         <span class="n">obj</span> <span class="o">=</span> <span class="vg">$.</span><span class="n">parseJSON</span> <span class="n">json</span></pre></div>
       </td>
     </tr>
-    <tr id='section-25'>
+    <tr id='section-26'>
       <td class=docs>
         <div class="pilwrap">
-          <a class="pilcrow" href="#section-25">&#182;</a>
+          <a class="pilcrow" href="#section-26">&#182;</a>
         </div>
         <p>Restore points</p>
       </td>
@@ -481,17 +512,19 @@ current state &ldquo;save-able&rdquo;</p>
             <span class="vi">@add_point</span> <span class="n">point</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">point</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">point</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">point</span><span class="o">.</span><span class="n">id</span></pre></div>
       </td>
     </tr>
-    <tr id='section-26'>
+    <tr id='section-27'>
       <td class=docs>
         <div class="pilwrap">
-          <a class="pilcrow" href="#section-26">&#182;</a>
+          <a class="pilcrow" href="#section-27">&#182;</a>
         </div>
         <p>Restore connections</p>
 
       </td>
       <td class=code>
         <div class='highlight'><pre>        <span class="k">for</span> <span class="n">con</span> <span class="k">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">connections</span>
-            <span class="n">aconnect</span> <span class="vi">@points_id_map</span><span class="o">[</span><span class="n">con</span><span class="o">.</span><span class="n">a</span><span class="o">]</span><span class="p">,</span> <span class="vi">@points_id_map</span><span class="o">[</span><span class="n">con</span><span class="o">.</span><span class="n">b</span><span class="o">]</span><span class="p">,</span> <span class="n">con</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span> <span class="n">con</span><span class="o">.</span><span class="n">direction</span></pre></div>
+            <span class="vi">@connect</span> <span class="vi">@points_id_map</span><span class="o">[</span><span class="n">con</span><span class="o">.</span><span class="n">a</span><span class="o">]</span><span class="p">,</span> <span class="vi">@points_id_map</span><span class="o">[</span><span class="n">con</span><span class="o">.</span><span class="n">b</span><span class="o">]</span><span class="p">,</span> <span class="n">con</span><span class="o">.</span><span class="n">weight</span><span class="p">,</span> <span class="n">con</span><span class="o">.</span><span class="n">direction</span>
+
+<span class="n">this</span><span class="o">.</span><span class="n">Graph</span> <span class="o">=</span> <span class="no">Graph</span></pre></div>
       </td>
     </tr>
   </table>
