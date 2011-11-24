@@ -14,13 +14,12 @@
       <div id="jump_page">
           <a class="source" href="BFS.html">BFS.coffee</a>
           <a class="source" href="DFS.html">DFS.coffee</a>
-          <a class="source" href="DFS2.html">DFS2.coffee</a>
           <a class="source" href="DLS.html">DLS.coffee</a>
           <a class="source" href="algorithm.html">algorithm.coffee</a>
           <a class="source" href="animate.html">animate.coffee</a>
           <a class="source" href="connection.html">connection.coffee</a>
           <a class="source" href="graph.html">graph.coffee</a>
-          <a class="source" href="itterative_deepening.html">itterative_deepening.coffee</a>
+          <a class="source" href="iterative_deepening.html">iterative_deepening.coffee</a>
           <a class="source" href="main.html">main.coffee</a>
           <a class="source" href="point.html">point.coffee</a>
           <a class="source" href="z-other.html">z-other.coffee</a>
@@ -43,9 +42,9 @@
         
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="k">class</span> <span class="nc">DLS</span> <span class="n">extends</span> <span class="n">algorithm</span>
+        <div class='highlight'><pre><span class="k">class</span> <span class="nc">DLS</span> <span class="n">extends</span> <span class="no">Algorithm</span>
 
-    <span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;DLS&quot;</span></pre></div>
+    <span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;Depth-Limited Search&quot;</span></pre></div>
       </td>
     </tr>
     <tr id='section-2'>
@@ -144,12 +143,19 @@ the connection to the explored connections array</p>
       <td class=code>
         <div class='highlight'><pre>                <span class="n">explored_nodes</span><span class="o">.</span><span class="n">push</span> <span class="n">neighbour</span><span class="o">.</span><span class="n">p</span>
                 <span class="n">explored_connections</span><span class="o">.</span><span class="n">push</span> <span class="n">neighbour</span><span class="o">.</span><span class="n">c</span>
-  
-  <span class="n">gen_info</span><span class="p">:</span> <span class="o">-&gt;</span>
-      <span class="n">alert</span> <span class="s2">&quot;general information&quot;</span>
 
-  <span class="n">run_info</span><span class="p">:</span> <span class="o">-&gt;</span>
-      <span class="n">alert</span> <span class="s2">&quot;runtime information&quot;</span></pre></div>
+    <span class="n">gen_info</span><span class="p">:</span> <span class="o">-&gt;</span>
+        <span class="o">[</span>
+            <span class="s2">&quot;Complete&quot;</span>
+            <span class="s2">&quot;O(b&lt;sup&gt;m&lt;/sup&gt;)&quot;</span>
+            <span class="s2">&quot;O(bm)&quot;</span>
+            <span class="s2">&quot;Not Optimal&quot;</span>
+        <span class="o">]</span>
+
+    <span class="n">run_info</span><span class="p">:</span> <span class="o">-&gt;</span>
+        <span class="n">alert</span> <span class="s2">&quot;runtime information&quot;</span>
+
+<span class="n">this</span><span class="o">.</span><span class="n">DLS</span> <span class="o">=</span> <span class="no">DLS</span></pre></div>
       </td>
     </tr>
   </table>

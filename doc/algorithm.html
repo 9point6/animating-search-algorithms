@@ -14,13 +14,12 @@
       <div id="jump_page">
           <a class="source" href="BFS.html">BFS.coffee</a>
           <a class="source" href="DFS.html">DFS.coffee</a>
-          <a class="source" href="DFS2.html">DFS2.coffee</a>
           <a class="source" href="DLS.html">DLS.coffee</a>
           <a class="source" href="algorithm.html">algorithm.coffee</a>
           <a class="source" href="animate.html">animate.coffee</a>
           <a class="source" href="connection.html">connection.coffee</a>
           <a class="source" href="graph.html">graph.coffee</a>
-          <a class="source" href="itterative_deepening.html">itterative_deepening.coffee</a>
+          <a class="source" href="iterative_deepening.html">iterative_deepening.coffee</a>
           <a class="source" href="main.html">main.coffee</a>
           <a class="source" href="point.html">point.coffee</a>
           <a class="source" href="z-other.html">z-other.coffee</a>
@@ -77,7 +76,7 @@
         <p>Algorithm abstract class</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="k">class</span> <span class="n">algorithm</span></pre></div>
+        <div class='highlight'><pre><span class="k">class</span> <span class="nc">Algorithm</span></pre></div>
       </td>
     </tr>
     <tr id='section-4'>
@@ -150,7 +149,10 @@ classes, but here for completeness.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>    <span class="n">constructor</span><span class="p">:</span> <span class="o">-&gt;</span>
-        <span class="kp">false</span></pre></div>
+        <span class="kp">false</span>
+
+    <span class="n">destroy</span><span class="p">:</span> <span class="o">-&gt;</span>
+        <span class="n">delete</span> <span class="err">@</span></pre></div>
       </td>
     </tr>
     <tr id='section-algorithm.search(_)'>
@@ -200,7 +202,9 @@ running the algorithm. (Such as run time, etc)</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>    <span class="n">run_info</span><span class="p">:</span> <span class="o">-&gt;</span>
-        <span class="kp">throw</span> <span class="s2">&quot;Run info not implemented&quot;</span></pre></div>
+        <span class="kp">throw</span> <span class="s2">&quot;Run info not implemented&quot;</span>
+
+<span class="n">this</span><span class="o">.</span><span class="n">Algorithm</span> <span class="o">=</span> <span class="no">Algorithm</span></pre></div>
       </td>
     </tr>
   </table>

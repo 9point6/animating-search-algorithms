@@ -14,13 +14,12 @@
       <div id="jump_page">
           <a class="source" href="BFS.html">BFS.coffee</a>
           <a class="source" href="DFS.html">DFS.coffee</a>
-          <a class="source" href="DFS2.html">DFS2.coffee</a>
           <a class="source" href="DLS.html">DLS.coffee</a>
           <a class="source" href="algorithm.html">algorithm.coffee</a>
           <a class="source" href="animate.html">animate.coffee</a>
           <a class="source" href="connection.html">connection.coffee</a>
           <a class="source" href="graph.html">graph.coffee</a>
-          <a class="source" href="itterative_deepening.html">itterative_deepening.coffee</a>
+          <a class="source" href="iterative_deepening.html">iterative_deepening.coffee</a>
           <a class="source" href="main.html">main.coffee</a>
           <a class="source" href="point.html">point.coffee</a>
           <a class="source" href="z-other.html">z-other.coffee</a>
@@ -77,7 +76,7 @@
         <p>Graph node class</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="k">class</span> <span class="n">point</span></pre></div>
+        <div class='highlight'><pre><span class="k">class</span> <span class="nc">Point</span></pre></div>
       </td>
     </tr>
     <tr id='section-point.constructor(_)'>
@@ -124,8 +123,7 @@
         <p>Assign point an ID. Used for connections and save/restore</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="vi">@id</span> <span class="o">=</span> <span class="n">uniqueId</span><span class="p">(</span> <span class="p">)</span>
-        <span class="n">a</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">points_id_map</span></pre></div>
+        <div class='highlight'><pre>        <span class="vi">@id</span> <span class="o">=</span> <span class="n">uniqueId</span><span class="p">(</span> <span class="p">)</span></pre></div>
       </td>
     </tr>
     <tr id='section-7'>
@@ -249,10 +247,10 @@ the canvas.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>                <span class="n">newpoints</span> <span class="o">=</span> <span class="o">[]</span>
-                <span class="k">for</span> <span class="n">point</span> <span class="k">in</span> <span class="n">a</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">points</span>
+                <span class="k">for</span> <span class="n">point</span> <span class="k">in</span> <span class="no">APP</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">points</span>
                     <span class="k">if</span> <span class="n">point</span><span class="o">.</span><span class="n">id</span> <span class="n">isnt</span> <span class="vi">@id</span>
                         <span class="n">newpoints</span><span class="o">.</span><span class="n">push</span> <span class="n">point</span>
-                <span class="n">a</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">points</span> <span class="o">=</span> <span class="n">newpoints</span></pre></div>
+                <span class="no">APP</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">points</span> <span class="o">=</span> <span class="n">newpoints</span></pre></div>
       </td>
     </tr>
     <tr id='section-point.move(_)'>
@@ -306,14 +304,14 @@ the canvas.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>    <span class="n">click</span><span class="p">:</span> <span class="p">(</span> <span class="n">e</span> <span class="p">)</span> <span class="o">=&gt;</span>
-        <span class="k">if</span> <span class="n">a</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">connect_mode</span> <span class="n">is</span> <span class="kp">true</span>
+        <span class="k">if</span> <span class="no">APP</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">connect_mode</span> <span class="n">is</span> <span class="kp">true</span>
             <span class="vi">@r</span><span class="o">.</span><span class="n">animate</span>
                 <span class="n">r</span><span class="p">:</span> <span class="mi">10</span>
                 <span class="n">fill</span><span class="p">:</span> <span class="s2">&quot;#f00&quot;</span><span class="p">,</span>
                 <span class="mi">100</span>
-            <span class="n">a</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">do_mouse_connection</span> <span class="err">@</span>
-        <span class="k">else</span> <span class="k">if</span> <span class="n">a</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">remove_mode</span> <span class="n">is</span> <span class="kp">true</span>
-            <span class="n">a</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">do_mouse_removal</span> <span class="err">@</span>
+            <span class="no">APP</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">do_mouse_connection</span> <span class="err">@</span>
+        <span class="k">else</span> <span class="k">if</span> <span class="no">APP</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">remove_mode</span> <span class="n">is</span> <span class="kp">true</span>
+            <span class="no">APP</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">do_mouse_removal</span> <span class="err">@</span>
         <span class="k">else</span>
             <span class="kp">false</span></pre></div>
       </td>
@@ -329,8 +327,9 @@ the canvas.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>    <span class="n">drag_start</span><span class="p">:</span> <span class="o">=&gt;</span>
-        <span class="k">if</span> <span class="vi">@move_mode</span> <span class="n">is</span> <span class="kp">false</span>
-            <span class="vi">@move_mode</span> <span class="o">=</span> <span class="kp">true</span></pre></div>
+        <span class="k">if</span> <span class="no">APP</span><span class="o">.</span><span class="n">design_mode</span>
+            <span class="k">if</span> <span class="vi">@move_mode</span> <span class="n">is</span> <span class="kp">false</span>
+                <span class="vi">@move_mode</span> <span class="o">=</span> <span class="kp">true</span></pre></div>
       </td>
     </tr>
     <tr id='section-18'>
@@ -341,9 +340,9 @@ the canvas.</p>
         <p>Needed because the drag events work in relative co-ordinates</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>            <span class="o">[</span><span class="vi">@startx</span><span class="p">,</span> <span class="vi">@starty</span><span class="o">]</span> <span class="o">=</span> <span class="o">[</span><span class="mi">0</span> <span class="o">+</span> <span class="vi">@x</span><span class="p">,</span> <span class="mi">0</span> <span class="o">+</span> <span class="vi">@y</span><span class="o">]</span>
-        <span class="k">else</span>
-            <span class="kp">false</span></pre></div>
+        <div class='highlight'><pre>                <span class="o">[</span><span class="vi">@startx</span><span class="p">,</span> <span class="vi">@starty</span><span class="o">]</span> <span class="o">=</span> <span class="o">[</span><span class="mi">0</span> <span class="o">+</span> <span class="vi">@x</span><span class="p">,</span> <span class="mi">0</span> <span class="o">+</span> <span class="vi">@y</span><span class="o">]</span>
+            <span class="k">else</span>
+                <span class="kp">false</span></pre></div>
       </td>
     </tr>
     <tr id='section-point.drag_move(_)'>
@@ -364,10 +363,11 @@ the canvas.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>    <span class="n">drag_move</span><span class="p">:</span> <span class="p">(</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span> <span class="p">)</span> <span class="o">=&gt;</span>
-        <span class="vi">@move</span> <span class="vi">@startx</span> <span class="o">+</span> <span class="n">dx</span><span class="p">,</span> <span class="vi">@starty</span> <span class="o">+</span> <span class="n">dy</span>
-        <span class="k">for</span> <span class="n">connection</span> <span class="k">in</span> <span class="vi">@connections</span>
-            <span class="k">do</span> <span class="p">(</span> <span class="n">connection</span> <span class="p">)</span> <span class="o">-&gt;</span>
-                <span class="n">connection</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">update_path</span><span class="p">(</span> <span class="p">)</span></pre></div>
+        <span class="k">if</span> <span class="no">APP</span><span class="o">.</span><span class="n">design_mode</span>
+            <span class="vi">@move</span> <span class="vi">@startx</span> <span class="o">+</span> <span class="n">dx</span><span class="p">,</span> <span class="vi">@starty</span> <span class="o">+</span> <span class="n">dy</span>
+            <span class="k">for</span> <span class="n">connection</span> <span class="k">in</span> <span class="vi">@connections</span>
+                <span class="k">do</span> <span class="p">(</span> <span class="n">connection</span> <span class="p">)</span> <span class="o">-&gt;</span>
+                    <span class="n">connection</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">update_path</span><span class="p">(</span> <span class="p">)</span></pre></div>
       </td>
     </tr>
     <tr id='section-point.drag_up(_)'>
@@ -381,7 +381,8 @@ the canvas.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>    <span class="n">drag_up</span><span class="p">:</span> <span class="o">=&gt;</span>
-        <span class="vi">@move_mode</span> <span class="o">=</span> <span class="kp">false</span></pre></div>
+        <span class="k">if</span> <span class="no">APP</span><span class="o">.</span><span class="n">design_mode</span>
+            <span class="vi">@move_mode</span> <span class="o">=</span> <span class="kp">false</span></pre></div>
       </td>
     </tr>
     <tr id='section-point.move&lt;em&gt;_&lt;/em&gt;with_mouse(_)'>
@@ -501,7 +502,8 @@ because it&rsquo;s used in the new <code>point</code> method to allow the user t
             <span class="k">when</span> <span class="s2">&quot;normal&quot;</span>
                 <span class="vi">@r</span><span class="o">.</span><span class="n">animate</span>
                     <span class="n">fill</span><span class="p">:</span> <span class="s2">&quot;#000&quot;</span><span class="p">,</span>
-                    <span class="n">anim_speed</span></pre></div>
+                    <span class="n">anim_speed</span>
+                    <span class="vi">@style</span> <span class="o">=</span> <span class="s2">&quot;normal&quot;</span></pre></div>
       </td>
     </tr>
     <tr id='section-25'>
@@ -515,7 +517,8 @@ because it&rsquo;s used in the new <code>point</code> method to allow the user t
         <div class='highlight'><pre>            <span class="k">when</span> <span class="s2">&quot;viewing&quot;</span>
                 <span class="vi">@r</span><span class="o">.</span><span class="n">animate</span>
                     <span class="n">fill</span><span class="p">:</span> <span class="s2">&quot;#008000&quot;</span><span class="p">,</span>
-                    <span class="n">anim_speed</span></pre></div>
+                    <span class="n">anim_speed</span>
+                    <span class="vi">@style</span> <span class="o">=</span> <span class="s2">&quot;viewing&quot;</span></pre></div>
       </td>
     </tr>
     <tr id='section-26'>
@@ -530,7 +533,10 @@ because it&rsquo;s used in the new <code>point</code> method to allow the user t
         <div class='highlight'><pre>            <span class="k">when</span> <span class="s2">&quot;visited&quot;</span>
                 <span class="vi">@r</span><span class="o">.</span><span class="n">animate</span>
                     <span class="n">fill</span><span class="p">:</span> <span class="s2">&quot;#999&quot;</span><span class="p">,</span>
-                    <span class="n">anim_speed</span></pre></div>
+                    <span class="n">anim_speed</span>
+                    <span class="vi">@style</span> <span class="o">=</span> <span class="s2">&quot;visited&quot;</span>
+
+<span class="n">this</span><span class="o">.</span><span class="n">Point</span> <span class="o">=</span> <span class="no">Point</span></pre></div>
       </td>
     </tr>
   </table>

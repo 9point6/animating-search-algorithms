@@ -14,13 +14,12 @@
       <div id="jump_page">
           <a class="source" href="BFS.html">BFS.coffee</a>
           <a class="source" href="DFS.html">DFS.coffee</a>
-          <a class="source" href="DFS2.html">DFS2.coffee</a>
           <a class="source" href="DLS.html">DLS.coffee</a>
           <a class="source" href="algorithm.html">algorithm.coffee</a>
           <a class="source" href="animate.html">animate.coffee</a>
           <a class="source" href="connection.html">connection.coffee</a>
           <a class="source" href="graph.html">graph.coffee</a>
-          <a class="source" href="itterative_deepening.html">itterative_deepening.coffee</a>
+          <a class="source" href="iterative_deepening.html">iterative_deepening.coffee</a>
           <a class="source" href="main.html">main.coffee</a>
           <a class="source" href="point.html">point.coffee</a>
           <a class="source" href="z-other.html">z-other.coffee</a>
@@ -214,7 +213,14 @@
         <p>Stop IE text selection</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="err">$</span><span class="p">(</span> <span class="s1">&#39;body&#39;</span> <span class="p">)</span><span class="o">.</span><span class="n">onselectstart</span> <span class="o">=</span> <span class="o">-&gt;</span> <span class="kp">false</span></pre></div>
+        <div class='highlight'><pre>    <span class="err">$</span><span class="p">(</span> <span class="s1">&#39;body&#39;</span> <span class="p">)</span><span class="o">.</span><span class="n">onselectstart</span> <span class="o">=</span> <span class="o">-&gt;</span> <span class="kp">false</span>
+
+    <span class="n">window</span><span class="o">.</span><span class="n">ALGORITHMS</span> <span class="o">=</span> <span class="o">[</span>
+        <span class="no">BFS</span>
+        <span class="no">DFS</span>
+        <span class="no">DLS</span>
+        <span class="no">IterativeDeepening</span>
+    <span class="o">]</span></pre></div>
       </td>
     </tr>
     <tr id='section-9'>
@@ -226,14 +232,7 @@
 
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">window</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="kp">new</span> <span class="n">app</span>
-
-    <span class="n">window</span><span class="o">.</span><span class="n">algorithms</span> <span class="o">=</span> <span class="o">[</span>
-        <span class="no">BFS</span>
-        <span class="no">DFS</span>
-        <span class="no">DLS</span>
-        <span class="no">ItterativeDeepening</span>
-    <span class="o">]</span></pre></div>
+        <div class='highlight'><pre>    <span class="n">window</span><span class="o">.</span><span class="n">APP</span> <span class="o">=</span> <span class="kp">new</span> <span class="no">Main</span></pre></div>
       </td>
     </tr>
   </table>

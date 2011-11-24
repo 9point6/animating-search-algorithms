@@ -14,13 +14,12 @@
       <div id="jump_page">
           <a class="source" href="BFS.html">BFS.coffee</a>
           <a class="source" href="DFS.html">DFS.coffee</a>
-          <a class="source" href="DFS2.html">DFS2.coffee</a>
           <a class="source" href="DLS.html">DLS.coffee</a>
           <a class="source" href="algorithm.html">algorithm.coffee</a>
           <a class="source" href="animate.html">animate.coffee</a>
           <a class="source" href="connection.html">connection.coffee</a>
           <a class="source" href="graph.html">graph.coffee</a>
-          <a class="source" href="itterative_deepening.html">itterative_deepening.coffee</a>
+          <a class="source" href="iterative_deepening.html">iterative_deepening.coffee</a>
           <a class="source" href="main.html">main.coffee</a>
           <a class="source" href="point.html">point.coffee</a>
           <a class="source" href="z-other.html">z-other.coffee</a>
@@ -77,7 +76,7 @@
         <p>Animate class</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="k">class</span> <span class="n">animate</span></pre></div>
+        <div class='highlight'><pre><span class="k">class</span> <span class="nc">Animate</span></pre></div>
       </td>
     </tr>
     <tr id='section-4'>
@@ -99,7 +98,11 @@
         <p>Stores the algorithm currently being worked on in the UI environment.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>    <span class="n">algorithm</span><span class="p">:</span> <span class="n">null</span></pre></div>
+        <div class='highlight'><pre>    <span class="n">algorithm</span><span class="p">:</span> <span class="n">null</span>
+
+    <span class="n">destroy</span><span class="p">:</span> <span class="o">-&gt;</span>
+        <span class="no">APP</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">remove_styles</span><span class="p">(</span> <span class="p">)</span>
+        <span class="n">delete</span> <span class="err">@</span></pre></div>
       </td>
     </tr>
     <tr id='section-animate.step_forward(_)'>
@@ -128,7 +131,7 @@
 reached the last element of the array already, then run the code.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="k">if</span> <span class="n">algorithm</span><span class="o">.</span><span class="n">traverse_info</span> <span class="n">is</span> <span class="ow">not</span> <span class="n">null</span> <span class="ow">and</span> <span class="n">pointer</span> <span class="o">&lt;</span> <span class="n">algorithm</span><span class="o">.</span><span class="n">traverse_info</span><span class="o">.</span><span class="n">length</span></pre></div>
+        <div class='highlight'><pre>        <span class="k">if</span> <span class="vi">@algorithm</span><span class="o">.</span><span class="n">traverse_info?</span> <span class="ow">and</span> <span class="vi">@pointer</span> <span class="o">&lt;</span> <span class="vi">@algorithm</span><span class="o">.</span><span class="n">traverse_info</span><span class="o">.</span><span class="n">length</span></pre></div>
       </td>
     </tr>
     <tr id='section-8'>
@@ -139,7 +142,7 @@ reached the last element of the array already, then run the code.</p>
         <p>create local variable for storing the array of points/connections</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>            <span class="vi">@traverse_info</span> <span class="o">=</span> <span class="n">algorithm</span><span class="o">.</span><span class="n">traverse_info</span></pre></div>
+        <div class='highlight'><pre>            <span class="vi">@traverse_info</span> <span class="o">=</span> <span class="vi">@algorithm</span><span class="o">.</span><span class="n">traverse_info</span></pre></div>
       </td>
     </tr>
     <tr id='section-9'>
@@ -150,7 +153,8 @@ reached the last element of the array already, then run the code.</p>
         <p>create a variable for storing the element the pointer represents</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>            <span class="n">current_item</span> <span class="o">=</span> <span class="vi">@traverse_info</span><span class="o">[</span><span class="n">pointer</span><span class="o">]</span></pre></div>
+        <div class='highlight'><pre>            <span class="n">current_item</span> <span class="o">=</span> <span class="vi">@traverse_info</span><span class="o">[</span><span class="vi">@pointer</span><span class="o">]</span>
+            <span class="n">console</span><span class="o">.</span><span class="n">log</span> <span class="s2">&quot;current item &quot;</span> <span class="o">+</span> <span class="n">current_item</span><span class="o">.</span><span class="n">name</span></pre></div>
       </td>
     </tr>
     <tr id='section-10'>
@@ -183,7 +187,8 @@ reached the last element of the array already, then run the code.</p>
         <p>loop through all of the points connections</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>                <span class="k">for</span> <span class="n">con</span> <span class="k">in</span> <span class="n">current_item</span><span class="o">.</span><span class="n">connections</span></pre></div>
+        <div class='highlight'><pre>                <span class="n">console</span><span class="o">.</span><span class="n">log</span> <span class="s2">&quot;IT GOT HERE 1&quot;</span>
+                <span class="k">for</span> <span class="n">con</span> <span class="k">in</span> <span class="n">current_item</span><span class="o">.</span><span class="n">connections</span></pre></div>
       </td>
     </tr>
     <tr id='section-13'>
@@ -196,8 +201,8 @@ traverse_info array as it should be the only connection in the
 &ldquo;viewing&rdquo; state.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>                    <span class="k">if</span> <span class="n">con</span><span class="o">.</span><span class="n">style</span> <span class="n">is</span> <span class="ow">not</span> <span class="s2">&quot;viewing&quot;</span>
-                        <span class="n">con</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;potential&quot;</span></pre></div>
+        <div class='highlight'><pre>                    <span class="k">if</span> <span class="n">con</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">style</span> <span class="n">is</span> <span class="s2">&quot;normal&quot;</span>
+                        <span class="n">con</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;potential&quot;</span></pre></div>
       </td>
     </tr>
     <tr id='section-14'>
@@ -208,7 +213,8 @@ traverse_info array as it should be the only connection in the
         <p>the current_item is not the first element in the array</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>            <span class="k">if</span> <span class="n">pointer</span> <span class="n">is</span> <span class="ow">not</span> <span class="mi">0</span></pre></div>
+        <div class='highlight'><pre>            <span class="n">console</span><span class="o">.</span><span class="n">log</span> <span class="s2">&quot;pointer &quot;</span> <span class="o">+</span> <span class="vi">@pointer</span>
+            <span class="k">if</span> <span class="vi">@pointer</span> <span class="n">isnt</span> <span class="mi">0</span></pre></div>
       </td>
     </tr>
     <tr id='section-15'>
@@ -219,7 +225,8 @@ traverse_info array as it should be the only connection in the
         <p>create a variable for storing the previous element.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>                <span class="n">previous_item</span> <span class="o">=</span> <span class="vi">@traverse_info</span><span class="o">[</span><span class="n">pointer</span><span class="o">-</span><span class="mi">1</span><span class="o">]</span></pre></div>
+        <div class='highlight'><pre>                <span class="n">previous_item</span> <span class="o">=</span> <span class="vi">@traverse_info</span><span class="o">[</span><span class="vi">@pointer</span><span class="o">-</span><span class="mi">1</span><span class="o">]</span>
+                <span class="n">console</span><span class="o">.</span><span class="n">log</span> <span class="s2">&quot;previous_item &quot;</span> <span class="o">+</span> <span class="n">previous_item</span><span class="o">.</span><span class="n">name</span></pre></div>
       </td>
     </tr>
     <tr id='section-16'>
@@ -257,10 +264,10 @@ connections as &ldquo;potentials&rdquo; in an open set.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>                        <span class="k">for</span> <span class="n">con</span> <span class="k">in</span> <span class="n">previous_item</span><span class="o">.</span><span class="n">connections</span>
-                            <span class="k">if</span> <span class="n">con</span><span class="o">.</span><span class="n">style</span> <span class="n">is</span> <span class="s2">&quot;potential&quot;</span> <span class="ow">and</span>
-                                <span class="n">algorithm</span><span class="o">.</span><span class="n">name</span> <span class="n">is</span> <span class="ow">not</span> <span class="s2">&quot;AStar&quot;</span> <span class="ow">and</span>
-                                    <span class="n">algorithm</span><span class="o">.</span><span class="n">name</span> <span class="n">is</span> <span class="ow">not</span> <span class="s2">&quot;BiDi&quot;</span>
-                                        <span class="n">con</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;normal&quot;</span></pre></div>
+                            <span class="k">if</span> <span class="n">con</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">style</span> <span class="n">is</span> <span class="s2">&quot;potential&quot;</span> <span class="ow">and</span>
+                                <span class="vi">@algorithm</span><span class="o">.</span><span class="n">name</span> <span class="n">isnt</span> <span class="s2">&quot;AStar&quot;</span> <span class="ow">and</span>
+                                    <span class="vi">@algorithm</span><span class="o">.</span><span class="n">name</span> <span class="n">isnt</span> <span class="s2">&quot;BiDi&quot;</span>
+                                        <span class="n">con</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;normal&quot;</span></pre></div>
       </td>
     </tr>
     <tr id='section-19'>
@@ -271,7 +278,7 @@ connections as &ldquo;potentials&rdquo; in an open set.</p>
         <p>increase the pointer value</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>            <span class="n">pointer</span><span class="o">++</span></pre></div>
+        <div class='highlight'><pre>            <span class="vi">@pointer</span><span class="o">++</span></pre></div>
       </td>
     </tr>
     <tr id='section-animate.step_backward(_)'>
@@ -300,7 +307,7 @@ connections as &ldquo;potentials&rdquo; in an open set.</p>
 zero, as the pointer is decremented immediately after this comparison.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="k">if</span> <span class="n">algorithm</span><span class="o">.</span><span class="n">traverse_info</span> <span class="n">is</span> <span class="ow">not</span> <span class="n">null</span> <span class="ow">and</span> <span class="n">pointer</span> <span class="o">&gt;</span> <span class="mi">0</span></pre></div>
+        <div class='highlight'><pre>        <span class="k">if</span> <span class="vi">@algorithm</span><span class="o">.</span><span class="n">traverse_info?</span> <span class="ow">and</span> <span class="vi">@pointer</span> <span class="o">&gt;</span> <span class="mi">0</span></pre></div>
       </td>
     </tr>
     <tr id='section-22'>
@@ -311,7 +318,7 @@ zero, as the pointer is decremented immediately after this comparison.</p>
         <p>Decrement the pointer property</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>            <span class="n">pointer</span><span class="o">--</span></pre></div>
+        <div class='highlight'><pre>            <span class="vi">@pointer</span><span class="o">--</span></pre></div>
       </td>
     </tr>
     <tr id='section-23'>
@@ -322,7 +329,7 @@ zero, as the pointer is decremented immediately after this comparison.</p>
         <p>create variable for storing array</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>            <span class="vi">@traverse_info</span> <span class="o">=</span> <span class="n">algorithm</span><span class="o">.</span><span class="n">traverse_info</span></pre></div>
+        <div class='highlight'><pre>            <span class="vi">@traverse_info</span> <span class="o">=</span> <span class="vi">@algorithm</span><span class="o">.</span><span class="n">traverse_info</span></pre></div>
       </td>
     </tr>
     <tr id='section-24'>
@@ -358,8 +365,8 @@ connections back to a normal style.</p>
       <td class=code>
         <div class='highlight'><pre>            <span class="k">if</span> <span class="n">current_item</span> <span class="n">instanceof</span> <span class="no">Point</span>
                 <span class="k">for</span> <span class="n">con</span> <span class="k">in</span> <span class="n">current_item</span><span class="o">.</span><span class="n">connections</span>
-                    <span class="k">if</span> <span class="n">con</span><span class="o">.</span><span class="n">style</span> <span class="n">is</span> <span class="s2">&quot;potential&quot;</span>
-                        <span class="n">con</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;normal&quot;</span></pre></div>
+                    <span class="k">if</span> <span class="n">con</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">style</span> <span class="n">is</span> <span class="s2">&quot;potential&quot;</span>
+                        <span class="n">con</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;normal&quot;</span></pre></div>
       </td>
     </tr>
     <tr id='section-27'>
@@ -371,7 +378,7 @@ connections back to a normal style.</p>
 array</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>            <span class="k">if</span> <span class="n">pointer</span> <span class="n">is</span> <span class="ow">not</span> <span class="mi">0</span></pre></div>
+        <div class='highlight'><pre>            <span class="k">if</span> <span class="vi">@pointer</span> <span class="n">is</span> <span class="ow">not</span> <span class="mi">0</span></pre></div>
       </td>
     </tr>
     <tr id='section-28'>
@@ -382,7 +389,7 @@ array</p>
         <p>Create a variable for storing the previous item</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>                <span class="n">previous_item</span> <span class="o">=</span> <span class="vi">@traverse_info</span><span class="o">[</span><span class="n">pointer</span><span class="o">-</span><span class="mi">1</span><span class="o">]</span></pre></div>
+        <div class='highlight'><pre>                <span class="n">previous_item</span> <span class="o">=</span> <span class="vi">@traverse_info</span><span class="o">[</span><span class="vi">@pointer</span><span class="o">-</span><span class="mi">1</span><span class="o">]</span></pre></div>
       </td>
     </tr>
     <tr id='section-29'>
@@ -407,8 +414,8 @@ to now be in a &ldquo;potential&rdquo; style.</p>
       <td class=code>
         <div class='highlight'><pre>                <span class="k">if</span> <span class="n">previous_item</span> <span class="n">instanceof</span> <span class="no">Point</span>
                     <span class="k">for</span> <span class="n">con</span> <span class="k">in</span> <span class="n">previous_item</span><span class="o">.</span><span class="n">connections</span>
-                        <span class="k">if</span> <span class="n">con</span><span class="o">.</span><span class="n">style</span> <span class="n">is</span> <span class="ow">not</span> <span class="s2">&quot;viewing&quot;</span>
-                            <span class="n">con</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;potential&quot;</span></pre></div>
+                        <span class="k">if</span> <span class="n">con</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">style</span> <span class="n">isnt</span> <span class="s2">&quot;viewing&quot;</span>
+                            <span class="n">con</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">update_style</span> <span class="s2">&quot;potential&quot;</span></pre></div>
       </td>
     </tr>
     <tr id='section-animate.traverse(_)'>
@@ -438,9 +445,11 @@ node and connection in order.</p>
 
       </td>
       <td class=code>
-        <div class='highlight'><pre>        <span class="k">if</span> <span class="n">algorithm</span><span class="o">.</span><span class="n">traverse_info</span> <span class="n">is</span> <span class="ow">not</span> <span class="n">null</span>
-            <span class="k">while</span> <span class="n">pointer</span> <span class="o">&lt;=</span> <span class="n">algorithm</span><span class="o">.</span><span class="n">traverse_info</span><span class="o">.</span><span class="n">length</span>
-                <span class="n">this</span><span class="o">.</span><span class="n">step_foward</span></pre></div>
+        <div class='highlight'><pre>        <span class="k">if</span> <span class="vi">@algorithm</span><span class="o">.</span><span class="n">traverse_info?</span>
+            <span class="k">while</span> <span class="n">pointer</span> <span class="o">&lt;=</span> <span class="vi">@algorithm</span><span class="o">.</span><span class="n">traverse_info</span><span class="o">.</span><span class="n">length</span>
+                <span class="n">this</span><span class="o">.</span><span class="n">step_foward</span>
+
+<span class="n">this</span><span class="o">.</span><span class="n">Animate</span> <span class="o">=</span> <span class="no">Animate</span></pre></div>
       </td>
     </tr>
   </table>
