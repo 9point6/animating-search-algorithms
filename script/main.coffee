@@ -12,7 +12,7 @@
 # ## Main Documentation
 
 # Main app class
-class app
+class Main
     # ### Class properties
 
     # ### app.constructor( )
@@ -22,7 +22,7 @@ class app
     # * Write a better system for preset data
     # * Replace JS prompt dialogs with nice modal ones
     constructor: ->
-        @graph = new graph( )
+        @graph = new Graph( )
 
         # Build toolbar, etc
         $( 'body' ).append ( '''
@@ -86,7 +86,14 @@ class app
         $( '#slideout' ).css
             "margin-right": -300
 
-        # Set click events for toolbar buttons
+        # Set events all UI stuff
+        $( '#algoselection' ).change ( e ) ->
+            alg = new ALGORITHMS[$( @ ).attr "value"]
+            $( '#algodata_completeness' ).html alg.gen_info( )[0]
+            $( '#algodata_time' ).html alg.gen_info( )[1]
+            $( '#algodata_space' ).html alg.gen_info( )[2]
+            $( '#algodata_optimality' ).html alg.gen_info( )[3]
+            delete alg
         $( '#new' ).click ( e ) =>
             @graph.clear_graph( )
         $( '#save' ).click ( e ) =>
@@ -101,8 +108,8 @@ class app
         $( '#connect' ).click ( e ) =>
             @graph.do_mouse_connection( )
         $( '#search' ).click ( e ) =>
-            @current_algo = new algorithms[1]
-            @animate_obj = new animate
+            @current_algo = new ALGORITHMS[$( '#algoselection' ).prop "value"]
+            @animate_obj = new Animate
             @animate_obj.algorithm = @current_algo
             $( '#designmode' ).animate
                 opacity: 0,
@@ -119,11 +126,11 @@ class app
                     @current_algo.goal_node = point
             @current_algo.search( )
             @current_algo.create_traverse_info( )
-            console.log @current_algo.traverse_info
-            console.log @current_algo.explored_nodes
         $( '#run' ).click ( e ) =>
             @animate_obj.step_forward( )
         $( '#design' ).click ( e ) =>
+            @animate_obj.destroy( )
+            @current_algo.destroy( )
             $( '#runmode' ).animate
                 opacity: 0,
                     complete: ->
@@ -138,6 +145,15 @@ class app
             else
                 $( '#slideout' ).animate
                     "margin-right": -300
+
+        # TODO: There's gotta be a better way of doing this
+        i = 0
+        for algo in ALGORITHMS
+            alg = new algo( )
+            $( '#algoselection' ).append "<option id=\"alg#{algo.name}\" value=\"#{i++}\">#{alg.name}</option>"
+            delete alg
+        $( '#algDFS' ).attr "selected", "selected"
+        $( '#algoselection' ).change( )
 
         # Preset test data
         @graph.add_point 224, 118, "Alan"
@@ -182,3 +198,5 @@ class app
                     $( @ ).text ""
                     $( '#designmode' ).css( 'height', '' ).animate
                         opacity: 100
+
+this.Main = Main

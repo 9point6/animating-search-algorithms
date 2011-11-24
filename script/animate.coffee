@@ -12,11 +12,15 @@
 # ## Main Documentation
 
 # Animate class
-class animate
+class Animate
     # Stores pointer value for current position in traverse_info array
     pointer: 0
     # Stores the algorithm currently being worked on in the UI environment.
     algorithm: null
+
+    destroy: ->
+        APP.graph.remove_styles( )
+        delete @
 
     # ### animate.step_forward( )
     # move forward one step in the traverse_info array for a given algorithm.
@@ -26,7 +30,7 @@ class animate
     step_forward: ->
         # check for null value in traverse_info. if the pointer has not
         # reached the last element of the array already, then run the code.
-        if @algorithm.traverse_info isnt null and @pointer < @algorithm.traverse_info.length
+        if @algorithm.traverse_info? and @pointer < @algorithm.traverse_info.length
 
             # create local variable for storing the array of points/connections
             @traverse_info = @algorithm.traverse_info
@@ -36,7 +40,7 @@ class animate
             # update the current item pointed at to "viewing"
             current_item.update_style "viewing"
             # if the current_item selected is a point object
-            if current_item instanceof point
+            if current_item instanceof Point
                 # loop through all of the points connections
                 console.log "IT GOT HERE 1"
                 for con in current_item.connections
@@ -57,7 +61,7 @@ class animate
                 if previous_item.style is "viewing"
                     # update previous items style to visited
                     previous_item.update_style "visited"
-                    if previous_item instanceof point
+                    if previous_item instanceof Point
                         # change all of its connections back to normal unless it
                         # is an AStar algorithm. AStar works by keeping previous
                         # connections as "potentials" in an open set.
@@ -79,7 +83,7 @@ class animate
 
         # Check for null value in traverse_info. Pointer has to be greater than
         # zero, as the pointer is decremented immediately after this comparison.
-        if @algorithm.traverse_info isnt null and @pointer > 0
+        if @algorithm.traverse_info? and @pointer > 0
             # Decrement the pointer property
             @pointer--
 
@@ -93,7 +97,7 @@ class animate
 
             # if the current item is a point then change all of it's potential
             # connections back to a normal style.
-            if current_item instanceof point
+            if current_item instanceof Point
                 for con in current_item.connections
                     if con.c.style is "potential"
                         con.c.update_style "normal"
@@ -108,7 +112,7 @@ class animate
 
                 # if the previous item is a point change all of its connections
                 # to now be in a "potential" style.
-                if previous_item instanceof point
+                if previous_item instanceof Point
                     for con in previous_item.connections
                         if con.c.style isnt "viewing"
                             con.c.update_style "potential"
@@ -121,6 +125,8 @@ class animate
     # #### TODO
     traverse: ->
         # if the list to iterate over is not null
-        if algorithm.traverse_info is not null
-            while pointer <= algorithm.traverse_info.length
+        if @algorithm.traverse_info?
+            while pointer <= @algorithm.traverse_info.length
                 this.step_foward
+
+this.Animate = Animate

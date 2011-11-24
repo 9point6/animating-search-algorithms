@@ -1,6 +1,6 @@
-class DLS extends algorithm
+class DLS extends Algorithm
 
-    name: "DLS"
+    name: "Depth-Limited Search"
 
     # depth-limited search starting form a root node
     # User gives a limit upon clicking animate.
@@ -33,9 +33,16 @@ class DLS extends algorithm
                 # the connection to the explored connections array
                 explored_nodes.push neighbour.p
                 explored_connections.push neighbour.c
-	
-	gen_info: ->
-      alert "general information"
 
-	run_info: ->
-      alert "runtime information"
+    gen_info: ->
+        [
+            "Complete"
+            "O(b<sup>m</sup>)"
+            "O(bm)"
+            "Not Optimal"
+        ]
+
+    run_info: ->
+        alert "runtime information"
+
+this.DLS = DLS

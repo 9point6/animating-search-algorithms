@@ -12,7 +12,7 @@
 # ## Main Documentation
 
 # Algorithm abstract class
-class algorithm
+class Algorithm
     # Base node object
     root_node: null
     # Goal node object
@@ -32,6 +32,9 @@ class algorithm
     # classes, but here for completeness.
     constructor: ->
         false
+
+    destroy: ->
+        delete @
 
     # ### algorithm.search( )
     # Will be the main bulk of the class. Runs and animates the search
@@ -54,3 +57,5 @@ class algorithm
     # **Return** -> Array containing the information
     run_info: ->
         throw "Run info not implemented"
+
+this.Algorithm = Algorithm

@@ -1,8 +1,8 @@
-class ItterativeDeepening extends algorithm
+class IterativeDeepening extends Algorithm
 
-    name: "Itterative Deepening"
+    name: "Iterative Deepening"
 
-    # Itarative Deepening starting form a root node
+    # Iterative Deepening starting form a root node
     # User gives a limit upon clicking animate.
     search: ->
         #stack for nodes to be searched
@@ -41,7 +41,14 @@ class ItterativeDeepening extends algorithm
             limit++
 
     gen_info: ->
-      alert "general information"
+        [
+            "Complete"
+            "O(b<sup>d+1</sup>)"
+            "O(bd)"
+            "Not Optimal"
+        ]
 
     run_info: ->
       alert "runtime information"
+
+this.IterativeDeepening = IterativeDeepening

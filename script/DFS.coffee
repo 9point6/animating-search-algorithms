@@ -12,14 +12,19 @@
 # ## Main Documentation
 
 # DFS algorithm class
-class DFS extends algorithm
-    name: "DFS"
+class DFS extends Algorithm
+    name: "Depth-First Search"
+
+    destroy: ->
+        for node in @explored_nodes
+            delete node.explored
+        super
 
     # ### DFS.search( )
     # executes a depth first search given
     # a particular set of nodes, starting from
     # the root_node (only works on a tree graph)
-    # ### Parameters
+    # #### Parameters
     search: ->
         # reset all the explored values for each node
         for node in @explored_nodes
@@ -49,13 +54,18 @@ class DFS extends algorithm
             for neighbour in current_node.connections
                 if not neighbour.p.explored
                     todo_list.push neighbour.p
-                    
+
 
             #add current node to explored nodes list
             @explored_nodes.push current_node
 
     gen_info: ->
-        alert "general information"
+        [
+            "Complete"
+            "O(b<sup>m</sup>)"
+            "O(bm)"
+            "Not Optimal"
+        ]
 
     run_info: ->
         alert "runtime information"
@@ -79,7 +89,7 @@ class DFS extends algorithm
 
             # push the current_node onto the start of the array.
             @traverse_info.push current_node
-            
+
             if current_node.connections.length > 2 or current_node.id is @root_node.id
                 fork.push current_node
 
@@ -95,12 +105,12 @@ class DFS extends algorithm
                     if con.p.id is exp_nodes[0].id
                         # add connection to the traverse_info array.
                         @traverse_info.push con.c
-             
-                pleh = @traverse_info[@traverse_info.length-1] instanceof connection
 
-                if not pleh
+                if not @traverse_info[@traverse_info.length-1] instanceof Connection
                     node = fork[fork.length-1]
                     if node?
                         for con in node.connections
                             if con.p.id is exp_nodes[0].id
                                 @traverse_info.push con.c
+
+this.DFS = DFS

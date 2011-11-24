@@ -12,7 +12,7 @@
 # ## Main Documentation
 
 # Graph edge class
-class connection
+class Connection
     # ### connection.constructor( )
     # Constructor for an edge
     # #### Parameters
@@ -24,7 +24,8 @@ class connection
     constructor: ( @raphael, @pointa, @pointb, @weight, @direction ) ->
         @pointa.connect @pointb, @
         @pointb.connect @pointa, @
-        
+
+        # Sets the current style to the default state
         @style = "normal"
 
         # Used to indicate direction for animating nodes.
@@ -75,10 +76,10 @@ class connection
 
                 # Remove from connections list in `app` object
                 newcons = []
-                for con in a.graph.connections
+                for con in APP.graph.connections
                     if con.pointa.id isnt @pointa.id or con.pointb.id isnt @pointb.id
                         newcons.push con
-                a.graph.connections = newcons
+                APP.graph.connections = newcons
 
     # ### connection.hover_in( )
     # Show hover effect
@@ -126,21 +127,21 @@ class connection
     # * `[a2b]` - Animate from A to B?
     spark: ( a2b = true ) ->
         start_point = if a2b then @pointa else @pointb
-        window.spark = @raphael.ellipse start_point.x, start_point.y, 20, 20
-        window.spark.attr
+        @spark = @raphael.ellipse start_point.x, start_point.y, 20, 20
+        @spark.attr
             fill: "r#f00-#fff"
             stroke: "transparent"
 
         # Raphael does not currently support alpha gradients, but SVG and VML
         # both do. This code changes the necessary elements to do this manually
-        grad = $( spark.node ).attr "fill"
+        grad = $( @spark.node ).attr "fill"
         grad = grad.substring 4, grad.length - 1
         stops = $( grad ).children( )
         $( stops[0] ).attr "stop-opacity", "1"
         $( stops[1] ).attr "stop-opacity", "0"
 
-        window.spark.animateAlong @r, 500, false, =>
-            spark.remove( )
+        @spark.animateAlong @r, 500, false, ->
+            @remove( )
 
     # ### connection.update_style( )
     # Perform animatrions on the connection. Used by search algorithms.
@@ -181,3 +182,5 @@ class connection
                     "stroke-width": 3,
                     anim_speed
                     @style = "visited"
+
+this.Connection = Connection

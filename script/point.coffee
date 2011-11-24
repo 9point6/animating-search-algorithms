@@ -12,7 +12,7 @@
 # ## Main Documentation
 
 # Graph node class
-class point
+class Point
     # ### point.constructor( )
     # Constructor for a node
     # #### Parameters
@@ -80,7 +80,7 @@ class point
                 for point in a.graph.points
                     if point.id isnt @id
                         newpoints.push point
-                a.graph.points = newpoints
+                APP.graph.points = newpoints
 
     # ### point.move( )
     # Moves a node.
@@ -105,14 +105,14 @@ class point
     # * Bring up a context menu to edit/remove the node
     # * Check if returning false is required
     click: ( e ) =>
-        if a.graph.connect_mode is true
+        if APP.graph.connect_mode is true
             @r.animate
                 r: 10
                 fill: "#f00",
                 100
-            a.graph.do_mouse_connection @
+            APP.graph.do_mouse_connection @
         else if a.graph.remove_mode is true
-            a.graph.do_mouse_removal @
+            APP.graph.do_mouse_removal @
         else
             false
 
@@ -217,3 +217,5 @@ class point
                     fill: "#999",
                     anim_speed
                     @style = "visited"
+
+this.Point = Point

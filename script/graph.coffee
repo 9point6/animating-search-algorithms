@@ -12,7 +12,7 @@
 # ## Main Documentation
 
 # Graph class
-class graph
+class Graph
     # ### Class properties
 
     # Flag for if the user is connecting two points
@@ -61,6 +61,15 @@ class graph
         @wx = $( window ).width( )
         @wy = $( window ).height( )
 
+    # ### graph.remove_styles( )
+    # Removes any styles set to any graph elements during the animation of an
+    # algorithm.
+    remove_styles: ->
+        for point in @points
+            point.update_style "normal"
+        for connection in @connections
+            connection.update_style "normal"
+
     # ### graph.add_point( )
     # Adds a node to the canvas.
     # #### Parameters
@@ -71,7 +80,7 @@ class graph
     #
     # **Return** -> new `point` object
     add_point: ( x, y, name = "", id ) ->
-        newpoint = new point @paper, x, y, name
+        newpoint = new Point @paper, x, y, name
         if id?
             newpoint.id = id
         @points_id_map[newpoint.id] = newpoint
@@ -88,7 +97,7 @@ class graph
     #
     # **Return** -> new `connection` object
     connect: ( pointa, pointb, weight = 0, direction = 0 ) ->
-        newcon = new connection @paper, pointa, pointb, weight, direction
+        newcon = new Connection @paper, pointa, pointb, weight, direction
         @connections.push newcon
         @sort_elements( )
         newcon
@@ -109,7 +118,7 @@ class graph
         if @connect_mode is false
             [@connectpointa,@connectpointb] = [{id:'0'},{id:'0'}]
             @connect_mode = true
-            a.fade_out_toolbar "Click two nodes to connect them"
+            APP.fade_out_toolbar "Click two nodes to connect them"
         else
             # If first point, save and contiune, else actually connect
             if @connectpointa.id is '0'
@@ -127,7 +136,7 @@ class graph
                     100
                 newcon.spark( )
                 @connect_mode = false
-                a.fade_in_toolbar( )
+                APP.fade_in_toolbar( )
 
     # ### graph.do*_*mouse_removal( )
     # Handle the removal of a node. Called with no parameters to start the
@@ -138,11 +147,11 @@ class graph
     do_mouse_removal: ( obj ) =>
         if @remove_mode is false
             @remove_mode = true
-            a.fade_out_toolbar "Click a node to remove it"
+            APP.fade_out_toolbar "Click a node to remove it"
         else
             obj.remove( )
             @remove_mode = false
-            a.fade_in_toolbar( )
+            APP.fade_in_toolbar( )
 
     # ### graph.serialise_graph( )
     # Takes the current state of the graph and serialises it into a JSON string
@@ -193,3 +202,5 @@ class graph
         # Restore connections
         for con in obj.connections
             @connect @points_id_map[con.a], @points_id_map[con.b], con.weight, con.direction
+
+this.Graph = Graph

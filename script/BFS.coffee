@@ -1,6 +1,5 @@
-class BFS extends algorithm
-
-    name: "BFS"
+class BFS extends Algorithm
+    name: "Beadth-First Search"
 
     search: ->
         #queue of nodes to be searched
@@ -34,3 +33,13 @@ class BFS extends algorithm
                 #if the nieghbour is the goal node end search
                 if neighbour.p is goal_node
                     break
+
+    gen_info: ->
+        [
+            "Complete"
+            "O(b<sup>d+1</sup>)"
+            "O(b<sup>d</sup>)"
+            "Not Optimal"
+        ]
+
+this.BFS = BFS

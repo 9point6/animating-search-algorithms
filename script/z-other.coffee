@@ -96,12 +96,12 @@ $ ->
     # Stop IE text selection
     $( 'body' ).onselectstart = -> false
 
-    # Instantiates the main class and starts the program
-    window.a = new app
-
-    window.algorithms = [
+    window.ALGORITHMS = [
         BFS
         DFS
         DLS
-        ItterativeDeepening
+        IterativeDeepening
     ]
+
+    # Instantiates the main class and starts the program
+    window.APP = new Main
