@@ -53,12 +53,13 @@ class DFS extends Algorithm
             #add to to-do stack
             for neighbour in current_node.connections
                 if not neighbour.p.explored
+                    neighbour.p.explored = true
                     todo_list.push neighbour.p
 
 
             #add current node to explored nodes list
             @explored_nodes.push current_node
-
+    
     gen_info: ->
         [
             "Complete"
@@ -86,12 +87,10 @@ class DFS extends Algorithm
             # get an element of the exp_nodes array, and
             # remove the element from the array.
             current_node = exp_nodes.shift( )
-
             # push the current_node onto the start of the array.
             @traverse_info.push current_node
 
-            #if current_node.connections.length > 2 or current_node.id is @root_node.id
-            fork.unshift current_node
+            fork.push current_node
 
             # if this the last node in exp_nodes array, then there is
             # no need to loop through its connections
@@ -106,18 +105,11 @@ class DFS extends Algorithm
                         # add connection to the traverse_info array.
                         @traverse_info.push con.c
 
-                if not @traverse_info[@traverse_info.length-1] instanceof Connection
-                    for node in fork
-                        if node?
-                            for con in node.connections
-                                if con.p.id is exp_nodes[0].id
-                                    @traverse_info.push con.c
-###    
-                if not @traverse_info[@traverse_info.length-1] instanceof Connection
-                    node = fork[fork.length-1]
-                    if node?
+                if @traverse_info[@traverse_info.length-1] instanceof Point
+                    while fork.length isnt 0
+                        node = fork.pop( )
                         for con in node.connections
                             if con.p.id is exp_nodes[0].id
                                 @traverse_info.push con.c
-###
+
 this.DFS = DFS

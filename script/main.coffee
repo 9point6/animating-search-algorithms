@@ -163,6 +163,8 @@ class Main
             @current_algo.create_traverse_info( )
         $( '#run' ).click ( e ) =>
             @animate_obj.step_forward( )
+            #console.log @current_algo.traverse_info
+            #console.log @current_algo.explored_nodes
         $( '#design' ).click ( e ) =>
             @design_mode = true
             @animate_obj.destroy( )
