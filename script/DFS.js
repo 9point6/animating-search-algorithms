@@ -24,7 +24,7 @@
       return DFS.__super__.destroy.apply(this, arguments);
     };
     DFS.prototype.search = function() {
-      var current_node, neighbour, node, todo_list, _i, _j, _len, _len2, _ref, _ref2;
+      var current_node, neighbour, node, todo_list, _i, _len, _ref, _results;
       _ref = this.explored_nodes;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         node = _ref[_i];
@@ -33,26 +33,29 @@
       this.explored_nodes = [];
       todo_list = [];
       todo_list.push(this.root_node);
+      _results = [];
       while (todo_list.length !== 0) {
         current_node = todo_list.pop();
-        current_node.explored = true;
         if (current_node.id === this.goal_node.id) {
           this.explored_nodes.push(current_node);
           break;
         }
-        console.log("***" + current_node.name);
-        _ref2 = current_node.connections;
-        for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
-          neighbour = _ref2[_j];
-          console.log(neighbour.p.name + " " + neighbour.p.explored);
-          if (!neighbour.p.explored) {
-            neighbour.p.explored = true;
-            todo_list.push(neighbour.p);
+        _results.push((function() {
+          var _j, _len2, _ref2, _results2;
+          if (!current_node.explored) {
+            current_node.explored = true;
+            this.explored_nodes.push(current_node);
+            _ref2 = current_node.connections;
+            _results2 = [];
+            for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
+              neighbour = _ref2[_j];
+              _results2.push(!neighbour.p.explored ? todo_list.push(neighbour.p) : void 0);
+            }
+            return _results2;
           }
-        }
-        this.explored_nodes.push(current_node);
+        }).call(this));
       }
-      return console.log(this.explored_nodes);
+      return _results;
     };
     DFS.prototype.gen_info = function() {
       return ["Complete", "O(b<sup>m</sup>)", "O(bm)", "Not Optimal"];

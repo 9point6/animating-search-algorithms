@@ -43,26 +43,20 @@ class DFS extends Algorithm
 
             #pull a node from the stack
             current_node = todo_list.pop( )
-            current_node.explored = true
 
             #if current node is goal node, end the search
             if current_node.id is @goal_node.id
                 @explored_nodes.push current_node
                 break
 
-            #add to to-do stack
-            console.log "***" + current_node.name
-            for neighbour in current_node.connections
-                console.log neighbour.p.name + " " + neighbour.p.explored
-                if not neighbour.p.explored
-                    neighbour.p.explored = true
-                    todo_list.push neighbour.p
-
-
-            #add current node to explored nodes list
-            @explored_nodes.push current_node
-
-        console.log @explored_nodes
+            if not current_node.explored
+                current_node.explored = true
+                #add current node to explored nodes list
+                @explored_nodes.push current_node
+                #add to to-do stack
+                for neighbour in current_node.connections
+                    if not neighbour.p.explored
+                        todo_list.push neighbour.p
 
     gen_info: ->
         [
