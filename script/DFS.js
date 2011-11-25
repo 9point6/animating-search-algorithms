@@ -74,7 +74,7 @@
         this.traverse_info.push(current_node);
         fork.unshift(current_node);
         _results.push((function() {
-          var _i, _len, _ref, _results2;
+          var _i, _j, _len, _len2, _ref, _results2;
           if (exp_nodes.length !== 0) {
             _ref = current_node.connections;
             for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -85,14 +85,14 @@
             }
             if (this.traverse_info.slice(-1)[0] instanceof Point) {
               _results2 = [];
-              while (fork.length !== 0) {
-                node = fork.pop();
+              for (_j = 0, _len2 = fork.length; _j < _len2; _j++) {
+                node = fork[_j];
                 _results2.push((function() {
-                  var _j, _len2, _ref2, _results3;
+                  var _k, _len3, _ref2, _results3;
                   _ref2 = node.connections;
                   _results3 = [];
-                  for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
-                    con = _ref2[_j];
+                  for (_k = 0, _len3 = _ref2.length; _k < _len3; _k++) {
+                    con = _ref2[_k];
                     _results3.push(con.p.id === exp_nodes[0].id ? this.traverse_info.push(con.c) : void 0);
                   }
                   return _results3;
