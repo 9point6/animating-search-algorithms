@@ -123,6 +123,7 @@ class Animate
         # if the list to iterate over is not null
         if @algorithm.traverse_info?
             while pointer <= @algorithm.traverse_info.length
-                this.step_foward
+                @step_foward
+
 
 this.Animate = Animate
