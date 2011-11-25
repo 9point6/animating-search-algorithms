@@ -51,6 +51,13 @@ $imgloc = ../../img/developpers/PNG/
     -o-transform: rotate($options)
     transform: rotate($options)
 
+@mixin flipH( )
+    -webkit-transform: scaleX(-1)
+    -moz-transform: scaleX(-1)
+    -ms-transform: scaleX(-1)
+    -o-transform: scaleX(-1)
+    transform: scaleX(-1)
+
 @mixin reset1
     padding: 0
     margin: 0
@@ -228,7 +235,12 @@ div#algohelptext
 #search
     background-image: url( "#{$imgloc}Spotlight%20Blue%20Button.png" )
 #run
-    background-image: url( "#{$imgloc}Play%20Blue%20Button.png" )
+    background-image: url( "#{$imgloc}Play%20All.png" )
+#stepback
+    background-image: url( "#{$imgloc}Play.png" )
+    @include flipH( )
+#stepforward
+    background-image: url( "#{$imgloc}Play.png" )
 #process
     background-image: url( "#{$imgloc}Run.png" )
 #design

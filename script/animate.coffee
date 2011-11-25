@@ -76,7 +76,6 @@ class Animate
     #
     # #### TODO
     step_backward: ->
-
         # Check for null value in traverse_info. Pointer has to be greater than
         # zero, as the pointer is decremented immediately after this comparison.
         if @algorithm.traverse_info? and @pointer > 0
@@ -86,7 +85,7 @@ class Animate
             # create variable for storing array
             @traverse_info = @algorithm.traverse_info
             # create variable for current item pointer looks at in the array
-            current_item = @traverse_info[pointer]
+            current_item = @traverse_info[@pointer]
 
             # change the current item to a "normal" style
             current_item.update_style "normal"
@@ -100,7 +99,7 @@ class Animate
 
             # If there is an item before the current item in the traverse_info
             # array
-            if @pointer is not 0
+            if @pointer isnt 0
                 # Create a variable for storing the previous item
                 previous_item = @traverse_info[@pointer-1]
                 # Change it's style to "viewing"
@@ -120,10 +119,15 @@ class Animate
     #
     # #### TODO
     traverse: ->
+        traverse_speed = 500
+        @pointer = 0
         # if the list to iterate over is not null
         if @algorithm.traverse_info?
-            while pointer <= @algorithm.traverse_info.length
-                @step_foward
+            doTraverse = =>
+                @step_forward( )
+                if @pointer < @algorithm.traverse_info.length
+                    setTimeout doTraverse, traverse_speed
+            setTimeout doTraverse, traverse_speed
 
 
 this.Animate = Animate

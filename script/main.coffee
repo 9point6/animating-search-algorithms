@@ -40,7 +40,9 @@ class Main
             </ul>
             <ul id="runmode">
                 <li id="process" title="Process Graph" />
+                <li id="stepback" title="Step Back through animation" />
                 <li id="run" title="Run Animation" />
+                <li id="stepforward" title="Step Forward through animation" />
                 <li id="design" title="Switch to design mode" />
             </ul>
             <div id="helptext" />
@@ -161,10 +163,12 @@ class Main
                     @current_algo.goal_node = point
             @current_algo.search( )
             @current_algo.create_traverse_info( )
+        $( '#stepback' ).click ( e ) =>
+            @animate_obj.step_backward( )
         $( '#run' ).click ( e ) =>
+            @animate_obj.traverse( )
+        $( '#stepforward' ).click ( e ) =>
             @animate_obj.step_forward( )
-            #console.log @current_algo.traverse_info
-            #console.log @current_algo.explored_nodes
         $( '#design' ).click ( e ) =>
             @design_mode = true
             @animate_obj.destroy( )
