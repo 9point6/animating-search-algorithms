@@ -166,7 +166,7 @@ class Connection
             # The connection is currently being 'looked at'
             when "viewing"
                 @r.animate
-                    stroke: "#008000"
+                    stroke: "#A40000"
                     "stroke-width": 10,
                     anim_speed
                     @style = "viewing"
@@ -180,7 +180,8 @@ class Connection
             # The connection has been visited by the algorithm
             when "visited"
                 @r.animate
-                    stroke: "#A40000"
+                    #stroke: "#A40000"
+                    stroke: "#000"
                     "stroke-width": 3,
                     anim_speed
                     @style = "visited"

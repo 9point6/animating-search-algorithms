@@ -120,7 +120,7 @@
           }, anim_speed, this.style = "normal");
         case "viewing":
           return this.r.animate({
-            stroke: "#008000",
+            stroke: "#A40000",
             "stroke-width": 10
           }, anim_speed, this.style = "viewing");
         case "potential":
@@ -130,7 +130,7 @@
           }, anim_speed, this.style = "potential");
         case "visited":
           return this.r.animate({
-            stroke: "#A40000",
+            stroke: "#000",
             "stroke-width": 3
           }, anim_speed, this.style = "visited");
       }

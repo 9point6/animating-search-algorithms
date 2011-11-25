@@ -166,7 +166,7 @@
           }, anim_speed, this.style = "normal");
         case "viewing":
           return this.r.animate({
-            fill: "#008000"
+            fill: "#A40000"
           }, anim_speed, this.style = "viewing");
         case "visited":
           return this.r.animate({
