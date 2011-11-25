@@ -66,7 +66,7 @@
             _results = [];
             for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
               con = _ref2[_j];
-              _results.push(con.c.style !== "viewing" ? con.c.update_style("potential") : void 0);
+              _results.push(con.c.style !== "visited" ? con.c.update_style("potential") : void 0);
             }
             return _results;
           }

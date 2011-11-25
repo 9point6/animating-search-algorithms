@@ -109,7 +109,7 @@ class Animate
                 # to now be in a "potential" style.
                 if previous_item instanceof Point
                     for con in previous_item.connections
-                        if con.c.style isnt "viewing"
+                        if con.c.style isnt "visited"
                             con.c.update_style "potential"
 
     # ### animate.traverse( )
