@@ -76,6 +76,9 @@ class DFS extends Algorithm
     #
     create_traverse_info: ->
         @traverse_info = []
+
+        # this array is used so connections are
+        # highlighted correctly when backtracking
         fork = []
 
         exp_nodes = @explored_nodes.slice(0)
@@ -88,6 +91,7 @@ class DFS extends Algorithm
             # push the current_node onto the start of the array.
             @traverse_info.push current_node
 
+            # push current_node onto the start of the array
             fork.unshift current_node
 
             # if this the last node in exp_nodes array, then there is
@@ -103,10 +107,16 @@ class DFS extends Algorithm
                         # add connection to the traverse_info array.
                         @traverse_info.push con.c
 
+                # Only runs this code if the last point is not directly
+                # connected with the next point in exp_nodes array
                 if @traverse_info.slice(-1)[0] instanceof Point
-                    while fork.length isnt 0
-                        node = fork.pop( )
+                    # loop through fork array for backtracking
+                    for node in fork
+                        # look at previous nodes connections
                         for con in node.connections
+                            # if the previous node is connected with the next node
+                            # then add the connection to the traverse_info array for
+                            # animation.
                             if con.p.id is exp_nodes[0].id
                                 @traverse_info.push con.c
 
