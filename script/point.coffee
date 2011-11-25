@@ -220,5 +220,11 @@ class Point
                     fill: "#999",
                     anim_speed
                     @style = "visited"
+            # The node is the goal node
+            when "goal"
+                @r.animate
+                    fill: "#FFFF00"
+                    anim_speed
+                    @style = "goal"
 
 this.Point = Point

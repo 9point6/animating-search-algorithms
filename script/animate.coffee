@@ -36,8 +36,14 @@ class Animate
             @traverse_info = @algorithm.traverse_info
             # create a variable for storing the element the pointer represents
             current_item = @traverse_info[@pointer]
-            # update the current item pointed at to "viewing"
-            current_item.update_style "viewing"
+
+            if current_item is @algorithm.goal_node
+                # update the current item pointed at to goal node animation
+                current_item.update_style "goal"
+            else
+                # update the current item pointed at to "viewing"
+                current_item.update_style "viewing"
+
             # if the current_item selected is a point object
             if current_item instanceof Point
                 # loop through all of the points connections

@@ -172,6 +172,10 @@
           return this.r.animate({
             fill: "#999"
           }, anim_speed, this.style = "visited");
+        case "goal":
+          return this.r.animate({
+            fill: "#FFFF00"
+          }, anim_speed, this.style = "goal");
       }
     };
     return Point;

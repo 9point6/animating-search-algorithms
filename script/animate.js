@@ -14,7 +14,11 @@
       if ((this.algorithm.traverse_info != null) && this.pointer < this.algorithm.traverse_info.length) {
         this.traverse_info = this.algorithm.traverse_info;
         current_item = this.traverse_info[this.pointer];
-        current_item.update_style("viewing");
+        if (current_item === this.algorithm.goal_node) {
+          current_item.update_style("goal");
+        } else {
+          current_item.update_style("viewing");
+        }
         if (current_item instanceof Point) {
           _ref = current_item.connections;
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {
