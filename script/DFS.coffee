@@ -91,7 +91,7 @@ class DFS extends Algorithm
             # push the current_node onto the start of the array.
             @traverse_info.push current_node
 
-            # push current_node onto the start of the array
+            # push current_node onto the start of the array backtracking array
             fork.unshift current_node
 
             # if this the last node in exp_nodes array, then there is

@@ -72,7 +72,6 @@
       while (exp_nodes.length !== 0) {
         current_node = exp_nodes.shift();
         this.traverse_info.push(current_node);
-        console.log(fork);
         fork.unshift(current_node);
         _results.push((function() {
           var _i, _j, _len, _len2, _ref, _results2;
