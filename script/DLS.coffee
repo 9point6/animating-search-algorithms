@@ -1,38 +1,33 @@
 class DLS extends Algorithm
-
     name: "Depth-Limited Search"
+
+    destroy: ->
+        for node in @explored_nodes
+            delete node.explored
+        super
 
     # depth-limited search starting form a root node
     # User gives a limit upon clicking animate.
     search: ->
-        #stack for nodes to be searched
-        todo_list = []
+        for node in @explored_nodes
+            node.explored = false
 
-        #limit of search
-        limit = 4
+        @explored_nodes = []
+        @todo_list = []
+        @_search @root_node, 6
 
-        #push root node onto the stack
-        todo_list.push root_node
+    _search: ( node, depth ) ->
+        if depth > 0
+            node.explored = true
+            @traverse_info.push node
 
-        # while there are nodes still left to check
-        while (todo_list.length is not 0) and (todo_list.length < limit)
-            current_node = todo_list.pull
+            if node is @goal_node
+                return node
 
-            # If the goal node is the current node, end the search
-            if current_node is goal_node
-                explored_nodes.push current_node
-                break
-
-            #get the connections of the current node
-            neighbours = current_node.connections
-
-            for neighbour in neighbours
-                todo_list.push neighbour.p
-
-                # add the node to the explored nodes array and
-                # the connection to the explored connections array
-                explored_nodes.push neighbour.p
-                explored_connections.push neighbour.c
+            for neighbour in node.connections
+                if not neighbour.p.explored
+                    @traverse_info.push neighbour.c
+                    @_search neighbour.p, depth-1
 
     gen_info: ->
         [
@@ -44,5 +39,58 @@ class DLS extends Algorithm
 
     run_info: ->
         alert "runtime information"
+
+    # ### DFS.create_traverse_info
+    # Populates the traverse_info array for use by the
+    # animate class
+    # ### Parameters
+    #
+    create_traverse_info: ->
+        ###
+        @traverse_info = []
+
+        # this array is used so connections are
+        # highlighted correctly when backtracking
+        fork = []
+
+        exp_nodes = @explored_nodes.slice(0)
+        # if the array reaches zero then all the elements
+        # have been added to the traverse_info array.
+        while exp_nodes.length isnt 0
+            # get an element of the exp_nodes array, and
+            # remove the element from the array.
+            current_node = exp_nodes.shift( )
+            # push the current_node onto the start of the array.
+            @traverse_info.push current_node
+
+            # push current_node onto the start of the array backtracking array
+            fork.unshift current_node
+
+            # if this the last node in exp_nodes array, then there is
+            # no need to loop through its connections
+            if exp_nodes.length isnt 0
+                # loop through the nodes connections, and pick out the
+                # correct connection which links to the next node in the
+                # exp_nodes array.
+                for con in current_node.connections
+                    # if the other node for the current connection is
+                    # the node we are looking for.
+                    if con.p.id is exp_nodes[0].id
+                        # add connection to the traverse_info array.
+                        @traverse_info.push con.c
+
+                # Only runs this code if the last point is not directly
+                # connected with the next point in exp_nodes array
+                if @traverse_info.slice(-1)[0] instanceof Point
+                    # loop through fork array for backtracking
+                    for node in fork
+                        # look at previous nodes connections
+                        for con in node.connections
+                            # if the previous node is connected with the next node
+                            # then add the connection to the traverse_info array for
+                            # animation.
+                            if con.p.id is exp_nodes[0].id
+                                @traverse_info.push con.c
+        ###
 
 this.DLS = DLS

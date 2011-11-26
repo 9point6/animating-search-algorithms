@@ -32,7 +32,6 @@ class DFS extends Algorithm
 
         #reset the explored_nodes array
         @explored_nodes = []
-
         #stack for nodes to be searched
         todo_list = []
 
@@ -51,9 +50,10 @@ class DFS extends Algorithm
 
             if not current_node.explored
                 current_node.explored = true
+
                 #add current node to explored nodes list
                 @explored_nodes.push current_node
-                #add to to-do stack
+
                 for neighbour in current_node.connections
                     if not neighbour.p.explored
                         todo_list.push neighbour.p
