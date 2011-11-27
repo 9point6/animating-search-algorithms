@@ -13,7 +13,7 @@
     function BFS() {
       BFS.__super__.constructor.apply(this, arguments);
     }
-    BFS.prototype.name = "Beadth-First Search";
+    BFS.prototype.name = "Breadth-First Search";
     BFS.prototype.destroy = function() {
       var node, _i, _len, _ref;
       _ref = this.explored_nodes;
@@ -60,7 +60,9 @@
       }
       return _results;
     };
-    BFS.prototype.create_traverse_info = function() {};
+    BFS.prototype.create_traverse_info = function() {
+      return false;
+    };
     BFS.prototype.gen_info = function() {
       return ["Complete", "O(b<sup>d+1</sup>)", "O(b<sup>d</sup>)", "Not Optimal"];
     };

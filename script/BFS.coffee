@@ -1,5 +1,5 @@
 class BFS extends Algorithm
-    name: "Beadth-First Search"
+    name: "Breadth-First Search"
 
     destroy: ->
         for node in @explored_nodes
