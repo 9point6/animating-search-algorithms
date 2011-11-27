@@ -32,13 +32,15 @@
       }
       this.explored_nodes = [];
       this.todo_list = [];
-      return this._search(this.root_node, 6);
+      return this._search(this.root_node, 4);
     };
     DLS.prototype._search = function(node, depth) {
       var neighbour, _i, _len, _ref, _results;
       if (depth > 0) {
+        if (!node.explored) {
+          this.explored_nodes.push(node);
+        }
         node.explored = true;
-        this.traverse_info.push(node);
         if (node === this.goal_node) {
           return node;
         }
@@ -46,24 +48,10 @@
         _results = [];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           neighbour = _ref[_i];
-          if (!neighbour.p.explored) {
-            this.traverse_info.push(neighbour.c);
-            this._search(neighbour.p, depth - 1);
-          }
-          _results.push(!this.contains(this.traverse_info, neighbour.c) && neighbour.p.explored ? neighbour.p.explored = false : void 0);
+          _results.push(this._search(neighbour.p, depth - 1));
         }
         return _results;
       }
-    };
-    DLS.prototype.contains = function(a, obj) {
-      var i;
-      i = a.length;
-      while (i--) {
-        if (a[i] === obj) {
-          return true;
-        }
-      }
-      return false;
     };
     DLS.prototype.gen_info = function() {
       return ["Complete", "O(b<sup>m</sup>)", "O(bm)", "Not Optimal"];
@@ -72,52 +60,46 @@
       return alert("runtime information");
     };
     DLS.prototype.create_traverse_info = function() {
-      /*
-              @traverse_info = []
-      
-              # this array is used so connections are
-              # highlighted correctly when backtracking
-              fork = []
-      
-              exp_nodes = @explored_nodes.slice(0)
-              # if the array reaches zero then all the elements
-              # have been added to the traverse_info array.
-              while exp_nodes.length isnt 0
-                  # get an element of the exp_nodes array, and
-                  # remove the element from the array.
-                  current_node = exp_nodes.shift( )
-                  # push the current_node onto the start of the array.
-                  @traverse_info.push current_node
-      
-                  # push current_node onto the start of the array backtracking array
-                  fork.unshift current_node
-      
-                  # if this the last node in exp_nodes array, then there is
-                  # no need to loop through its connections
-                  if exp_nodes.length isnt 0
-                      # loop through the nodes connections, and pick out the
-                      # correct connection which links to the next node in the
-                      # exp_nodes array.
-                      for con in current_node.connections
-                          # if the other node for the current connection is
-                          # the node we are looking for.
-                          if con.p.id is exp_nodes[0].id
-                              # add connection to the traverse_info array.
-                              @traverse_info.push con.c
-      
-                      # Only runs this code if the last point is not directly
-                      # connected with the next point in exp_nodes array
-                      if @traverse_info.slice(-1)[0] instanceof Point
-                          # loop through fork array for backtracking
-                          for node in fork
-                              # look at previous nodes connections
-                              for con in node.connections
-                                  # if the previous node is connected with the next node
-                                  # then add the connection to the traverse_info array for
-                                  # animation.
-                                  if con.p.id is exp_nodes[0].id
-                                      @traverse_info.push con.c
-              */
+      var con, current_node, exp_nodes, fork, node, _results;
+      this.traverse_info = [];
+      fork = [];
+      exp_nodes = this.explored_nodes.slice(0);
+      _results = [];
+      while (exp_nodes.length !== 0) {
+        current_node = exp_nodes.shift();
+        this.traverse_info.push(current_node);
+        fork.unshift(current_node);
+        _results.push((function() {
+          var _i, _j, _len, _len2, _ref, _results2;
+          if (exp_nodes.length !== 0) {
+            _ref = current_node.connections;
+            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+              con = _ref[_i];
+              if (con.p.id === exp_nodes[0].id) {
+                this.traverse_info.push(con.c);
+              }
+            }
+            if (this.traverse_info.slice(-1)[0] instanceof Point) {
+              _results2 = [];
+              for (_j = 0, _len2 = fork.length; _j < _len2; _j++) {
+                node = fork[_j];
+                _results2.push((function() {
+                  var _k, _len3, _ref2, _results3;
+                  _ref2 = node.connections;
+                  _results3 = [];
+                  for (_k = 0, _len3 = _ref2.length; _k < _len3; _k++) {
+                    con = _ref2[_k];
+                    _results3.push(con.p.id === exp_nodes[0].id ? this.traverse_info.push(con.c) : void 0);
+                  }
+                  return _results3;
+                }).call(this));
+              }
+              return _results2;
+            }
+          }
+        }).call(this));
+      }
+      return _results;
     };
     return DLS;
   })();

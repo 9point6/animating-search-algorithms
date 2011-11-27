@@ -14,20 +14,20 @@ class DLS extends Algorithm
 
         @explored_nodes = []
         @todo_list = []
-        @_search @root_node, 6
+        @_search @root_node, 4
 
     _search: ( node, depth ) ->
         if depth > 0
+            if not node.explored
+                @explored_nodes.push node
+
             node.explored = true
-            @traverse_info.push node
 
             if node is @goal_node
                 return node
 
             for neighbour in node.connections
-                if not neighbour.p.explored
-                    @traverse_info.push neighbour.c
-                    @_search neighbour.p, depth-1
+                @_search neighbour.p, depth-1
 
     gen_info: ->
         [
@@ -46,7 +46,6 @@ class DLS extends Algorithm
     # ### Parameters
     #
     create_traverse_info: ->
-        ###
         @traverse_info = []
 
         # this array is used so connections are
@@ -91,6 +90,4 @@ class DLS extends Algorithm
                             # animation.
                             if con.p.id is exp_nodes[0].id
                                 @traverse_info.push con.c
-        ###
-
 this.DLS = DLS
