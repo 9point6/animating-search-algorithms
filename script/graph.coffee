@@ -27,8 +27,8 @@ class Graph
     # * Write a better system for preset data
     # * Replace JS prompt dialogs with nice modal ones
     constructor: ->
-        [@points,@connections] = [[],[]]
-        @points_id_map = {}
+        [@nodes,@edges] = [[],[]]
+        @nodes_id_map = {}
 
         # Store the window height and width. `@` is an alias for `this.`
         @canvas_dimensions( )
@@ -65,10 +65,10 @@ class Graph
     # Removes any styles set to any graph elements during the animation of an
     # algorithm.
     remove_styles: ->
-        for point in @points
-            point.update_style "normal"
-        for connection in @connections
-            connection.update_style "normal"
+        for node in @nodes
+            node.update_style "normal"
+        for edge in @edges
+            edge.update_style "normal"
 
     # ### graph.add_point( )
     # Adds a node to the canvas.
@@ -79,13 +79,13 @@ class Graph
     # * `[id]`: ID of node. Should only be used by save and restore routines
     #
     # **Return** -> new `point` object
-    add_point: ( x, y, name = "", id ) ->
-        newpoint = new Point @paper, x, y, name
+    add_node: ( x, y, name = "", id ) ->
+        newnode = new Node @paper, x, y, name
         if id?
-            newpoint.id = id
-        @points_id_map[newpoint.id] = newpoint
-        @points.push newpoint
-        newpoint
+            newnode.id = id
+        @nodes_id_map[newnode.id] = newnode
+        @nodes.push newnode
+        newnode
 
     # ### graph.connect( )
     # Connects two nodes together.
@@ -96,11 +96,11 @@ class Graph
     # * `[direction]` - The direction of the edge
     #
     # **Return** -> new `connection` object
-    connect: ( pointa, pointb, weight = 0, direction = 0 ) ->
-        newcon = new Connection @paper, pointa, pointb, weight, direction
-        @connections.push newcon
+    connect: ( nodea, nodeb, weight = 0, direction = 0 ) ->
+        newedge = new Edge @paper, nodea, nodeb, weight, direction
+        @edges.push newedge
         @sort_elements( )
-        newcon
+        newedge
 
     # ### graph.do*_*mouse_connection( )
     # Handle the connection of two nodes together. Called with no parameters
@@ -115,7 +115,7 @@ class Graph
     do_mouse_connection: ( obj ) =>
         # If not yet connecting, change state
         if @connect_mode is false
-            [@conpa,@conpb] = [{id:'0'},{id:'0'}]
+            [@edgena,@edgenb] = [{id:'0'},{id:'0'}]
             @connect_mode = true
             APP.fade_out_toolbar "Click two nodes to connect", =>
                 @remove_styles( )
@@ -123,28 +123,28 @@ class Graph
                 APP.fade_in_toolbar( )
         else
             # If first point, save and contiune, else actually connect
-            if @conpa.id is '0'
-                @conpa = obj
+            if @edgena.id is '0'
+                @edgena = obj
             else
-                if @conpa.id isnt obj.id
+                if @edgena.id isnt obj.id
                     not_connected = true
-                    for con in @connections
-                        a = con.pointa.id
-                        b = con.pointb.id
-                        if ( a is @conpa.id and b is obj.id ) or ( b is @conpa.id and a is obj.id )
+                    for edge in @edges
+                        a = edge.nodea.id
+                        b = edge.nodeb.id
+                        if ( a is @edgena.id and b is obj.id ) or ( b is @edgena.id and a is obj.id )
                             not_connected = false
                     if not_connected
-                        @conpb = obj
-                        newcon = @connect @conpa, @conpb
-                        @conpa.r.animate
+                        @edgenb = obj
+                        newedge = @connect @edgena, @edgenb
+                        @edgena.r.animate
                             r: 5
                             fill: "#000",
                             100
-                        @conpb.r.animate
+                        @edgenb.r.animate
                             r: 5
                             fill: "#000",
                             100
-                        newcon.spark( )
+                        newedge.spark( )
                         @connect_mode = false
                         APP.fade_in_toolbar( )
                     else
@@ -174,21 +174,21 @@ class Graph
     #
     # **Return** -> Base64 encoded JSON string of graph state
     serialise_graph: ->
-        out = '{ "points": ['
+        out = '{ "nodes": ['
         comma = ""
 
         # Serialise points
-        for point in @points
-            point.id = if point.id? then point.id else uniqueId( )
-            out += comma + " { \"id\": \"#{point.id}\", \"x\": \"#{point.x}\", \"y\": \"#{point.y}\", \"name\": \"#{point.name}\" }"
+        for node in @nodes
+            node.id = if node.id? then node.id else uniqueId( )
+            out += comma + " { \"id\": \"#{node.id}\", \"x\": \"#{node.x}\", \"y\": \"#{node.y}\", \"name\": \"#{node.name}\" }"
             comma = ","
-        out += ' ], "connections": ['
+        out += ' ], "edges": ['
 
         comma = ""
 
         # Serialise connections
-        for con in @connections
-            out += comma + " { \"a\": \"#{con.pointa.id}\", \"b\": \"#{con.pointb.id}\", \"weight\": \"#{con.weight}\", \"direction\": \"#{con.direction}\" }"
+        for edge in @edges
+            out += comma + " { \"a\": \"#{edge.nodea.id}\", \"b\": \"#{edge.nodeb.id}\", \"weight\": \"#{edge.weight}\", \"direction\": \"#{edge.direction}\" }"
             comma = ","
         out += "] }"
 
@@ -197,13 +197,13 @@ class Graph
     # ### graph.clear_graph( )
     # Clears the current graph. Used by the "New" button and the restore method
     clear_graph: ->
-        for points in @points
-            delete point
-        for connection in @connections
-            delete connection
+        for node in @nodes
+            delete node
+        for edge in @edges
+            delete edge
 
-        @points_id_map = {}
-        [@points,@connections] = [[],[]]
+        @nodes_id_map = {}
+        [@nodes,@edges] = [[],[]]
         @paper.clear( )
 
     # ### graph.parse_string( )
@@ -216,10 +216,10 @@ class Graph
         json = base64Decode str
         obj = $.parseJSON json
         # Restore points
-        for point in obj.points
-            @add_point point.x, point.y, point.name, point.id
+        for node in obj.nodes
+            @add_node node.x, node.y, node.name, node.id
         # Restore connections
-        for con in obj.connections
-            @connect @points_id_map[con.a], @points_id_map[con.b], con.weight, con.direction
+        for edge in obj.edges
+            @connect @nodes_id_map[edge.a], @nodes_id_map[edge.b], edge.weight, edge.direction
 
 this.Graph = Graph

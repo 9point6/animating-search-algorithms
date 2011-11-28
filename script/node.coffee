@@ -12,7 +12,7 @@
 # ## Main Documentation
 
 # Graph node class
-class Point
+class Node
     # ### point.constructor( )
     # Constructor for a node
     # #### Parameters
@@ -22,7 +22,7 @@ class Point
     # * `[name]` - Name of the node
     constructor: ( @raphael, @x, @y, @name = "" ) ->
         @move_mode = false
-        @connections = []
+        @edges = []
 
         # Fixes a weird issue on reloading from JSON
         @x = parseInt @x
@@ -51,10 +51,10 @@ class Point
     # #### Parameters
     # * `other_point` - Other `point` object to connect to
     # * `connection` - `connection` object of the connection
-    connect: ( other_point, connection ) ->
+    connect: ( other_node, edge ) ->
         @connections.push
-            p: other_point
-            c: connection
+            n: other_node
+            e: edge
 
     # ### point.remove( )
     # Removes the `point` from the graph
@@ -62,8 +62,8 @@ class Point
     # * Some of this might be better suited in the `app` class...
     remove: =>
         # Remove all connections involving the point first
-        for con in @connections
-            con.c.remove( )
+        for edge in @edges
+            edge.e.remove( )
 
         # Animate the point disappearing
         @r.animate
@@ -76,11 +76,11 @@ class Point
                 @r.remove( )
 
                 # Remove point from `app` class's list
-                newpoints = []
-                for point in APP.graph.points
-                    if point.id isnt @id
-                        newpoints.push point
-                APP.graph.points = newpoints
+                newnodes = []
+                for node in APP.graph.nodes
+                    if node.id isnt @id
+                        newnodes.push node
+                APP.graph.nodes = newnodes
 
     # ### point.move( )
     # Moves a node.
@@ -135,9 +135,9 @@ class Point
     drag_move: ( dx, dy ) =>
         if APP.design_mode
             @move @startx + dx, @starty + dy
-            for connection in @connections
-                do ( connection ) ->
-                    connection.c.update_path( )
+            for edge in @edges
+                do ( edge ) ->
+                    edge.e.update_path( )
 
     # ### point.drag_up( )
     # Drag finish handler. Takes the object out of move mode.
@@ -227,4 +227,4 @@ class Point
                     anim_speed
                     @style = "goal"
 
-this.Point = Point
+this.Node = Node

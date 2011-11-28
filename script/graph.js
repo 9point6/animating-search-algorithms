@@ -7,8 +7,8 @@
     function Graph() {
       this.do_mouse_removal = __bind(this.do_mouse_removal, this);
       this.do_mouse_connection = __bind(this.do_mouse_connection, this);      var _ref;
-      _ref = [[], []], this.points = _ref[0], this.connections = _ref[1];
-      this.points_id_map = {};
+      _ref = [[], []], this.nodes = _ref[0], this.edges = _ref[1];
+      this.nodes_id_map = {};
       this.canvas_dimensions();
       $(window).resize(__bind(function(e) {
         this.canvas_dimensions();
@@ -31,48 +31,48 @@
       return this.wy = $(window).height();
     };
     Graph.prototype.remove_styles = function() {
-      var connection, point, _i, _j, _len, _len2, _ref, _ref2, _results;
-      _ref = this.points;
+      var edge, node, _i, _j, _len, _len2, _ref, _ref2, _results;
+      _ref = this.nodes;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        point = _ref[_i];
-        point.update_style("normal");
+        node = _ref[_i];
+        node.update_style("normal");
       }
-      _ref2 = this.connections;
+      _ref2 = this.edges;
       _results = [];
       for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
-        connection = _ref2[_j];
-        _results.push(connection.update_style("normal"));
+        edge = _ref2[_j];
+        _results.push(edge.update_style("normal"));
       }
       return _results;
     };
-    Graph.prototype.add_point = function(x, y, name, id) {
-      var newpoint;
+    Graph.prototype.add_node = function(x, y, name, id) {
+      var newnode;
       if (name == null) {
         name = "";
       }
-      newpoint = new Point(this.paper, x, y, name);
+      newnode = new Node(this.paper, x, y, name);
       if (id != null) {
-        newpoint.id = id;
+        newnode.id = id;
       }
-      this.points_id_map[newpoint.id] = newpoint;
-      this.points.push(newpoint);
-      return newpoint;
+      this.nodes_id_map[newnode.id] = newnode;
+      this.nodes.push(newnode);
+      return newnode;
     };
-    Graph.prototype.connect = function(pointa, pointb, weight, direction) {
-      var newcon;
+    Graph.prototype.connect = function(nodea, nodeb, weight, direction) {
+      var newedge;
       if (weight == null) {
         weight = 0;
       }
       if (direction == null) {
         direction = 0;
       }
-      newcon = new Connection(this.paper, pointa, pointb, weight, direction);
-      this.connections.push(newcon);
+      newedge = new Edge(this.paper, nodea, nodeb, weight, direction);
+      this.edges.push(newedge);
       this.sort_elements();
-      return newcon;
+      return newedge;
     };
     Graph.prototype.do_mouse_connection = function(obj) {
-      var a, b, con, newcon, not_connected, _i, _len, _ref, _ref2;
+      var a, b, edge, newedge, not_connected, _i, _len, _ref, _ref2;
       if (this.connect_mode === false) {
         _ref = [
           {
@@ -80,7 +80,7 @@
           }, {
             id: '0'
           }
-        ], this.conpa = _ref[0], this.conpb = _ref[1];
+        ], this.edgena = _ref[0], this.edgenb = _ref[1];
         this.connect_mode = true;
         return APP.fade_out_toolbar("Click two nodes to connect", __bind(function() {
           this.remove_styles();
@@ -88,32 +88,32 @@
           return APP.fade_in_toolbar();
         }, this));
       } else {
-        if (this.conpa.id === '0') {
-          return this.conpa = obj;
+        if (this.edgena.id === '0') {
+          return this.edgena = obj;
         } else {
-          if (this.conpa.id !== obj.id) {
+          if (this.edgena.id !== obj.id) {
             not_connected = true;
-            _ref2 = this.connections;
+            _ref2 = this.edges;
             for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
-              con = _ref2[_i];
-              a = con.pointa.id;
-              b = con.pointb.id;
-              if ((a === this.conpa.id && b === obj.id) || (b === this.conpa.id && a === obj.id)) {
+              edge = _ref2[_i];
+              a = edge.nodea.id;
+              b = edge.nodeb.id;
+              if ((a === this.edgena.id && b === obj.id) || (b === this.edgena.id && a === obj.id)) {
                 not_connected = false;
               }
             }
             if (not_connected) {
-              this.conpb = obj;
-              newcon = this.connect(this.conpa, this.conpb);
-              this.conpa.r.animate({
+              this.edgenb = obj;
+              newedge = this.connect(this.edgena, this.edgenb);
+              this.edgena.r.animate({
                 r: 5,
                 fill: "#000"
               }, 100);
-              this.conpb.r.animate({
+              this.edgenb.r.animate({
                 r: 5,
                 fill: "#000"
               }, 100);
-              newcon.spark();
+              newedge.spark();
               this.connect_mode = false;
               return APP.fade_in_toolbar();
             } else {
@@ -137,58 +137,58 @@
       }
     };
     Graph.prototype.serialise_graph = function() {
-      var comma, con, out, point, _i, _j, _len, _len2, _ref, _ref2;
-      out = '{ "points": [';
+      var comma, edge, node, out, _i, _j, _len, _len2, _ref, _ref2;
+      out = '{ "nodes": [';
       comma = "";
-      _ref = this.points;
+      _ref = this.nodes;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        point = _ref[_i];
-        point.id = point.id != null ? point.id : uniqueId();
-        out += comma + (" { \"id\": \"" + point.id + "\", \"x\": \"" + point.x + "\", \"y\": \"" + point.y + "\", \"name\": \"" + point.name + "\" }");
+        node = _ref[_i];
+        node.id = node.id != null ? node.id : uniqueId();
+        out += comma + (" { \"id\": \"" + node.id + "\", \"x\": \"" + node.x + "\", \"y\": \"" + node.y + "\", \"name\": \"" + node.name + "\" }");
         comma = ",";
       }
-      out += ' ], "connections": [';
+      out += ' ], "edges": [';
       comma = "";
-      _ref2 = this.connections;
+      _ref2 = this.edges;
       for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
-        con = _ref2[_j];
-        out += comma + (" { \"a\": \"" + con.pointa.id + "\", \"b\": \"" + con.pointb.id + "\", \"weight\": \"" + con.weight + "\", \"direction\": \"" + con.direction + "\" }");
+        edge = _ref2[_j];
+        out += comma + (" { \"a\": \"" + edge.nodea.id + "\", \"b\": \"" + edge.nodeb.id + "\", \"weight\": \"" + edge.weight + "\", \"direction\": \"" + edge.direction + "\" }");
         comma = ",";
       }
       out += "] }";
       return base64Encode(out);
     };
     Graph.prototype.clear_graph = function() {
-      var connection, points, _i, _j, _len, _len2, _ref, _ref2, _ref3;
-      _ref = this.points;
+      var edge, node, _i, _j, _len, _len2, _ref, _ref2, _ref3;
+      _ref = this.nodes;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        points = _ref[_i];
-        delete point;
+        node = _ref[_i];
+        delete node;
       }
-      _ref2 = this.connections;
+      _ref2 = this.edges;
       for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
-        connection = _ref2[_j];
-        delete connection;
+        edge = _ref2[_j];
+        delete edge;
       }
-      this.points_id_map = {};
-      _ref3 = [[], []], this.points = _ref3[0], this.connections = _ref3[1];
+      this.nodes_id_map = {};
+      _ref3 = [[], []], this.nodes = _ref3[0], this.edges = _ref3[1];
       return this.paper.clear();
     };
     Graph.prototype.parse_string = function(str) {
-      var con, json, obj, point, _i, _j, _len, _len2, _ref, _ref2, _results;
+      var edge, json, node, obj, _i, _j, _len, _len2, _ref, _ref2, _results;
       this.clear_graph();
       json = base64Decode(str);
       obj = $.parseJSON(json);
-      _ref = obj.points;
+      _ref = obj.nodes;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        point = _ref[_i];
-        this.add_point(point.x, point.y, point.name, point.id);
+        node = _ref[_i];
+        this.add_node(node.x, node.y, node.name, node.id);
       }
-      _ref2 = obj.connections;
+      _ref2 = obj.edges;
       _results = [];
       for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
-        con = _ref2[_j];
-        _results.push(this.connect(this.points_id_map[con.a], this.points_id_map[con.b], con.weight, con.direction));
+        edge = _ref2[_j];
+        _results.push(this.connect(this.nodes_id_map[edge.a], this.nodes_id_map[edge.b], edge.weight, edge.direction));
       }
       return _results;
     };

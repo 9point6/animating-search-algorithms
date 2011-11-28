@@ -137,8 +137,8 @@ class Main
         #$( '#load' ).click ( e ) =>
         #    @graph.parse_string prompt "Paste a saved graph string here"
         $( '#add' ).click ( e ) =>
-            pnt = @graph.add_point 1, 1, prompt "What will this point be named?"
-            pnt.move_with_mouse( )
+            node = @graph.add_node 1, 1, prompt "What will this node be named?"
+            node.move_with_mouse( )
         $( '#remove' ).click ( e ) =>
             @graph.do_mouse_removal( )
         $( '#connect' ).click ( e ) =>
@@ -156,11 +156,11 @@ class Main
                         $( '#runmode' ).css( 'display', 'block' ).animate
                             opacity: 100
         $( '#process' ).click ( e ) =>
-            for point in @graph.points
-                if point.name is "Dave"
-                    @current_algo.root_node = point
-                if point.name is "Elle"
-                    @current_algo.goal_node = point
+            for node in @graph.nodes
+                if node.name is "Dave"
+                    @current_algo.root_node = node
+                if node.name is "Elle"
+                    @current_algo.goal_node = node
             @current_algo.search( )
             @current_algo.create_traverse_info( )
         $( '#stepback' ).click ( e ) =>
@@ -198,17 +198,17 @@ class Main
         $( '#algoselection' ).change( )
 
         # Preset test data
-        @graph.add_point 224, 118, "Alan"
-        @graph.add_point 208, 356, "Beth"
-        @graph.add_point 259, 204, "Carl"
-        @graph.add_point 363, 283, "Dave"
-        @graph.add_point 110, 85, "Elle"
+        @graph.add_node 224, 118, "Alan"
+        @graph.add_node 208, 356, "Beth"
+        @graph.add_node 259, 204, "Carl"
+        @graph.add_node 363, 283, "Dave"
+        @graph.add_node 110, 85, "Elle"
 
-        @graph.connect @graph.points[2], @graph.points[1]
-        @graph.connect @graph.points[2], @graph.points[3]
-        @graph.connect @graph.points[0], @graph.points[2]
-        @graph.connect @graph.points[4], @graph.points[0]
-        @graph.connect @graph.points[3], @graph.points[1]
+        @graph.connect @graph.nodes[2], @graph.nodes[1]
+        @graph.connect @graph.nodes[2], @graph.nodes[3]
+        @graph.connect @graph.nodes[0], @graph.nodes[2]
+        @graph.connect @graph.nodes[4], @graph.nodes[0]
+        @graph.connect @graph.nodes[3], @graph.nodes[1]
 
         # Rearranges points so that they are above the connections in the canvas
         @graph.sort_elements( )

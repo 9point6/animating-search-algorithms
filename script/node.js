@@ -1,8 +1,8 @@
 (function() {
-  var Point;
+  var Node;
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-  Point = (function() {
-    function Point(raphael, x, y, name) {
+  Node = (function() {
+    function Node(raphael, x, y, name) {
       this.raphael = raphael;
       this.x = x;
       this.y = y;
@@ -16,7 +16,7 @@
       this.click = __bind(this.click, this);
       this.remove = __bind(this.remove, this);
       this.move_mode = false;
-      this.connections = [];
+      this.edges = [];
       this.x = parseInt(this.x);
       this.y = parseInt(this.y);
       this.id = uniqueId();
@@ -33,38 +33,38 @@
       this.r.click(this.click);
       this.r.drag(this.drag_move, this.drag_start, this.drag_up);
     }
-    Point.prototype.connect = function(other_point, connection) {
+    Node.prototype.connect = function(other_node, edge) {
       return this.connections.push({
-        p: other_point,
-        c: connection
+        n: other_node,
+        e: edge
       });
     };
-    Point.prototype.remove = function() {
-      var con, _i, _len, _ref;
-      _ref = this.connections;
+    Node.prototype.remove = function() {
+      var edge, _i, _len, _ref;
+      _ref = this.edges;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        con = _ref[_i];
-        con.c.remove();
+        edge = _ref[_i];
+        edge.e.remove();
       }
       return this.r.animate({
         r: 0,
         opacity: 0
       }, 200, 'linear', __bind(function() {
-        var newpoints, point, _j, _len2, _ref2;
+        var newnodes, node, _j, _len2, _ref2;
         this.label.remove();
         this.r.remove();
-        newpoints = [];
-        _ref2 = APP.graph.points;
+        newnodes = [];
+        _ref2 = APP.graph.nodes;
         for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
-          point = _ref2[_j];
-          if (point.id !== this.id) {
-            newpoints.push(point);
+          node = _ref2[_j];
+          if (node.id !== this.id) {
+            newnodes.push(node);
           }
         }
-        return APP.graph.points = newpoints;
+        return APP.graph.nodes = newnodes;
       }, this));
     };
-    Point.prototype.move = function(x, y) {
+    Node.prototype.move = function(x, y) {
       this.x = x;
       this.y = y;
       this.r.attr({
@@ -76,7 +76,7 @@
         y: this.y - 20
       });
     };
-    Point.prototype.click = function(e) {
+    Node.prototype.click = function(e) {
       if (APP.graph.connect_mode === true) {
         this.r.animate({
           r: 10,
@@ -89,7 +89,7 @@
         return false;
       }
     };
-    Point.prototype.drag_start = function() {
+    Node.prototype.drag_start = function() {
       var _ref;
       if (APP.design_mode) {
         if (this.move_mode === false) {
@@ -100,27 +100,27 @@
         }
       }
     };
-    Point.prototype.drag_move = function(dx, dy) {
-      var connection, _i, _len, _ref, _results;
+    Node.prototype.drag_move = function(dx, dy) {
+      var edge, _i, _len, _ref, _results;
       if (APP.design_mode) {
         this.move(this.startx + dx, this.starty + dy);
-        _ref = this.connections;
+        _ref = this.edges;
         _results = [];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          connection = _ref[_i];
-          _results.push((function(connection) {
-            return connection.c.update_path();
-          })(connection));
+          edge = _ref[_i];
+          _results.push((function(edge) {
+            return edge.e.update_path();
+          })(edge));
         }
         return _results;
       }
     };
-    Point.prototype.drag_up = function() {
+    Node.prototype.drag_up = function() {
       if (APP.design_mode) {
         return this.move_mode = false;
       }
     };
-    Point.prototype.move_with_mouse = function() {
+    Node.prototype.move_with_mouse = function() {
       var _ref;
       if (this.drag_start()) {
         _ref = [0, 0], this.startx = _ref[0], this.starty = _ref[1];
@@ -134,7 +134,7 @@
         }, this));
       }
     };
-    Point.prototype.hover_in = function(e) {
+    Node.prototype.hover_in = function(e) {
       this.r.attr({
         cursor: 'pointer'
       });
@@ -145,7 +145,7 @@
         opacity: 1
       }, 100);
     };
-    Point.prototype.hover_out = function(e) {
+    Node.prototype.hover_out = function(e) {
       this.r.attr({
         cursor: 'normal'
       });
@@ -156,7 +156,7 @@
         opacity: 0
       }, 100);
     };
-    Point.prototype.update_style = function(style_name) {
+    Node.prototype.update_style = function(style_name) {
       var anim_speed;
       anim_speed = 100;
       switch (style_name) {
@@ -178,7 +178,7 @@
           }, anim_speed, this.style = "goal");
       }
     };
-    return Point;
+    return Node;
   })();
-  this.Point = Point;
+  this.Node = Node;
 }).call(this);

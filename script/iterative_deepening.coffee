@@ -28,15 +28,15 @@ class IterativeDeepening extends Algorithm
                     break
 
                 #get the connections of the current node
-                neighbours = current_node.connections
+                neighbours = current_node.edges
 
                 for neighbour in neighbours
-                    todo_list.push neighbour.p
+                    todo_list.push neighbour.n
 
                     # add the node to the explored nodes array and
                     # the connection to the explored connections array
-                    explored_nodes.push neighbour.p
-                    explored_connections.push neighbour.c
+                    explored_nodes.push neighbour.n
+                    explored_edges.push neighbour.e
 
             limit++
 

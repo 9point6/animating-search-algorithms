@@ -45,14 +45,14 @@ class Animate
                 current_item.update_style "viewing"
 
             # if the current_item selected is a point object
-            if current_item instanceof Point
+            if current_item instanceof Node
                 # loop through all of the points connections
-                for con in current_item.connections
+                for edge in current_item.edges
                     # This stops overwriting the style of the previous element in the
                     # traverse_info array as it should be the only connection in the
                     # "viewing" state.
-                    if con.c.style is "normal"
-                        con.c.update_style "potential"
+                    if edge.e.style is "normal"
+                        edge.e.update_style "potential"
 
             # the current_item is not the first element in the array
             if @pointer isnt 0
@@ -63,15 +63,15 @@ class Animate
                 if previous_item.style is "viewing"
                     # update previous items style to visited
                     previous_item.update_style "visited"
-                    if previous_item instanceof Point
+                    if previous_item instanceof Node
                         # change all of its connections back to normal unless it
                         # is an AStar algorithm. AStar works by keeping previous
                         # connections as "potentials" in an open set.
-                        for con in previous_item.connections
-                            if con.c.style is "potential" and
+                        for edge in previous_item.edges
+                            if edge.e.style is "potential" and
                                 @algorithm.name isnt "AStar" and
                                     @algorithm.name isnt "BiDi"
-                                        con.c.update_style "normal"
+                                        edge.e.update_style "normal"
 
             # increase the pointer value
             @pointer++
@@ -98,10 +98,10 @@ class Animate
 
             # if the current item is a point then change all of it's potential
             # connections back to a normal style.
-            if current_item instanceof Point
-                for con in current_item.connections
-                    if con.c.style is "potential"
-                        con.c.update_style "normal"
+            if current_item instanceof Node
+                for edge in current_item.edges
+                    if edge.e.style is "potential"
+                        edge.e.update_style "normal"
 
             # If there is an item before the current item in the traverse_info
             # array
@@ -113,10 +113,10 @@ class Animate
 
                 # if the previous item is a point change all of its connections
                 # to now be in a "potential" style.
-                if previous_item instanceof Point
-                    for con in previous_item.connections
-                        if con.c.style isnt "visited"
-                            con.c.update_style "potential"
+                if previous_item instanceof Node
+                    for edge in previous_item.edges
+                        if edge.e.style isnt "visited"
+                            edge.e.update_style "potential"
 
     # ### animate.traverse( )
     # Loop through the given array, animating each given

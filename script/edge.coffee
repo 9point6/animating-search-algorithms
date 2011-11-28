@@ -12,7 +12,7 @@
 # ## Main Documentation
 
 # Graph edge class
-class Connection
+class Edge
     # ### connection.constructor( )
     # Constructor for an edge
     # #### Parameters
@@ -21,9 +21,9 @@ class Connection
     # * `pointb` - The second node
     # * `[weight]` - Weight of the the edge
     # * `[direction]`` - The direction of the edge
-    constructor: ( @raphael, @pointa, @pointb, @weight, @direction ) ->
-        @pointa.connect @pointb, @
-        @pointb.connect @pointa, @
+    constructor: ( @raphael, @nodea, @nodeb, @weight, @direction ) ->
+        @nodea.connect @nodeb, @
+        @nodeb.connect @nodea, @
 
         # Sets the current style to the default state
         @style = "normal"
@@ -47,7 +47,7 @@ class Connection
     # changed location.
     update_path: ->
         @r.attr
-            path: "M#{@pointa.x} #{@pointa.y}L#{@pointb.x} #{@pointb.y}"
+            path: "M#{@nodea.x} #{@nodea.y}L#{@nodeb.x} #{@nodeb.y}"
 
     # ### connection.remove( )
     # Removes the point from the graph
@@ -61,25 +61,25 @@ class Connection
                 @r.remove( )
 
                 # Remove from connections in `pointa`
-                newcons = []
-                for con in @pointa.connections
-                    if con.p.id isnt @pointb.id
-                        newcons.push con
-                @pointa.connections = newcons
+                new_edges = []
+                for edge in @nodea.edges
+                    if edge.n.id isnt @nodeb.id
+                        new_edges.push edge
+                @nodea.edges = new_edges
 
                 # Remove from connections in `pointb`
-                newcons = []
-                for con in @pointb.connections
-                    if con.p.id isnt @pointa.id
-                        newcons.push con
-                @pointb.connections = newcons
+                new_edges = []
+                for edge in @nodeb.edges
+                    if edge.n.id isnt @nodea.id
+                        new_edges.push edge
+                @nodeb.edges = new_edges
 
                 # Remove from connections list in `app` object
-                newcons = []
-                for con in APP.graph.connections
-                    if con.pointa.id isnt @pointa.id or con.pointb.id isnt @pointb.id
-                        newcons.push con
-                APP.graph.connections = newcons
+                new_edges = []
+                for edge in APP.graph.edges
+                    if edge.nodea.id isnt @nodea.id or edge.nodeb.id isnt @nodeb.id
+                        new_edges.push edge
+                APP.graph.edges = new_edges
 
     # ### connection.hover_in( )
     # Show hover effect
@@ -128,7 +128,7 @@ class Connection
     # #### Parameters
     # * `[a2b]` - Animate from A to B?
     spark: ( a2b = true ) ->
-        start_point = if a2b then @pointa else @pointb
+        start_point = if a2b then @nodea else @nodeb
         @spark = @raphael.ellipse start_point.x, start_point.y, 20, 20
         @spark.attr
             fill: "r#f00-#fff"
@@ -186,4 +186,4 @@ class Connection
                     anim_speed
                     @style = "visited"
 
-this.Connection = Connection
+this.Edge = Edge

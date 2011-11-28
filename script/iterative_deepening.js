@@ -27,12 +27,12 @@
             explored_nodes.push(current_node);
             break;
           }
-          neighbours = current_node.connections;
+          neighbours = current_node.edges;
           for (_i = 0, _len = neighbours.length; _i < _len; _i++) {
             neighbour = neighbours[_i];
-            todo_list.push(neighbour.p);
-            explored_nodes.push(neighbour.p);
-            explored_connections.push(neighbour.c);
+            todo_list.push(neighbour.n);
+            explored_nodes.push(neighbour.n);
+            explored_edges.push(neighbour.e);
           }
         }
         _results.push(limit++);

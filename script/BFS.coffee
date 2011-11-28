@@ -38,22 +38,22 @@ class BFS extends Algorithm
                 break
 
             #get the connections of the node
-            neighbours = current_node.connections
+            neighbours = current_node.edges
 
             if @traverse_info?
-                for node in current_node.connections
-                    if node.p.id is @traverse_info.slice(-1)[0].id
-                        @traverse_info.push node.c
+                for node in current_node.edges
+                    if node.n.id is @traverse_info.slice(-1)[0].id
+                        @traverse_info.push node.e
 
             @traverse_info.push current_node
 
             #for all the neighbours of the node
             for neighbour in neighbours
                 #add the neighbour to the set of explored nodes
-                if not neighbour.p.explored
-                    neighbour.p.explored = true
-                    queue.push neighbour.p
-                    #@traverse_info.push neighbour.c
+                if not neighbour.n.explored
+                    neighbour.n.explored = true
+                    queue.push neighbour.n
+                    #@traverse_info.push neighbour.e
 
             @explored_nodes.push current_node
 

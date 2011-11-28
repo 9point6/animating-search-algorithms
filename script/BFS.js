@@ -24,7 +24,7 @@
       return BFS.__super__.destroy.apply(this, arguments);
     };
     BFS.prototype.search = function() {
-      var current_node, neighbour, neighbours, node, queue, _i, _j, _len, _len2, _ref, _results;
+      var current_node, neighbour, neighbours, node, queue, _i, _j, _k, _len, _len2, _len3, _ref, _ref2, _results;
       _ref = this.explored_nodes;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         node = _ref[_i];
@@ -46,14 +46,22 @@
           this.traverse_info.push(current_node);
           break;
         }
-        neighbours = current_node.connections;
+        neighbours = current_node.edges;
+        if (this.traverse_info != null) {
+          _ref2 = current_node.edges;
+          for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
+            node = _ref2[_j];
+            if (node.n.id === this.traverse_info.slice(-1)[0].id) {
+              this.traverse_info.push(node.e);
+            }
+          }
+        }
         this.traverse_info.push(current_node);
-        for (_j = 0, _len2 = neighbours.length; _j < _len2; _j++) {
-          neighbour = neighbours[_j];
-          if (!neighbour.p.explored) {
-            neighbour.p.explored = true;
-            queue.push(neighbour.p);
-            this.traverse_info.push(neighbour.c);
+        for (_k = 0, _len3 = neighbours.length; _k < _len3; _k++) {
+          neighbour = neighbours[_k];
+          if (!neighbour.n.explored) {
+            neighbour.n.explored = true;
+            queue.push(neighbour.n);
           }
         }
         _results.push(this.explored_nodes.push(current_node));

@@ -60,9 +60,9 @@
         return $('#dlsubmit').click();
       }, this));
       $('#add').click(__bind(function(e) {
-        var pnt;
-        pnt = this.graph.add_point(1, 1, prompt("What will this point be named?"));
-        return pnt.move_with_mouse();
+        var node;
+        node = this.graph.add_node(1, 1, prompt("What will this node be named?"));
+        return node.move_with_mouse();
       }, this));
       $('#remove').click(__bind(function(e) {
         return this.graph.do_mouse_removal();
@@ -89,15 +89,15 @@
         });
       }, this));
       $('#process').click(__bind(function(e) {
-        var point, _i, _len, _ref;
-        _ref = this.graph.points;
+        var node, _i, _len, _ref;
+        _ref = this.graph.nodes;
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          point = _ref[_i];
-          if (point.name === "Dave") {
-            this.current_algo.root_node = point;
+          node = _ref[_i];
+          if (node.name === "Dave") {
+            this.current_algo.root_node = node;
           }
-          if (point.name === "Elle") {
-            this.current_algo.goal_node = point;
+          if (node.name === "Elle") {
+            this.current_algo.goal_node = node;
           }
         }
         this.current_algo.search();
@@ -149,16 +149,16 @@
       }
       $('#algDFS').attr("selected", "selected");
       $('#algoselection').change();
-      this.graph.add_point(224, 118, "Alan");
-      this.graph.add_point(208, 356, "Beth");
-      this.graph.add_point(259, 204, "Carl");
-      this.graph.add_point(363, 283, "Dave");
-      this.graph.add_point(110, 85, "Elle");
-      this.graph.connect(this.graph.points[2], this.graph.points[1]);
-      this.graph.connect(this.graph.points[2], this.graph.points[3]);
-      this.graph.connect(this.graph.points[0], this.graph.points[2]);
-      this.graph.connect(this.graph.points[4], this.graph.points[0]);
-      this.graph.connect(this.graph.points[3], this.graph.points[1]);
+      this.graph.add_node(224, 118, "Alan");
+      this.graph.add_node(208, 356, "Beth");
+      this.graph.add_node(259, 204, "Carl");
+      this.graph.add_node(363, 283, "Dave");
+      this.graph.add_node(110, 85, "Elle");
+      this.graph.connect(this.graph.nodes[2], this.graph.nodes[1]);
+      this.graph.connect(this.graph.nodes[2], this.graph.nodes[3]);
+      this.graph.connect(this.graph.nodes[0], this.graph.nodes[2]);
+      this.graph.connect(this.graph.nodes[4], this.graph.nodes[0]);
+      this.graph.connect(this.graph.nodes[3], this.graph.nodes[1]);
       this.graph.sort_elements();
     }
     Main.prototype.fade_out_toolbar = function(text, cancel_callback) {
