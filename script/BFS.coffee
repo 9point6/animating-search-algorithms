@@ -40,6 +40,11 @@ class BFS extends Algorithm
             #get the connections of the node
             neighbours = current_node.connections
 
+            if @traverse_info?
+                for node in current_node.connections
+                    if node.p.id is @traverse_info.slice(-1)[0].id
+                        @traverse_info.push node.c
+
             @traverse_info.push current_node
 
             #for all the neighbours of the node
@@ -48,7 +53,7 @@ class BFS extends Algorithm
                 if not neighbour.p.explored
                     neighbour.p.explored = true
                     queue.push neighbour.p
-                    @traverse_info.push neighbour.c
+                    #@traverse_info.push neighbour.c
 
             @explored_nodes.push current_node
 
