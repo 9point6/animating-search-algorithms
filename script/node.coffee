@@ -52,7 +52,7 @@ class Node
     # * `other_point` - Other `point` object to connect to
     # * `connection` - `connection` object of the connection
     connect: ( other_node, edge ) ->
-        @connections.push
+        @edges.push
             n: other_node
             e: edge
 

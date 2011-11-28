@@ -34,7 +34,7 @@
       this.r.drag(this.drag_move, this.drag_start, this.drag_up);
     }
     Node.prototype.connect = function(other_node, edge) {
-      return this.connections.push({
+      return this.edges.push({
         n: other_node,
         e: edge
       });
