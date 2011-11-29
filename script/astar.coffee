@@ -7,20 +7,20 @@
 
 class DFS extends Algorithm
     name: "A* Search"
-    
+
     destroy: ->
         for node in @explored_nodes
             delete node.explored
         super
-    
+
     search: (heuristic) ->
-            
+
         @destroy
         @explored_nodes = []
 
         openList = []       # this contains the nodes that have been visited but not yet processed
         closedList = []     # this is the list of processed nodes
-        
+
         if @root_node.id is @goal_node.id #// we're at the goal node so return
             break
         else
@@ -30,9 +30,9 @@ class DFS extends Algorithm
             root_node.costSoFar = 0
             root_node.estimatedTotalCost = @root_node.costSoFar + heuristic(root_node, goal_node)
             openList.push @root_node
-        
-        while openList.length isnt 0 
-            
+
+        while openList.length isnt 0
+
             # get the node with the smallest estimatedTotalCost
             currentNode = @getSmallestElement openList
             @explored_nodes.push
@@ -43,48 +43,48 @@ class DFS extends Algorithm
             #if its on the open list compare values and update if neccessary, stays on open list
             #if its on the closed list but this is a shorter path update values and put it back on the open list
             #remove it from the closed list, this will force any connections dependant on this node to be reconsidered at a later time
-            
-            
+
+
             for connection in currentNode.edges
-            	endNode = connection.n
-            	potentialCost = currentNode.costSoFar + connection.e.weight
-            	            	
-            	if @contains closedList, endNode
-            		if potentialCost < endNode.costSoFar
-            			# endNode.estimatedTotalCost - endNode.costSoFar == the heuristic (OR SHOULD!) 
-            			endNode.estimatedTotalCost = endNode.estimatedTotalCost - endNode.costSoFar + potentialCost
-            			endNode.costSoFar = potentialCost
-            			@remove closedList, endNode
-            			openList.push endNode
-            	else if @contains openList, endNode
-            		if potentialCost < endNode.costSoFar
-            			# endNode.estimatedTotalCost - endNode.costSoFar == the heuristic (OR SHOULD!) 
-            			endNode.estimatedTotalCost = endNode.estimatedTotalCost - endNode.costSoFar + potentialCost
-            			endNode.costSoFar = potentialCost
-            	else
-            		endNode.costSoFar = potentialCost
-            		endNode.estimatedTotalCost = endNode.costSoFar + heuristic(endNode, @goal_node)
-            		openList.push endNode
-            	
-            	@remove openList, currentNode
-            	closedList.push currentNode
+                endNode = connection.n
+                potentialCost = currentNode.costSoFar + connection.e.weight
 
-	contains: (a, obj) ->
-		i = a.length
-    		while i--
-    			if a[i] is obj
-    				return true
-    		return false
-    	
+                if @contains closedList, endNode
+                    if potentialCost < endNode.costSoFar
+                        # endNode.estimatedTotalCost - endNode.costSoFar == the heuristic (OR SHOULD!)
+                        endNode.estimatedTotalCost = endNode.estimatedTotalCost - endNode.costSoFar + potentialCost
+                        endNode.costSoFar = potentialCost
+                        @remove closedList, endNode
+                        openList.push endNode
+                else if @contains openList, endNode
+                    if potentialCost < endNode.costSoFar
+                        # endNode.estimatedTotalCost - endNode.costSoFar == the heuristic (OR SHOULD!)
+                        endNode.estimatedTotalCost = endNode.estimatedTotalCost - endNode.costSoFar + potentialCost
+                        endNode.costSoFar = potentialCost
+                else
+                    endNode.costSoFar = potentialCost
+                    endNode.estimatedTotalCost = endNode.costSoFar + heuristic(endNode, @goal_node)
+                    openList.push endNode
+
+                @remove openList, currentNode
+                closedList.push currentNode
+
+    contains: (a, obj) ->
+        i = a.length
+        while i--
+            if a[i] is obj
+                return true
+        return false
+
     remove: (a, obj) ->
-    	i = a.length
-    	while i--
-    		if a[i] is obj
-    			a.splice(i,1)
+        i = a.length
+        while i--
+            if a[i] is obj
+                a.splice(i,1)
 
-	getSmallestElement: (a) ->
-		smallNode = a[0]
-		for node in a
-			if smallNode.estimatedTotalCost > node.estimatedTotalCost
-				smallNode = node
+    getSmallestElement: (a) ->
+        smallNode = a[0]
+        for node in a
+            if smallNode.estimatedTotalCost > node.estimatedTotalCost
+                smallNode = node
 
