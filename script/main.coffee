@@ -32,7 +32,7 @@ class Main
             <ul id="designmode">
                 <li id="new" title="New Graph" />
                 <li id="save" title="Save Graph" />
-                <li id="load" title="Load Graph" />
+                <li id="load" title="Load Graph" />    
                 <li id="add" title="Add a node" />
                 <li id="remove" title="Remove a node" />
                 <li id="connect" title="Connect two nodes" />
