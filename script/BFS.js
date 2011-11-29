@@ -24,7 +24,7 @@
       return BFS.__super__.destroy.apply(this, arguments);
     };
     BFS.prototype.search = function() {
-      var current_node, neighbour, neighbours, node, queue, _i, _j, _k, _len, _len2, _len3, _ref, _ref2, _results;
+      var current_node, found, neighbour, neighbours, node, queue, _i, _len, _ref, _results;
       _ref = this.explored_nodes;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         node = _ref[_i];
@@ -32,39 +32,44 @@
       }
       this.explored_nodes = [];
       this.traverse_info = [];
+      this.found = false;
       queue = [];
       queue.push(this.root_node);
       this.root_node.explored = true;
+      this.traverse_info.push(this.root_node);
       if (this.root_node === this.goal_node) {
         return;
       }
       _results = [];
       while (queue.length !== 0) {
         current_node = queue.shift();
+        if (found) {
+          break;
+        }
         if (current_node === this.goal_node) {
           this.explored_nodes.push(current_node);
           this.traverse_info.push(current_node);
           break;
         }
         neighbours = current_node.edges;
-        if (this.traverse_info != null) {
-          _ref2 = current_node.edges;
-          for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
-            node = _ref2[_j];
-            if (node.n.id === this.traverse_info.slice(-1)[0].id) {
-              this.traverse_info.push(node.e);
+        _results.push((function() {
+          var _j, _len2, _results2;
+          _results2 = [];
+          for (_j = 0, _len2 = neighbours.length; _j < _len2; _j++) {
+            neighbour = neighbours[_j];
+            if (!neighbour.n.explored) {
+              neighbour.n.explored = true;
+              this.traverse_info.push(neighbour.e);
+              this.traverse_info.push(neighbour.n);
+              if (neighbour.n === this.goal_node) {
+                found = true;
+                break;
+              }
+              queue.push(neighbour.n);
             }
           }
-        }
-        this.traverse_info.push(current_node);
-        for (_k = 0, _len3 = neighbours.length; _k < _len3; _k++) {
-          neighbour = neighbours[_k];
-          if (!neighbour.n.explored) {
-            neighbour.n.explored = true;
-            queue.push(neighbour.n);
-          }
-        }
-        _results.push(this.explored_nodes.push(current_node));
+          return _results2;
+        }).call(this));
       }
       return _results;
     };

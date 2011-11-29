@@ -12,7 +12,7 @@ class BFS extends Algorithm
 
         @explored_nodes = []
         @traverse_info = []
-
+        @found = false
         #queue of nodes to be searched
         queue = []
 
@@ -21,6 +21,7 @@ class BFS extends Algorithm
 
         #add the root node to the set of explored nodes
         @root_node.explored = true
+        @traverse_info.push @root_node
 
         #if the root node is the goal then end search
         if @root_node is @goal_node
@@ -32,6 +33,9 @@ class BFS extends Algorithm
             #the new root node is the first node in the queue
             current_node = queue.shift()
 
+            if found
+                break
+
             if current_node is @goal_node
                 @explored_nodes.push current_node
                 @traverse_info.push current_node
@@ -40,23 +44,24 @@ class BFS extends Algorithm
             #get the connections of the node
             neighbours = current_node.edges
 
-            if @traverse_info?
-                for node in current_node.edges
-                    if node.n.id is @traverse_info.slice(-1)[0].id
-                        @traverse_info.push node.e
-
-            @traverse_info.push current_node
-
             #for all the neighbours of the node
             for neighbour in neighbours
                 #add the neighbour to the set of explored nodes
                 if not neighbour.n.explored
                     neighbour.n.explored = true
+                    @traverse_info.push neighbour.e
+                    @traverse_info.push neighbour.n
+                    if neighbour.n is @goal_node
+                        found = true
+                        break
                     queue.push neighbour.n
-                    #@traverse_info.push neighbour.e
 
-            @explored_nodes.push current_node
 
+    # ### DFS.create_traverse_info
+    # Populates the traverse_info array for use by the
+    # animate class
+    # ### Parameters
+    #
     create_traverse_info: ->
         false
 
