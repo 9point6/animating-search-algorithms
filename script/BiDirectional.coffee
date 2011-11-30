@@ -24,26 +24,33 @@ class BiDirectional extends Algorithm
 
     search: (algorithm1, algorithm2) ->
 
+        @alg1 = algorithm1
+        @alg2 = algorithm2
+
         traverse_info_start = algorithm1.traverse_info
         traverse_info_goal = algorithm2.traverse_info
 
         for i in traverse_info_start.length
             for j in traverse_info_goal.length
-
                 traverse_start = traverse_info_start[i]
                 traverse_goal = traverse_info_goal[j]
 
                 if traverse_start isnt traverse_goal
                     traverse_info.push traverse_start
                     traverse_info.push traverse_goal
-
-                if traverse_start is traverse_goal
+                else
+                    #if traverse_start is traverse_goal
                     traverse_info.push traverse_start
                     return
 
     gen_info: ->
-        alert "stuff"
+        @alg1.gen_info( )
+        @alg2.gen_info( )
 
     run_info: ->
         alert "stuff"
 
+    create_traverse_info: ->
+        false
+
+this.BiDirectional = BiDirectional
