@@ -22,8 +22,11 @@ class BiDirectional extends Algorithm
         delete node.explored
     super
 	
-	search: (traverse_info_start, traverse_info_goal) ->
-				
+	search: (algorithm1, algorithm2) ->
+		
+		traverse_info_start = algorithm1.traverse_info
+		traverse_info_goal = algorithm2.traverse_info
+		
 		for i in traverse_info_start.length
 			for j in traverse_info_goal.length
 			
