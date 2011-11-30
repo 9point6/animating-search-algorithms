@@ -25,13 +25,17 @@ class BiDirectional extends Algorithm
 	search: (traverse_info_start, traverse_info_goal) ->
 				
 		for i in traverse_info_start.length
+			for j in traverse_info_goal.length
 			
-			if traverse_info_start[i] is not traverse_info_goal[i]
+				traverse_start = traverse_info_start[i]
+				traverse_goal = traverse_info_goal[j]
 			
-				traverse_info_output.push = traverse_start
-				traverse_info_output.push = traverse_goal
+				if traverse_info_start[i] isnt traverse_info_goal[j]
+				
+					traverse_info.push traverse_start
+					traverse_info.push traverse_goal
 
-			if traverse_start is traverse_goal
-			
-				traverse_info_output.push = traverse_start
-				break
+				if traverse_info_start[i] is traverse_info_goal[j]
+				
+					traverse_info.push traverse_start
+					break
