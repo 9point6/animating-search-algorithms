@@ -41,4 +41,4 @@ class BiDirectional extends Algorithm
 				if traverse_info_start[i] is traverse_info_goal[j]
 				
 					traverse_info.push traverse_start
-					break
+					return
