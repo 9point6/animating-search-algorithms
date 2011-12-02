@@ -1,11 +1,5 @@
 (function() {
-  /(?:)/;
-  /(?:)/;
-  /(?:)/;
-  /(?:)/;
-  /(?:)/;
-  /(?:)/;
-  var DFS;
+  var AStar;
   var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
     for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
     function ctor() { this.constructor = child; }
@@ -14,23 +8,23 @@
     child.__super__ = parent.prototype;
     return child;
   };
-  DFS = (function() {
-    __extends(DFS, Algorithm);
-    function DFS() {
-      DFS.__super__.constructor.apply(this, arguments);
+  AStar = (function() {
+    __extends(AStar, Algorithm);
+    function AStar() {
+      AStar.__super__.constructor.apply(this, arguments);
     }
-    DFS.prototype.name = "A* Search";
-    DFS.prototype.destroy = function() {
+    AStar.prototype.name = "A* Search";
+    AStar.prototype.destroy = function() {
       var node, _i, _len, _ref;
       _ref = this.explored_nodes;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         node = _ref[_i];
         delete node.explored;
       }
-      return DFS.__super__.destroy.apply(this, arguments);
+      return AStar.__super__.destroy.apply(this, arguments);
     };
-    DFS.prototype.search = function(heuristic) {
-      var closedList, connection, currentNode, endNode, openList, potentialCost, _results;
+    AStar.prototype.search = function(heuristic) {
+      var closedList, connection, currentNode, endNode, openList, potentialCost, _i, _len, _ref, _results;
       this.destroy;
       this.explored_nodes = [];
       openList = [];
@@ -38,48 +32,43 @@
       if (this.root_node.id === this.goal_node.id) {
         break;
       } else {
-        root_node.costSoFar = 0;
-        root_node.estimatedTotalCost = this.root_node.costSoFar + heuristic(root_node, goal_node);
+        this.root_node.costSoFar = 0;
+        this.root_node.estimatedTotalCost = this.root_node.costSoFar + heuristic(this.root_node, this.goal_node);
         openList.push(this.root_node);
       }
       _results = [];
       while (openList.length !== 0) {
         currentNode = this.getSmallestElement(openList);
         this.explored_nodes.push;
-        _results.push((function() {
-          var _i, _len, _ref, _results2;
-          _ref = currentNode.edges;
-          _results2 = [];
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            connection = _ref[_i];
-            endNode = connection.n;
-            potentialCost = currentNode.costSoFar + connection.e.weight;
-            if (this.contains(closedList, endNode)) {
-              if (potentialCost < endNode.costSoFar) {
-                endNode.estimatedTotalCost = endNode.estimatedTotalCost - endNode.costSoFar + potentialCost;
-                endNode.costSoFar = potentialCost;
-                this.remove(closedList, endNode);
-                openList.push(endNode);
-              }
-            } else if (this.contains(openList, endNode)) {
-              if (potentialCost < endNode.costSoFar) {
-                endNode.estimatedTotalCost = endNode.estimatedTotalCost - endNode.costSoFar + potentialCost;
-                endNode.costSoFar = potentialCost;
-              }
-            } else {
+        _ref = currentNode.edges;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          connection = _ref[_i];
+          endNode = connection.n;
+          potentialCost = currentNode.costSoFar + connection.e.weight;
+          if (this.contains(closedList, endNode)) {
+            if (potentialCost < endNode.costSoFar) {
+              endNode.estimatedTotalCost = endNode.estimatedTotalCost - endNode.costSoFar + potentialCost;
               endNode.costSoFar = potentialCost;
-              endNode.estimatedTotalCost = endNode.costSoFar + heuristic(endNode, this.goal_node);
+              this.remove(closedList, endNode);
               openList.push(endNode);
             }
-            this.remove(openList, currentNode);
-            _results2.push(closedList.push(currentNode));
+          } else if (this.contains(openList, endNode)) {
+            if (potentialCost < endNode.costSoFar) {
+              endNode.estimatedTotalCost = endNode.estimatedTotalCost - endNode.costSoFar + potentialCost;
+              endNode.costSoFar = potentialCost;
+            }
+          } else {
+            endNode.costSoFar = potentialCost;
+            endNode.estimatedTotalCost = endNode.costSoFar + heuristic(endNode, this.goal_node);
+            openList.push(endNode);
           }
-          return _results2;
-        }).call(this));
+        }
+        this.remove(openList, currentNode);
+        _results.push(closedList.push(currentNode));
       }
       return _results;
     };
-    DFS.prototype.contains = function(a, obj) {
+    AStar.prototype.contains = function(a, obj) {
       var i;
       i = a.length;
       while (i--) {
@@ -89,7 +78,7 @@
       }
       return false;
     };
-    DFS.prototype.remove = function(a, obj) {
+    AStar.prototype.remove = function(a, obj) {
       var i, _results;
       i = a.length;
       _results = [];
@@ -98,7 +87,7 @@
       }
       return _results;
     };
-    DFS.prototype.getSmallestElement = function(a) {
+    AStar.prototype.getSmallestElement = function(a) {
       var node, smallNode, _i, _len, _results;
       smallNode = a[0];
       _results = [];
@@ -108,6 +97,13 @@
       }
       return _results;
     };
-    return DFS;
+    AStar.prototype.gen_info = function() {
+      return alert("general information");
+    };
+    AStar.prototype.run_info = function() {
+      return alert("run information");
+    };
+    return AStar;
   })();
+  this.AStar = AStar;
 }).call(this);

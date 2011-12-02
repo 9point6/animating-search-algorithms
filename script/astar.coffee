@@ -1,9 +1,9 @@
-//# Node class or point whatever the fuck its called, I'm gonna call it node
-//# it makes more sense. needs extra variables for the A* search to work
-//# costSoFar - this will be the cost to get to this node
-//# estimatedTotalCost - this will be the estimate cost to get to the goal node
-//# if we use this node in our path. It is equal to costSoFar + heuristic
-//# fromNode - this is the record of the node we came from to get to this one
+# Node class or point whatever the fuck its called, I'm gonna call it node
+# it makes more sense. needs extra variables for the A* search to work
+# costSoFar - this will be the cost to get to this node
+# estimatedTotalCost - this will be the estimate cost to get to the goal node
+# if we use this node in our path. It is equal to costSoFar + heuristic
+# fromNode - this is the record of the node we came from to get to this one
 
 class AStar extends Algorithm
     name: "A* Search"
@@ -35,7 +35,16 @@ class AStar extends Algorithm
 
             # get the node with the smallest estimatedTotalCost
             currentNode = @getSmallestElement openList
-            @explored_nodes.push
+
+            # find the edge that is connected to the previous node and the new current node and place
+            # on the traverse_info array for animation.
+            for edge in currentNode.edges
+                if edge.n is @prev_node
+                    @traverse_info.push edge.n
+
+            @explored_nodes.push currentNode
+            @traverse_info.push currentNode
+
             #for each connection from our current node
             #if needed initialise or update costSoFar and estimatedTotalCost
             #we also need to check if this connection leads to a node that already
@@ -66,8 +75,9 @@ class AStar extends Algorithm
                     endNode.estimatedTotalCost = endNode.costSoFar + heuristic(endNode, @goal_node)
                     openList.push endNode
 
-                @remove openList, currentNode
-                closedList.push currentNode
+            @remove openList, currentNode
+            closedList.push currentNode
+            @prev_node = currentNode
 
     contains: (a, obj) ->
         i = a.length
