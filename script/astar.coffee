@@ -5,7 +5,7 @@
 //# if we use this node in our path. It is equal to costSoFar + heuristic
 //# fromNode - this is the record of the node we came from to get to this one
 
-class DFS extends Algorithm
+class AStar extends Algorithm
     name: "A* Search"
 
     destroy: ->
@@ -21,14 +21,14 @@ class DFS extends Algorithm
         openList = []       # this contains the nodes that have been visited but not yet processed
         closedList = []     # this is the list of processed nodes
 
-        if @root_node.id is @goal_node.id #// we're at the goal node so return
+        if @root_node.id is @goal_node.id # we're at the goal node so return
             break
         else
-            #initialise root_nodes cost so far as 0
+            # initialise root_nodes cost so far as 0
             # call the heuristic to estimate the total cost to the goal node
             # and add root_node to the list of open nodes
-            root_node.costSoFar = 0
-            root_node.estimatedTotalCost = @root_node.costSoFar + heuristic(root_node, goal_node)
+            @root_node.costSoFar = 0
+            @root_node.estimatedTotalCost = @root_node.costSoFar + heuristic(@root_node, @goal_node)
             openList.push @root_node
 
         while openList.length isnt 0
@@ -88,3 +88,10 @@ class DFS extends Algorithm
             if smallNode.estimatedTotalCost > node.estimatedTotalCost
                 smallNode = node
 
+    gen_info: ->
+        alert "general information"
+
+    run_info: ->
+        alert "run information"
+
+this.AStar = AStar
