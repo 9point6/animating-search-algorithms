@@ -79,6 +79,9 @@
     BFS.prototype.gen_info = function() {
       return ["Complete", "O(b<sup>d+1</sup>)", "O(b<sup>d</sup>)", "Not Optimal"];
     };
+    BFS.prototype.run_info = function() {
+      return alert("Run information");
+    };
     return BFS;
   })();
   this.BFS = BFS;

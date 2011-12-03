@@ -15,6 +15,9 @@
 class DFS extends Algorithm
     name: "Depth-First Search"
 
+    # ### DFS.destroy( )
+    # deletes the explored variable from each node.
+    # ### Parameters
     destroy: ->
         for node in @explored_nodes
             delete node.explored
@@ -58,6 +61,9 @@ class DFS extends Algorithm
                     if not neighbour.n.explored
                         todo_list.push neighbour.n
 
+    # ### DFS.gen_info( )
+    # Gives the general metrics for a BFS search
+    # ### Parameters
     gen_info: ->
         [
             "Complete"
@@ -66,6 +72,9 @@ class DFS extends Algorithm
             "Not Optimal"
         ]
 
+    # ### DFS.run_info( )
+    # Shows the specific metrics for a particular instance.
+    # ### Parameters
     run_info: ->
         alert "runtime information"
 
@@ -73,7 +82,6 @@ class DFS extends Algorithm
     # Populates the traverse_info array for use by the
     # animate class
     # ### Parameters
-    #
     create_traverse_info: ->
         @traverse_info = []
 
