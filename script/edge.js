@@ -26,6 +26,17 @@
       this.r.click(this.click);
       this.di.click(this.click);
     }
+    Edge.prototype.visitable = function(node) {
+      if (this.direction === 0) {
+        return true;
+      } else {
+        if (this.direction > 0) {
+          return this.nodea.id === node.id;
+        } else {
+          return this.nodeb.id === node.id;
+        }
+      }
+    };
     Edge.prototype.update_midpoint = function() {
       this.x = (this.nodea.x + this.nodeb.x) / 2;
       this.y = (this.nodea.y + this.nodeb.y) / 2;

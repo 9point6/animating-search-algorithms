@@ -25,7 +25,6 @@ class Edge
         @nodea.connect @nodeb, @
         @nodeb.connect @nodea, @
 
-
         # Used to indicate direction for animating nodes.
         # If true point a is animated, then the connection, then potentially B
         @anim_atob = true
@@ -52,6 +51,15 @@ class Edge
         @di.hover @hover_in, @hover_out
         @r.click @click
         @di.click @click
+
+    visitable: ( node ) ->
+        if @direction is 0
+            true
+        else
+            if @direction > 0
+                @nodea.id is node.id
+            else
+                @nodeb.id is node.id
 
     update_midpoint: ->
         @x = ( @nodea.x + @nodeb.x ) / 2
