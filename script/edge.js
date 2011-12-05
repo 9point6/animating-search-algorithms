@@ -16,18 +16,41 @@
       this.nodeb.connect(this.nodea, this);
       this.style = "normal";
       this.anim_atob = true;
+      this.update_midpoint();
       this.r = this.raphael.path();
       this.r.attr({
         stroke: "#666"
+      });
+      this.wt = this.raphael.text(this.x, this.y - 20, this.weight);
+      this.di = this.raphael.path();
+      this.di.attr({
+        stroke: "#999"
       });
       this.update_path();
       this.r.hover(this.hover_in, this.hover_out);
       this.r.click(this.click);
     }
+    Edge.prototype.update_midpoint = function() {
+      this.x = (this.nodea.x + this.nodeb.x) / 2;
+      this.y = (this.nodea.y + this.nodeb.y) / 2;
+      this.m = (this.nodeb.y - this.nodea.y) / (this.nodeb.x - this.nodea.x);
+      return console.log("" + this.m + " - " + this.nodea.x + " - " + this.nodeb.x + " - " + (180 / Math.PI * Math.atan(this.m)));
+    };
     Edge.prototype.update_path = function() {
-      return this.r.attr({
+      this.update_midpoint();
+      this.r.attr({
         path: "M" + this.nodea.x + " " + this.nodea.y + "L" + this.nodeb.x + " " + this.nodeb.y
       });
+      this.wt.attr({
+        x: this.x,
+        y: this.y - 20
+      });
+      this.di.attr({
+        x: this.x,
+        y: this.y,
+        path: ["M", this.x, this.y, "L", this.x + 10, this.y + 10, "L", this.x - 10, this.y + 10, "L", this.x, this.y]
+      });
+      return this.di.rotate(180 / Math.PI * Math.atan(this.m) + 90);
     };
     Edge.prototype.remove = function() {
       return this.r.animate({

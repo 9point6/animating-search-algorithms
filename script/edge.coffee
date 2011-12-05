@@ -32,22 +32,62 @@ class Edge
         # If true point a is animated, then the connection, then potentially B
         @anim_atob = true
 
+        # work out the center co-ords for the line
+        @update_midpoint( )
+
         # Draw line
         @r = @raphael.path( )
         @r.attr
             stroke: "#666"
+
+        # draw weight text
+        @wt = @raphael.text @x, @y - 20, @weight
+
+        # direction indicator
+        @di = @raphael.path( )
+        @di.attr
+            stroke: "#999"
+
         @update_path( )
 
         # Set event handlers
         @r.hover @hover_in, @hover_out
         @r.click @click
 
+    update_midpoint: ->
+        @x = ( @nodea.x + @nodeb.x ) / 2
+        @y = ( @nodea.y + @nodeb.y ) / 2
+        @m = ( @nodeb.y - @nodea.y ) / ( @nodeb.x - @nodea.x )
+        console.log "#{@m} - #{@nodea.x} - #{@nodeb.x} - #{180 / Math.PI * Math.atan @m}"
+
     # ### connection.update_path( )
     # Updates the connection path. To be used when `pointa` or `pointb` have
     # changed location.
     update_path: ->
+        @update_midpoint( )
         @r.attr
             path: "M#{@nodea.x} #{@nodea.y}L#{@nodeb.x} #{@nodeb.y}"
+        @wt.attr
+            x: @x
+            y: @y - 20
+        @di.attr
+            x: @x
+            y: @y
+            path: [
+                "M"
+                @x
+                @y
+                "L"
+                @x + 10
+                @y + 10
+                "L"
+                @x - 10
+                @y + 10
+                "L"
+                @x
+                @y
+            ]
+        @di.rotate 180 / Math.PI * Math.atan( @m ) + 90
 
     # ### connection.remove( )
     # Removes the point from the graph

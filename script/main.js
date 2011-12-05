@@ -154,11 +154,11 @@
       this.graph.add_node(259, 204, "Carl");
       this.graph.add_node(363, 283, "Dave");
       this.graph.add_node(110, 85, "Elle");
-      this.graph.connect(this.graph.nodes[2], this.graph.nodes[1]);
-      this.graph.connect(this.graph.nodes[2], this.graph.nodes[3]);
-      this.graph.connect(this.graph.nodes[0], this.graph.nodes[2]);
-      this.graph.connect(this.graph.nodes[4], this.graph.nodes[0]);
-      this.graph.connect(this.graph.nodes[3], this.graph.nodes[1]);
+      this.graph.connect(this.graph.nodes[2], this.graph.nodes[1], 3, -1);
+      this.graph.connect(this.graph.nodes[2], this.graph.nodes[3], 2, 1);
+      this.graph.connect(this.graph.nodes[0], this.graph.nodes[2], 8, 0);
+      this.graph.connect(this.graph.nodes[4], this.graph.nodes[0], 4, 0);
+      this.graph.connect(this.graph.nodes[3], this.graph.nodes[1], 2, 1);
       this.graph.sort_elements();
     }
     Main.prototype.fade_out_toolbar = function(text, cancel_callback) {

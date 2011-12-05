@@ -96,7 +96,7 @@ class Graph
     # * `[direction]` - The direction of the edge
     #
     # **Return** -> new `connection` object
-    connect: ( nodea, nodeb, weight = 0, direction = 0 ) ->
+    connect: ( nodea, nodeb, weight = 1, direction = 0 ) ->
         newedge = new Edge @paper, nodea, nodeb, weight, direction
         @edges.push newedge
         @sort_elements( )

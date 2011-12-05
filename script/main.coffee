@@ -32,7 +32,7 @@ class Main
             <ul id="designmode">
                 <li id="new" title="New Graph" />
                 <li id="save" title="Save Graph" />
-                <li id="load" title="Load Graph" />    
+                <li id="load" title="Load Graph" />
                 <li id="add" title="Add a node" />
                 <li id="remove" title="Remove a node" />
                 <li id="connect" title="Connect two nodes" />
@@ -204,11 +204,11 @@ class Main
         @graph.add_node 363, 283, "Dave"
         @graph.add_node 110, 85, "Elle"
 
-        @graph.connect @graph.nodes[2], @graph.nodes[1]
-        @graph.connect @graph.nodes[2], @graph.nodes[3]
-        @graph.connect @graph.nodes[0], @graph.nodes[2]
-        @graph.connect @graph.nodes[4], @graph.nodes[0]
-        @graph.connect @graph.nodes[3], @graph.nodes[1]
+        @graph.connect @graph.nodes[2], @graph.nodes[1], 3, -1
+        @graph.connect @graph.nodes[2], @graph.nodes[3], 2, 1
+        @graph.connect @graph.nodes[0], @graph.nodes[2], 8, 0
+        @graph.connect @graph.nodes[4], @graph.nodes[0], 4, 0
+        @graph.connect @graph.nodes[3], @graph.nodes[1], 2, 1
 
         # Rearranges points so that they are above the connections in the canvas
         @graph.sort_elements( )
