@@ -46,7 +46,8 @@ class Edge
         # direction indicator
         @di = @raphael.path( )
         @di.attr
-            stroke: "#999"
+            stroke: "#666"
+            fill: "#666"
 
         @update_path( )
 
@@ -58,13 +59,13 @@ class Edge
         @x = ( @nodea.x + @nodeb.x ) / 2
         @y = ( @nodea.y + @nodeb.y ) / 2
         @m = ( @nodeb.y - @nodea.y ) / ( @nodeb.x - @nodea.x )
-        console.log "#{@m} - #{@nodea.x} - #{@nodeb.x} - #{180 / Math.PI * Math.atan @m}"
 
     # ### connection.update_path( )
     # Updates the connection path. To be used when `pointa` or `pointb` have
     # changed location.
     update_path: ->
         @update_midpoint( )
+        add = ( if @direction > 0 then 180 else 0 ) + ( if @nodea.x < @nodeb.x then 180 else 0 )
         @r.attr
             path: "M#{@nodea.x} #{@nodea.y}L#{@nodeb.x} #{@nodeb.y}"
         @wt.attr
@@ -78,16 +79,18 @@ class Edge
                 @x
                 @y
                 "L"
-                @x + 10
+                @x + 5
                 @y + 10
                 "L"
-                @x - 10
+                @x - 5
                 @y + 10
                 "L"
                 @x
                 @y
             ]
-        @di.rotate 180 / Math.PI * Math.atan( @m ) + 90
+            opacity: if @direction is 0 then 0 else 100
+        @di.translate 0, -5
+        @di.rotate 180 / Math.PI * Math.atan( @m ) + 90 + add, true
 
     # ### connection.remove( )
     # Removes the point from the graph
@@ -160,7 +163,7 @@ class Edge
     # #### TODO
     # * Bring up a context menu to edit/remove the connection
     click: ( e ) =>
-        @spark( )
+        @spark( @direction >= 0 )
 
     # ### connection.spark( )
     # Performs an animation along the edge. To be used when demonstrating the
@@ -169,21 +172,25 @@ class Edge
     # * `[a2b]` - Animate from A to B?
     spark: ( a2b = true ) ->
         start_point = if a2b then @nodea else @nodeb
-        @spark = @raphael.ellipse start_point.x, start_point.y, 20, 20
-        @spark.attr
+        spark = @raphael.ellipse start_point.x, start_point.y, 20, 20
+        spark.attr
             fill: "r#f00-#fff"
             stroke: "transparent"
 
         # Raphael does not currently support alpha gradients, but SVG and VML
         # both do. This code changes the necessary elements to do this manually
-        grad = $( @spark.node ).attr "fill"
+        grad = $( spark.node ).attr "fill"
         grad = grad.substring 4, grad.length - 1
         stops = $( grad ).children( )
         $( stops[0] ).attr "stop-opacity", "1"
         $( stops[1] ).attr "stop-opacity", "0"
 
-        @spark.animateAlong @r, 500, false, ->
-            @remove( )
+        if a2b
+            spark.animateAlong @r, 500, false, ->
+                @remove( )
+        else
+            spark.animateAlongBack @r, 500, false, ->
+                @remove( )
 
     # ### connection.update_style( )
     # Perform animatrions on the connection. Used by search algorithms.

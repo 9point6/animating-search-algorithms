@@ -24,7 +24,8 @@
       this.wt = this.raphael.text(this.x, this.y - 20, this.weight);
       this.di = this.raphael.path();
       this.di.attr({
-        stroke: "#999"
+        stroke: "#666",
+        fill: "#666"
       });
       this.update_path();
       this.r.hover(this.hover_in, this.hover_out);
@@ -33,11 +34,12 @@
     Edge.prototype.update_midpoint = function() {
       this.x = (this.nodea.x + this.nodeb.x) / 2;
       this.y = (this.nodea.y + this.nodeb.y) / 2;
-      this.m = (this.nodeb.y - this.nodea.y) / (this.nodeb.x - this.nodea.x);
-      return console.log("" + this.m + " - " + this.nodea.x + " - " + this.nodeb.x + " - " + (180 / Math.PI * Math.atan(this.m)));
+      return this.m = (this.nodeb.y - this.nodea.y) / (this.nodeb.x - this.nodea.x);
     };
     Edge.prototype.update_path = function() {
+      var add;
       this.update_midpoint();
+      add = (this.direction > 0 ? 180 : 0) + (this.nodea.x < this.nodeb.x ? 180 : 0);
       this.r.attr({
         path: "M" + this.nodea.x + " " + this.nodea.y + "L" + this.nodeb.x + " " + this.nodeb.y
       });
@@ -48,9 +50,11 @@
       this.di.attr({
         x: this.x,
         y: this.y,
-        path: ["M", this.x, this.y, "L", this.x + 10, this.y + 10, "L", this.x - 10, this.y + 10, "L", this.x, this.y]
+        path: ["M", this.x, this.y, "L", this.x + 5, this.y + 10, "L", this.x - 5, this.y + 10, "L", this.x, this.y],
+        opacity: this.direction === 0 ? 0 : 100
       });
-      return this.di.rotate(180 / Math.PI * Math.atan(this.m) + 90);
+      this.di.translate(0, -5);
+      return this.di.rotate(180 / Math.PI * Math.atan(this.m) + 90 + add, true);
     };
     Edge.prototype.remove = function() {
       return this.r.animate({
@@ -110,27 +114,33 @@
       }
     };
     Edge.prototype.click = function(e) {
-      return this.spark();
+      return this.spark(this.direction >= 0);
     };
     Edge.prototype.spark = function(a2b) {
-      var grad, start_point, stops;
+      var grad, spark, start_point, stops;
       if (a2b == null) {
         a2b = true;
       }
       start_point = a2b ? this.nodea : this.nodeb;
-      this.spark = this.raphael.ellipse(start_point.x, start_point.y, 20, 20);
-      this.spark.attr({
+      spark = this.raphael.ellipse(start_point.x, start_point.y, 20, 20);
+      spark.attr({
         fill: "r#f00-#fff",
         stroke: "transparent"
       });
-      grad = $(this.spark.node).attr("fill");
+      grad = $(spark.node).attr("fill");
       grad = grad.substring(4, grad.length - 1);
       stops = $(grad).children();
       $(stops[0]).attr("stop-opacity", "1");
       $(stops[1]).attr("stop-opacity", "0");
-      return this.spark.animateAlong(this.r, 500, false, function() {
-        return this.remove();
-      });
+      if (a2b) {
+        return spark.animateAlong(this.r, 500, false, function() {
+          return this.remove();
+        });
+      } else {
+        return spark.animateAlongBack(this.r, 500, false, function() {
+          return this.remove();
+        });
+      }
     };
     Edge.prototype.update_style = function(style_name) {
       var anim_speed;
