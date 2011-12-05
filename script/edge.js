@@ -14,22 +14,17 @@
       this.remove = __bind(this.remove, this);
       this.nodea.connect(this.nodeb, this);
       this.nodeb.connect(this.nodea, this);
-      this.style = "normal";
       this.anim_atob = true;
       this.update_midpoint();
       this.r = this.raphael.path();
-      this.r.attr({
-        stroke: "#666"
-      });
       this.wt = this.raphael.text(this.x, this.y - 20, this.weight);
       this.di = this.raphael.path();
-      this.di.attr({
-        stroke: "#666",
-        fill: "#666"
-      });
+      this.update_style("normal", true);
       this.update_path();
       this.r.hover(this.hover_in, this.hover_out);
+      this.di.hover(this.hover_in, this.hover_out);
       this.r.click(this.click);
+      this.di.click(this.click);
     }
     Edge.prototype.update_midpoint = function() {
       this.x = (this.nodea.x + this.nodeb.x) / 2;
@@ -96,10 +91,10 @@
         this.r.attr({
           cursor: 'pointer'
         });
-        return this.r.animate({
-          "stroke-width": 3,
-          stroke: "#f00"
+        this.di.attr({
+          cursor: 'pointer'
         });
+        return this.update_style("hover");
       }
     };
     Edge.prototype.hover_out = function(e) {
@@ -107,10 +102,10 @@
         this.r.attr({
           cursor: 'normal'
         });
-        return this.r.animate({
-          "stroke-width": 1,
-          stroke: "#666"
-        }, 100);
+        this.di.attr({
+          cursor: 'normal'
+        });
+        return this.update_style("normal");
       }
     };
     Edge.prototype.click = function(e) {
@@ -142,30 +137,51 @@
         });
       }
     };
-    Edge.prototype.update_style = function(style_name) {
+    Edge.prototype.update_style = function(style_name, instant) {
       var anim_speed;
-      anim_speed = 100;
+      if (instant == null) {
+        instant = false;
+      }
+      anim_speed = instant ? 0 : 100;
       switch (style_name) {
         case "normal":
-          return this.r.animate({
+          this.r.animate({
             stroke: "#666",
             "stroke-width": 1
-          }, anim_speed, this.style = "normal");
+          }, anim_speed);
+          this.di.animate({
+            fill: "#666",
+            stroke: "#666"
+          }, anim_speed);
+          return this.style = "normal";
+        case "hover":
+          this.r.animate({
+            stroke: "#f00",
+            "stroke-width": 3
+          }, anim_speed);
+          this.di.animate({
+            fill: "#f00",
+            stroke: "#f00"
+          }, anim_speed);
+          return this.style = "hover";
         case "viewing":
-          return this.r.animate({
+          this.r.animate({
             stroke: "#A40000",
             "stroke-width": 10
-          }, anim_speed, this.style = "viewing");
+          }, anim_speed);
+          return this.style = "viewing";
         case "potential":
-          return this.r.animate({
+          this.r.animate({
             stroke: "#0247FE",
             "stroke-width": 5
-          }, anim_speed, this.style = "potential");
+          }, anim_speed);
+          return this.style = "potential";
         case "visited":
-          return this.r.animate({
+          this.r.animate({
             stroke: "#000",
             "stroke-width": 3
-          }, anim_speed, this.style = "visited");
+          }, anim_speed);
+          return this.style = "visited";
       }
     };
     return Edge;

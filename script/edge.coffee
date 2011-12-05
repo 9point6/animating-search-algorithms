@@ -25,8 +25,6 @@ class Edge
         @nodea.connect @nodeb, @
         @nodeb.connect @nodea, @
 
-        # Sets the current style to the default state
-        @style = "normal"
 
         # Used to indicate direction for animating nodes.
         # If true point a is animated, then the connection, then potentially B
@@ -37,23 +35,23 @@ class Edge
 
         # Draw line
         @r = @raphael.path( )
-        @r.attr
-            stroke: "#666"
 
         # draw weight text
         @wt = @raphael.text @x, @y - 20, @weight
 
         # direction indicator
         @di = @raphael.path( )
-        @di.attr
-            stroke: "#666"
-            fill: "#666"
+
+        # Sets the current style to the default state
+        @update_style "normal", true
 
         @update_path( )
 
         # Set event handlers
         @r.hover @hover_in, @hover_out
+        @di.hover @hover_in, @hover_out
         @r.click @click
+        @di.click @click
 
     update_midpoint: ->
         @x = ( @nodea.x + @nodeb.x ) / 2
@@ -135,9 +133,9 @@ class Edge
         if APP.design_mode
             @r.attr
                 cursor: 'pointer'
-            @r.animate
-                "stroke-width": 3
-                stroke: "#f00",
+            @di.attr
+                cursor: 'pointer'
+            @update_style "hover"
 
     # ### connection.hover_out( )
     # Remove hover effect
@@ -150,10 +148,9 @@ class Edge
         if APP.design_mode
             @r.attr
                 cursor: 'normal'
-            @r.animate
-                "stroke-width": 1
-                stroke: "#666",
-                100
+            @di.attr
+                cursor: 'normal'
+            @update_style "normal"
 
     # ### connection.click( )
     # Connection click handler. Currently just does a spark animation.
@@ -196,12 +193,13 @@ class Edge
     # Perform animatrions on the connection. Used by search algorithms.
     # #### Parameters
     # * `style_name` - Name of preset style used to update the look of the connection.
+    # * `instant` - whether to smoothly animate or instantly change the style [false]
     #
     # #### TODO
     # * Add all needed animations
     # * Maybe enumerate?
-    update_style: ( style_name ) ->
-        anim_speed = 100
+    update_style: ( style_name, instant = false ) ->
+        anim_speed = if instant then 0 else 100
         switch style_name
             # The connection is to be reset back to 'default'
             when "normal"
@@ -209,21 +207,36 @@ class Edge
                     stroke: "#666"
                     "stroke-width": 1,
                     anim_speed
-                    @style = "normal"
+                @di.animate
+                    fill: "#666"
+                    stroke: "#666",
+                    anim_speed
+                @style = "normal"
+            # When the connection has mouse over
+            when "hover"
+                @r.animate
+                    stroke: "#f00"
+                    "stroke-width": 3,
+                    anim_speed
+                @di.animate
+                    fill: "#f00"
+                    stroke: "#f00",
+                    anim_speed
+                @style = "hover"
             # The connection is currently being 'looked at'
             when "viewing"
                 @r.animate
                     stroke: "#A40000"
                     "stroke-width": 10,
                     anim_speed
-                    @style = "viewing"
+                @style = "viewing"
             # The connection is an option for later in the algorithm
             when "potential"
                 @r.animate
                     stroke: "#0247FE"
                     "stroke-width": 5,
                     anim_speed
-                    @style = "potential"
+                @style = "potential"
             # The connection has been visited by the algorithm
             when "visited"
                 @r.animate
@@ -231,6 +244,6 @@ class Edge
                     stroke: "#000"
                     "stroke-width": 3,
                     anim_speed
-                    @style = "visited"
+                @style = "visited"
 
 this.Edge = Edge
