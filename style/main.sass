@@ -15,6 +15,9 @@ $colour2 = #fa0
 $copytext = #666
 $imgloc = ../../img/developpers/PNG/
 
+@mixin button_img($name)
+  background-image: url( "#{$imgloc}#{$name}.png" )
+
 @mixin linear-gradient($from, $to)
     background-color: $from
     background-image: -webkit-gradient(linear, left top, left bottom, from($from), to($to))
@@ -277,30 +280,37 @@ div#algohelptext
 // Button Images
 // TODO: Convert to a sprite
 #new
-    background-image: url( "#{$imgloc}New%20Document.png" )
+    @include button_img( New%20Document )
 #save
-    background-image: url( "#{$imgloc}Get%20Document.png" )
+    @include button_img( Get%20Document )
 #load
-    background-image: url( "#{$imgloc}Send%20Document.png" )
+    @include button_img( Send%20Document )
 #add
-    background-image: url( "#{$imgloc}Add%20Green%20Button.png" )
+    @include button_img( Add%20Green%20Button )
 #remove
-    background-image: url( "#{$imgloc}Minus%20Green%20Button.png" )
+    @include button_img( Minus%20Green%20Button )
 #connect
-    background-image: url( "#{$imgloc}Plugin%20Green%20Button.png" )
+    @include button_img( Plugin%20Green%20Button )
 #search
-    background-image: url( "#{$imgloc}Spotlight%20Blue%20Button.png" )
+    @include button_img( Spotlight%20Blue%20Button )
 #run
-    background-image: url( "#{$imgloc}Play%20All.png" )
+    @include button_img( Play%20All )
 #stepback
-    background-image: url( "#{$imgloc}Play.png" )
+    @include button_img( Play )
     @include flipH( )
 #stepforward
-    background-image: url( "#{$imgloc}Play.png" )
+    @include button_img( Play )
 #process
-    background-image: url( "#{$imgloc}Run.png" )
+    @include button_img( Run )
 #design
-    background-image: url( "#{$imgloc}Write%20Document.png" )
+    @include button_img( Write%20Document )
 #cancel
-    background-image: url( "#{$imgloc}Cancel%20Red%20Button.png" )
-
+    @include button_img( Cancel%20Red%20Button )
+#stop
+    @include button_img( Stop )
+#settings
+    @include button_img( Gear )
+#reset
+    @include button_img( Backup%20Green%20Button )
+#setnodes
+    @include button_img( Star )

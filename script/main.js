@@ -6,7 +6,7 @@
       var alg, algo, i, _i, _len;
       this.design_mode = true;
       this.graph = new Graph();
-      $('body').append('<div id="toolbar">\n    <h1>search<span>r</span></h1>\n    <ul id="designmode">\n        <li id="new" title="New Graph" />\n        <li id="save" title="Save Graph" />\n        <li id="load" title="Load Graph" />\n        <li id="add" title="Add a node" />\n        <li id="remove" title="Remove a node" />\n        <li id="connect" title="Connect two nodes" />\n        <li id="search" title="Switch to search mode" />\n    </ul>\n    <ul id="runmode">\n        <li id="process" title="Process Graph" />\n        <li id="stepback" title="Step Back through animation" />\n        <li id="run" title="Run Animation" />\n        <li id="stepforward" title="Step Forward through animation" />\n        <li id="design" title="Switch to design mode" />\n    </ul>\n    <div id="helptext" />\n</div>\n<div id="slidewrap">\n    <a id="slidetoggle">\n        <span>&#9679;</span>\n    </a>\n    <div id="slideout">\n        <h2 id="title">Algorithm</h2>\n        <ul id="list">\n            <li>\n                <h3>Algorithm:</h3>\n                <select id="algoselection" />\n            </li>\n            <li>\n                <h3>Completeness:</h3>\n                <p id="algodata_completeness">Blah</p>\n            </li>\n            <li>\n                <h3>Time Complexity:</h3>\n                <p id="algodata_time">Blah</p>\n            </li>\n            <li>\n                <h3>Space Complexity:</h3>\n                <p id="algodata_space">Blah</p>\n            </li>\n            <li>\n                <h3>Optimality:</h3>\n                <p id="algodata_optimality">Blah</p>\n            </li>\n        </ul>\n    </div>\n</div>\n<div id="algohelptext">Click for algorithm properties</div>\n<div id="copyright">\n    <a href="doc">Project Home</a>\n<div>');
+      $('body').append('<div id="toolbar">\n    <h1>search<span>r</span></h1>\n    <ul id="designmode">\n        <li id="new" title="New Graph" />\n        <li id="save" title="Save Graph" />\n        <li id="load" title="Load Graph" />\n        <li id="add" title="Add a node" />\n        <li id="remove" title="Remove a node" />\n        <li id="connect" title="Connect two nodes" />\n        <li id="search" title="Switch to search mode" />\n    </ul>\n    <ul id="runmode">\n        <li id="setnodes" title="Set root and goal nodes" />\n        <li id="process" title="Process Graph" />\n        <li id="stepback" title="Step Back through animation" />\n        <li id="run" title="Run Animation" />\n        <li id="stop" title="Stop Animation" />\n        <li id="stepforward" title="Step Forward through animation" />\n        <li id="reset" title="Reset the animation" />\n        <li id="settings" title="Settings Dialog" />\n        <li id="design" title="Switch to design mode" />\n    </ul>\n    <div id="helptext" />\n</div>\n<div id="slidewrap">\n    <a id="slidetoggle">\n        <span>&#9679;</span>\n    </a>\n    <div id="slideout">\n        <h2 id="title">Algorithm</h2>\n        <ul id="list">\n            <li>\n                <h3>Algorithm:</h3>\n                <select id="algoselection" />\n            </li>\n            <li>\n                <h3>Completeness:</h3>\n                <p id="algodata_completeness">Blah</p>\n            </li>\n            <li>\n                <h3>Time Complexity:</h3>\n                <p id="algodata_time">Blah</p>\n            </li>\n            <li>\n                <h3>Space Complexity:</h3>\n                <p id="algodata_space">Blah</p>\n            </li>\n            <li>\n                <h3>Optimality:</h3>\n                <p id="algodata_optimality">Blah</p>\n            </li>\n        </ul>\n    </div>\n</div>\n<div id="algohelptext">Click for algorithm properties</div>\n<div id="copyright">\n    <a href="doc">Project Home</a>\n<div>');
       $('#helptext').css({
         opacity: 0
       });
@@ -89,7 +89,7 @@
         this.current_algo = new ALGORITHMS[$('#algoselection').prop("value")];
         this.animate_obj = new Animate;
         this.animate_obj.algorithm = this.current_algo;
-        return $('#designmode').animate({
+        $('#designmode').animate({
           opacity: 0
         }, {
           complete: function() {
@@ -101,6 +101,12 @@
             });
           }
         });
+        return $('#slideout').animate({
+          "margin-right": 0
+        });
+      }, this));
+      $('#setnodes').click(__bind(function(e) {
+        return alert("not yet implemented");
       }, this));
       $('#process').click(__bind(function(e) {
         var node, _i, _len, _ref;
@@ -123,14 +129,23 @@
       $('#run').click(__bind(function(e) {
         return this.animate_obj.traverse();
       }, this));
+      $('#stop').click(__bind(function(e) {
+        return this.animate_obj.stop();
+      }, this));
       $('#stepforward').click(__bind(function(e) {
         return this.animate_obj.step_forward();
+      }, this));
+      $('#reset').click(__bind(function(e) {
+        return this.animate_obj.reset();
+      }, this));
+      $('#settings').click(__bind(function(e) {
+        return alert("not yet implemented");
       }, this));
       $('#design').click(__bind(function(e) {
         this.design_mode = true;
         this.animate_obj.destroy();
         this.current_algo.destroy();
-        return $('#runmode').animate({
+        $('#runmode').animate({
           opacity: 0
         }, {
           complete: function() {
@@ -141,6 +156,9 @@
               opacity: 100
             });
           }
+        });
+        return $('#slideout').animate({
+          "margin-right": -300
         });
       }, this));
       $('#slidetoggle').click(__bind(function(e) {

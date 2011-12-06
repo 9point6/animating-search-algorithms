@@ -80,16 +80,23 @@
     Animate.prototype.traverse = function() {
       var doTraverse, traverse_speed;
       traverse_speed = 500;
-      this.pointer = 0;
       if (this.algorithm.traverse_info != null) {
         doTraverse = __bind(function() {
           this.step_forward();
-          if (this.pointer < this.algorithm.traverse_info.length) {
+          if (this.pointer < this.algorithm.traverse_info.length && !this._stop) {
             return setTimeout(doTraverse, traverse_speed);
           }
         }, this);
+        this._stop = false;
         return setTimeout(doTraverse, traverse_speed);
       }
+    };
+    Animate.prototype.stop = function() {
+      return this._stop = true;
+    };
+    Animate.prototype.reset = function() {
+      APP.graph.remove_styles();
+      return this.pointer = 0;
     };
     return Animate;
   })();

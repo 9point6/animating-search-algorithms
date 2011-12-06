@@ -39,10 +39,14 @@ class Main
                 <li id="search" title="Switch to search mode" />
             </ul>
             <ul id="runmode">
+                <li id="setnodes" title="Set root and goal nodes" />
                 <li id="process" title="Process Graph" />
                 <li id="stepback" title="Step Back through animation" />
                 <li id="run" title="Run Animation" />
+                <li id="stop" title="Stop Animation" />
                 <li id="stepforward" title="Step Forward through animation" />
+                <li id="reset" title="Reset the animation" />
+                <li id="settings" title="Settings Dialog" />
                 <li id="design" title="Switch to design mode" />
             </ul>
             <div id="helptext" />
@@ -164,6 +168,10 @@ class Main
                             display: 'none'
                         $( '#runmode' ).css( 'display', 'block' ).animate
                             opacity: 100
+            $( '#slideout' ).animate
+                "margin-right": 0
+        $( '#setnodes' ).click ( e ) =>
+            alert "not yet implemented"
         $( '#process' ).click ( e ) =>
             for node in @graph.nodes
                 if node.name is "Dave"
@@ -176,8 +184,14 @@ class Main
             @animate_obj.step_backward( )
         $( '#run' ).click ( e ) =>
             @animate_obj.traverse( )
+        $( '#stop' ).click ( e ) =>
+            @animate_obj.stop( )
         $( '#stepforward' ).click ( e ) =>
             @animate_obj.step_forward( )
+        $( '#reset' ).click ( e ) =>
+            @animate_obj.reset( )
+        $( '#settings' ).click ( e ) =>
+            alert "not yet implemented"
         $( '#design' ).click ( e ) =>
             @design_mode = true
             @animate_obj.destroy( )
@@ -189,6 +203,8 @@ class Main
                             display: 'none'
                         $( '#designmode' ).css( 'display', 'block' ).animate
                             opacity: 100
+            $( '#slideout' ).animate
+                "margin-right": -300
         $( '#slidetoggle' ).click ( e ) =>
             if $( '#slideout' ).css( "margin-right" ) is "-300px"
                 $( '#slideout' ).animate

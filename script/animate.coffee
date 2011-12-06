@@ -126,14 +126,20 @@ class Animate
     # #### TODO
     traverse: ->
         traverse_speed = 500
-        @pointer = 0
         # if the list to iterate over is not null
         if @algorithm.traverse_info?
             doTraverse = =>
                 @step_forward( )
-                if @pointer < @algorithm.traverse_info.length
+                if @pointer < @algorithm.traverse_info.length and not @_stop
                     setTimeout doTraverse, traverse_speed
+            @_stop = false
             setTimeout doTraverse, traverse_speed
 
+    stop: ->
+        @_stop = true
+
+    reset: ->
+        APP.graph.remove_styles( )
+        @pointer = 0
 
 this.Animate = Animate
