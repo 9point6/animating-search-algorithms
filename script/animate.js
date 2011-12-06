@@ -36,7 +36,7 @@
               _ref2 = previous_item.edges;
               for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
                 edge = _ref2[_j];
-                if (edge.e.style === "potential" && this.algorithm.name !== "AStar" && this.algorithm.name !== "BiDi") {
+                if (edge.e.style === "potential" && this.algorithm.name !== "A* Search" && this.algorithm.name !== "Bi-Directional Search") {
                   edge.e.update_style("normal");
                 }
               }

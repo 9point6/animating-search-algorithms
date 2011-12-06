@@ -69,8 +69,8 @@ class Animate
                         # connections as "potentials" in an open set.
                         for edge in previous_item.edges
                             if edge.e.style is "potential" and
-                                @algorithm.name isnt "AStar" and
-                                    @algorithm.name isnt "BiDi"
+                                @algorithm.name isnt "A* Search" and
+                                    @algorithm.name isnt "Bi-Directional Search"
                                         edge.e.update_style "normal"
 
             # increase the pointer value
