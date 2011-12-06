@@ -24,25 +24,26 @@ class BiDirectional extends Algorithm
         super
 
     search: ->
+        traverse_info_start = @alg1.traverse_info.slice(0)
+        traverse_info_goal = @alg2.traverse_info.slice(0)
 
-        traverse_info_start = algorithm1.traverse_info
-        traverse_info_goal = algorithm2.traverse_info
+        for item in traverse_info_start
+            @traverse_info.push item
 
-        for i in traverse_info_start.length
-            for j in traverse_info_goal.length
-                traverse_start = traverse_info_start[i]
-                traverse_goal = traverse_info_goal[j]
-
-                if traverse_start isnt traverse_goal
-                    traverse_info.push traverse_start
-                    traverse_info.push traverse_goal
-                else
-                    #if traverse_start is traverse_goal
-                    traverse_info.push traverse_start
+            for item2 in @alg2.traverse_info
+                if item.id is item2.id
+                    @traverse_info.push traverse_info_start
                     return
 
+            @traverse_info.push traverse_info_goal.shift( )
+
     gen_info: ->
-        alert "stuff"
+        [
+            "Complete"
+            "O(b<sup>m</sup>)"
+            "O(bm)"
+            "Not Optimal"
+        ]
 
     run_info: ->
         alert "stuff"

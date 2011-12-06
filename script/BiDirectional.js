@@ -25,36 +25,27 @@
       return BiDirectional.__super__.destroy.apply(this, arguments);
     };
     BiDirectional.prototype.search = function() {
-      return this._search(this.alg1, this.alg2);
-    };
-    BiDirectional.prototype._search = function(algorithm1, algorithm2) {
-      var i, j, traverse_goal, traverse_info_goal, traverse_info_start, traverse_start, _i, _j, _len, _len2, _ref, _ref2, _results;
-      this.alg1 = algorithm1;
-      this.alg2 = algorithm2;
-      traverse_info_start = algorithm1.traverse_info;
-      traverse_info_goal = algorithm2.traverse_info;
-      _ref = traverse_info_start.length;
+      var item, item2, traverse_info_goal, traverse_info_start, _i, _j, _len, _len2, _ref, _results;
+      traverse_info_start = this.alg1.traverse_info.slice(0);
+      traverse_info_goal = this.alg2.traverse_info.slice(0);
       _results = [];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        i = _ref[_i];
-        _ref2 = traverse_info_goal.length;
-        for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
-          j = _ref2[_j];
-          traverse_start = traverse_info_start[i];
-          traverse_goal = traverse_info_goal[j];
-          if (traverse_start !== traverse_goal) {
-            traverse_info.push(traverse_start);
-            traverse_info.push(traverse_goal);
-          } else {
-            traverse_info.push(traverse_start);
+      for (_i = 0, _len = traverse_info_start.length; _i < _len; _i++) {
+        item = traverse_info_start[_i];
+        this.traverse_info.push(item);
+        _ref = this.alg2.traverse_info;
+        for (_j = 0, _len2 = _ref.length; _j < _len2; _j++) {
+          item2 = _ref[_j];
+          if (item.id === item2.id) {
+            this.traverse_info.push(traverse_info_start);
             return;
           }
         }
+        _results.push(this.traverse_info.push(traverse_info_goal.shift()));
       }
       return _results;
     };
     BiDirectional.prototype.gen_info = function() {
-      return alert("stuff");
+      return ["Complete", "O(b<sup>m</sup>)", "O(bm)", "Not Optimal"];
     };
     BiDirectional.prototype.run_info = function() {
       return alert("stuff");
