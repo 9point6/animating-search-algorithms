@@ -41,6 +41,14 @@ class Modal
         if @options.intro
             @div.append "<div class=\"intro\">#{@options.intro}</div>"
 
+        submit_h = ( e ) =>
+            @options.animations.background.out @wrap
+            @options.animations.dialog.out @div
+            @options.callback @return( )
+        submit_hk = ( e ) =>
+            if event.which is 13
+                submit_h e
+
         if @options.fields
             fdiv = $( "<div class=\"fields\" />" )
             @div.append fdiv
@@ -52,13 +60,15 @@ class Modal
                 if field.type is "radio"
                     first = true
                     for k,v of field.values
-                        label.append """
-                            <label>
-                                <input type="radio" id="modf-#{fr}" name="modf-#{fr}" class="modal_fields"
-                                    value="#{k}" #{if first then 'checked="checked"' else ""}/>
-                                <span>#{v}</span>
-                            </label>
-                            """
+                        llabel = $( '<label />' )
+                        label.append llabel
+                        input = $( """
+                            <input type="radio" id="modf-#{fr}" name="modf-#{fr}" class="modal_fields"
+                                value="#{k}" #{if first then 'checked="checked"' else ""}/>
+                            """ )
+                        llabel.append input
+                        llabel.append "<span>#{v}</span>"
+                        input.keypress submit_hk
                         first = false
                 else
                     input = $( "<input />" ).addClass "modal_fields"
@@ -66,6 +76,7 @@ class Modal
                         type: field.type
                         id: "modf-#{fr}"
                         value: field.default
+                    input.keypress submit_hk
                     label.append input
                 fdiv.append "<br class=\"clear\" />"
 
@@ -74,10 +85,8 @@ class Modal
 
         submit = $( "<button type=\"button\">#{@options.okay}</button>" )
         buttons.append submit
-        submit.click ( e ) =>
-            @options.animations.background.out @wrap
-            @options.animations.dialog.out @div
-            @options.callback @return( )
+        submit.click submit_h
+        submit.keypress submit_hk
 
         if @options.cancel
             cancel = $( "<button type=\"button\">#{@options.cancel}</button>" )

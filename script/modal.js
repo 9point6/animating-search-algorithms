@@ -48,7 +48,7 @@
       }
     };
     function Modal(params) {
-      var buttons, cancel, fdiv, field, first, fr, input, k, label, submit, v, _ref, _ref2, _ref3;
+      var buttons, cancel, fdiv, field, first, fr, input, k, label, llabel, submit, submit_h, submit_hk, v, _ref, _ref2, _ref3;
       $.extend(this.options, params);
       this.wrap = $('<div />').addClass("modal");
       this.div = $('<div />').appendTo(this.wrap);
@@ -58,6 +58,16 @@
       if (this.options.intro) {
         this.div.append("<div class=\"intro\">" + this.options.intro + "</div>");
       }
+      submit_h = __bind(function(e) {
+        this.options.animations.background.out(this.wrap);
+        this.options.animations.dialog.out(this.div);
+        return this.options.callback(this["return"]());
+      }, this);
+      submit_hk = __bind(function(e) {
+        if (event.which === 13) {
+          return submit_h(e);
+        }
+      }, this);
       if (this.options.fields) {
         fdiv = $("<div class=\"fields\" />");
         this.div.append(fdiv);
@@ -77,7 +87,12 @@
             _ref3 = field.values;
             for (k in _ref3) {
               v = _ref3[k];
-              label.append("<label>\n    <input type=\"radio\" id=\"modf-" + fr + "\" name=\"modf-" + fr + "\" class=\"modal_fields\"\n        value=\"" + k + "\" " + (first ? 'checked="checked"' : "") + "/>\n    <span>" + v + "</span>\n</label>");
+              llabel = $('<label />');
+              label.append(llabel);
+              input = $("<input type=\"radio\" id=\"modf-" + fr + "\" name=\"modf-" + fr + "\" class=\"modal_fields\"\n    value=\"" + k + "\" " + (first ? 'checked="checked"' : "") + "/>");
+              llabel.append(input);
+              llabel.append("<span>" + v + "</span>");
+              input.keypress(submit_hk);
               first = false;
             }
           } else {
@@ -87,6 +102,7 @@
               id: "modf-" + fr,
               value: field["default"]
             });
+            input.keypress(submit_hk);
             label.append(input);
           }
           fdiv.append("<br class=\"clear\" />");
@@ -96,11 +112,8 @@
       this.div.append(buttons);
       submit = $("<button type=\"button\">" + this.options.okay + "</button>");
       buttons.append(submit);
-      submit.click(__bind(function(e) {
-        this.options.animations.background.out(this.wrap);
-        this.options.animations.dialog.out(this.div);
-        return this.options.callback(this["return"]());
-      }, this));
+      submit.click(submit_h);
+      submit.keypress(submit_hk);
       if (this.options.cancel) {
         cancel = $("<button type=\"button\">" + this.options.cancel + "</button>");
         buttons.append(cancel);
