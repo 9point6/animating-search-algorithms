@@ -18,11 +18,14 @@ class BiDirectional extends Algorithm
     name: "Bi-Directional Search"
 
     destroy: ->
-    for node in @explored_nodes
-        delete node.explored
-    super
+        for node in @explored_nodes
+            delete node.explored
+        super
 
-    search: (algorithm1, algorithm2) ->
+    search: ->
+        @_search @alg1, @alg2
+
+    _search: (algorithm1, algorithm2) ->
 
         @alg1 = algorithm1
         @alg2 = algorithm2
