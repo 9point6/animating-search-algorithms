@@ -24,12 +24,6 @@ class BiDirectional extends Algorithm
         super
 
     search: ->
-        @_search @alg1, @alg2
-
-    _search: (algorithm1, algorithm2) ->
-
-        @alg1 = algorithm1
-        @alg2 = algorithm2
 
         traverse_info_start = algorithm1.traverse_info
         traverse_info_goal = algorithm2.traverse_info
