@@ -10,10 +10,11 @@
   };
   BiDirectional = (function() {
     __extends(BiDirectional, Algorithm);
-    function BiDirectional() {
-      BiDirectional.__super__.constructor.apply(this, arguments);
-    }
     BiDirectional.prototype.name = "Bi-Directional Search";
+    function BiDirectional(alg1, alg2) {
+      this.alg1 = alg1;
+      this.alg2 = alg2;
+    }
     BiDirectional.prototype.destroy = function() {
       var node, _i, _len, _ref;
       _ref = this.explored_nodes;

@@ -16,6 +16,8 @@
 class BiDirectional extends Algorithm
     name: "Bi-Directional Search"
 
+    constructor: (@alg1, @alg2) ->
+
     destroy: ->
         for node in @explored_nodes
             delete node.explored
