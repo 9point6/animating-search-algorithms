@@ -58,7 +58,8 @@ class DFS extends Algorithm
                 @explored_nodes.push current_node
 
                 for neighbour in current_node.edges
-                    if not neighbour.n.explored
+                    visitable = neighbour.e.visitable current_node
+                    if not neighbour.n.explored and visitable
                         todo_list.push neighbour.n
 
     # ### DFS.gen_info( )
@@ -99,7 +100,7 @@ class DFS extends Algorithm
             # push the current_node onto the start of the array.
             @traverse_info.push current_node
 
-            # push current_node onto the start of the array backtracking array
+            # push current_node onto the start of the backtracking array
             fork.unshift current_node
 
             # if this the last node in exp_nodes array, then there is
@@ -118,14 +119,19 @@ class DFS extends Algorithm
                 # Only runs this code if the last point is not directly
                 # connected with the next point in exp_nodes array
                 if @traverse_info.slice(-1)[0] instanceof Node
+                    found = false
                     # loop through fork array for backtracking
                     for node in fork
-                        # look at previous nodes connections
-                        for edge in node.edges
-                            # if the previous node is connected with the next node
-                            # then add the connection to the traverse_info array for
-                            # animation.
-                            if edge.n.id is exp_nodes[0].id
-                                @traverse_info.push edge.e
+                        # stop looping if the edge has been found
+                        if not found
+                            # look at previous nodes connections
+                            for edge in node.edges
+                                # if the previous node is connected with the next node
+                                # then add the connection to the traverse_info array for
+                                # animation.
+                                if edge.n.id is exp_nodes[0].id
+                                    @traverse_info.push edge.e
+                                    found = true
+                                    break
 
 this.DFS = DFS

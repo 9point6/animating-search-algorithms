@@ -24,7 +24,7 @@
       return BFS.__super__.destroy.apply(this, arguments);
     };
     BFS.prototype.search = function() {
-      var current_node, found, neighbour, neighbours, node, queue, _i, _len, _ref, _results;
+      var current_node, found, neighbour, neighbours, node, queue, visitable, _i, _len, _ref, _results;
       _ref = this.explored_nodes;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         node = _ref[_i];
@@ -32,11 +32,12 @@
       }
       this.explored_nodes = [];
       this.traverse_info = [];
-      this.found = false;
       queue = [];
+      found = false;
       queue.push(this.root_node);
       this.root_node.explored = true;
       this.traverse_info.push(this.root_node);
+      this.explored_nodes.push(this.root_node);
       if (this.root_node === this.goal_node) {
         return;
       }
@@ -57,10 +58,12 @@
           _results2 = [];
           for (_j = 0, _len2 = neighbours.length; _j < _len2; _j++) {
             neighbour = neighbours[_j];
-            if (!neighbour.n.explored) {
+            visitable = neighbour.e.visitable(current_node);
+            if (!neighbour.n.explored && visitable) {
               neighbour.n.explored = true;
               this.traverse_info.push(neighbour.e);
               this.traverse_info.push(neighbour.n);
+              this.explored_nodes.push(neighbour.n);
               if (neighbour.n === this.goal_node) {
                 found = true;
                 break;

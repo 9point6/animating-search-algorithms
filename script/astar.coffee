@@ -13,7 +13,10 @@ class AStar extends Algorithm
             delete node.explored
         super
 
-    search: (heuristic) ->
+    search: ->
+        @_search @heuristic
+
+    _search: (heuristic) ->
 
         @destroy
         @explored_nodes = []
