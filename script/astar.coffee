@@ -25,7 +25,7 @@ class AStar extends Algorithm
         closedList = []     # this is the list of processed nodes
 
         if @root_node.id is @goal_node.id # we're at the goal node so return
-            break
+            return
         else
             # initialise root_nodes cost so far as 0
             # call the heuristic to estimate the total cost to the goal node

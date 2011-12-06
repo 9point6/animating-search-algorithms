@@ -33,7 +33,7 @@
       openList = [];
       closedList = [];
       if (this.root_node.id === this.goal_node.id) {
-        break;
+        return;
       } else {
         this.root_node.costSoFar = 0;
         this.root_node.estimatedTotalCost = this.root_node.costSoFar + heuristic(this.root_node, this.goal_node);

@@ -101,6 +101,8 @@ $ ->
         DFS
         DLS
         IterativeDeepening
+        AStar
+        BiDirectional
     ]
 
     # Instantiates the main class and starts the program
