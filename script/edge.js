@@ -57,15 +57,25 @@
         x: this.x,
         y: this.y,
         path: ["M", this.x, this.y, "L", this.x + 5, this.y + 10, "L", this.x - 5, this.y + 10, "L", this.x, this.y],
-        opacity: this.direction === 0 ? 0 : 100
+        opacity: Math.abs(this.direction * 100)
       });
       this.di.translate(0, -5);
       return this.di.rotate(180 / Math.PI * Math.atan(this.m) + 90 + add, true);
     };
     Edge.prototype.remove = function() {
+      this.di.animate({
+        opacity: 0
+      }, 250, 'linear', function() {
+        return this.remove();
+      });
+      this.wt.animate({
+        opacity: 0
+      }, 250, 'linear', function() {
+        return this.remove();
+      });
       return this.r.animate({
         opacity: 0
-      }, 50, 'linear', __bind(function() {
+      }, 250, 'linear', __bind(function() {
         var edge, new_edges, _i, _j, _k, _len, _len2, _len3, _ref, _ref2, _ref3;
         this.r.remove();
         new_edges = [];

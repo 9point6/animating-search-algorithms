@@ -109,7 +109,8 @@
                 fields: {
                   "weight": {
                     type: "text",
-                    label: "Edge weight"
+                    label: "Edge weight",
+                    "default": 1
                   },
                   "direction": {
                     type: "radio",

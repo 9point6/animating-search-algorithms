@@ -141,6 +141,7 @@ class Graph
                                 "weight":
                                     type: "text"
                                     label: "Edge weight"
+                                    default: 1
                                 "direction":
                                     type: "radio"
                                     label: "Edge Direction"

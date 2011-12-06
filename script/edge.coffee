@@ -94,7 +94,7 @@ class Edge
                 @x
                 @y
             ]
-            opacity: if @direction is 0 then 0 else 100
+            opacity: Math.abs @direction * 100
         @di.translate 0, -5
         @di.rotate 180 / Math.PI * Math.atan( @m ) + 90 + add, true
 
@@ -104,9 +104,17 @@ class Edge
     # * Some of this might be better suited in the `app` class...
     # * Remove redundant code
     remove: =>
+        @di.animate
+            opacity: 0,
+            250, 'linear', ->
+                @remove( )
+        @wt.animate
+            opacity: 0,
+            250, 'linear', ->
+                @remove( )
         @r.animate
-           opacity: 0,
-           50, 'linear', =>
+            opacity: 0,
+            250, 'linear', =>
                 @r.remove( )
 
                 # Remove from connections in `pointa`

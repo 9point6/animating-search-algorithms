@@ -45,6 +45,7 @@ class Modal
             fdiv = $( "<div class=\"fields\" />" )
             @div.append fdiv
             for fr,field of @options.fields
+                field.default ?= ""
                 label = $( "<label />" )
                 fdiv.append label
                 label.append "<span>#{field.label}:</span>"
@@ -64,10 +65,15 @@ class Modal
                     input.attr
                         type: field.type
                         id: "modf-#{fr}"
+                        value: field.default
                     label.append input
+                fdiv.append "<br class=\"clear\" />"
+
+        buttons = $( "<div class=\"buttons\" />" )
+        @div.append buttons
 
         submit = $( "<button type=\"button\">#{@options.okay}</button>" )
-        @div.append submit
+        buttons.append submit
         submit.click ( e ) =>
             @options.animations.background.out @wrap
             @options.animations.dialog.out @div
@@ -75,7 +81,7 @@ class Modal
 
         if @options.cancel
             cancel = $( "<button type=\"button\">#{@options.cancel}</button>" )
-            @div.append cancel
+            buttons.append cancel
             cancel.click ( e ) =>
                 @options.animations.background.out @wrap
                 @options.animations.dialog.out @div
@@ -88,7 +94,7 @@ class Modal
     show: ->
         @options.animations.background.in @wrap
         @options.animations.dialog.in @div
-        $( 'input.modal_fields' ).focus( )
+        $( 'input.modal_fields' )[0].focus( )
 
     return: ->
         ret = {}

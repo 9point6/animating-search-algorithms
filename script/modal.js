@@ -48,7 +48,7 @@
       }
     };
     function Modal(params) {
-      var cancel, fdiv, field, first, fr, input, k, label, submit, v, _ref, _ref2;
+      var buttons, cancel, fdiv, field, first, fr, input, k, label, submit, v, _ref, _ref2, _ref3;
       $.extend(this.options, params);
       this.wrap = $('<div />').addClass("modal");
       this.div = $('<div />').appendTo(this.wrap);
@@ -64,14 +64,19 @@
         _ref = this.options.fields;
         for (fr in _ref) {
           field = _ref[fr];
+                    if ((_ref2 = field["default"]) != null) {
+            _ref2;
+          } else {
+            field["default"] = "";
+          };
           label = $("<label />");
           fdiv.append(label);
           label.append("<span>" + field.label + ":</span>");
           if (field.type === "radio") {
             first = true;
-            _ref2 = field.values;
-            for (k in _ref2) {
-              v = _ref2[k];
+            _ref3 = field.values;
+            for (k in _ref3) {
+              v = _ref3[k];
               label.append("<label>\n    <input type=\"radio\" id=\"modf-" + fr + "\" name=\"modf-" + fr + "\" class=\"modal_fields\"\n        value=\"" + k + "\" " + (first ? 'checked="checked"' : "") + "/>\n    <span>" + v + "</span>\n</label>");
               first = false;
             }
@@ -79,14 +84,18 @@
             input = $("<input />").addClass("modal_fields");
             input.attr({
               type: field.type,
-              id: "modf-" + fr
+              id: "modf-" + fr,
+              value: field["default"]
             });
             label.append(input);
           }
+          fdiv.append("<br class=\"clear\" />");
         }
       }
+      buttons = $("<div class=\"buttons\" />");
+      this.div.append(buttons);
       submit = $("<button type=\"button\">" + this.options.okay + "</button>");
-      this.div.append(submit);
+      buttons.append(submit);
       submit.click(__bind(function(e) {
         this.options.animations.background.out(this.wrap);
         this.options.animations.dialog.out(this.div);
@@ -94,7 +103,7 @@
       }, this));
       if (this.options.cancel) {
         cancel = $("<button type=\"button\">" + this.options.cancel + "</button>");
-        this.div.append(cancel);
+        buttons.append(cancel);
         cancel.click(__bind(function(e) {
           this.options.animations.background.out(this.wrap);
           return this.options.animations.dialog.out(this.div);
@@ -107,7 +116,7 @@
     Modal.prototype.show = function() {
       this.options.animations.background["in"](this.wrap);
       this.options.animations.dialog["in"](this.div);
-      return $('input.modal_fields').focus();
+      return $('input.modal_fields')[0].focus();
     };
     Modal.prototype["return"] = function() {
       var elem, key, ret, _i, _j, _len, _len2, _ref, _ref2;
