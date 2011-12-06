@@ -45,6 +45,9 @@
         currentNode = this.getSmallestElement(openList);
         console.log("Current Node: " + currentNode.name);
         this.explored_nodes.push(currentNode);
+        if (currentNode === this.goal_node) {
+          break;
+        }
         _ref = currentNode.edges;
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           connection = _ref[_i];

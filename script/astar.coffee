@@ -53,6 +53,9 @@ class AStar extends Algorithm
 
             @explored_nodes.push currentNode
 
+            if currentNode is @goal_node
+                break
+
             #for each connection from our current node
             #if needed initialise or update costSoFar and estimatedTotalCost
             #we also need to check if this connection leads to a node that already
