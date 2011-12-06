@@ -45,6 +45,30 @@ class Node
         @r.click @click
         @r.drag @drag_move, @drag_start, @drag_up
 
+    setRoot: ->
+        if not @goal or not @root
+            @root = true
+            @emph = @raphael.circle @x, @y, 10
+            @emph.attr
+                stroke: "#f00"
+                "stroke-width": 2
+            @
+        else
+            false
+
+    setGoal: ->
+        if not @goal or not @root
+            @goal = true
+            @emph = @raphael.circle @x, @y, 10
+            @emph.attr
+                fill: "#0f0"
+                stroke: "#0f0"
+                "stroke-width": 2
+            $( @emph.node ).prependTo $( 'svg' )[0]
+            @
+        else
+            false
+
     # ### point.connect( )
     # Connect this `point` to another. Connections should be made from the main
     # app object. Used to allow easy navigation of connections from each node.
@@ -67,9 +91,9 @@ class Node
 
         # Animate the point disappearing
         @r.animate
-           r: 0
-           opacity: 0,
-           200, 'linear', =>
+            r: 0
+            opacity: 0,
+            200, 'linear', =>
                 # When finished animating, remove all the drawing elements on
                 # the canvas.
                 @label.remove( )
@@ -81,6 +105,11 @@ class Node
                     if node.id isnt @id
                         newnodes.push node
                 APP.graph.nodes = newnodes
+        if @goal or @root
+            @emph.animate
+                r: 0
+                opacity: 0,
+                200, 'linear'
 
     # ### point.move( )
     # Moves a node.
@@ -94,6 +123,10 @@ class Node
         @label.attr
             x: @x
             y: @y - 20
+        if @goal or @root
+            @emph.attr
+                cx: @x
+                cy: @y
 
     # ### point.click( )
     # Node click handler. What it does depends on the current state of the

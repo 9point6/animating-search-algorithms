@@ -175,9 +175,9 @@ class Main
         $( '#process' ).click ( e ) =>
             for node in @graph.nodes
                 if node.name is "Dave"
-                    @current_algo.root_node = node
+                    @current_algo.root_node = node.setRoot( )
                 if node.name is "Elle"
-                    @current_algo.goal_node = node
+                    @current_algo.goal_node = node.setGoal( )
             @current_algo.search( )
             @current_algo.create_traverse_info( )
         $( '#stepback' ).click ( e ) =>

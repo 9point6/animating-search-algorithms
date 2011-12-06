@@ -114,10 +114,10 @@
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           node = _ref[_i];
           if (node.name === "Dave") {
-            this.current_algo.root_node = node;
+            this.current_algo.root_node = node.setRoot();
           }
           if (node.name === "Elle") {
-            this.current_algo.goal_node = node;
+            this.current_algo.goal_node = node.setGoal();
           }
         }
         this.current_algo.search();

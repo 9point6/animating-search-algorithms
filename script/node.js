@@ -33,6 +33,34 @@
       this.r.click(this.click);
       this.r.drag(this.drag_move, this.drag_start, this.drag_up);
     }
+    Node.prototype.setRoot = function() {
+      if (!this.goal || !this.root) {
+        this.root = true;
+        this.emph = this.raphael.circle(this.x, this.y, 10);
+        this.emph.attr({
+          stroke: "#f00",
+          "stroke-width": 2
+        });
+        return this;
+      } else {
+        return false;
+      }
+    };
+    Node.prototype.setGoal = function() {
+      if (!this.goal || !this.root) {
+        this.goal = true;
+        this.emph = this.raphael.circle(this.x, this.y, 10);
+        this.emph.attr({
+          fill: "#0f0",
+          stroke: "#0f0",
+          "stroke-width": 2
+        });
+        $(this.emph.node).prependTo($('svg')[0]);
+        return this;
+      } else {
+        return false;
+      }
+    };
     Node.prototype.connect = function(other_node, edge) {
       return this.edges.push({
         n: other_node,
@@ -46,7 +74,7 @@
         edge = _ref[_i];
         edge.e.remove();
       }
-      return this.r.animate({
+      this.r.animate({
         r: 0,
         opacity: 0
       }, 200, 'linear', __bind(function() {
@@ -63,6 +91,12 @@
         }
         return APP.graph.nodes = newnodes;
       }, this));
+      if (this.goal || this.root) {
+        return this.emph.animate({
+          r: 0,
+          opacity: 0
+        }, 200, 'linear');
+      }
     };
     Node.prototype.move = function(x, y) {
       this.x = x;
@@ -71,10 +105,16 @@
         cx: this.x,
         cy: this.y
       });
-      return this.label.attr({
+      this.label.attr({
         x: this.x,
         y: this.y - 20
       });
+      if (this.goal || this.root) {
+        return this.emph.attr({
+          cx: this.x,
+          cy: this.y
+        });
+      }
     };
     Node.prototype.click = function(e) {
       if (APP.graph.connect_mode === true) {
