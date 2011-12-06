@@ -23,8 +23,11 @@
       }
       return AStar.__super__.destroy.apply(this, arguments);
     };
-    AStar.prototype.search = function(heuristic) {
-      var closedList, connection, currentNode, endNode, openList, potentialCost, _i, _len, _ref, _results;
+    AStar.prototype.search = function() {
+      return this._search(this.heuristic);
+    };
+    AStar.prototype._search = function(heuristic) {
+      var closedList, connection, currentNode, edge, endNode, openList, potentialCost, _i, _j, _len, _len2, _ref, _ref2, _results;
       this.destroy;
       this.explored_nodes = [];
       openList = [];
@@ -39,10 +42,18 @@
       _results = [];
       while (openList.length !== 0) {
         currentNode = this.getSmallestElement(openList);
-        this.explored_nodes.push;
         _ref = currentNode.edges;
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          connection = _ref[_i];
+          edge = _ref[_i];
+          if (edge.n === this.prev_node) {
+            this.traverse_info.push(edge.n);
+          }
+        }
+        this.explored_nodes.push(currentNode);
+        this.traverse_info.push(currentNode);
+        _ref2 = currentNode.edges;
+        for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
+          connection = _ref2[_j];
           endNode = connection.n;
           potentialCost = currentNode.costSoFar + connection.e.weight;
           if (this.contains(closedList, endNode)) {
@@ -64,7 +75,8 @@
           }
         }
         this.remove(openList, currentNode);
-        _results.push(closedList.push(currentNode));
+        closedList.push(currentNode);
+        _results.push(this.prev_node = currentNode);
       }
       return _results;
     };
