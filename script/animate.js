@@ -52,7 +52,11 @@
         this.pointer--;
         this.traverse_info = this.algorithm.traverse_info;
         current_item = this.traverse_info[this.pointer];
-        current_item.update_style("normal");
+        if ((this.algorithm.name !== "A* Search" && this.algorithm.name !== "Bi-Directional Search") || current_item instanceof Node) {
+          current_item.update_style("normal");
+        } else {
+          current_item.update_style("potential");
+        }
         if (current_item instanceof Node) {
           _ref = current_item.edges;
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {

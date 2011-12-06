@@ -93,8 +93,11 @@ class Animate
             # create variable for current item pointer looks at in the array
             current_item = @traverse_info[@pointer]
 
-            # change the current item to a "normal" style
-            current_item.update_style "normal"
+            if (@algorithm.name isnt "A* Search" and @algorithm.name isnt "Bi-Directional Search") or current_item instanceof Node
+                # change the current item to a "normal" style
+                current_item.update_style "normal"
+            else
+                current_item.update_style "potential"
 
             # if the current item is a point then change all of it's potential
             # connections back to a normal style.
