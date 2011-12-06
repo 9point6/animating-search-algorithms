@@ -33,9 +33,9 @@ class BFS extends Algorithm
 
         @explored_nodes = []
         @traverse_info = []
-        @found = false
         #queue of nodes to be searched
         queue = []
+        found = false
 
         #add the root node to the front of the queue
         queue.push @root_node
@@ -43,6 +43,7 @@ class BFS extends Algorithm
         #add the root node to the set of explored nodes
         @root_node.explored = true
         @traverse_info.push @root_node
+        @explored_nodes.push @root_node
 
         #if the root node is the goal then end search
         if @root_node is @goal_node
@@ -54,6 +55,7 @@ class BFS extends Algorithm
             #the new root node is the first node in the queue
             current_node = queue.shift()
 
+            # Goal node has been found so break
             if found
                 break
 
@@ -67,11 +69,13 @@ class BFS extends Algorithm
 
             #for all the neighbours of the node
             for neighbour in neighbours
+                visitable = neighbour.e.visitable current_node
                 #add the neighbour to the set of explored nodes
-                if not neighbour.n.explored
+                if not neighbour.n.explored and visitable
                     neighbour.n.explored = true
                     @traverse_info.push neighbour.e
                     @traverse_info.push neighbour.n
+                    @explored_nodes.push neighbour.n
                     if neighbour.n is @goal_node
                         found = true
                         break
