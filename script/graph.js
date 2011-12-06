@@ -61,7 +61,7 @@
     Graph.prototype.connect = function(nodea, nodeb, weight, direction) {
       var newedge;
       if (weight == null) {
-        weight = 0;
+        weight = 1;
       }
       if (direction == null) {
         direction = 0;
@@ -72,7 +72,7 @@
       return newedge;
     };
     Graph.prototype.do_mouse_connection = function(obj) {
-      var a, b, edge, newedge, not_connected, _i, _len, _ref, _ref2;
+      var a, b, edge, modal, not_connected, _i, _len, _ref, _ref2;
       if (this.connect_mode === false) {
         _ref = [
           {
@@ -104,18 +104,40 @@
             }
             if (not_connected) {
               this.edgenb = obj;
-              newedge = this.connect(this.edgena, this.edgenb);
-              this.edgena.r.animate({
-                r: 5,
-                fill: "#000"
-              }, 100);
-              this.edgenb.r.animate({
-                r: 5,
-                fill: "#000"
-              }, 100);
-              newedge.spark();
-              this.connect_mode = false;
-              return APP.fade_in_toolbar();
+              modal = new Modal({
+                title: "New connection",
+                fields: {
+                  "weight": {
+                    type: "text",
+                    label: "Edge weight"
+                  },
+                  "direction": {
+                    type: "radio",
+                    label: "Edge Direction",
+                    values: {
+                      "0": "Undirected",
+                      "-1": "'" + this.edgenb.name + "' to '" + this.edgena.name + "'",
+                      "1": "'" + this.edgena.name + "' to '" + this.edgenb.name + "'"
+                    }
+                  }
+                },
+                callback: __bind(function(r) {
+                  var newedge;
+                  newedge = this.connect(this.edgena, this.edgenb, r.weight, r.direction);
+                  this.edgena.r.animate({
+                    r: 5,
+                    fill: "#000"
+                  }, 100);
+                  this.edgenb.r.animate({
+                    r: 5,
+                    fill: "#000"
+                  }, 100);
+                  newedge.spark();
+                  this.connect_mode = false;
+                  return APP.fade_in_toolbar();
+                }, this)
+              });
+              return modal.show();
             } else {
               return obj.update_style("normal");
             }

@@ -135,18 +135,33 @@ class Graph
                             not_connected = false
                     if not_connected
                         @edgenb = obj
-                        newedge = @connect @edgena, @edgenb
-                        @edgena.r.animate
-                            r: 5
-                            fill: "#000",
-                            100
-                        @edgenb.r.animate
-                            r: 5
-                            fill: "#000",
-                            100
-                        newedge.spark( )
-                        @connect_mode = false
-                        APP.fade_in_toolbar( )
+                        modal = new Modal
+                            title: "New connection"
+                            fields:
+                                "weight":
+                                    type: "text"
+                                    label: "Edge weight"
+                                "direction":
+                                    type: "radio"
+                                    label: "Edge Direction"
+                                    values:
+                                        "0": "Undirected"
+                                        "-1": "'#{@edgenb.name}' to '#{@edgena.name}'"
+                                        "1": "'#{@edgena.name}' to '#{@edgenb.name}'"
+                            callback: ( r ) =>
+                                newedge = @connect @edgena, @edgenb, r.weight, r.direction
+                                @edgena.r.animate
+                                    r: 5
+                                    fill: "#000",
+                                    100
+                                @edgenb.r.animate
+                                    r: 5
+                                    fill: "#000",
+                                    100
+                                newedge.spark( )
+                                @connect_mode = false
+                                APP.fade_in_toolbar( )
+                        modal.show( )
                     else
                         obj.update_style "normal"
 

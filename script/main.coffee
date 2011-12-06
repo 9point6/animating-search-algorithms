@@ -137,8 +137,17 @@ class Main
         #$( '#load' ).click ( e ) =>
         #    @graph.parse_string prompt "Paste a saved graph string here"
         $( '#add' ).click ( e ) =>
-            node = @graph.add_node 1, 1, prompt "What will this node be named?"
-            node.move_with_mouse( )
+            modal = new Modal
+                title: "New Node"
+                fields:
+                    "name":
+                        type: "text"
+                        label: "Node name"
+                cancel: "Cancel"
+                callback: ( r ) =>
+                    node = @graph.add_node 1, 1, r.name
+                    node.move_with_mouse( )
+            modal.show( )
         $( '#remove' ).click ( e ) =>
             @graph.do_mouse_removal( )
         $( '#connect' ).click ( e ) =>

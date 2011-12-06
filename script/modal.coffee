@@ -1,0 +1,106 @@
+class Modal
+    options:
+        title: false
+        intro: false
+        fields: false
+        okay: "Okay"
+        cancel: false
+        animations:
+            background:
+                in: ( elem ) ->
+                    $( elem ).animate
+                        opacity: 100
+                out: ( elem ) ->
+                    $( elem ).animate
+                        opacity: 0,
+                        250, "linear", =>
+                            $( elem ).hide( )
+                default: ( elem ) ->
+                    $( elem ).css
+                        opacity: 0
+            dialog:
+                in: ( elem ) ->
+                    $( elem ).animate
+                        "margin-top": 0
+                out: ( elem ) ->
+                    $( elem ).animate
+                        "margin-top": -1000
+                default: ( elem ) ->
+                    $( elem ).css
+                        "margin-top": -1000
+
+    constructor: ( params ) ->
+        $.extend @options, params
+
+        @wrap = $( '<div />' ).addClass "modal"
+        @div = $( '<div />' ).appendTo @wrap
+
+        if @options.title
+            @div.append "<h2>#{@options.title}</h2>"
+
+        if @options.intro
+            @div.append "<div class=\"intro\">#{@options.intro}</div>"
+
+        if @options.fields
+            fdiv = $( "<div class=\"fields\" />" )
+            @div.append fdiv
+            for fr,field of @options.fields
+                label = $( "<label />" )
+                fdiv.append label
+                label.append "<span>#{field.label}:</span>"
+                if field.type is "radio"
+                    first = true
+                    for k,v of field.values
+                        label.append """
+                            <label>
+                                <input type="radio" id="modf-#{fr}" name="modf-#{fr}" class="modal_fields"
+                                    value="#{k}" #{if first then 'checked="checked"' else ""}/>
+                                <span>#{v}</span>
+                            </label>
+                            """
+                        first = false
+                else
+                    input = $( "<input />" ).addClass "modal_fields"
+                    input.attr
+                        type: field.type
+                        id: "modf-#{fr}"
+                    label.append input
+
+        submit = $( "<button type=\"button\">#{@options.okay}</button>" )
+        @div.append submit
+        submit.click ( e ) =>
+            @options.animations.background.out @wrap
+            @options.animations.dialog.out @div
+            @options.callback @return( )
+
+        if @options.cancel
+            cancel = $( "<button type=\"button\">#{@options.cancel}</button>" )
+            @div.append cancel
+            cancel.click ( e ) =>
+                @options.animations.background.out @wrap
+                @options.animations.dialog.out @div
+
+        @options.animations.background.default @wrap
+        @options.animations.dialog.default @div
+
+        $( 'body' ).append @wrap
+
+    show: ->
+        @options.animations.background.in @wrap
+        @options.animations.dialog.in @div
+        $( 'input.modal_fields' ).focus( )
+
+    return: ->
+        ret = {}
+        for elem in $( "input.modal_fields:not([type=\"radio\"])", @div )
+            elem = $( elem )
+            key = elem.attr( "id" ).substring 5
+            ret[key] = elem.val( )
+        for elem in $( "input.modal_fields:checked", @div )
+            elem = $( elem )
+            key = elem.attr( "id" ).substring 5
+            ret[key] = elem.val( )
+        console.log ret
+        ret
+
+this.Modal = Modal

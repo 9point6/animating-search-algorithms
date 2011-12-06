@@ -124,7 +124,9 @@
       var _ref;
       if (this.drag_start()) {
         _ref = [0, 0], this.startx = _ref[0], this.starty = _ref[1];
-        return $(this.raphael.canvas).mousemove(__bind(function(e) {
+        console.log("derp");
+        $(this.raphael.canvas).mousemove(__bind(function(e) {
+          console.log("df");
           this.drag_move(e.pageX, e.pageY);
           return $(this.raphael.canvas).click(__bind(function(e) {
             this.drag_up();
@@ -132,6 +134,7 @@
             return $(this.raphael.canvas).unbind('click');
           }, this));
         }, this));
+        return console.log("herp");
       }
     };
     Node.prototype.hover_in = function(e) {

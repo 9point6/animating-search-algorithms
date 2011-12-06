@@ -151,12 +151,15 @@ class Node
     move_with_mouse: =>
         if @drag_start( )
             [@startx, @starty] = [0, 0]
+            console.log "derp"
             $( @raphael.canvas ).mousemove ( e ) =>
+                console.log "df"
                 @drag_move e.pageX, e.pageY
                 $( @raphael.canvas ).click ( e ) =>
                     @drag_up( )
                     $( @raphael.canvas ).unbind( 'mousemove' )
                     $( @raphael.canvas ).unbind( 'click' )
+            console.log "herp"
 
     # ### point.hover_in( )
     # Show hover effect

@@ -60,9 +60,23 @@
         return $('#dlsubmit').click();
       }, this));
       $('#add').click(__bind(function(e) {
-        var node;
-        node = this.graph.add_node(1, 1, prompt("What will this node be named?"));
-        return node.move_with_mouse();
+        var modal;
+        modal = new Modal({
+          title: "New Node",
+          fields: {
+            "name": {
+              type: "text",
+              label: "Node name"
+            }
+          },
+          cancel: "Cancel",
+          callback: __bind(function(r) {
+            var node;
+            node = this.graph.add_node(1, 1, r.name);
+            return node.move_with_mouse();
+          }, this)
+        });
+        return modal.show();
       }, this));
       $('#remove').click(__bind(function(e) {
         return this.graph.do_mouse_removal();
