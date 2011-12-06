@@ -53,8 +53,7 @@
       return _results;
     };
     BiDirectional.prototype.gen_info = function() {
-      this.alg1.gen_info();
-      return this.alg2.gen_info();
+      return alert("stuff");
     };
     BiDirectional.prototype.run_info = function() {
       return alert("stuff");

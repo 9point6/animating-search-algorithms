@@ -10,9 +10,6 @@
   };
   AStar = (function() {
     __extends(AStar, Algorithm);
-    function AStar() {
-      AStar.__super__.constructor.apply(this, arguments);
-    }
     AStar.prototype.name = "A* Search";
     AStar.prototype.destroy = function() {
       var node, _i, _len, _ref;
@@ -23,11 +20,15 @@
       }
       return AStar.__super__.destroy.apply(this, arguments);
     };
+    function AStar() {
+      this.heuristic_choice = 0;
+    }
     AStar.prototype.search = function() {
-      return this._search(this.heuristic);
+      this.heuristic = new Heuristics();
+      return this._search();
     };
-    AStar.prototype._search = function(heuristic) {
-      var closedList, connection, currentNode, edge, endNode, openList, potentialCost, _i, _j, _len, _len2, _ref, _ref2, _results;
+    AStar.prototype._search = function() {
+      var closedList, connection, currentNode, endNode, openList, potentialCost, visitable, _i, _len, _ref, _results;
       this.destroy;
       this.explored_nodes = [];
       openList = [];
@@ -36,42 +37,38 @@
         return;
       } else {
         this.root_node.costSoFar = 0;
-        this.root_node.estimatedTotalCost = this.root_node.costSoFar + heuristic(this.root_node, this.goal_node);
+        this.root_node.estimatedTotalCost = this.root_node.costSoFar + this.heuristic.choice(this.heuristic_choice, this.root_node, this.goal_node);
         openList.push(this.root_node);
       }
       _results = [];
       while (openList.length !== 0) {
         currentNode = this.getSmallestElement(openList);
+        console.log("Current Node: " + currentNode.name);
+        this.explored_nodes.push(currentNode);
         _ref = currentNode.edges;
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          edge = _ref[_i];
-          if (edge.n === this.prev_node) {
-            this.traverse_info.push(edge.n);
-          }
-        }
-        this.explored_nodes.push(currentNode);
-        this.traverse_info.push(currentNode);
-        _ref2 = currentNode.edges;
-        for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
-          connection = _ref2[_j];
-          endNode = connection.n;
-          potentialCost = currentNode.costSoFar + connection.e.weight;
-          if (this.contains(closedList, endNode)) {
-            if (potentialCost < endNode.costSoFar) {
-              endNode.estimatedTotalCost = endNode.estimatedTotalCost - endNode.costSoFar + potentialCost;
+          connection = _ref[_i];
+          visitable = connection.e.visitable(currentNode);
+          if (visitable) {
+            endNode = connection.n;
+            potentialCost = currentNode.costSoFar + connection.e.weight;
+            if (this.contains(closedList, endNode)) {
+              if (potentialCost < endNode.costSoFar) {
+                endNode.estimatedTotalCost = endNode.estimatedTotalCost - endNode.costSoFar + potentialCost;
+                endNode.costSoFar = potentialCost;
+                this.remove(closedList, endNode);
+                openList.push(endNode);
+              }
+            } else if (this.contains(openList, endNode)) {
+              if (potentialCost < endNode.costSoFar) {
+                endNode.estimatedTotalCost = endNode.estimatedTotalCost - endNode.costSoFar + potentialCost;
+                endNode.costSoFar = potentialCost;
+              }
+            } else {
               endNode.costSoFar = potentialCost;
-              this.remove(closedList, endNode);
+              endNode.estimatedTotalCost = endNode.costSoFar + this.heuristic.choice(this.heuristic_choice, endNode, this.goal_node);
               openList.push(endNode);
             }
-          } else if (this.contains(openList, endNode)) {
-            if (potentialCost < endNode.costSoFar) {
-              endNode.estimatedTotalCost = endNode.estimatedTotalCost - endNode.costSoFar + potentialCost;
-              endNode.costSoFar = potentialCost;
-            }
-          } else {
-            endNode.costSoFar = potentialCost;
-            endNode.estimatedTotalCost = endNode.costSoFar + heuristic(endNode, this.goal_node);
-            openList.push(endNode);
           }
         }
         this.remove(openList, currentNode);
@@ -100,20 +97,70 @@
       return _results;
     };
     AStar.prototype.getSmallestElement = function(a) {
-      var node, smallNode, _i, _len, _results;
+      var node, smallNode, _i, _len;
       smallNode = a[0];
-      _results = [];
       for (_i = 0, _len = a.length; _i < _len; _i++) {
         node = a[_i];
-        _results.push(smallNode.estimatedTotalCost > node.estimatedTotalCost ? smallNode = node : void 0);
+        if (smallNode.estimatedTotalCost > node.estimatedTotalCost) {
+          smallNode = node;
+        }
       }
-      return _results;
+      return smallNode;
     };
     AStar.prototype.gen_info = function() {
-      return alert("general information");
+      return ["Complete", "O(log h<sup>*</sup>(x))", "O(bm)", "Optimal"];
     };
     AStar.prototype.run_info = function() {
       return alert("run information");
+    };
+    AStar.prototype.create_traverse_info = function() {
+      var current_node, edge, exp_nodes, fork, found, node, _results;
+      this.traverse_info = [];
+      fork = [];
+      exp_nodes = this.explored_nodes.slice(0);
+      _results = [];
+      while (exp_nodes.length !== 0) {
+        current_node = exp_nodes.shift();
+        this.traverse_info.push(current_node);
+        fork.unshift(current_node);
+        _results.push((function() {
+          var _i, _j, _len, _len2, _ref, _results2;
+          if (exp_nodes.length !== 0) {
+            _ref = current_node.edges;
+            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+              edge = _ref[_i];
+              if (edge.n.id === exp_nodes[0].id) {
+                this.traverse_info.push(edge.e);
+              }
+            }
+            if (this.traverse_info.slice(-1)[0] instanceof Node) {
+              found = false;
+              _results2 = [];
+              for (_j = 0, _len2 = fork.length; _j < _len2; _j++) {
+                node = fork[_j];
+                _results2.push((function() {
+                  var _k, _len3, _ref2, _results3;
+                  if (!found) {
+                    _ref2 = node.edges;
+                    _results3 = [];
+                    for (_k = 0, _len3 = _ref2.length; _k < _len3; _k++) {
+                      edge = _ref2[_k];
+                      if (edge.n.id === exp_nodes[0].id) {
+                        this.traverse_info.push(edge.e);
+                        found = true;
+                        break;
+                      }
+                    }
+                    return _results3;
+                  }
+                }).call(this));
+              }
+              return _results2;
+            }
+          }
+        }).call(this));
+      }
+      return _results;
     };
     return AStar;
   })();

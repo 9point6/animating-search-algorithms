@@ -14,7 +14,6 @@
 # BiDi algorithm class
 
 class BiDirectional extends Algorithm
-
     name: "Bi-Directional Search"
 
     destroy: ->
@@ -47,8 +46,7 @@ class BiDirectional extends Algorithm
                     return
 
     gen_info: ->
-        @alg1.gen_info( )
-        @alg2.gen_info( )
+        alert "stuff"
 
     run_info: ->
         alert "stuff"
