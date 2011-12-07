@@ -157,7 +157,7 @@
           if (i++ < lim) {
             return setTimeout(func, 50);
           } else {
-            _ref = [0, 0, 0, 0], dxl = _ref[0], dyl = _ref[1], dxg = _ref[2], dyg = _ref[3];
+            _ref = [Infinity, Infinity, 0, 0], dxl = _ref[0], dyl = _ref[1], dxg = _ref[2], dyg = _ref[3];
             _ref2 = this.graph.nodes;
             for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
               n = _ref2[_i];
@@ -166,15 +166,15 @@
               dxg = Math.max(dxg, n.x);
               dyg = Math.max(dyg, n.y);
             }
-            dx = Math.abs(dxl);
-            dy = Math.abs(dyl);
-            mx = Math.max(1, (dxg - dxl) / 1000);
-            my = Math.max(1, (dyg - dyl) / 500);
-            console.log("" + dx + ", " + dy + " - " + mx + " - " + my);
+            dx = dxl;
+            dy = dyl;
+            mx = (dxg - dxl) / 1000;
+            my = (dyg - dyl) / 500;
+            console.log("" + dx + ", " + dy + " - " + mx + " - " + my + " -");
             _ref3 = this.graph.nodes;
             for (_j = 0, _len2 = _ref3.length; _j < _len2; _j++) {
               n = _ref3[_j];
-              n.move(10 + (n.x + dx) / mx, 50 + (n.y + dy) / my);
+              n.move(10 + (n.x - dx) / mx, 50 + (n.y - dy) / my);
               _ref4 = n.edges;
               for (_k = 0, _len3 = _ref4.length; _k < _len3; _k++) {
                 e = _ref4[_k];

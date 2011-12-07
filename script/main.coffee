@@ -219,19 +219,19 @@ class Main
                 if i++ < lim
                     setTimeout func, 50
                 else
-                    [dxl,dyl,dxg,dyg] = [0,0,0,0]
+                    [dxl,dyl,dxg,dyg] = [Infinity,Infinity,0,0]
                     for n in @graph.nodes
                         dxl = Math.min dxl, n.x
                         dyl = Math.min dyl, n.y
                         dxg = Math.max dxg, n.x
                         dyg = Math.max dyg, n.y
-                    dx = Math.abs dxl
-                    dy = Math.abs dyl
-                    mx = Math.max 1, ( dxg - dxl ) / 1000
-                    my = Math.max 1, ( dyg - dyl ) / 500
-                    console.log "#{dx}, #{dy} - #{mx} - #{my}"
+                    dx = dxl
+                    dy = dyl
+                    mx = ( dxg - dxl ) / 1000
+                    my = ( dyg - dyl ) / 500
+                    console.log "#{dx}, #{dy} - #{mx} - #{my} -"
                     for n in @graph.nodes
-                        n.move 10 + ( n.x + dx ) / mx, 50 + ( n.y + dy ) / my
+                        n.move 10 + ( n.x - dx ) / mx, 50 + ( n.y - dy ) / my
                         for e in n.edges
                             e.e.update_path( )
                     modal.destroy( )
