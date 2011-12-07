@@ -87,7 +87,7 @@
         _ref2 = APP.graph.nodes;
         for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
           v = _ref2[_j];
-          p[v.id] = lim + 1;
+          p[v.id] = lim + v.weight_to_travel(u);
         }
         p[u.id] = 0;
         e = {};

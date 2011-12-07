@@ -202,10 +202,14 @@ class Main
                 intro: "Running Kamada Kawai <span id=\"kkprog\">#{i}/#{lim}</span>"
                 okay: false
             modal.show( )
+            $( ".buttons", modal.div ).css( 'text-align', 'left' ).append "<div id=\"kkprogbar\" />"
+            $( '#kkprogbar' ).css
+                width: 0
             kamada = new KamadaKawai
             kamada.prepare( )
             func = =>
                 $( '#kkprog' ).text "#{i}/#{lim}"
+                $( '#kkprogbar' ).css "width", i * 100 / lim + "%"
                 kamada.iterate( )
 #                 for n in @graph.nodes
 #                     n.move n.x, n.y
@@ -222,10 +226,10 @@ class Main
                         dyg = Math.max dyg, n.y
                     dx = Math.abs dxl
                     dy = Math.abs dyl
-                    mx = ( dxg - dxl ) / 1000
-                    my = ( dyg - dyl ) / 500
+                    mx = Math.max 1, ( dxg - dxl ) / 1000
+                    my = Math.max 1, ( dyg - dyl ) / 500
                     for n in @graph.nodes
-                        n.move 10 + ( n.x + dx ) / mx, ( n.y + dy ) / my
+                        n.move 10 + ( n.x + dx ) / mx, 50 + ( n.y + dy ) / my
                         for e in n.edges
                             e.e.update_path( )
                     modal.destroy( )

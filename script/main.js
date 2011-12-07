@@ -140,11 +140,18 @@
           okay: false
         });
         modal.show();
+        $(".buttons", modal.div).css('text-align', 'left').append("<div id=\"kkprogbar\" />");
+        $('#kkprogbar').css({
+          height: 10,
+          width: 0,
+          background: "#0cf"
+        });
         kamada = new KamadaKawai;
         kamada.prepare();
         func = __bind(function() {
           var dx, dxg, dxl, dy, dyg, dyl, e, mx, my, n, _i, _j, _k, _len, _len2, _len3, _ref, _ref2, _ref3, _ref4;
           $('#kkprog').text("" + i + "/" + lim);
+          $('#kkprogbar').css("width", i * 100 / lim + "%");
           kamada.iterate();
           if (i++ < lim) {
             return setTimeout(func, 50);
@@ -160,12 +167,12 @@
             }
             dx = Math.abs(dxl);
             dy = Math.abs(dyl);
-            mx = (dxg - dxl) / 1000;
-            my = (dyg - dyl) / 500;
+            mx = Math.max(1, (dxg - dxl) / 1000);
+            my = Math.max(1, (dyg - dyl) / 500);
             _ref3 = this.graph.nodes;
             for (_j = 0, _len2 = _ref3.length; _j < _len2; _j++) {
               n = _ref3[_j];
-              n.move(10 + (n.x + dx) / mx, (n.y + dy) / my);
+              n.move(10 + (n.x + dx) / mx, 50 + (n.y + dy) / my);
               _ref4 = n.edges;
               for (_k = 0, _len3 = _ref4.length; _k < _len3; _k++) {
                 e = _ref4[_k];

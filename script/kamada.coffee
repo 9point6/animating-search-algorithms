@@ -76,8 +76,8 @@ class KamadaKawai
         console.log "Calculating approximate APSP to depth " + lim
         for u in APP.graph.nodes
             p = {}
-            # p[v.id] = lim + v.weight_to_travel( u ) for v in APP.graph.nodes
-            p[v.id] = lim + 1 for v in APP.graph.nodes
+            p[v.id] = lim + v.weight_to_travel( u ) for v in APP.graph.nodes
+            # p[v.id] = lim + 1 for v in APP.graph.nodes
             p[u.id] = 0
 
             e = {}
