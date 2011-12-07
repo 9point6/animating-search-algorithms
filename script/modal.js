@@ -64,7 +64,8 @@
         this.options.animations.background.out(this.wrap);
         this.options.animations.dialog.out(this.div);
         if (this.options.callback) {
-          return this.options.callback(this["return"]());
+          this.options.callback(this["return"]());
+          return this.destroy();
         }
       }, this);
       submit_hk = __bind(function(e) {
@@ -167,7 +168,6 @@
         key = elem.attr("id").substring(5);
         ret[key] = elem.val();
       }
-      console.log(ret);
       return ret;
     };
     return Modal;

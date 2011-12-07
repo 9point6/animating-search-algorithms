@@ -58,6 +58,7 @@ class KamadaKawai
                 dij = @paths[u.id][v.id]
                 if dij == Infinity then return false
                 kd = @k / ( dij * dij )
+                #kd = v.weight_to_travel( u ) / ( dij * dij )
                 @springs[u.id][v.id] = kd
                 @springs[v.id][u.id] = kd
         # console.log "// update springs"
@@ -75,7 +76,7 @@ class KamadaKawai
         for u in APP.graph.nodes
             p = {}
             p[v.id] = lim + v.weight_to_travel( u ) for v in APP.graph.nodes
-            # p[v.id] = lim + 1 for v in APP.graph.nodes
+            #p[v.id] = lim + 1 for v in APP.graph.nodes
             p[u.id] = 0
 
             e = {}

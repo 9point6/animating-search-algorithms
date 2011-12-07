@@ -10,6 +10,9 @@
   };
   AStar = (function() {
     __extends(AStar, Algorithm);
+    function AStar() {
+      AStar.__super__.constructor.apply(this, arguments);
+    }
     AStar.prototype.name = "A* Search";
     AStar.prototype.destroy = function() {
       var node, _i, _len, _ref;
@@ -20,7 +23,6 @@
       }
       return AStar.__super__.destroy.apply(this, arguments);
     };
-    function AStar() {}
     AStar.prototype.search = function() {
       this.heuristic = new Heuristics();
       return this._search();

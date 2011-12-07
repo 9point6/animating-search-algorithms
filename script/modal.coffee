@@ -48,6 +48,7 @@ class Modal
             @options.animations.dialog.out @div
             if @options.callback
                 @options.callback @return( )
+                @destroy( )
         submit_hk = ( e ) =>
             if event.which is 13
                 submit_h e
@@ -129,7 +130,6 @@ class Modal
             elem = $( elem )
             key = elem.attr( "id" ).substring 5
             ret[key] = elem.val( )
-        console.log ret
         ret
 
 this.Modal = Modal

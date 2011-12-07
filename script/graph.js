@@ -90,7 +90,7 @@
       return newedge;
     };
     Graph.prototype.do_mouse_connection = function(obj) {
-      var a, b, edge, modal, not_connected, _i, _len, _ref, _ref2;
+      var a, b, edge, not_connected, _i, _len, _ref, _ref2;
       if (this.connect_mode === false) {
         _ref = [
           {
@@ -122,7 +122,7 @@
             }
             if (not_connected) {
               this.edgenb = obj;
-              modal = new Modal({
+              this.modal = new Modal({
                 title: "New connection",
                 fields: {
                   "weight": {
@@ -156,7 +156,7 @@
                   return APP.fade_in_toolbar();
                 }, this)
               });
-              return modal.show();
+              return this.modal.show();
             } else {
               return obj.update_style("normal");
             }

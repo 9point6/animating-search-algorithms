@@ -141,7 +141,7 @@ class Graph
                             not_connected = false
                     if not_connected
                         @edgenb = obj
-                        modal = new Modal
+                        @modal = new Modal
                             title: "New connection"
                             fields:
                                 "weight":
@@ -168,7 +168,7 @@ class Graph
                                 newedge.spark( )
                                 @connect_mode = false
                                 APP.fade_in_toolbar( )
-                        modal.show( )
+                        @modal.show( )
                     else
                         obj.update_style "normal"
 

@@ -217,7 +217,7 @@ class Main
 #                     for e in n.edges
 #                         e.e.update_path( )
                 if i++ < lim
-                    setTimeout func, 50
+                    setTimeout func, 5
                 else
                     [dxl,dyl,dxg,dyg] = [Infinity,Infinity,0,0]
                     for n in @graph.nodes
@@ -227,11 +227,12 @@ class Main
                         dyg = Math.max dyg, n.y
                     dx = dxl
                     dy = dyl
-                    mx = ( dxg - dxl ) / 1000
+                    mx = ( dxg - dxl ) / 500
                     my = ( dyg - dyl ) / 500
-                    console.log "#{dx}, #{dy} - #{mx} - #{my} -"
+                    console.log "#{dxl}, #{dyl} - #{dxg} - #{dyg}"
+                    console.log "#{dx}, #{dy} - #{mx} - #{my}"
                     for n in @graph.nodes
-                        n.move 10 + ( n.x - dx ) / mx, 50 + ( n.y - dy ) / my
+                        n.move 50 + ( n.x - dx ) / Math.max( mx, my ), 50 + ( n.y - dy ) / Math.max( mx, my )
                         for e in n.edges
                             e.e.update_path( )
                     modal.destroy( )
