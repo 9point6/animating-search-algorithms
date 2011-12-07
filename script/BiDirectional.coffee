@@ -26,16 +26,22 @@ class BiDirectional extends Algorithm
     search: ->
         traverse_info_start = @alg1.traverse_info.slice(0)
         traverse_info_goal = @alg2.traverse_info.slice(0)
+        pointer = 0
 
         for item in traverse_info_start
             @traverse_info.push item
 
             for item2 in @alg2.traverse_info
+                pointer2 = 0
                 if item.id is item2.id
                     @traverse_info.push traverse_info_start
                     return
+                pointer2++
+                if pointer2 = pointer
+                    break
 
             @traverse_info.push traverse_info_goal.shift( )
+            pointer++
 
     gen_info: ->
         [
