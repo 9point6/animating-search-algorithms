@@ -8,12 +8,12 @@ class KamadaKawai
     dist: ( n1, n2 ) ->
         dx = n2.x - n1.x
         dy = n2.y - n1.y
-        d2 = ( dx * dx ) - ( dy * dy )
+        d2 = ( dx * dx ) + ( dy * dy )
 
-        while d2 < .01
-            dx = .1 * Math.random( ) + .1
-            dy = .1 * Math.random( ) + .1
-            d2 = ( dx * dx ) - ( dy * dy )
+#         while d2 < .01
+#             dx = .1 * Math.random( ) + .1
+#             dy = .1 * Math.random( ) + .1
+#             d2 = ( dx * dx ) + ( dy * dy )
 
         result = [d2, dx, dy]
 
@@ -37,9 +37,7 @@ class KamadaKawai
         for n in APP.graph.nodes
             do( n ) ->
             @partials[n.id] = @compute_partial_derivatives n
-            console.log @partials[n.id]
             delta = @calculate_delta @partials[n.id]
-            console.log delta
 
             if delta > @delta_p
                 @p = n
@@ -95,7 +93,8 @@ class KamadaKawai
                     q.push m
             @paths[u.id] = p
 
-        # console.log "// shortest paths"
+        console.log "// shortest paths"
+        console.log @paths
         @paths
 
     iterate: ( ) ->

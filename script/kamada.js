@@ -9,12 +9,7 @@
       var d2, dx, dy, result;
       dx = n2.x - n1.x;
       dy = n2.y - n1.y;
-      d2 = (dx * dx) - (dy * dy);
-      while (d2 < .01) {
-        dx = .1 * Math.random() + .1;
-        dy = .1 * Math.random() + .1;
-        d2 = (dx * dx) - (dy * dy);
-      }
+      d2 = (dx * dx) + (dy * dy);
       return result = [d2, dx, dy];
     };
     KamadaKawai.prototype.prepare = function() {
@@ -38,9 +33,7 @@
         n = _ref3[_j];
         _fn(n);
         this.partials[n.id] = this.compute_partial_derivatives(n);
-        console.log(this.partials[n.id]);
         delta = this.calculate_delta(this.partials[n.id]);
-        console.log(delta);
         _results.push(delta > this.delta_p ? (this.p = n, this.delta_p = delta) : void 0);
       }
       return _results;
@@ -108,6 +101,8 @@
         }
         this.paths[u.id] = p;
       }
+      console.log("// shortest paths");
+      console.log(this.paths);
       return this.paths;
     };
     KamadaKawai.prototype.iterate = function() {

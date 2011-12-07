@@ -142,9 +142,7 @@
         modal.show();
         $(".buttons", modal.div).css('text-align', 'left').append("<div id=\"kkprogbar\" />");
         $('#kkprogbar').css({
-          height: 10,
-          width: 0,
-          background: "#0cf"
+          width: 0
         });
         kamada = new KamadaKawai;
         kamada.prepare();
@@ -169,6 +167,7 @@
             dy = Math.abs(dyl);
             mx = Math.max(1, (dxg - dxl) / 1000);
             my = Math.max(1, (dyg - dyl) / 500);
+            console.log("" + dx + ", " + dy + " - " + mx + " - " + my);
             _ref3 = this.graph.nodes;
             for (_j = 0, _len2 = _ref3.length; _j < _len2; _j++) {
               n = _ref3[_j];

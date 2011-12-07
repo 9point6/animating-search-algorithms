@@ -228,6 +228,7 @@ class Main
                     dy = Math.abs dyl
                     mx = Math.max 1, ( dxg - dxl ) / 1000
                     my = Math.max 1, ( dyg - dyl ) / 500
+                    console.log "#{dx}, #{dy} - #{mx} - #{my}"
                     for n in @graph.nodes
                         n.move 10 + ( n.x + dx ) / mx, 50 + ( n.y + dy ) / my
                         for e in n.edges
