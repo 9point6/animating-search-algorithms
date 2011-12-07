@@ -22,9 +22,7 @@
       this.alg2.root_node = this.goal_node;
       this.alg2.goal_node = this.root_node;
       this.alg1.search();
-      this.alg2.search();
-      this.alg1.create_traverse_info();
-      return this.alg2.create_traverse_info();
+      return this.alg2.search();
     };
     BiDirectional.prototype.destroy = function() {
       var node, _i, _len, _ref;
@@ -37,6 +35,8 @@
     };
     BiDirectional.prototype.search = function() {
       var item, item2, pointer, pointer2, traverse_info_goal, traverse_info_start, _i, _j, _len, _len2, _ref, _results;
+      this.alg1.create_traverse_info();
+      this.alg2.create_traverse_info();
       traverse_info_start = this.alg1.traverse_info.slice(0);
       traverse_info_goal = this.alg2.traverse_info.slice(0);
       pointer = 0;
