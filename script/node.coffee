@@ -46,18 +46,16 @@ class Node
         @r.drag @drag_move, @drag_start, @drag_up
 
     setRoot: ->
-        if not @goal or not @root
+        if not @goal and not @root
             @root = true
             @emph = @raphael.circle @x, @y, 10
             @emph.attr
                 stroke: "#f00"
                 "stroke-width": 2
-            @
-        else
-            false
+        @
 
     setGoal: ->
-        if not @goal or not @root
+        if not @goal and not @root
             @goal = true
             @emph = @raphael.circle @x, @y, 10
             @emph.attr
@@ -65,9 +63,17 @@ class Node
                 stroke: "#0f0"
                 "stroke-width": 2
             $( @emph.node ).prependTo $( 'svg' )[0]
-            @
-        else
-            false
+        @
+
+    unsetGoalRoot: ->
+        if @goal or @root
+            @emph.remove( )
+            if @root
+                APP.current_algo.root_node = null
+                @root = false
+            if @goal
+                APP.current_algo.goal_node = null
+                @goal = false
 
     # ### point.connect( )
     # Connect this `point` to another. Connections should be made from the main
@@ -138,14 +144,23 @@ class Node
     # * Bring up a context menu to edit/remove the node
     # * Check if returning false is required
     click: ( e ) =>
-        if APP.graph.connect_mode is true
+        if APP.graph.connect_mode
             @r.animate
                 r: 10
                 fill: "#f00",
                 100
             APP.graph.do_mouse_connection @
-        else if APP.graph.remove_mode is true
+        else if APP.graph.remove_mode
             APP.graph.do_mouse_removal @
+        else if APP.root_select_mode
+            APP.current_algo.root_node = @setRoot( )
+            APP.root_select_mode = false
+            APP.goal_select_mode = true
+            APP.change_help_text "Select goal node"
+        else if APP.goal_select_mode
+            APP.current_algo.goal_node = @setGoal( )
+            APP.goal_select_mode = false
+            APP.fade_in_toolbar( )
         else
             false
 

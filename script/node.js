@@ -34,20 +34,18 @@
       this.r.drag(this.drag_move, this.drag_start, this.drag_up);
     }
     Node.prototype.setRoot = function() {
-      if (!this.goal || !this.root) {
+      if (!this.goal && !this.root) {
         this.root = true;
         this.emph = this.raphael.circle(this.x, this.y, 10);
         this.emph.attr({
           stroke: "#f00",
           "stroke-width": 2
         });
-        return this;
-      } else {
-        return false;
       }
+      return this;
     };
     Node.prototype.setGoal = function() {
-      if (!this.goal || !this.root) {
+      if (!this.goal && !this.root) {
         this.goal = true;
         this.emph = this.raphael.circle(this.x, this.y, 10);
         this.emph.attr({
@@ -56,9 +54,20 @@
           "stroke-width": 2
         });
         $(this.emph.node).prependTo($('svg')[0]);
-        return this;
-      } else {
-        return false;
+      }
+      return this;
+    };
+    Node.prototype.unsetGoalRoot = function() {
+      if (this.goal || this.root) {
+        this.emph.remove();
+        if (this.root) {
+          APP.current_algo.root_node = null;
+          this.root = false;
+        }
+        if (this.goal) {
+          APP.current_algo.goal_node = null;
+          return this.goal = false;
+        }
       }
     };
     Node.prototype.connect = function(other_node, edge) {
@@ -117,14 +126,23 @@
       }
     };
     Node.prototype.click = function(e) {
-      if (APP.graph.connect_mode === true) {
+      if (APP.graph.connect_mode) {
         this.r.animate({
           r: 10,
           fill: "#f00"
         }, 100);
         return APP.graph.do_mouse_connection(this);
-      } else if (APP.graph.remove_mode === true) {
+      } else if (APP.graph.remove_mode) {
         return APP.graph.do_mouse_removal(this);
+      } else if (APP.root_select_mode) {
+        APP.current_algo.root_node = this.setRoot();
+        APP.root_select_mode = false;
+        APP.goal_select_mode = true;
+        return APP.change_help_text("Select goal node");
+      } else if (APP.goal_select_mode) {
+        APP.current_algo.goal_node = this.setGoal();
+        APP.goal_select_mode = false;
+        return APP.fade_in_toolbar();
       } else {
         return false;
       }

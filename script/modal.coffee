@@ -1,5 +1,5 @@
 class Modal
-    options:
+    defaults:
         title: false
         intro: false
         fields: false
@@ -30,6 +30,8 @@ class Modal
                         "margin-top": -1000
 
     constructor: ( params ) ->
+        @options = {}
+        $.extend @options, @defaults
         $.extend @options, params
 
         @wrap = $( '<div />' ).addClass "modal"
@@ -44,7 +46,8 @@ class Modal
         submit_h = ( e ) =>
             @options.animations.background.out @wrap
             @options.animations.dialog.out @div
-            @options.callback @return( )
+            if @options.callback
+                @options.callback @return( )
         submit_hk = ( e ) =>
             if event.which is 13
                 submit_h e
@@ -103,7 +106,8 @@ class Modal
     show: ->
         @options.animations.background.in @wrap
         @options.animations.dialog.in @div
-        $( 'input.modal_fields' )[0].focus( )
+        if @options.fields
+            $( 'input.modal_fields' )[0].focus( )
 
     return: ->
         ret = {}

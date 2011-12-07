@@ -2,7 +2,7 @@
   var Modal;
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   Modal = (function() {
-    Modal.prototype.options = {
+    Modal.prototype.defaults = {
       title: false,
       intro: false,
       fields: false,
@@ -49,6 +49,8 @@
     };
     function Modal(params) {
       var buttons, cancel, fdiv, field, first, fr, input, k, label, llabel, submit, submit_h, submit_hk, v, _ref, _ref2, _ref3;
+      this.options = {};
+      $.extend(this.options, this.defaults);
       $.extend(this.options, params);
       this.wrap = $('<div />').addClass("modal");
       this.div = $('<div />').appendTo(this.wrap);
@@ -61,7 +63,9 @@
       submit_h = __bind(function(e) {
         this.options.animations.background.out(this.wrap);
         this.options.animations.dialog.out(this.div);
-        return this.options.callback(this["return"]());
+        if (this.options.callback) {
+          return this.options.callback(this["return"]());
+        }
       }, this);
       submit_hk = __bind(function(e) {
         if (event.which === 13) {
@@ -129,7 +133,9 @@
     Modal.prototype.show = function() {
       this.options.animations.background["in"](this.wrap);
       this.options.animations.dialog["in"](this.div);
-      return $('input.modal_fields')[0].focus();
+      if (this.options.fields) {
+        return $('input.modal_fields')[0].focus();
+      }
     };
     Modal.prototype["return"] = function() {
       var elem, key, ret, _i, _j, _len, _len2, _ref, _ref2;

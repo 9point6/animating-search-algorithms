@@ -45,6 +45,16 @@
       }
       return _results;
     };
+    Graph.prototype.remove_root_and_goal_nodes = function() {
+      var node, _i, _len, _ref, _results;
+      _ref = this.nodes;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        node = _ref[_i];
+        _results.push(node.unsetGoalRoot());
+      }
+      return _results;
+    };
     Graph.prototype.add_node = function(x, y, name, id) {
       var newnode;
       if (name == null) {

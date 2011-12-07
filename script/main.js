@@ -93,10 +93,8 @@
           opacity: 0
         }, {
           complete: function() {
-            $(this).css({
-              display: 'none'
-            });
-            return $('#runmode').css('display', 'block').animate({
+            $(this).hide();
+            return $('#runmode').show().animate({
               opacity: 100
             });
           }
@@ -106,28 +104,55 @@
         });
       }, this));
       $('#setnodes').click(__bind(function(e) {
-        return alert("not yet implemented");
+        this.graph.remove_root_and_goal_nodes();
+        this.fade_out_toolbar("Select root node", __bind(function() {
+          if (this.current_algo.root_node != null) {
+            this.current_algo.root_node.update_style("normal");
+          }
+          if (this.current_algo.goal_node != null) {
+            this.current_algo.goal_node.update_style("normal");
+          }
+          this.graph.remove_root_and_goal_nodes();
+          this.root_select_mode = false;
+          this.goal_select_mode = false;
+          return this.fade_in_toolbar();
+        }, this));
+        return this.root_select_mode = true;
       }, this));
       $('#process').click(__bind(function(e) {
-        var node, _i, _len, _ref;
-        _ref = this.graph.nodes;
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          node = _ref[_i];
-          if (node.name === "Dave") {
-            this.current_algo.root_node = node.setRoot();
-          }
-          if (node.name === "Elle") {
-            this.current_algo.goal_node = node.setGoal();
-          }
+        var modal;
+        if ((this.current_algo.root_node != null) && (this.current_algo.goal_node != null)) {
+          this.current_algo.search();
+          return this.current_algo.create_traverse_info();
+        } else {
+          modal = new Modal({
+            title: "Root or goal nodes not selected",
+            intro: "You need to set a goal and root node before running the algorithm."
+          });
+          return modal.show();
         }
-        this.current_algo.search();
-        return this.current_algo.create_traverse_info();
       }, this));
       $('#stepback').click(__bind(function(e) {
         return this.animate_obj.step_backward();
       }, this));
       $('#run').click(__bind(function(e) {
-        return this.animate_obj.traverse();
+        var modal;
+        if (this.current_algo.traverse_info[0] != null) {
+          return this.animate_obj.traverse();
+        } else {
+          modal = new Modal({
+            title: "You have not run the algorithm",
+            intro: "Press okay to run now and then animate",
+            cancel: "Cancel",
+            callback: __bind(function(r) {
+              $('#process').click();
+              if (this.current_algo.traverse_info[0] != null) {
+                return $('#run').click();
+              }
+            }, this)
+          });
+          return modal.show();
+        }
       }, this));
       $('#stop').click(__bind(function(e) {
         return this.animate_obj.stop();
@@ -143,16 +168,15 @@
       }, this));
       $('#design').click(__bind(function(e) {
         this.design_mode = true;
+        this.graph.remove_root_and_goal_nodes();
         this.animate_obj.destroy();
         this.current_algo.destroy();
         $('#runmode').animate({
           opacity: 0
         }, {
           complete: function() {
-            $(this).css({
-              display: 'none'
-            });
-            return $('#designmode').css('display', 'block').animate({
+            $(this).hide();
+            return $('#designmode').show().animate({
               opacity: 100
             });
           }
@@ -194,12 +218,15 @@
       this.graph.sort_elements();
     }
     Main.prototype.fade_out_toolbar = function(text, cancel_callback) {
-      return $('#designmode').animate({
+      var tb;
+      tb = this.design_mode ? $('#designmode') : $('#runmode');
+      return tb.animate({
         opacity: 0
       }, {
         complete: function() {
           $(this).css({
-            height: 1
+            height: 1,
+            "margin-top": -100
           });
           $('#helptext').text(text).append('<ul>\n    <li id="cancel" title="Cancel operation" />\n</ul>').animate({
             opacity: 100
@@ -215,12 +242,20 @@
         opacity: 0
       }, {
         complete: function() {
+          var tb;
           $(this).html("");
-          return $('#designmode').css('height', '').animate({
+          tb = APP.design_mode ? $('#designmode') : $('#runmode');
+          return tb.css({
+            height: '',
+            "margin-top": ''
+          }).animate({
             opacity: 100
           });
         }
       });
+    };
+    Main.prototype.change_help_text = function(text) {
+      return $('#helptext').text(text);
     };
     return Main;
   })();

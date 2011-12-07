@@ -164,26 +164,47 @@ class Main
             $( '#designmode' ).animate
                 opacity: 0,
                     complete: ->
-                        $( @ ).css
-                            display: 'none'
-                        $( '#runmode' ).css( 'display', 'block' ).animate
+                        $( @ ).hide( )
+                        $( '#runmode' ).show( ).animate
                             opacity: 100
             $( '#slideout' ).animate
                 "margin-right": 0
         $( '#setnodes' ).click ( e ) =>
-            alert "not yet implemented"
+            @graph.remove_root_and_goal_nodes( )
+            @fade_out_toolbar "Select root node", =>
+                if @current_algo.root_node?
+                    @current_algo.root_node.update_style "normal"
+                if @current_algo.goal_node?
+                    @current_algo.goal_node.update_style "normal"
+                @graph.remove_root_and_goal_nodes( )
+                @root_select_mode = false
+                @goal_select_mode = false
+                @fade_in_toolbar( )
+            @root_select_mode = true
         $( '#process' ).click ( e ) =>
-            for node in @graph.nodes
-                if node.name is "Dave"
-                    @current_algo.root_node = node.setRoot( )
-                if node.name is "Elle"
-                    @current_algo.goal_node = node.setGoal( )
-            @current_algo.search( )
-            @current_algo.create_traverse_info( )
+            if @current_algo.root_node? and @current_algo.goal_node?
+                @current_algo.search( )
+                @current_algo.create_traverse_info( )
+            else
+                modal = new Modal
+                    title: "Root or goal nodes not selected"
+                    intro: "You need to set a goal and root node before running the algorithm."
+                modal.show( )
         $( '#stepback' ).click ( e ) =>
             @animate_obj.step_backward( )
         $( '#run' ).click ( e ) =>
-            @animate_obj.traverse( )
+            if @current_algo.traverse_info[0]?
+                @animate_obj.traverse( )
+            else
+                modal = new Modal
+                    title: "You have not run the algorithm"
+                    intro: "Press okay to run now and then animate"
+                    cancel: "Cancel"
+                    callback: ( r ) =>
+                        $( '#process' ).click( )
+                        if @current_algo.traverse_info[0]?
+                            $( '#run' ).click( )
+                modal.show( )
         $( '#stop' ).click ( e ) =>
             @animate_obj.stop( )
         $( '#stepforward' ).click ( e ) =>
@@ -194,14 +215,14 @@ class Main
             alert "not yet implemented"
         $( '#design' ).click ( e ) =>
             @design_mode = true
+            @graph.remove_root_and_goal_nodes( )
             @animate_obj.destroy( )
             @current_algo.destroy( )
             $( '#runmode' ).animate
                 opacity: 0,
                     complete: ->
-                        $( @ ).css
-                            display: 'none'
-                        $( '#designmode' ).css( 'display', 'block' ).animate
+                        $( @ ).hide( )
+                        $( '#designmode' ).show( ).animate
                             opacity: 100
             $( '#slideout' ).animate
                 "margin-right": -300
@@ -247,11 +268,13 @@ class Main
     # #### TODO
     # * Convert these two methods to a single method and toggle.
     fade_out_toolbar: ( text, cancel_callback ) ->
-        $( '#designmode' ).animate
+        tb = if @design_mode then $( '#designmode' ) else $( '#runmode' )
+        tb.animate
             opacity: 0,
                 complete: ->
                     $( @ ).css
                         height: 1
+                        "margin-top": -100
                     $( '#helptext' ).text( text ).append( '''
                         <ul>
                             <li id="cancel" title="Cancel operation" />
@@ -270,7 +293,14 @@ class Main
             opacity: 0,
                 complete: ->
                     $( @ ).html ""
-                    $( '#designmode' ).css( 'height', '' ).animate
+                    tb = if APP.design_mode then $( '#designmode' ) else $( '#runmode' )
+                    tb.css(
+                        height: '',
+                        "margin-top": ''
+                    ).animate
                         opacity: 100
+
+    change_help_text: ( text ) ->
+        $( '#helptext' ).text text
 
 this.Main = Main
