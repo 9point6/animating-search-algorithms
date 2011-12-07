@@ -15,8 +15,8 @@
     }
     BiDirectional.prototype.name = "Bi-Directional Search";
     BiDirectional.prototype.pre_run = function() {
-      console.log(this.alg1);
-      console.log(this.alg2);
+      this.alg1 = new BFS();
+      this.alg2 = new BFS();
       this.alg1.root_node = this.root_node;
       this.alg1.goal_node = this.goal_node;
       this.alg2.root_node = this.goal_node;
@@ -37,8 +37,8 @@
       var item, item2, pointer, pointer2, traverse_info_goal, traverse_info_start, _i, _j, _len, _len2, _ref, _results;
       this.alg1.create_traverse_info();
       this.alg2.create_traverse_info();
-      traverse_info_start = this.alg1.traverse_info.slice(0);
-      traverse_info_goal = this.alg2.traverse_info.slice(0);
+      console.log(traverse_info_start = this.alg1.traverse_info.slice(0));
+      console.log(traverse_info_goal = this.alg2.traverse_info.slice(0));
       pointer = 0;
       _results = [];
       for (_i = 0, _len = traverse_info_start.length; _i < _len; _i++) {

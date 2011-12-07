@@ -17,8 +17,8 @@ class BiDirectional extends Algorithm
     name: "Bi-Directional Search"
 
     pre_run: ->
-        console.log @alg1
-        console.log @alg2
+        @alg1 = new BFS( )
+        @alg2 = new BFS( )
         @alg1.root_node = @root_node
         @alg1.goal_node = @goal_node
         @alg2.root_node = @goal_node
@@ -34,8 +34,8 @@ class BiDirectional extends Algorithm
     search: ->
         @alg1.create_traverse_info( )
         @alg2.create_traverse_info( )
-        traverse_info_start = @alg1.traverse_info.slice(0)
-        traverse_info_goal = @alg2.traverse_info.slice(0)
+        console.log traverse_info_start = @alg1.traverse_info.slice(0)
+        console.log traverse_info_goal = @alg2.traverse_info.slice(0)
         pointer = 0
 
         for item in traverse_info_start
