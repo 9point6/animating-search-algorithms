@@ -273,6 +273,8 @@ class Main
             @root_select_mode = true
         $( '#process' ).click ( e ) =>
             if @current_algo.root_node? and @current_algo.goal_node?
+                if @current_algo instanceof BiDirectional
+                    @current_algo.pre_run( )
                 @current_algo.search( )
                 @current_algo.create_traverse_info( )
             else

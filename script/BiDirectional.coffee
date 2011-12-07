@@ -16,7 +16,15 @@
 class BiDirectional extends Algorithm
     name: "Bi-Directional Search"
 
-    constructor: (@alg1, @alg2) ->
+    pre_run: ->
+        @alg1.root_node = @root_node
+        @alg1.goal_node = @goal_node
+        @alg2.root_node = @goal_node
+        @alg2.goal_node = @root_node
+        @alg1.search( )
+        @alg2.search( )
+        @alg1.create_traverse_info( )
+        @alg2.create_traverse_info( )
 
     destroy: ->
         for node in @explored_nodes

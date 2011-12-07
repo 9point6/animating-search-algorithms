@@ -10,11 +10,20 @@
   };
   BiDirectional = (function() {
     __extends(BiDirectional, Algorithm);
-    BiDirectional.prototype.name = "Bi-Directional Search";
-    function BiDirectional(alg1, alg2) {
-      this.alg1 = alg1;
-      this.alg2 = alg2;
+    function BiDirectional() {
+      BiDirectional.__super__.constructor.apply(this, arguments);
     }
+    BiDirectional.prototype.name = "Bi-Directional Search";
+    BiDirectional.prototype.pre_run = function() {
+      this.alg1.root_node = this.root_node;
+      this.alg1.goal_node = this.goal_node;
+      this.alg2.root_node = this.goal_node;
+      this.alg2.goal_node = this.root_node;
+      this.alg1.search();
+      this.alg2.search();
+      this.alg1.create_traverse_info();
+      return this.alg2.create_traverse_info();
+    };
     BiDirectional.prototype.destroy = function() {
       var node, _i, _len, _ref;
       _ref = this.explored_nodes;

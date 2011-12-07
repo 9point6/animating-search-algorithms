@@ -237,6 +237,9 @@
       $('#process').click(__bind(function(e) {
         var modal;
         if ((this.current_algo.root_node != null) && (this.current_algo.goal_node != null)) {
+          if (this.current_algo instanceof BiDirectional) {
+            this.current_algo.pre_run();
+          }
           this.current_algo.search();
           return this.current_algo.create_traverse_info();
         } else {
