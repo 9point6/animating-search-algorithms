@@ -110,7 +110,6 @@ class Graph
         @edgecount++
         @edgewsum += parseInt weight
         @edgewavg = @edgewsum / @edgecount
-        console.log "#{@edgewavg} = #{@edgewsum} / #{@edgecount} -"
         @sort_elements( )
         newedge
 
@@ -162,7 +161,7 @@ class Graph
                                         "-1": "'#{@edgenb.name}' to '#{@edgena.name}'"
                                         "1": "'#{@edgena.name}' to '#{@edgenb.name}'"
                             callback: ( r ) =>
-                                newedge = @connect @edgena, @edgenb, r.weight, r.direction
+                                newedge = @connect @edgena, @edgenb, parseInt r.weight, parseInt r.direction
                                 @edgena.r.animate
                                     r: 5
                                     fill: "#000",

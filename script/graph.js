@@ -91,7 +91,6 @@
       this.edgecount++;
       this.edgewsum += parseInt(weight);
       this.edgewavg = this.edgewsum / this.edgecount;
-      console.log("" + this.edgewavg + " = " + this.edgewsum + " / " + this.edgecount + " -");
       this.sort_elements();
       return newedge;
     };
@@ -148,7 +147,7 @@
                 },
                 callback: __bind(function(r) {
                   var newedge;
-                  newedge = this.connect(this.edgena, this.edgenb, r.weight, r.direction);
+                  newedge = this.connect(this.edgena, this.edgenb, parseInt(r.weight, parseInt(r.direction)));
                   this.edgena.r.animate({
                     r: 5,
                     fill: "#000"
