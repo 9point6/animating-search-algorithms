@@ -17,6 +17,8 @@ class BiDirectional extends Algorithm
     name: "Bi-Directional Search"
 
     pre_run: ->
+        console.log @alg1
+        console.log @alg2
         @alg1.root_node = @root_node
         @alg1.goal_node = @goal_node
         @alg2.root_node = @goal_node

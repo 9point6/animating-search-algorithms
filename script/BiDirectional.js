@@ -15,6 +15,8 @@
     }
     BiDirectional.prototype.name = "Bi-Directional Search";
     BiDirectional.prototype.pre_run = function() {
+      console.log(this.alg1);
+      console.log(this.alg2);
       this.alg1.root_node = this.root_node;
       this.alg1.goal_node = this.goal_node;
       this.alg2.root_node = this.goal_node;
