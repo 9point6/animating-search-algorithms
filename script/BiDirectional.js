@@ -25,9 +25,10 @@
       return BiDirectional.__super__.destroy.apply(this, arguments);
     };
     BiDirectional.prototype.search = function() {
-      var item, item2, traverse_info_goal, traverse_info_start, _i, _j, _len, _len2, _ref, _results;
+      var item, item2, pointer, pointer2, traverse_info_goal, traverse_info_start, _i, _j, _len, _len2, _ref, _results;
       traverse_info_start = this.alg1.traverse_info.slice(0);
       traverse_info_goal = this.alg2.traverse_info.slice(0);
+      pointer = 0;
       _results = [];
       for (_i = 0, _len = traverse_info_start.length; _i < _len; _i++) {
         item = traverse_info_start[_i];
@@ -35,12 +36,18 @@
         _ref = this.alg2.traverse_info;
         for (_j = 0, _len2 = _ref.length; _j < _len2; _j++) {
           item2 = _ref[_j];
+          pointer2 = 0;
           if (item.id === item2.id) {
             this.traverse_info.push(traverse_info_start);
             return;
           }
+          pointer2++;
+          if (pointer2 = pointer) {
+            break;
+          }
         }
-        _results.push(this.traverse_info.push(traverse_info_goal.shift()));
+        this.traverse_info.push(traverse_info_goal.shift());
+        _results.push(pointer++);
       }
       return _results;
     };
