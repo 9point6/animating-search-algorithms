@@ -20,9 +20,7 @@
       }
       return AStar.__super__.destroy.apply(this, arguments);
     };
-    function AStar() {
-      this.heuristic_choice = 0;
-    }
+    function AStar() {}
     AStar.prototype.search = function() {
       this.heuristic = new Heuristics();
       return this._search();
@@ -37,7 +35,7 @@
         return;
       } else {
         this.root_node.costSoFar = 0;
-        this.root_node.estimatedTotalCost = this.root_node.costSoFar + this.heuristic.choice(this.heuristic_choice, this.root_node, this.goal_node);
+        this.root_node.estimatedTotalCost = 0 + this.root_node.costSoFar + this.heuristic.choice(this.heuristic_choice, this.root_node, this.goal_node);
         openList.push(this.root_node);
       }
       _results = [];

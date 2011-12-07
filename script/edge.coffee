@@ -53,7 +53,7 @@ class Edge
         @di.click @click
 
     visitable: ( node ) ->
-        if @direction is 0
+        if @direction is "0"
             true
         else
             if @direction > 0
