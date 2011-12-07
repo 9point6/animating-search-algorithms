@@ -13,9 +13,6 @@ class AStar extends Algorithm
             delete node.explored
         super
 
-    constructor: ->
-        @heuristic_choice = 0
-
     search: ->
         # Create the heuristic object for this particular search
         @heuristic = new Heuristics( )
@@ -37,7 +34,7 @@ class AStar extends Algorithm
             # call the heuristic to estimate the total cost to the goal node
             # and add root_node to the list of open nodes
             @root_node.costSoFar = 0
-            @root_node.estimatedTotalCost = @root_node.costSoFar + @heuristic.choice @heuristic_choice, @root_node, @goal_node
+            @root_node.estimatedTotalCost = 0 + @root_node.costSoFar + @heuristic.choice @heuristic_choice, @root_node, @goal_node
             openList.push @root_node
 
         while openList.length isnt 0

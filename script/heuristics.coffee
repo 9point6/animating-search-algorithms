@@ -27,8 +27,8 @@ class Heuristics
     # #### TODO
     choice: (num_choice, node_from, node_to) ->
         switch ( num_choice )
-            when 0 then return 0
-            when 1 then @euclidean_distance node_from, node_to
+            when "0" then return 0
+            when "1" then @euclidean_distance node_from, node_to
 
     # ### Heuristics.euclidean_distance( )
     # Works out the euclidean distance between two points
