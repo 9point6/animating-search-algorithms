@@ -32,6 +32,7 @@ class Animate
         # reached the last element of the array already, then run the code.
         if @algorithm.traverse_info? and @pointer < @algorithm.traverse_info.length
 
+            goal_reached = false
             # create local variable for storing the array of points/connections
             @traverse_info = @algorithm.traverse_info
             # create a variable for storing the element the pointer represents
@@ -40,6 +41,7 @@ class Animate
             if current_item is @algorithm.goal_node
                 # update the current item pointed at to goal node animation
                 current_item.update_style "goal"
+                goal_reached = true
             else
                 # update the current item pointed at to "viewing"
                 current_item.update_style "viewing"
@@ -51,7 +53,7 @@ class Animate
                     # This stops overwriting the style of the previous element in the
                     # traverse_info array as it should be the only connection in the
                     # "viewing" state.
-                    if edge.e.style is "normal" and edge.e.visitable current_item
+                    if edge.e.style is "normal" and not goal_reached and edge.e.visitable current_item
                         edge.e.update_style "potential"
 
             # the current_item is not the first element in the array
@@ -98,7 +100,7 @@ class Animate
                         console.log("creating path")
                         @create_path (@pointer / 2)
                         for edge in current_item.edges
-                            if edge.n isnt @traverse_info[@pointer-2] and edge.e isnt last_viewed
+                            if edge.n isnt @traverse_info[@pointer-2] and edge.e isnt last_viewed and not goal_reached
                                 edge.e.update_style "potential"
 
                     if current_item instanceof Edge
