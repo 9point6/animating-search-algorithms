@@ -52,7 +52,7 @@
                     edge.e.update_style("normal");
                   }
                 }
-                if (edge.e.style === "potential" && this.algorithm.name !== "A* Search" && this.algorithm.name !== "Bi-Directional Search") {
+                if (edge.e.style === "potential") {
                   edge.e.update_style("normal");
                 }
               }

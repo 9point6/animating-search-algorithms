@@ -38,12 +38,15 @@
       } else {
         this.root_node.costSoFar = 0;
         this.root_node.estimatedTotalCost = 0 + this.root_node.costSoFar + this.heuristic.choice(this.heuristic_choice, this.root_node, this.goal_node);
+        console.log(this.heuristic.choice(this.heuristic_choice, this.root_node, this.goal_node));
+        console.log("heuristic_choice " + this.heuristic_choice);
+        console.log(this.root_node);
+        console.log(this.goal_node);
         openList.push(this.root_node);
       }
       _results = [];
       while (openList.length !== 0) {
         currentNode = this.getSmallestElement(openList);
-        console.log("Current Node: " + currentNode.name);
         this.explored_nodes.push(currentNode);
         if (currentNode === this.goal_node) {
           break;
@@ -71,6 +74,8 @@
               endNode.costSoFar = potentialCost;
               endNode.estimatedTotalCost = endNode.costSoFar + this.heuristic.choice(this.heuristic_choice, endNode, this.goal_node);
               openList.push(endNode);
+              console.log("openList = ");
+              console.log(openList);
             }
           }
         }

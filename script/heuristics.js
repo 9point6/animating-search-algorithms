@@ -3,10 +3,11 @@
   Heuristics = (function() {
     function Heuristics() {}
     Heuristics.prototype.choice = function(num_choice, node_from, node_to) {
+      num_choice = parseInt(num_choice);
       switch (num_choice) {
-        case "0":
+        case 0:
           return 0;
-        case "1":
+        case 1:
           return this.euclidean_distance(node_from, node_to);
       }
     };

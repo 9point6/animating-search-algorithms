@@ -84,10 +84,10 @@ class Animate
                             # change all of its connections back to normal unless it
                             # is an AStar algorithm. AStar works by keeping previous
                             # connections as "potentials" in an open set.
-                            if edge.e.style is "potential" and
-                                @algorithm.name isnt "A* Search" and
-                                    @algorithm.name isnt "Bi-Directional Search"
-                                        edge.e.update_style "normal"
+                            if edge.e.style is "potential"
+                                #@algorithm.name isnt "A* Search" and
+                                #@algorithm.name isnt "Bi-Directional Search"
+                                edge.e.update_style "normal"
 
                 if @algorithm.path_edges?
                     #else

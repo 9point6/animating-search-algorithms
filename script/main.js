@@ -69,6 +69,7 @@
             li.append(combo = $("<select id=\"algoheuristic\">"));
             combo.append("<option selected=\"selected\" value=\"0\">None</option>");
             combo.append("<option value=\"1\">Euclidian</option>");
+            this.current_algo.heuristic_choice = 0;
             combo.change(__bind(function(e) {
               if (this.current_algo) {
                 return this.current_algo.heuristic_choice = $(e.target).val();

@@ -145,6 +145,7 @@ class Main
                     li.append combo = $( "<select id=\"algoheuristic\">" )
                     combo.append "<option selected=\"selected\" value=\"0\">None</option>"
                     combo.append "<option value=\"1\">Euclidian</option>"
+                    @current_algo.heuristic_choice = 0
                     combo.change ( e ) =>
                         if @current_algo
                             @current_algo.heuristic_choice = $( e.target ).val( )
