@@ -113,6 +113,11 @@ class Modal
     destroy: ->
         @options.animations.background.out @wrap
         @options.animations.dialog.out @div
+        func = =>
+            @div.remove( )
+            @wrap.remove( )
+            delete @
+        setTimeout func, 250
 
     return: ->
         ret = {}

@@ -140,8 +140,15 @@
       }
     };
     Modal.prototype.destroy = function() {
+      var func;
       this.options.animations.background.out(this.wrap);
-      return this.options.animations.dialog.out(this.div);
+      this.options.animations.dialog.out(this.div);
+      func = __bind(function() {
+        this.div.remove();
+        this.wrap.remove();
+        return delete this;
+      }, this);
+      return setTimeout(func, 250);
     };
     Modal.prototype["return"] = function() {
       var elem, key, ret, _i, _j, _len, _len2, _ref, _ref2;
