@@ -86,10 +86,11 @@ class Modal
         buttons = $( "<div class=\"buttons\" />" )
         @div.append buttons
 
-        submit = $( "<button type=\"button\">#{@options.okay}</button>" )
-        buttons.append submit
-        submit.click submit_h
-        submit.keypress submit_hk
+        if @options.okay
+            submit = $( "<button type=\"button\">#{@options.okay}</button>" )
+            buttons.append submit
+            submit.click submit_h
+            submit.keypress submit_hk
 
         if @options.cancel
             cancel = $( "<button type=\"button\">#{@options.cancel}</button>" )
@@ -108,6 +109,10 @@ class Modal
         @options.animations.dialog.in @div
         if @options.fields
             $( 'input.modal_fields' )[0].focus( )
+
+    destroy: ->
+        @options.animations.background.out @wrap
+        @options.animations.dialog.out @div
 
     return: ->
         ret = {}

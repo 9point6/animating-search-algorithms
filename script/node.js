@@ -77,6 +77,17 @@
         }
       }
     };
+    Node.prototype.weight_to_travel = function(other_node) {
+      var e, _i, _len, _ref;
+      _ref = this.edges;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        e = _ref[_i];
+        if (e.n.id === other_node.id) {
+          return e.e.weight;
+        }
+      }
+      return 1;
+    };
     Node.prototype.connect = function(other_node, edge) {
       return this.edges.push({
         n: other_node,

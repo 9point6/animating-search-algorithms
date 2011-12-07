@@ -76,6 +76,12 @@ class Node
                 APP.current_algo.goal_node = null
                 @goal = false
 
+    weight_to_travel: ( other_node ) ->
+        for e in @edges
+            if e.n.id is other_node.id
+                return e.e.weight
+        1
+
     # ### point.connect( )
     # Connect this `point` to another. Connections should be made from the main
     # app object. Used to allow easy navigation of connections from each node.

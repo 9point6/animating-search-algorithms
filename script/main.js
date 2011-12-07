@@ -6,7 +6,7 @@
       var alg, algo, i, _i, _len;
       this.design_mode = true;
       this.graph = new Graph();
-      $('body').append('<div id="toolbar">\n    <h1>search<span>r</span></h1>\n    <ul id="designmode">\n        <li id="new" title="New Graph" />\n        <li id="save" title="Save Graph" />\n        <li id="load" title="Load Graph" />\n        <li id="add" title="Add a node" />\n        <li id="remove" title="Remove a node" />\n        <li id="connect" title="Connect two nodes" />\n        <li id="search" title="Switch to search mode" />\n    </ul>\n    <ul id="runmode">\n        <li id="setnodes" title="Set root and goal nodes" />\n        <li id="process" title="Process Graph" />\n        <li id="stepback" title="Step Back through animation" />\n        <li id="run" title="Run Animation" />\n        <li id="stop" title="Stop Animation" />\n        <li id="stepforward" title="Step Forward through animation" />\n        <li id="reset" title="Reset the animation" />\n        <li id="settings" title="Settings Dialog" />\n        <li id="design" title="Switch to design mode" />\n    </ul>\n    <div id="helptext" />\n</div>\n<div id="slidewrap">\n    <a id="slidetoggle">\n        <span>&#9679;</span>\n    </a>\n    <div id="slideout">\n        <h2 id="title">Algorithm</h2>\n        <ul id="list">\n            <li>\n                <h3>Algorithm:</h3>\n                <select id="algoselection" />\n            </li>\n            <li>\n                <h3>Completeness:</h3>\n                <p id="algodata_completeness">Blah</p>\n            </li>\n            <li>\n                <h3>Time Complexity:</h3>\n                <p id="algodata_time">Blah</p>\n            </li>\n            <li>\n                <h3>Space Complexity:</h3>\n                <p id="algodata_space">Blah</p>\n            </li>\n            <li>\n                <h3>Optimality:</h3>\n                <p id="algodata_optimality">Blah</p>\n            </li>\n        </ul>\n    </div>\n</div>\n<div id="algohelptext">Click for algorithm properties</div>\n<div id="copyright">\n    <a href="doc">Project Home</a>\n<div>');
+      $('body').append('<div id="toolbar">\n    <h1>search<span>r</span></h1>\n    <ul id="designmode">\n        <li id="new" title="New Graph" />\n        <li id="save" title="Save Graph" />\n        <li id="load" title="Load Graph" />\n        <li id="add" title="Add a node" />\n        <li id="remove" title="Remove a node" />\n        <li id="connect" title="Connect two nodes" />\n        <li id="kamada" title="Run Kamada Kawai graph layout algorithm" />\n        <li id="search" title="Switch to search mode" />\n    </ul>\n    <ul id="runmode">\n        <li id="setnodes" title="Set root and goal nodes" />\n        <li id="process" title="Process Graph" />\n        <li id="stepback" title="Step Back through animation" />\n        <li id="run" title="Run Animation" />\n        <li id="stop" title="Stop Animation" />\n        <li id="stepforward" title="Step Forward through animation" />\n        <li id="reset" title="Reset the animation" />\n        <li id="settings" title="Settings Dialog" />\n        <li id="design" title="Switch to design mode" />\n    </ul>\n    <div id="helptext" />\n</div>\n<div id="slidewrap">\n    <a id="slidetoggle">\n        <span>&#9679;</span>\n    </a>\n    <div id="slideout">\n        <h2 id="title">Algorithm</h2>\n        <ul id="list">\n            <li>\n                <h3>Algorithm:</h3>\n                <select id="algoselection" />\n            </li>\n            <li>\n                <h3>Completeness:</h3>\n                <p id="algodata_completeness">Blah</p>\n            </li>\n            <li>\n                <h3>Time Complexity:</h3>\n                <p id="algodata_time">Blah</p>\n            </li>\n            <li>\n                <h3>Space Complexity:</h3>\n                <p id="algodata_space">Blah</p>\n            </li>\n            <li>\n                <h3>Optimality:</h3>\n                <p id="algodata_optimality">Blah</p>\n            </li>\n        </ul>\n    </div>\n</div>\n<div id="algohelptext">Click for algorithm properties</div>\n<div id="copyright">\n    <a href="doc">Project Home</a>\n<div>');
       $('#helptext').css({
         opacity: 0
       });
@@ -43,7 +43,7 @@
         return $('#algohelptext').css("opacity", 0);
       });
       $('#algoselection').change(__bind(function(e) {
-        var a, alg, algo, combo, extras, goal, i, j, li, root, _i, _len;
+        var a, al, alg, combo, extras, goal, i, j, li, root, _i, _len;
         if (this.current_algo) {
           root = this.current_algo.root_node;
           goal = this.current_algo.goal_node;
@@ -82,10 +82,10 @@
               li.append(combo = $("<select id=\"algobidi" + i + "\">"));
               j = 0;
               for (_i = 0, _len = ALGORITHMS.length; _i < _len; _i++) {
-                algo = ALGORITHMS[_i];
-                a = new algo();
+                al = ALGORITHMS[_i];
+                a = new al();
                 if (!(a instanceof BiDirectional)) {
-                  combo.append("<option id=\"bd" + i + "-alg" + algo.name + "\" value=\"" + (j++) + "\">" + a.name + "</option>");
+                  combo.append("<option id=\"bd" + i + "-alg" + al.name + "\" value=\"" + (j++) + "\">" + a.name + "</option>");
                   combo.change(__bind(function(e) {
                     return false;
                   }, this));
@@ -129,6 +129,53 @@
       }, this));
       $('#connect').click(__bind(function(e) {
         return this.graph.do_mouse_connection();
+      }, this));
+      $('#kamada').click(__bind(function(e) {
+        var func, i, kamada, lim, modal;
+        i = 0;
+        lim = prompt("how many iterations", 500);
+        modal = new Modal({
+          title: "Please wait",
+          intro: "Running Kamada Kawai <span id=\"kkprog\">" + i + "/" + lim + "</span>",
+          okay: false
+        });
+        modal.show();
+        kamada = new KamadaKawai;
+        kamada.prepare();
+        func = __bind(function() {
+          var dx, dxg, dxl, dy, dyg, dyl, e, mx, my, n, _i, _j, _k, _len, _len2, _len3, _ref, _ref2, _ref3, _ref4;
+          $('#kkprog').text("" + i + "/" + lim);
+          kamada.iterate();
+          if (i++ < lim) {
+            return setTimeout(func, 50);
+          } else {
+            _ref = [0, 0, 0, 0], dxl = _ref[0], dyl = _ref[1], dxg = _ref[2], dyg = _ref[3];
+            _ref2 = this.graph.nodes;
+            for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
+              n = _ref2[_i];
+              dxl = Math.min(dxl, n.x);
+              dyl = Math.min(dyl, n.y);
+              dxg = Math.max(dxg, n.x);
+              dyg = Math.max(dyg, n.y);
+            }
+            dx = Math.abs(dxl);
+            dy = Math.abs(dyl);
+            mx = (dxg - dxl) / 1000;
+            my = (dyg - dyl) / 500;
+            _ref3 = this.graph.nodes;
+            for (_j = 0, _len2 = _ref3.length; _j < _len2; _j++) {
+              n = _ref3[_j];
+              n.move(10 + (n.x + dx) / mx, (n.y + dy) / my);
+              _ref4 = n.edges;
+              for (_k = 0, _len3 = _ref4.length; _k < _len3; _k++) {
+                e = _ref4[_k];
+                e.e.update_path();
+              }
+            }
+            return modal.destroy();
+          }
+        }, this);
+        return func();
       }, this));
       $('#search').click(__bind(function(e) {
         this.design_mode = false;

@@ -29,6 +29,7 @@ class Graph
     constructor: ->
         [@nodes,@edges] = [[],[]]
         @nodes_id_map = {}
+        @nodecount = 0
 
         # Store the window height and width. `@` is an alias for `this.`
         @canvas_dimensions( )
@@ -89,6 +90,7 @@ class Graph
             newnode.id = id
         @nodes_id_map[newnode.id] = newnode
         @nodes.push newnode
+        @nodecount++
         newnode
 
     # ### graph.connect( )

@@ -114,10 +114,12 @@
       }
       buttons = $("<div class=\"buttons\" />");
       this.div.append(buttons);
-      submit = $("<button type=\"button\">" + this.options.okay + "</button>");
-      buttons.append(submit);
-      submit.click(submit_h);
-      submit.keypress(submit_hk);
+      if (this.options.okay) {
+        submit = $("<button type=\"button\">" + this.options.okay + "</button>");
+        buttons.append(submit);
+        submit.click(submit_h);
+        submit.keypress(submit_hk);
+      }
       if (this.options.cancel) {
         cancel = $("<button type=\"button\">" + this.options.cancel + "</button>");
         buttons.append(cancel);
@@ -136,6 +138,10 @@
       if (this.options.fields) {
         return $('input.modal_fields')[0].focus();
       }
+    };
+    Modal.prototype.destroy = function() {
+      this.options.animations.background.out(this.wrap);
+      return this.options.animations.dialog.out(this.div);
     };
     Modal.prototype["return"] = function() {
       var elem, key, ret, _i, _j, _len, _len2, _ref, _ref2;

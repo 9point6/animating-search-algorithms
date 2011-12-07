@@ -36,6 +36,7 @@ class Main
                 <li id="add" title="Add a node" />
                 <li id="remove" title="Remove a node" />
                 <li id="connect" title="Connect two nodes" />
+                <li id="kamada" title="Run Kamada Kawai graph layout algorithm" />
                 <li id="search" title="Switch to search mode" />
             </ul>
             <ul id="runmode">
@@ -153,10 +154,10 @@ class Main
                         li.append "<h3>Algorithm #{i}:</h3>"
                         li.append combo = $( "<select id=\"algobidi#{i}\">" )
                         j = 0
-                        for algo in ALGORITHMS
-                            a = new algo( )
+                        for al in ALGORITHMS
+                            a = new al( )
                             if not ( a instanceof BiDirectional )
-                                combo.append "<option id=\"bd#{i}-alg#{algo.name}\" value=\"#{j++}\">#{a.name}</option>"
+                                combo.append "<option id=\"bd#{i}-alg#{al.name}\" value=\"#{j++}\">#{a.name}</option>"
                                 combo.change ( e ) =>
                                     # TODO: Change in bidi
                                     false
@@ -193,6 +194,43 @@ class Main
             @graph.do_mouse_removal( )
         $( '#connect' ).click ( e ) =>
             @graph.do_mouse_connection( )
+        $( '#kamada' ).click ( e ) =>
+            i = 0
+            lim = prompt "how many iterations", 500
+            modal = new Modal
+                title: "Please wait"
+                intro: "Running Kamada Kawai <span id=\"kkprog\">#{i}/#{lim}</span>"
+                okay: false
+            modal.show( )
+            kamada = new KamadaKawai
+            kamada.prepare( )
+            func = =>
+                $( '#kkprog' ).text "#{i}/#{lim}"
+                kamada.iterate( )
+#                 for n in @graph.nodes
+#                     n.move n.x, n.y
+#                     for e in n.edges
+#                         e.e.update_path( )
+                if i++ < lim
+                    setTimeout func, 50
+                else
+                    [dxl,dyl,dxg,dyg] = [0,0,0,0]
+                    for n in @graph.nodes
+                        dxl = Math.min dxl, n.x
+                        dyl = Math.min dyl, n.y
+                        dxg = Math.max dxg, n.x
+                        dyg = Math.max dyg, n.y
+                    dx = Math.abs dxl
+                    dy = Math.abs dyl
+                    mx = ( dxg - dxl ) / 1000
+                    my = ( dyg - dyl ) / 500
+                    for n in @graph.nodes
+                        n.move 10 + ( n.x + dx ) / mx, ( n.y + dy ) / my
+                        for e in n.edges
+                            e.e.update_path( )
+                    modal.destroy( )
+
+            func( )
         $( '#search' ).click ( e ) =>
             @design_mode = false
             @current_algo = new ALGORITHMS[$( '#algoselection' ).prop "value"]

@@ -9,6 +9,7 @@
       this.do_mouse_connection = __bind(this.do_mouse_connection, this);      var _ref;
       _ref = [[], []], this.nodes = _ref[0], this.edges = _ref[1];
       this.nodes_id_map = {};
+      this.nodecount = 0;
       this.canvas_dimensions();
       $(window).resize(__bind(function(e) {
         this.canvas_dimensions();
@@ -72,6 +73,7 @@
       }
       this.nodes_id_map[newnode.id] = newnode;
       this.nodes.push(newnode);
+      this.nodecount++;
       return newnode;
     };
     Graph.prototype.connect = function(nodea, nodeb, weight, direction) {
