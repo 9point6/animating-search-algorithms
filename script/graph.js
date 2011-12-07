@@ -45,13 +45,19 @@
       }
       return _results;
     };
-    Graph.prototype.remove_root_and_goal_nodes = function() {
+    Graph.prototype.remove_root_and_goal_nodes = function(root, goal) {
       var node, _i, _len, _ref, _results;
+      if (root == null) {
+        root = true;
+      }
+      if (goal == null) {
+        goal = true;
+      }
       _ref = this.nodes;
       _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         node = _ref[_i];
-        _results.push(node.unsetGoalRoot());
+        _results.push(node.unsetGoalRoot(root, goal));
       }
       return _results;
     };

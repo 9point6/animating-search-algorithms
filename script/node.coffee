@@ -65,13 +65,14 @@ class Node
             $( @emph.node ).prependTo $( 'svg' )[0]
         @
 
-    unsetGoalRoot: ->
+    unsetGoalRoot: ( root = true, goal = true ) ->
         if @goal or @root
-            @emph.remove( )
-            if @root
+            if @root and root
+                @emph.remove( )
                 APP.current_algo.root_node = null
                 @root = false
-            if @goal
+            if @goal and goal
+                @emph.remove( )
                 APP.current_algo.goal_node = null
                 @goal = false
 
@@ -162,15 +163,27 @@ class Node
             APP.goal_select_mode = false
             APP.fade_in_toolbar( )
         else
-            if APP.design_mode and not @move_mode
+            if not @move_mode
                 if APP.context
                     APP.context.destroy( )
-                APP.context = new Context
-                    items:
-                        'Remove': =>
-                            @remove( )
-                    x: e.pageX
-                    y: e.pageY
+                if APP.design_mode
+                    APP.context = new Context
+                        items:
+                            'Remove': =>
+                                @remove( )
+                        x: e.pageX
+                        y: e.pageY
+                else
+                    APP.context = new Context
+                        items:
+                            'Set as Root Node': =>
+                                APP.graph.remove_root_and_goal_nodes( true, false )
+                                APP.current_algo.root_node = @setRoot( )
+                            'Set as Goal Node': =>
+                                APP.graph.remove_root_and_goal_nodes( false, true )
+                                APP.current_algo.goal_node = @setGoal( )
+                        x: e.pageX
+                        y: e.pageY
             @move_mode = false
 
     # ### point.drag_start( )

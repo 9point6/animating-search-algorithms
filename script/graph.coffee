@@ -70,9 +70,9 @@ class Graph
         for edge in @edges
             edge.update_style "normal"
 
-    remove_root_and_goal_nodes: ->
+    remove_root_and_goal_nodes: ( root = true, goal = true ) ->
         for node in @nodes
-            node.unsetGoalRoot( )
+            node.unsetGoalRoot( root, goal )
 
     # ### graph.add_point( )
     # Adds a node to the canvas.

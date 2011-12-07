@@ -57,14 +57,21 @@
       }
       return this;
     };
-    Node.prototype.unsetGoalRoot = function() {
+    Node.prototype.unsetGoalRoot = function(root, goal) {
+      if (root == null) {
+        root = true;
+      }
+      if (goal == null) {
+        goal = true;
+      }
       if (this.goal || this.root) {
-        this.emph.remove();
-        if (this.root) {
+        if (this.root && root) {
+          this.emph.remove();
           APP.current_algo.root_node = null;
           this.root = false;
         }
-        if (this.goal) {
+        if (this.goal && goal) {
+          this.emph.remove();
           APP.current_algo.goal_node = null;
           return this.goal = false;
         }
@@ -144,19 +151,36 @@
         APP.goal_select_mode = false;
         return APP.fade_in_toolbar();
       } else {
-        if (APP.design_mode && !this.move_mode) {
+        if (!this.move_mode) {
           if (APP.context) {
             APP.context.destroy();
           }
-          APP.context = new Context({
-            items: {
-              'Remove': __bind(function() {
-                return this.remove();
-              }, this)
-            },
-            x: e.pageX,
-            y: e.pageY
-          });
+          if (APP.design_mode) {
+            APP.context = new Context({
+              items: {
+                'Remove': __bind(function() {
+                  return this.remove();
+                }, this)
+              },
+              x: e.pageX,
+              y: e.pageY
+            });
+          } else {
+            APP.context = new Context({
+              items: {
+                'Set as Root Node': __bind(function() {
+                  APP.graph.remove_root_and_goal_nodes(true, false);
+                  return APP.current_algo.root_node = this.setRoot();
+                }, this),
+                'Set as Goal Node': __bind(function() {
+                  APP.graph.remove_root_and_goal_nodes(false, true);
+                  return APP.current_algo.goal_node = this.setGoal();
+                }, this)
+              },
+              x: e.pageX,
+              y: e.pageY
+            });
+          }
         }
         return this.move_mode = false;
       }
