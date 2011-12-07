@@ -68,10 +68,47 @@ class Animate
                         # is an AStar algorithm. AStar works by keeping previous
                         # connections as "potentials" in an open set.
                         for edge in previous_item.edges
+                            if @algorithm.path_edges? and edge.e.style is "potential"
+                                is_visited = false
+                                for i in [0...@pointer]
+                                    if @traverse_info[i] is edge.e
+                                        is_visited = true
+                                        break
+                                if is_visited is true
+                                    edge.e.update_style "visited"
+                                else
+                                    edge.e.update_style "normal"
+
+                            # change all of its connections back to normal unless it
+                            # is an AStar algorithm. AStar works by keeping previous
+                            # connections as "potentials" in an open set.
                             if edge.e.style is "potential" and
                                 @algorithm.name isnt "A* Search" and
                                     @algorithm.name isnt "Bi-Directional Search"
                                         edge.e.update_style "normal"
+            
+                if @algorithm.path_edges?
+                    #else
+                    #    @create_path ((@pointer+1) /2)
+                    if current_item instanceof Node
+                        if previous_item instanceof Edge
+                            console.log("resetting path")
+                            @reset_path()
+                        last_viewed = previous_item
+                        console.log("creating path")
+                        @create_path (@pointer / 2)
+                        for edge in current_item.edges
+                            if edge.n isnt @traverse_info[@pointer-2] and edge.e isnt last_viewed
+                                edge.e.update_style "potential"
+                    
+                    if current_item instanceof Edge
+                        console.log(current_item.nodea)
+                        console.log(current_item.nodeb)
+                        if current_item.nodea isnt previous_item and current_item.nodeb isnt previous_item
+                            @reset_path()
+                            @create_path((@pointer+1)/2)
+                            current_item.update_style "viewing"
+                
 
             # increase the pointer value
             @pointer++
@@ -117,10 +154,33 @@ class Animate
                 # if the previous item is a point change all of its connections
                 # to now be in a "potential" style.
                 if previous_item instanceof Node
+                    if @algorithm.path_edges?
+                        @reset_path()
+                        @create_path((@pointer-1) / 2)
                     for edge in previous_item.edges
                         if edge.e.style isnt "visited"
-                            edge.e.update_style "potential"
+                            if edge.e.style is "path"
+                            else
+                                edge.e.update_style "potential"
+    
 
+    create_path: (pointer) ->
+        path = @algorithm.path_edges[pointer]
+        console.log(pointer)
+        console.log(path)
+        for edge in path
+            if edge.style isnt "potential"
+                edge.update_style "path"
+
+
+    reset_path: ->
+        console.log("really resetting now...")
+        for edge in APP.graph.edges
+            #console.log(edge)
+            if edge.style is "path"
+                edge.update_style "visited"
+
+    
     # ### animate.traverse( )
     # Loop through the given array, animating each given
     # node and connection in order.

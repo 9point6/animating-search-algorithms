@@ -269,5 +269,11 @@ class Edge
                     "stroke-width": 3,
                     anim_speed
                 @style = "visited"
+            when "path"
+                @r.animate
+                    stroke: "#CDAD00"
+                    "stroke-width": 5,
+                    anim_speed
+                    @style = "path"
 
 this.Edge = Edge

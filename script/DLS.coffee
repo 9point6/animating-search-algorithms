@@ -13,26 +13,35 @@ class DLS extends Algorithm
             node.explored = false
 
         @explored_nodes = []
-        @traverse_info = []
-        @traverse_info.push @root_node
         @todo_list = []
-        @_search @root_node, 4, null
+        @path_info = []
+        @path_edges = []
+        @is_found = false
+        @traverse_info = []
+        @_search @root_node, 3, @root_node
+        @create_path_info()
 
     _search: ( node, depth, prev_node ) ->
-        if depth > 0
+        if (depth >= 0)
             #if not node.explored
             #@explored_nodes.push node
 
             #node.explored = true
+            @explored_nodes.push node
+            @path_info.push prev_node
+            @traverse_info.push node
 
             if node is @goal_node
+                @is_found = true
                 return node
-
+            
             for neighbour in node.edges
-                if neighbour.p isnt prev_node
-                    @traverse_info.push neighbour.e
-                    @traverse_info.push neighbour.n
-                @_search neighbour.n, depth-1, node
+                if neighbour.n.id isnt prev_node.id
+                    if depth > 0
+                        @traverse_info.push neighbour.e
+                    @_search neighbour.n, depth-1, node
+                    if @is_found
+                        break
 
     gen_info: ->
         [
@@ -97,4 +106,34 @@ class DLS extends Algorithm
                             if edge.n.id is exp_nodes[0].id
                                 @traverse_info.push edge.e
         ###
+
+
+    create_path_info: ->
+        console.log("creating path info...")
+        rev_explored = @explored_nodes.reverse()
+        rev_path_info = @path_info.reverse()
+        #path_edges = []
+        for i in [0...rev_explored.length]
+            out_sub = [rev_explored[i]]
+            out_edges = []
+            current = rev_path_info[i]
+            for edge in current.edges
+                if edge.n.id is out_sub.slice(-1)[0].id
+                    out_edges.push edge.e
+            j = i
+            while (j isnt rev_path_info.length - 1)
+                j++
+                if rev_explored[j].id is current.id
+                    out_sub.push rev_explored[j]
+                    current = rev_path_info[j]
+                    for edge in current.edges
+                        if edge.n.id is out_sub.slice(-1)[0].id
+                            out_edges.push edge.e
+            @path_info[i] = out_sub.reverse()
+            @path_edges[i] = out_edges.reverse()
+        @path_info.reverse()
+        @path_edges.reverse()
+        console.log(@path_info)
+        console.log(@path_edges)
+
 this.DLS = DLS
