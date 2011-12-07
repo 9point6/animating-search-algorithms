@@ -87,7 +87,8 @@ class Graph
     #
     # **Return** -> new `point` object
     add_node: ( x, y, name = "", id ) ->
-        newnode = new Node @paper, x, y, name
+        newnode = new Node @paper, parseInt( x ), parseInt( y ), name
+        console.log "#{name} - #{id}"
         if id?
             newnode.id = id
         @nodes_id_map[newnode.id] = newnode
@@ -105,6 +106,8 @@ class Graph
     #
     # **Return** -> new `connection` object
     connect: ( nodea, nodeb, weight = 1, direction = 0 ) ->
+        weight = parseInt weight
+        direction = parseInt direction
         newedge = new Edge @paper, nodea, nodeb, weight, direction
         @edges.push newedge
         @edgecount++
@@ -161,7 +164,7 @@ class Graph
                                         "-1": "'#{@edgenb.name}' to '#{@edgena.name}'"
                                         "1": "'#{@edgena.name}' to '#{@edgenb.name}'"
                             callback: ( r ) =>
-                                newedge = @connect @edgena, @edgenb, parseInt r.weight, parseInt r.direction
+                                newedge = @connect @edgena, @edgenb, r.weight, r.direction
                                 @edgena.r.animate
                                     r: 5
                                     fill: "#000",

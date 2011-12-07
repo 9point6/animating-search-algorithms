@@ -69,7 +69,8 @@
       if (name == null) {
         name = "";
       }
-      newnode = new Node(this.paper, x, y, name);
+      newnode = new Node(this.paper, parseInt(x), parseInt(y), name);
+      console.log("" + name + " - " + id);
       if (id != null) {
         newnode.id = id;
       }
@@ -86,6 +87,8 @@
       if (direction == null) {
         direction = 0;
       }
+      weight = parseInt(weight);
+      direction = parseInt(direction);
       newedge = new Edge(this.paper, nodea, nodeb, weight, direction);
       this.edges.push(newedge);
       this.edgecount++;
@@ -147,7 +150,7 @@
                 },
                 callback: __bind(function(r) {
                   var newedge;
-                  newedge = this.connect(this.edgena, this.edgenb, parseInt(r.weight, parseInt(r.direction)));
+                  newedge = this.connect(this.edgena, this.edgenb, r.weight, r.direction);
                   this.edgena.r.animate({
                     r: 5,
                     fill: "#000"
