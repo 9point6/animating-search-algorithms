@@ -176,7 +176,15 @@ class Edge
     # #### TODO
     # * Bring up a context menu to edit/remove the connection
     click: ( e ) =>
-        @spark( @direction >= 0 )
+        # @spark( @direction >= 0 )
+        if APP.context
+            APP.context.destroy( )
+        APP.context = new Context
+            items:
+                'Remove': =>
+                    @remove( )
+            x: e.pageX
+            y: e.pageY
 
     # ### connection.spark( )
     # Performs an animation along the edge. To be used when demonstrating the

@@ -224,6 +224,32 @@ div#algohelptext
     ul
       float: right
 
+.context
+    position: absolute;
+    left: 0
+    top: 0
+    width: 100%
+    height: 100%
+
+    ul
+        position: absolute
+        padding: 5px
+        color: #fff
+        list-style: none
+        display: block
+
+        @include border-radius(0 10px 10px 10px)
+        @include linear-gradient(#000, #333)
+        @include box-shadow(0 0 10px, #000)
+
+        li
+            margin: 0
+            padding: 0
+            cursor: pointer
+
+            &:hover
+                background-color: rgba(255,255,255,0.3)
+
 .modal
     position: absolute
     left: 0

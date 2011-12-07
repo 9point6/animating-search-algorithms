@@ -144,23 +144,33 @@
         APP.goal_select_mode = false;
         return APP.fade_in_toolbar();
       } else {
-        return false;
+        if (APP.design_mode && !this.move_mode) {
+          if (APP.context) {
+            APP.context.destroy();
+          }
+          APP.context = new Context({
+            items: {
+              'Remove': __bind(function() {
+                return this.remove();
+              }, this)
+            },
+            x: e.pageX,
+            y: e.pageY
+          });
+        }
+        return this.move_mode = false;
       }
     };
     Node.prototype.drag_start = function() {
       var _ref;
       if (APP.design_mode) {
-        if (this.move_mode === false) {
-          this.move_mode = true;
-          return _ref = [0 + this.x, 0 + this.y], this.startx = _ref[0], this.starty = _ref[1], _ref;
-        } else {
-          return false;
-        }
+        return _ref = [0 + this.x, 0 + this.y], this.startx = _ref[0], this.starty = _ref[1], _ref;
       }
     };
     Node.prototype.drag_move = function(dx, dy) {
       var edge, _i, _len, _ref, _results;
       if (APP.design_mode) {
+        this.move_mode = true;
         this.move(this.startx + dx, this.starty + dy);
         _ref = this.edges;
         _results = [];
@@ -173,11 +183,7 @@
         return _results;
       }
     };
-    Node.prototype.drag_up = function() {
-      if (APP.design_mode) {
-        return this.move_mode = false;
-      }
-    };
+    Node.prototype.drag_up = function() {};
     Node.prototype.move_with_mouse = function() {
       var _ref;
       if (this.drag_start()) {

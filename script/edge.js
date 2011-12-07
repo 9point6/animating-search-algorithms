@@ -130,7 +130,18 @@
       }
     };
     Edge.prototype.click = function(e) {
-      return this.spark(this.direction >= 0);
+      if (APP.context) {
+        APP.context.destroy();
+      }
+      return APP.context = new Context({
+        items: {
+          'Remove': __bind(function() {
+            return this.remove();
+          }, this)
+        },
+        x: e.pageX,
+        y: e.pageY
+      });
     };
     Edge.prototype.spark = function(a2b) {
       var grad, spark, start_point, stops;

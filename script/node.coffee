@@ -162,18 +162,23 @@ class Node
             APP.goal_select_mode = false
             APP.fade_in_toolbar( )
         else
-            false
+            if APP.design_mode and not @move_mode
+                if APP.context
+                    APP.context.destroy( )
+                APP.context = new Context
+                    items:
+                        'Remove': =>
+                            @remove( )
+                    x: e.pageX
+                    y: e.pageY
+            @move_mode = false
 
     # ### point.drag_start( )
     # Drag start handler. Sets the object into move mode.
     drag_start: =>
         if APP.design_mode
-            if @move_mode is false
-                @move_mode = true
-                # Needed because the drag events work in relative co-ordinates
-                [@startx, @starty] = [0 + @x, 0 + @y]
-            else
-                false
+            # Needed because the drag events work in relative co-ordinates
+            [@startx, @starty] = [0 + @x, 0 + @y]
 
     # ### point.drag_move( )
     # Drag move handler. Performs movement on the node.
@@ -182,6 +187,7 @@ class Node
     # * `dy` - Difference in Y co-ordinates
     drag_move: ( dx, dy ) =>
         if APP.design_mode
+            @move_mode = true
             @move @startx + dx, @starty + dy
             for edge in @edges
                 do ( edge ) ->
@@ -190,8 +196,8 @@ class Node
     # ### point.drag_up( )
     # Drag finish handler. Takes the object out of move mode.
     drag_up: =>
-        if APP.design_mode
-            @move_mode = false
+        #if APP.design_mode
+            # @move_mode = false
 
     # ### point.move*_*with_mouse( )
     # Mostly for the old move method. (click to pick up, click to drop). Kept
