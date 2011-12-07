@@ -34,14 +34,15 @@ class DLS extends Algorithm
             if node is @goal_node
                 @is_found = true
                 return node
-            
+
             for neighbour in node.edges
-                if neighbour.n.id isnt prev_node.id
-                    if depth > 0
-                        @traverse_info.push neighbour.e
-                    @_search neighbour.n, depth-1, node
-                    if @is_found
-                        break
+                if neighbour.e.visitable node
+                    if neighbour.n.id isnt prev_node.id
+                        if depth > 0
+                            @traverse_info.push neighbour.e
+                        @_search neighbour.n, depth-1, node
+                        if @is_found
+                            break
 
     gen_info: ->
         [

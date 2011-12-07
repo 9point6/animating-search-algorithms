@@ -51,7 +51,7 @@ class Animate
                     # This stops overwriting the style of the previous element in the
                     # traverse_info array as it should be the only connection in the
                     # "viewing" state.
-                    if edge.e.style is "normal"
+                    if edge.e.style is "normal" and edge.e.visitable current_item
                         edge.e.update_style "potential"
 
             # the current_item is not the first element in the array
@@ -86,7 +86,7 @@ class Animate
                                 @algorithm.name isnt "A* Search" and
                                     @algorithm.name isnt "Bi-Directional Search"
                                         edge.e.update_style "normal"
-            
+
                 if @algorithm.path_edges?
                     #else
                     #    @create_path ((@pointer+1) /2)
@@ -100,7 +100,7 @@ class Animate
                         for edge in current_item.edges
                             if edge.n isnt @traverse_info[@pointer-2] and edge.e isnt last_viewed
                                 edge.e.update_style "potential"
-                    
+
                     if current_item instanceof Edge
                         console.log(current_item.nodea)
                         console.log(current_item.nodeb)
@@ -108,7 +108,7 @@ class Animate
                             @reset_path()
                             @create_path((@pointer+1)/2)
                             current_item.update_style "viewing"
-                
+
 
             # increase the pointer value
             @pointer++
@@ -160,9 +160,9 @@ class Animate
                     for edge in previous_item.edges
                         if edge.e.style isnt "visited"
                             if edge.e.style is "path"
-                            else
+                            else if edge.e.visitable previous_item
                                 edge.e.update_style "potential"
-    
+
 
     create_path: (pointer) ->
         path = @algorithm.path_edges[pointer]
@@ -180,7 +180,7 @@ class Animate
             if edge.style is "path"
                 edge.update_style "visited"
 
-    
+
     # ### animate.traverse( )
     # Loop through the given array, animating each given
     # node and connection in order.
