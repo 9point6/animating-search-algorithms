@@ -199,8 +199,8 @@
           this.current_algo.heuristic_choice = $('#algoheuristic').val();
         }
         if (this.current_algo instanceof BiDirectional) {
-          this.current_algo.alg1 = $('#algobidi1').val();
-          this.current_algo.alg2 = $('#algobidi2').val();
+          this.current_algo.alg1 = new ALGORITHMS[$('#algobidi1').val()];
+          this.current_algo.alg2 = new ALGORITHMS[$('#algobidi2').val()];
         }
         this.animate_obj = new Animate;
         this.animate_obj.algorithm = this.current_algo;

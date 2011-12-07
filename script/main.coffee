@@ -247,8 +247,8 @@ class Main
             if @current_algo instanceof AStar
                 @current_algo.heuristic_choice = $( '#algoheuristic' ).val( )
             if @current_algo instanceof BiDirectional
-                @current_algo.alg1 = $( '#algobidi1' ).val( )
-                @current_algo.alg2 = $( '#algobidi2' ).val( )
+                @current_algo.alg1 = new ALGORITHMS[$( '#algobidi1' ).val( )]
+                @current_algo.alg2 = new ALGORITHMS[$( '#algobidi2' ).val( )]
             @animate_obj = new Animate
             @animate_obj.algorithm = @current_algo
             $( '#designmode' ).animate

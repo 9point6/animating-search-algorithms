@@ -23,8 +23,6 @@ class BiDirectional extends Algorithm
         @alg2.goal_node = @root_node
         @alg1.search( )
         @alg2.search( )
-        @alg1.create_traverse_info( )
-        @alg2.create_traverse_info( )
 
     destroy: ->
         for node in @explored_nodes
@@ -32,6 +30,8 @@ class BiDirectional extends Algorithm
         super
 
     search: ->
+        @alg1.create_traverse_info( )
+        @alg2.create_traverse_info( )
         traverse_info_start = @alg1.traverse_info.slice(0)
         traverse_info_goal = @alg2.traverse_info.slice(0)
         pointer = 0
