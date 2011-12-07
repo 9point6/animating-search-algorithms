@@ -57,8 +57,8 @@ class KamadaKawai
                 do( u, v )->
                 dij = @paths[u.id][v.id]
                 if dij == Infinity then return false
-                kd = @k / ( dij * dij )
-                #kd = v.weight_to_travel( u ) / ( dij * dij )
+                #kd = @k / ( dij * dij )
+                kd = 10 * v.weight_to_travel( u ) / ( dij * dij )
                 @springs[u.id][v.id] = kd
                 @springs[v.id][u.id] = kd
         # console.log "// update springs"
@@ -68,15 +68,15 @@ class KamadaKawai
     # O(n2) + O(n3) - luckily only run once
     # tested + working on a cube
     shortest_paths: ->
-        # console.log "## shortest paths"
+        console.log "## shortest paths"
         @paths = {}
 
         lim = Math.ceil Math.sqrt APP.graph.nodecount
         console.log "Calculating approximate APSP to depth " + lim
         for u in APP.graph.nodes
             p = {}
-            p[v.id] = lim + v.weight_to_travel( u ) for v in APP.graph.nodes
-            #p[v.id] = lim + 1 for v in APP.graph.nodes
+            #p[v.id] = lim + v.weight_to_travel( u ) for v in APP.graph.nodes
+            p[v.id] = lim + 1 for v in APP.graph.nodes
             p[u.id] = 0
 
             e = {}
@@ -143,7 +143,7 @@ class KamadaKawai
                 [d2, d.x, d.y] = @dist( @p, n )
 
                 k = spr[n.id]
-                lid3 = pat[n.id] / ( d2 * Math.sqrt d2 )
+                lid3 = pat[n.id] * ( 1 / ( d2 * Math.sqrt d2 ) )
 
                 for i in dim
                     for j in dim

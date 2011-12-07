@@ -61,7 +61,7 @@
           if (dij === Infinity) {
             return false;
           }
-          kd = this.k / (dij * dij);
+          kd = 10 * v.weight_to_travel(u) / (dij * dij);
           this.springs[u.id][v.id] = kd;
           this.springs[v.id][u.id] = kd;
         }
@@ -70,6 +70,7 @@
     };
     KamadaKawai.prototype.shortest_paths = function() {
       var e, lim, m, n, p, q, qo, u, v, _i, _j, _k, _len, _len2, _len3, _ref, _ref2;
+      console.log("## shortest paths");
       this.paths = {};
       lim = Math.ceil(Math.sqrt(APP.graph.nodecount));
       console.log("Calculating approximate APSP to depth " + lim);
@@ -80,7 +81,7 @@
         _ref2 = APP.graph.nodes;
         for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
           v = _ref2[_j];
-          p[v.id] = lim + v.weight_to_travel(u);
+          p[v.id] = lim + 1;
         }
         p[u.id] = 0;
         e = {};
@@ -152,7 +153,7 @@
             (function() {})();
             _ref2 = this.dist(this.p, n), d2 = _ref2[0], d.x = _ref2[1], d.y = _ref2[2];
             k = spr[n.id];
-            lid3 = pat[n.id] / (d2 * Math.sqrt(d2));
+            lid3 = pat[n.id] * (1 / (d2 * Math.sqrt(d2)));
             for (_j = 0, _len2 = dim.length; _j < _len2; _j++) {
               i = dim[_j];
               for (_k = 0, _len3 = dim.length; _k < _len3; _k++) {
