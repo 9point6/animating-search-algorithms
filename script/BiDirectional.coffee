@@ -43,6 +43,7 @@ class BiDirectional extends Algorithm
             "O(b<sup>m</sup>)"
             "O(bm)"
             "Not Optimal"
+            "bidi"
         ]
 
     run_info: ->

@@ -118,12 +118,49 @@ class Main
             $( '#algohelptext' ).css "opacity", 100
         ), ( e ) ->
             $( '#algohelptext' ).css "opacity", 0
-        $( '#algoselection' ).change ( e ) ->
-            alg = new ALGORITHMS[$( @ ).attr "value"]
+        $( '#algoselection' ).change ( e ) =>
+            if @current_algo
+                root = @current_algo.root_node
+                goal = @current_algo.goal_node
+                @animate_obj.destroy( )
+                @current_algo.destroy( )
+                @current_algo = new ALGORITHMS[$( '#algoselection' ).prop "value"]
+                @current_algo.root_node = root
+                @current_algo.goal_node = goal
+                @animate_obj = new Animate
+                @animate_obj.algorithm = @current_algo
+            alg = new ALGORITHMS[$( '#algoselection' ).attr "value"]
+            $( '.algoextra' ).remove( )
             $( '#algodata_completeness' ).html alg.gen_info( )[0]
             $( '#algodata_time' ).html alg.gen_info( )[1]
             $( '#algodata_space' ).html alg.gen_info( )[2]
             $( '#algodata_optimality' ).html alg.gen_info( )[3]
+            if alg.gen_info( )[4]?
+                extras = $( '#list' )
+                if alg.gen_info( )[4].indexOf( 'needsheuristic' ) isnt -1
+                    # TODO: automate
+                    extras.append li = $( "<li class=\"algoextra\" />" )
+                    li.append "<h3>Heuristic:</h3>"
+                    li.append combo = $( "<select id=\"algoheuristic\">" )
+                    combo.append "<option selected=\"selected\" value=\"0\">None</option>"
+                    combo.append "<option value=\"1\">Euclidian</option>"
+                    combo.change ( e ) =>
+                        if @current_algo
+                            @current_algo.heuristic_choice = $( e.target ).val( )
+                if alg.gen_info( )[4].indexOf( 'bidi' ) isnt -1
+                    for i in [1..2]
+                        extras.append li = $( "<li class=\"algoextra\" />" )
+                        li.append "<h3>Algorithm #{i}:</h3>"
+                        li.append combo = $( "<select id=\"algobidi#{i}\">" )
+                        j = 0
+                        for algo in ALGORITHMS
+                            a = new algo( )
+                            if not ( a instanceof BiDirectional )
+                                combo.append "<option id=\"bd#{i}-alg#{algo.name}\" value=\"#{j++}\">#{a.name}</option>"
+                                combo.change ( e ) =>
+                                    # TODO: Change in bidi
+                                    false
+                            delete a
             delete alg
         $( '#new' ).click ( e ) =>
             @graph.clear_graph( )
@@ -159,6 +196,8 @@ class Main
         $( '#search' ).click ( e ) =>
             @design_mode = false
             @current_algo = new ALGORITHMS[$( '#algoselection' ).prop "value"]
+            if @current_algo instanceof AStar
+                @current_algo.heuristic_choice = $( '#algoheuristic' ).val( )
             @animate_obj = new Animate
             @animate_obj.algorithm = @current_algo
             $( '#designmode' ).animate

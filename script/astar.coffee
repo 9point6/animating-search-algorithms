@@ -120,6 +120,7 @@ class AStar extends Algorithm
             "O(log h<sup>*</sup>(x))"
             "O(bm)"
             "Optimal"
+            "needsheuristic"
         ]
 
     run_info: ->

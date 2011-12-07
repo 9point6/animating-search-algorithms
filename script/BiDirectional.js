@@ -45,7 +45,7 @@
       return _results;
     };
     BiDirectional.prototype.gen_info = function() {
-      return ["Complete", "O(b<sup>m</sup>)", "O(bm)", "Not Optimal"];
+      return ["Complete", "O(b<sup>m</sup>)", "O(bm)", "Not Optimal", "bidi"];
     };
     BiDirectional.prototype.run_info = function() {
       return alert("stuff");

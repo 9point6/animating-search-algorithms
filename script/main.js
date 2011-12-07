@@ -42,15 +42,61 @@
       }), function(e) {
         return $('#algohelptext').css("opacity", 0);
       });
-      $('#algoselection').change(function(e) {
-        var alg;
-        alg = new ALGORITHMS[$(this).attr("value")];
+      $('#algoselection').change(__bind(function(e) {
+        var a, alg, algo, combo, extras, goal, i, j, li, root, _i, _len;
+        if (this.current_algo) {
+          root = this.current_algo.root_node;
+          goal = this.current_algo.goal_node;
+          this.animate_obj.destroy();
+          this.current_algo.destroy();
+          this.current_algo = new ALGORITHMS[$('#algoselection').prop("value")];
+          this.current_algo.root_node = root;
+          this.current_algo.goal_node = goal;
+          this.animate_obj = new Animate;
+          this.animate_obj.algorithm = this.current_algo;
+        }
+        alg = new ALGORITHMS[$('#algoselection').attr("value")];
+        $('.algoextra').remove();
         $('#algodata_completeness').html(alg.gen_info()[0]);
         $('#algodata_time').html(alg.gen_info()[1]);
         $('#algodata_space').html(alg.gen_info()[2]);
         $('#algodata_optimality').html(alg.gen_info()[3]);
+        if (alg.gen_info()[4] != null) {
+          extras = $('#list');
+          if (alg.gen_info()[4].indexOf('needsheuristic') !== -1) {
+            extras.append(li = $("<li class=\"algoextra\" />"));
+            li.append("<h3>Heuristic:</h3>");
+            li.append(combo = $("<select id=\"algoheuristic\">"));
+            combo.append("<option selected=\"selected\" value=\"0\">None</option>");
+            combo.append("<option value=\"1\">Euclidian</option>");
+            combo.change(__bind(function(e) {
+              if (this.current_algo) {
+                return this.current_algo.heuristic_choice = $(e.target).val();
+              }
+            }, this));
+          }
+          if (alg.gen_info()[4].indexOf('bidi') !== -1) {
+            for (i = 1; i <= 2; i++) {
+              extras.append(li = $("<li class=\"algoextra\" />"));
+              li.append("<h3>Algorithm " + i + ":</h3>");
+              li.append(combo = $("<select id=\"algobidi" + i + "\">"));
+              j = 0;
+              for (_i = 0, _len = ALGORITHMS.length; _i < _len; _i++) {
+                algo = ALGORITHMS[_i];
+                a = new algo();
+                if (!(a instanceof BiDirectional)) {
+                  combo.append("<option id=\"bd" + i + "-alg" + algo.name + "\" value=\"" + (j++) + "\">" + a.name + "</option>");
+                  combo.change(__bind(function(e) {
+                    return false;
+                  }, this));
+                }
+                delete a;
+              }
+            }
+          }
+        }
         return delete alg;
-      });
+      }, this));
       $('#new').click(__bind(function(e) {
         return this.graph.clear_graph();
       }, this));
@@ -87,6 +133,9 @@
       $('#search').click(__bind(function(e) {
         this.design_mode = false;
         this.current_algo = new ALGORITHMS[$('#algoselection').prop("value")];
+        if (this.current_algo instanceof AStar) {
+          this.current_algo.heuristic_choice = $('#algoheuristic').val();
+        }
         this.animate_obj = new Animate;
         this.animate_obj.algorithm = this.current_algo;
         $('#designmode').animate({

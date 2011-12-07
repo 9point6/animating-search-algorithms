@@ -111,7 +111,7 @@
       return smallNode;
     };
     AStar.prototype.gen_info = function() {
-      return ["Complete", "O(log h<sup>*</sup>(x))", "O(bm)", "Optimal"];
+      return ["Complete", "O(log h<sup>*</sup>(x))", "O(bm)", "Optimal", "needsheuristic"];
     };
     AStar.prototype.run_info = function() {
       return alert("run information");
