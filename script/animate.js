@@ -10,12 +10,14 @@
       return delete this;
     };
     Animate.prototype.step_forward = function() {
-      var current_item, edge, i, is_visited, last_viewed, previous_item, _i, _j, _k, _len, _len2, _len3, _ref, _ref2, _ref3, _ref4;
+      var current_item, edge, goal_reached, i, is_visited, last_viewed, previous_item, _i, _j, _k, _len, _len2, _len3, _ref, _ref2, _ref3, _ref4;
       if ((this.algorithm.traverse_info != null) && this.pointer < this.algorithm.traverse_info.length) {
+        goal_reached = false;
         this.traverse_info = this.algorithm.traverse_info;
         current_item = this.traverse_info[this.pointer];
         if (current_item === this.algorithm.goal_node) {
           current_item.update_style("goal");
+          goal_reached = true;
         } else {
           current_item.update_style("viewing");
         }
@@ -23,7 +25,7 @@
           _ref = current_item.edges;
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {
             edge = _ref[_i];
-            if (edge.e.style === "normal" && edge.e.visitable(current_item)) {
+            if (edge.e.style === "normal" && !goal_reached && edge.e.visitable(current_item)) {
               edge.e.update_style("potential");
             }
           }
@@ -68,7 +70,7 @@
               _ref4 = current_item.edges;
               for (_k = 0, _len3 = _ref4.length; _k < _len3; _k++) {
                 edge = _ref4[_k];
-                if (edge.n !== this.traverse_info[this.pointer - 2] && edge.e !== last_viewed) {
+                if (edge.n !== this.traverse_info[this.pointer - 2] && edge.e !== last_viewed && !goal_reached) {
                   edge.e.update_style("potential");
                 }
               }
