@@ -86,7 +86,7 @@
           return e.e.weight;
         }
       }
-      return 1;
+      return APP.graph.edgewavg;
     };
     Node.prototype.connect = function(other_node, edge) {
       return this.edges.push({

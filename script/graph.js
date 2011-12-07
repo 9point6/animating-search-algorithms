@@ -6,11 +6,12 @@
     Graph.prototype.remove_mode = false;
     function Graph() {
       this.do_mouse_removal = __bind(this.do_mouse_removal, this);
-      this.do_mouse_connection = __bind(this.do_mouse_connection, this);
-      var _ref;
+      this.do_mouse_connection = __bind(this.do_mouse_connection, this);      var _ref;
       _ref = [[], []], this.nodes = _ref[0], this.edges = _ref[1];
       this.nodes_id_map = {};
       this.nodecount = 0;
+      this.edgecount = 0;
+      this.edgewsum = 0;
       this.canvas_dimensions();
       $(window).resize(__bind(function(e) {
         this.canvas_dimensions();
@@ -87,6 +88,10 @@
       }
       newedge = new Edge(this.paper, nodea, nodeb, weight, direction);
       this.edges.push(newedge);
+      this.edgecount++;
+      this.edgewsum += parseInt(weight);
+      this.edgewavg = this.edgewsum / this.edgecount;
+      console.log("" + this.edgewavg + " = " + this.edgewsum + " / " + this.edgecount + " -");
       this.sort_elements();
       return newedge;
     };
@@ -214,6 +219,9 @@
       }
       this.nodes_id_map = {};
       _ref3 = [[], []], this.nodes = _ref3[0], this.edges = _ref3[1];
+      this.nodecount = 0;
+      this.edgecount = 0;
+      this.edgewsum = 0;
       return this.paper.clear();
     };
     Graph.prototype.parse_string = function(str) {

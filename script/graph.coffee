@@ -30,6 +30,8 @@ class Graph
         [@nodes,@edges] = [[],[]]
         @nodes_id_map = {}
         @nodecount = 0
+        @edgecount = 0
+        @edgewsum = 0
 
         # Store the window height and width. `@` is an alias for `this.`
         @canvas_dimensions( )
@@ -105,6 +107,10 @@ class Graph
     connect: ( nodea, nodeb, weight = 1, direction = 0 ) ->
         newedge = new Edge @paper, nodea, nodeb, weight, direction
         @edges.push newedge
+        @edgecount++
+        @edgewsum += parseInt weight
+        @edgewavg = @edgewsum / @edgecount
+        console.log "#{@edgewavg} = #{@edgewsum} / #{@edgecount} -"
         @sort_elements( )
         newedge
 
@@ -226,6 +232,9 @@ class Graph
 
         @nodes_id_map = {}
         [@nodes,@edges] = [[],[]]
+        @nodecount = 0
+        @edgecount = 0
+        @edgewsum = 0
         @paper.clear( )
 
     # ### graph.parse_string( )

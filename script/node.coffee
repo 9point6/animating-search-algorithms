@@ -80,7 +80,7 @@ class Node
         for e in @edges
             if e.n.id is other_node.id
                 return e.e.weight
-        1
+        APP.graph.edgewavg
 
     # ### point.connect( )
     # Connect this `point` to another. Connections should be made from the main
