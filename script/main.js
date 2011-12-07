@@ -147,10 +147,13 @@
         kamada = new KamadaKawai;
         kamada.prepare();
         func = __bind(function() {
-          var dx, dxg, dxl, dy, dyg, dyl, e, mx, my, n, _i, _j, _k, _len, _len2, _len3, _ref, _ref2, _ref3, _ref4;
+          var dx, dxg, dxl, dy, dyg, dyl, e, j, mx, my, n, _i, _j, _k, _len, _len2, _len3, _ref, _ref2, _ref3, _ref4;
           $('#kkprog').text("" + i + "/" + lim);
           $('#kkprogbar').css("width", i * 100 / lim + "%");
-          kamada.iterate();
+          for (j = 0; j <= 20; j++) {
+            kamada.iterate();
+          }
+          i += j;
           if (i++ < lim) {
             return setTimeout(func, 50);
           } else {

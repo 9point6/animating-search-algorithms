@@ -210,7 +210,8 @@ class Main
             func = =>
                 $( '#kkprog' ).text "#{i}/#{lim}"
                 $( '#kkprogbar' ).css "width", i * 100 / lim + "%"
-                kamada.iterate( )
+                kamada.iterate( ) for j in [0..20]
+                i += j
 #                 for n in @graph.nodes
 #                     n.move n.x, n.y
 #                     for e in n.edges
