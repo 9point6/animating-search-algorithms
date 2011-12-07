@@ -88,7 +88,6 @@ class Graph
     # **Return** -> new `point` object
     add_node: ( x, y, name = "", id ) ->
         newnode = new Node @paper, parseInt( x ), parseInt( y ), name
-        console.log "#{name} - #{id}"
         if id?
             newnode.id = id
         @nodes_id_map[newnode.id] = newnode

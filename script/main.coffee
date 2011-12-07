@@ -160,7 +160,9 @@ class Main
                             if not ( a instanceof BiDirectional )
                                 combo.append "<option id=\"bd#{i}-alg#{al.name}\" value=\"#{j++}\">#{a.name}</option>"
                                 combo.change ( e ) =>
-                                    # TODO: Change in bidi
+                                    if @current_algo
+                                        @current_algo.alg1 = new ALGORITHMS[$( e.target ).val( )]
+                                        @current_algo.alg2 = new ALGORITHMS[$( e.target ).val( )]
                                     false
                             delete a
             delete alg
@@ -244,6 +246,9 @@ class Main
             @current_algo = new ALGORITHMS[$( '#algoselection' ).prop "value"]
             if @current_algo instanceof AStar
                 @current_algo.heuristic_choice = $( '#algoheuristic' ).val( )
+            if @current_algo instanceof BiDirectional
+                @current_algo.alg1 = $( '#algobidi1' ).val( )
+                @current_algo.alg2 = $( '#algobidi2' ).val( )
             @animate_obj = new Animate
             @animate_obj.algorithm = @current_algo
             $( '#designmode' ).animate

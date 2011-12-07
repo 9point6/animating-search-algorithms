@@ -88,6 +88,10 @@
                 if (!(a instanceof BiDirectional)) {
                   combo.append("<option id=\"bd" + i + "-alg" + al.name + "\" value=\"" + (j++) + "\">" + a.name + "</option>");
                   combo.change(__bind(function(e) {
+                    if (this.current_algo) {
+                      this.current_algo.alg1 = new ALGORITHMS[$(e.target).val()];
+                      this.current_algo.alg2 = new ALGORITHMS[$(e.target).val()];
+                    }
                     return false;
                   }, this));
                 }
@@ -193,6 +197,10 @@
         this.current_algo = new ALGORITHMS[$('#algoselection').prop("value")];
         if (this.current_algo instanceof AStar) {
           this.current_algo.heuristic_choice = $('#algoheuristic').val();
+        }
+        if (this.current_algo instanceof BiDirectional) {
+          this.current_algo.alg1 = $('#algobidi1').val();
+          this.current_algo.alg2 = $('#algobidi2').val();
         }
         this.animate_obj = new Animate;
         this.animate_obj.algorithm = this.current_algo;
