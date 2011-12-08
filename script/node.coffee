@@ -36,6 +36,7 @@ class Node
         @label = @raphael.text @x, @y - 20, @name
         @label.attr
             opacity: 0
+        $( @label.node ).css "cursor", "default"
         @r.attr
             fill: "#000"
             stroke: "transparent"

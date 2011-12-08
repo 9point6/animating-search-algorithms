@@ -18,11 +18,13 @@
       this.update_midpoint();
       this.r = this.raphael.path();
       this.wt = this.raphael.text(this.x, this.y - 20, this.weight);
+      $(this.wt.node).css("cursor", "default");
       this.di = this.raphael.path();
       this.update_style("normal", true);
       this.update_path();
       this.r.hover(this.hover_in, this.hover_out);
       this.di.hover(this.hover_in, this.hover_out);
+      this.wt.hover(this.hover_in, this.hover_out);
       this.r.click(this.click);
       this.di.click(this.click);
     }

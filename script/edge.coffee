@@ -37,6 +37,7 @@ class Edge
 
         # draw weight text
         @wt = @raphael.text @x, @y - 20, @weight
+        $( @wt.node ).css "cursor", "default"
 
         # direction indicator
         @di = @raphael.path( )
@@ -49,6 +50,7 @@ class Edge
         # Set event handlers
         @r.hover @hover_in, @hover_out
         @di.hover @hover_in, @hover_out
+        @wt.hover @hover_in, @hover_out
         @r.click @click
         @di.click @click
 

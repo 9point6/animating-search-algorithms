@@ -25,6 +25,7 @@
       this.label.attr({
         opacity: 0
       });
+      $(this.label.node).css("cursor", "default");
       this.r.attr({
         fill: "#000",
         stroke: "transparent"
