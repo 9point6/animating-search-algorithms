@@ -16,8 +16,8 @@
     BiDirectional.prototype.name = "Bi-Directional Search";
     BiDirectional.prototype.pre_run = function() {
       var node, _i, _len, _ref;
-      this.alg1 = new DLS();
-      this.alg2 = new DLS();
+      this.alg1 = new BFS();
+      this.alg2 = new BFS();
       this.alg1.heuristic_choice = 0;
       this.alg2.heuristic_choice = 0;
       this.alg1.root_node = this.root_node;
