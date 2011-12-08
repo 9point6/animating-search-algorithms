@@ -16,8 +16,8 @@
     BiDirectional.prototype.name = "Bi-Directional Search";
     BiDirectional.prototype.pre_run = function() {
       var node, _i, _len, _ref;
-      this.alg1 = new BFS();
-      this.alg2 = new BFS();
+      this.alg1 = new DFS();
+      this.alg2 = new DFS();
       this.alg1.root_node = this.root_node;
       this.alg1.goal_node = this.goal_node;
       this.alg1.search();
@@ -45,6 +45,7 @@
       return BiDirectional.__super__.destroy.apply(this, arguments);
     };
     BiDirectional.prototype.search = function() {
+<<<<<<< HEAD
       var item, item2, pointer, pointer2, _i, _j, _len, _len2, _ref, _ref2, _results;
       pointer = 0;
       _ref = this.traverse_info_start;
@@ -60,16 +61,72 @@
           if (item instanceof Node && item2 instanceof Node) {
             if (item.id === item2.id) {
               return;
+=======
+      var combinedArrayLength, i, searched_from_goal, searched_from_start, _results;
+      searched_from_goal = [];
+      searched_from_start = [];
+      combinedArrayLength = this.traverse_info_start.length + this.traverse_info_goal.length;
+      i = 0;
+      _results = [];
+      while (i < combinedArrayLength) {
+        if (i < this.traverse_info_start.length) {
+          this.traverse_info.push(this.traverse_info_start[i]);
+          searched_from_start.push(this.traverse_info[this.traverse_info.length - 1]);
+          if (this.contains(searched_from_goal, searched_from_start[searched_from_start.length - 1])) {
+            return;
+          }
+          if (this.traverse_info[this.traverse_info.length - 1] instanceof Edge) {
+            if (this.containsById(searched_from_start, this.traverse_info_start[i].nodea)) {
+              if (this.containsById(searched_from_goal, this.traverse_info_start[i].nodeb)) {
+                return;
+              }
+>>>>>>> 76cd4e6ced08b33cd7ab1422b086866bbb8d160e
             }
           }
-          pointer2++;
-          if (pointer2 === pointer) {
-            break;
+        }
+        if (i < this.traverse_info_goal.length) {
+          this.traverse_info.push(this.traverse_info_goal[i]);
+          searched_from_goal.push(this.traverse_info[this.traverse_info.length - 1]);
+          if (this.contains(searched_from_start, searched_from_goal[searched_from_goal.length - 1])) {
+            return;
+          }
+          if (this.traverse_info[this.traverse_info.length - 1] instanceof Edge) {
+            if (this.containsById(searched_from_start, this.traverse_info_start[i].nodea)) {
+              if (this.containsById(searched_from_goal, this.traverse_info_start[i].nodeb)) {
+                return;
+              }
+            }
           }
         }
-        _results.push(this.traverse_info_goal[0] != null ? this.traverse_info.push(this.traverse_info_goal.shift()) : void 0);
+        _results.push(i++);
       }
       return _results;
+    };
+    BiDirectional.prototype.contains = function(a, obj) {
+      var i;
+      i = a.length;
+      while (i--) {
+        if ((a[i] != null) && (obj != null)) {
+          if (a[i] === obj) {
+            return true;
+          }
+        }
+      }
+      return false;
+    };
+    BiDirectional.prototype.containsById = function(a, obj) {
+      var i;
+      i = a.length;
+      while (i--) {
+        if ((a[i].id != null) && (obj.id != null)) {
+          if (a[i].id === obj.id) {
+            console.log(a[i]);
+            console.log(obj);
+            return true;
+          }
+        }
+      }
+      return false;
     };
     BiDirectional.prototype.gen_info = function() {
       return ["Complete", "O(b<sup>m</sup>)", "O(bm)", "Not Optimal", "bidi"];

@@ -50,10 +50,12 @@ class Animate
             if current_item instanceof Node
                 # loop through all of the points connections
                 for edge in current_item.edges
+                    visitable = edge.e.visitable current_item
+
                     # This stops overwriting the style of the previous element in the
                     # traverse_info array as it should be the only connection in the
                     # "viewing" state.
-                    if edge.e.style is "normal" and not goal_reached and edge.e.visitable current_item
+                    if edge.e.style is "normal" and not goal_reached and visitable
                         edge.e.update_style "potential"
 
             # the current_item is not the first element in the array
