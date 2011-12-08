@@ -74,10 +74,16 @@ class Edge
     update_path: ->
         @update_midpoint( )
         add = ( if @direction > 0 then 180 else 0 ) + ( if @nodea.x < @nodeb.x then 180 else 0 )
+        angle = 180 / Math.PI * Math.atan( @m ) + 90
+        if 180 > angle >= 140 then anglemod = -1
+        else if 220 > angle >= 180 then anglemod = 1
+        else if 360 > angle >= 320 then anglemod = 1
+        else if 40 > angle >= 0 then anglemod = -1
+        else anglemod = 0
         @r.attr
             path: "M#{@nodea.x} #{@nodea.y}L#{@nodeb.x} #{@nodeb.y}"
         @wt.attr
-            x: @x
+            x: @x + 20 * Math.round anglemod
             y: @y - 20
         @di.attr
             x: @x
@@ -98,7 +104,7 @@ class Edge
             ]
             opacity: Math.abs @direction * 100
         @di.translate 0, -5
-        @di.rotate 180 / Math.PI * Math.atan( @m ) + 90 + add, true
+        @di.rotate angle + add, true
 
     # ### connection.remove( )
     # Removes the point from the graph
@@ -206,6 +212,14 @@ class Edge
                         "-1": "'#{@nodeb.name}' to '#{@nodea.name}'"
                         "1": "'#{@nodea.name}' to '#{@nodeb.name}'"
                     default: @direction
+            cancel: "Cancel"
+            callback: ( r ) =>
+                @direction = parseInt r.direction
+                @weight = parseInt r.weight
+                @wt.attr
+                    text: @weight
+                @update_path( )
+        modal.show( )
 
     # ### connection.spark( )
     # Performs an animation along the edge. To be used when demonstrating the
@@ -256,6 +270,9 @@ class Edge
                     fill: "#666"
                     stroke: "#666",
                     anim_speed
+                @wt.animate
+                    stroke: "#000",
+                    anim_speed
                 @style = "normal"
             # When the connection has mouse over
             when "hover"
@@ -265,6 +282,9 @@ class Edge
                     anim_speed
                 @di.animate
                     fill: "#f00"
+                    stroke: "#f00",
+                    anim_speed
+                @wt.animate
                     stroke: "#f00",
                     anim_speed
                 @style = "hover"

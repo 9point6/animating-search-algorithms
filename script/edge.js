@@ -52,14 +52,26 @@
       return this.m = (this.nodeb.y - this.nodea.y) / (this.nodeb.x - this.nodea.x);
     };
     Edge.prototype.update_path = function() {
-      var add;
+      var add, angle, anglemod;
       this.update_midpoint();
       add = (this.direction > 0 ? 180 : 0) + (this.nodea.x < this.nodeb.x ? 180 : 0);
+      angle = 180 / Math.PI * Math.atan(this.m) + 90;
+      if ((180 > angle && angle >= 140)) {
+        anglemod = -1;
+      } else if ((220 > angle && angle >= 180)) {
+        anglemod = 1;
+      } else if ((360 > angle && angle >= 320)) {
+        anglemod = 1;
+      } else if ((40 > angle && angle >= 0)) {
+        anglemod = -1;
+      } else {
+        anglemod = 0;
+      }
       this.r.attr({
         path: "M" + this.nodea.x + " " + this.nodea.y + "L" + this.nodeb.x + " " + this.nodeb.y
       });
       this.wt.attr({
-        x: this.x,
+        x: this.x + 20 * Math.round(anglemod),
         y: this.y - 20
       });
       this.di.attr({
@@ -69,7 +81,7 @@
         opacity: Math.abs(this.direction * 100)
       });
       this.di.translate(0, -5);
-      return this.di.rotate(180 / Math.PI * Math.atan(this.m) + 90 + add, true);
+      return this.di.rotate(angle + add, true);
     };
     Edge.prototype.remove = function() {
       this.di.animate({
@@ -157,7 +169,7 @@
     };
     Edge.prototype.edit = function() {
       var modal;
-      return modal = new Modal({
+      modal = new Modal({
         title: "Edit an edge",
         fields: {
           "weight": {
@@ -175,8 +187,18 @@
             },
             "default": this.direction
           }
-        }
+        },
+        cancel: "Cancel",
+        callback: __bind(function(r) {
+          this.direction = parseInt(r.direction);
+          this.weight = parseInt(r.weight);
+          this.wt.attr({
+            text: this.weight
+          });
+          return this.update_path();
+        }, this)
       });
+      return modal.show();
     };
     Edge.prototype.spark = function(a2b) {
       var grad, spark, start_point, stops;
@@ -220,6 +242,9 @@
             fill: "#666",
             stroke: "#666"
           }, anim_speed);
+          this.wt.animate({
+            stroke: "#000"
+          }, anim_speed);
           return this.style = "normal";
         case "hover":
           this.r.animate({
@@ -228,6 +253,9 @@
           }, anim_speed);
           this.di.animate({
             fill: "#f00",
+            stroke: "#f00"
+          }, anim_speed);
+          this.wt.animate({
             stroke: "#f00"
           }, anim_speed);
           return this.style = "hover";

@@ -48,7 +48,7 @@
       }
     };
     function Modal(params) {
-      var buttons, cancel, fdiv, field, first, fr, input, k, label, llabel, submit, submit_h, submit_hk, v, _ref, _ref2, _ref3;
+      var buttons, cancel, fdiv, field, first, fr, input, k, label, llabel, selector, submit, submit_h, submit_hk, v, _ref, _ref2, _ref3;
       this.options = {};
       $.extend(this.options, this.defaults);
       $.extend(this.options, params);
@@ -99,6 +99,10 @@
               llabel.append("<span>" + v + "</span>");
               input.keypress(submit_hk);
               first = false;
+            }
+            if (field["default"]) {
+              selector = "input.modal_fields[name=\"modf-" + fr + "\"][value=\"" + field["default"] + "\"]";
+              $(selector, label).attr("checked", "checked");
             }
           } else {
             input = $("<input />").addClass("modal_fields");

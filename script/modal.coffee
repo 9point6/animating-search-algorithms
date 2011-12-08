@@ -74,6 +74,9 @@ class Modal
                         llabel.append "<span>#{v}</span>"
                         input.keypress submit_hk
                         first = false
+                    if field.default
+                       selector = "input.modal_fields[name=\"modf-#{fr}\"][value=\"#{field.default}\"]"
+                       $( selector, label ).attr "checked", "checked"
                 else
                     input = $( "<input />" ).addClass "modal_fields"
                     input.attr
