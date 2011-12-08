@@ -40,7 +40,7 @@ class Context
             opacity: 0
 
         if @options.autoshow
-            show( )
+            @show( )
 
     show: ->
         $( 'body' ).append @div

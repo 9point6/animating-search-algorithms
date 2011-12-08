@@ -48,7 +48,7 @@
         opacity: 0
       });
       if (this.options.autoshow) {
-        show();
+        this.show();
       }
     }
     Context.prototype.show = function() {
