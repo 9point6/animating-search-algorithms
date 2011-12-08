@@ -58,7 +58,11 @@
           _results2 = [];
           for (_j = 0, _len2 = neighbours.length; _j < _len2; _j++) {
             neighbour = neighbours[_j];
-            visitable = neighbour.e.visitable(current_node);
+            if (this.is_from_goal != null) {
+              visitable = neighbour.e.visitable(current_node, true);
+            } else {
+              visitable = neighbour.e.visitable(current_node);
+            }
             if (!neighbour.n.explored && visitable) {
               neighbour.n.explored = true;
               this.traverse_info.push(neighbour.e);

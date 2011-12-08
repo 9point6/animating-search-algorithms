@@ -21,10 +21,19 @@ class BiDirectional extends Algorithm
         @alg2 = new BFS( )
         @alg1.root_node = @root_node
         @alg1.goal_node = @goal_node
+        @alg1.search( )
+        @alg1.create_traverse_info( )
+        @traverse_info_start = @alg1.traverse_info.slice(0)
+
+        for node in APP.graph.nodes
+            node.explored = false
+
         @alg2.root_node = @goal_node
         @alg2.goal_node = @root_node
-        @alg1.search( )
+        @alg2.is_from_goal = true
         @alg2.search( )
+        @alg2.create_traverse_info( )
+        @traverse_info_goal = @alg2.traverse_info.slice(0)
 
     destroy: ->
         for node in @explored_nodes
@@ -32,26 +41,22 @@ class BiDirectional extends Algorithm
         super
 
     search: ->
-        @alg1.create_traverse_info( )
-        @alg2.create_traverse_info( )
-        console.log traverse_info_start = @alg1.traverse_info.slice(0)
-        console.log traverse_info_goal = @alg2.traverse_info.slice(0)
         pointer = 0
-
-        for item in traverse_info_start
+        for item in @traverse_info_start
             @traverse_info.push item
-
+            pointer++
             for item2 in @alg2.traverse_info
                 pointer2 = 0
-                if item.id is item2.id
-                    @traverse_info.push traverse_info_start
-                    return
+                if item instanceof Node and item2 instanceof Node
+                    if item.id is item2.id
+                        #@traverse_info.push item2
+                        return
                 pointer2++
-                if pointer2 = pointer
+                if pointer2 is pointer
                     break
 
-            @traverse_info.push traverse_info_goal.shift( )
-            pointer++
+            if @traverse_info_goal[0]?
+                @traverse_info.push @traverse_info_goal.shift( )
 
     gen_info: ->
         [

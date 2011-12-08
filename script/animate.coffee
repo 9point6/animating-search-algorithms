@@ -38,7 +38,7 @@ class Animate
             # create a variable for storing the element the pointer represents
             current_item = @traverse_info[@pointer]
 
-            if current_item is @algorithm.goal_node
+            if current_item is @algorithm.goal_node and @algorithm.name isnt "Bi-Directional Search"
                 # update the current item pointed at to goal node animation
                 current_item.update_style "goal"
                 goal_reached = true

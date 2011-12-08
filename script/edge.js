@@ -26,14 +26,23 @@
       this.r.click(this.click);
       this.di.click(this.click);
     }
-    Edge.prototype.visitable = function(node) {
-      if (this.direction === "0") {
+    Edge.prototype.visitable = function(node, reverse) {
+      var ret;
+      if (reverse == null) {
+        reverse = false;
+      }
+      if (this.direction === 0) {
         return true;
       } else {
         if (this.direction > 0) {
-          return this.nodea.id === node.id;
+          ret = this.nodea.id === node.id;
         } else {
-          return this.nodeb.id === node.id;
+          ret = this.nodeb.id === node.id;
+        }
+        if (reverse) {
+          return !ret;
+        } else {
+          return ret;
         }
       }
     };

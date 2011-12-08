@@ -15,7 +15,7 @@
         goal_reached = false;
         this.traverse_info = this.algorithm.traverse_info;
         current_item = this.traverse_info[this.pointer];
-        if (current_item === this.algorithm.goal_node) {
+        if (current_item === this.algorithm.goal_node && this.algorithm.name !== "Bi-Directional Search") {
           current_item.update_style("goal");
           goal_reached = true;
         } else {

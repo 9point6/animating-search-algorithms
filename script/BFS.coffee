@@ -69,7 +69,11 @@ class BFS extends Algorithm
 
             #for all the neighbours of the node
             for neighbour in neighbours
-                visitable = neighbour.e.visitable current_node
+                if @is_from_goal?
+                    visitable = neighbour.e.visitable current_node, true
+                else
+                    visitable = neighbour.e.visitable current_node
+
                 #add the neighbour to the set of explored nodes
                 if not neighbour.n.explored and visitable
                     neighbour.n.explored = true

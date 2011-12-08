@@ -52,14 +52,16 @@ class Edge
         @r.click @click
         @di.click @click
 
-    visitable: ( node ) ->
-        if @direction is "0"
+    visitable: ( node, reverse = false ) ->
+        if @direction is 0
             true
         else
             if @direction > 0
-                @nodea.id is node.id
+                ret = @nodea.id is node.id
             else
-                @nodeb.id is node.id
+                ret = @nodeb.id is node.id
+
+            if reverse then not ret else ret
 
     update_midpoint: ->
         @x = ( @nodea.x + @nodeb.x ) / 2
