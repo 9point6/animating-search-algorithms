@@ -269,6 +269,8 @@ class Main
                 @root_select_mode = false
                 @goal_select_mode = false
                 @fade_in_toolbar( )
+                # TODO: Might need more work for BiDi
+                @current_algo.traverse_info = []
             @root_select_mode = true
         $( '#process' ).click ( e ) =>
             if @current_algo.root_node? and @current_algo.goal_node?
