@@ -58,7 +58,12 @@ class DFS extends Algorithm
                 @explored_nodes.push current_node
 
                 for neighbour in current_node.edges
-                    visitable = neighbour.e.visitable current_node
+                    if @is_from_goal?
+                        visitable = neighbour.e.visitable current_node, true
+                    else
+                        visitable = neighbour.e.visitable current_node
+
+                    #visitable = neighbour.e.visitable current_node
                     if not neighbour.n.explored and visitable
                         todo_list.push neighbour.n
 

@@ -10,7 +10,7 @@
       return delete this;
     };
     Animate.prototype.step_forward = function() {
-      var current_item, edge, goal_reached, i, is_visited, last_viewed, previous_item, _i, _j, _k, _len, _len2, _len3, _ref, _ref2, _ref3, _ref4;
+      var current_item, edge, goal_reached, i, is_visited, last_viewed, previous_item, visitable, _i, _j, _k, _len, _len2, _len3, _ref, _ref2, _ref3, _ref4;
       if ((this.algorithm.traverse_info != null) && this.pointer < this.algorithm.traverse_info.length) {
         goal_reached = false;
         this.traverse_info = this.algorithm.traverse_info;
@@ -25,7 +25,8 @@
           _ref = current_item.edges;
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {
             edge = _ref[_i];
-            if (edge.e.style === "normal" && !goal_reached && edge.e.visitable(current_item)) {
+            visitable = edge.e.visitable(current_item);
+            if (edge.e.style === "normal" && !goal_reached && visitable) {
               edge.e.update_style("potential");
             }
           }

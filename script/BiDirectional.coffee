@@ -41,22 +41,54 @@ class BiDirectional extends Algorithm
         super
 
     search: ->
-        pointer = 0
-        for item in @traverse_info_start
-            @traverse_info.push item
-            pointer++
-            for item2 in @alg2.traverse_info
-                pointer2 = 0
-                if item instanceof Node and item2 instanceof Node
-                    if item.id is item2.id
-                        #@traverse_info.push item2
-                        return
-                pointer2++
-                if pointer2 is pointer
-                    break
+        searched_from_goal = []
+        searched_from_start = []
+        combinedArrayLength = @traverse_info_start.length + @traverse_info_goal.length
+        i = 0
+        while i < combinedArrayLength
+            if i < @traverse_info_start.length
+                @traverse_info.push @traverse_info_start[i]
+                searched_from_start.push @traverse_info[@traverse_info.length-1]
 
-            if @traverse_info_goal[0]?
-                @traverse_info.push @traverse_info_goal.shift( )
+                if @contains searched_from_goal, searched_from_start[searched_from_start.length-1]
+                    return
+
+                if @traverse_info[@traverse_info.length-1] instanceof Edge
+                    if @containsById searched_from_start, @traverse_info_start[i].nodea
+                        if @containsById searched_from_goal, @traverse_info_start[i].nodeb
+                            return
+
+            if i < @traverse_info_goal.length
+                @traverse_info.push @traverse_info_goal[i]
+                searched_from_goal.push @traverse_info[@traverse_info.length-1]
+
+                if @contains searched_from_start, searched_from_goal[searched_from_goal.length-1]
+                    return
+
+                if @traverse_info[@traverse_info.length-1] instanceof Edge
+                    if @containsById searched_from_start, @traverse_info_start[i].nodea
+                        if @containsById searched_from_goal, @traverse_info_start[i].nodeb
+                            return
+
+            i++
+
+    contains: (a, obj) ->
+        i = a.length
+        while i--
+            if a[i]? and obj?
+                if a[i] is obj
+                    return true
+        return false
+
+    containsById: (a, obj) ->
+        i = a.length
+        while i--
+            if a[i].id? and obj.id?
+                if a[i].id is obj.id
+                    console.log a[i]
+                    console.log obj
+                    return true
+        return false
 
     gen_info: ->
         [

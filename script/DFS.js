@@ -49,7 +49,11 @@
             _results2 = [];
             for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
               neighbour = _ref2[_j];
-              visitable = neighbour.e.visitable(current_node);
+              if (this.is_from_goal != null) {
+                visitable = neighbour.e.visitable(current_node, true);
+              } else {
+                visitable = neighbour.e.visitable(current_node);
+              }
               _results2.push(!neighbour.n.explored && visitable ? todo_list.push(neighbour.n) : void 0);
             }
             return _results2;
