@@ -36,7 +36,12 @@ class DLS extends Algorithm
                 return node
 
             for neighbour in node.edges
-                if neighbour.e.visitable node
+                if @is_from_goal?
+                    visitable = neighbour.e.visitable node, true
+                else
+                    visitable = neighbour.e.visitable node
+
+                if visitable
                     if neighbour.n.id isnt prev_node.id
                         if depth > 0
                             @traverse_info.push neighbour.e

@@ -38,10 +38,6 @@
       } else {
         this.root_node.costSoFar = 0;
         this.root_node.estimatedTotalCost = 0 + this.root_node.costSoFar + this.heuristic.choice(this.heuristic_choice, this.root_node, this.goal_node);
-        console.log(this.heuristic.choice(this.heuristic_choice, this.root_node, this.goal_node));
-        console.log("heuristic_choice " + this.heuristic_choice);
-        console.log(this.root_node);
-        console.log(this.goal_node);
         openList.push(this.root_node);
       }
       _results = [];
@@ -54,7 +50,11 @@
         _ref = currentNode.edges;
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           connection = _ref[_i];
-          visitable = connection.e.visitable(currentNode);
+          if (this.is_from_goal != null) {
+            visitable = connection.e.visitable(currentNode, true);
+          } else {
+            visitable = connection.e.visitable(currentNode);
+          }
           if (visitable) {
             endNode = connection.n;
             potentialCost = currentNode.costSoFar + connection.e.weight;
@@ -74,8 +74,6 @@
               endNode.costSoFar = potentialCost;
               endNode.estimatedTotalCost = endNode.costSoFar + this.heuristic.choice(this.heuristic_choice, endNode, this.goal_node);
               openList.push(endNode);
-              console.log("openList = ");
-              console.log(openList);
             }
           }
         }

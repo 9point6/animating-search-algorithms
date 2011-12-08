@@ -40,7 +40,7 @@
       return this.create_path_info();
     };
     DLS.prototype._search = function(node, depth, prev_node) {
-      var neighbour, _i, _len, _ref, _results;
+      var neighbour, visitable, _i, _len, _ref, _results;
       if (depth >= 0) {
         this.explored_nodes.push(node);
         this.path_info.push(prev_node);
@@ -53,7 +53,12 @@
         _results = [];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           neighbour = _ref[_i];
-          if (neighbour.e.visitable(node)) {
+          if (this.is_from_goal != null) {
+            visitable = neighbour.e.visitable(node, true);
+          } else {
+            visitable = neighbour.e.visitable(node);
+          }
+          if (visitable) {
             if (neighbour.n.id !== prev_node.id) {
               if (depth > 0) {
                 this.traverse_info.push(neighbour.e);
