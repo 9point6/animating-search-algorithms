@@ -45,23 +45,6 @@
       return BiDirectional.__super__.destroy.apply(this, arguments);
     };
     BiDirectional.prototype.search = function() {
-<<<<<<< HEAD
-      var item, item2, pointer, pointer2, _i, _j, _len, _len2, _ref, _ref2, _results;
-      pointer = 0;
-      _ref = this.traverse_info_start;
-      _results = [];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        item = _ref[_i];
-        this.traverse_info.push(item);
-        pointer++;
-        _ref2 = this.alg2.traverse_info;
-        for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
-          item2 = _ref2[_j];
-          pointer2 = 0;
-          if (item instanceof Node && item2 instanceof Node) {
-            if (item.id === item2.id) {
-              return;
-=======
       var combinedArrayLength, i, searched_from_goal, searched_from_start, _results;
       searched_from_goal = [];
       searched_from_start = [];
@@ -80,7 +63,6 @@
               if (this.containsById(searched_from_goal, this.traverse_info_start[i].nodeb)) {
                 return;
               }
->>>>>>> 76cd4e6ced08b33cd7ab1422b086866bbb8d160e
             }
           }
         }
