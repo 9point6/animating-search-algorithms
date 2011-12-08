@@ -199,7 +199,7 @@ class Main
             @graph.do_mouse_connection( )
         $( '#kamada' ).click ( e ) =>
             i = 0
-            lim = prompt "how many iterations", 500
+            lim = 150 * @graph.nodecount
             modal = new Modal
                 title: "Please wait"
                 intro: "Running Kamada Kawai <span id=\"kkprog\">#{i}/#{lim}</span>"
@@ -230,12 +230,13 @@ class Main
                         dyg = Math.max dyg, n.y
                     dx = dxl
                     dy = dyl
+                    # TODO: actual screen widths
                     mx = ( dxg - dxl ) / 500
                     my = ( dyg - dyl ) / 500
                     console.log "#{dxl}, #{dyl} - #{dxg} - #{dyg}"
                     console.log "#{dx}, #{dy} - #{mx} - #{my}"
                     for n in @graph.nodes
-                        n.move 50 + ( n.x - dx ) / Math.max( mx, my ), 50 + ( n.y - dy ) / Math.max( mx, my )
+                        n.move 75 + ( n.x - dx ) / Math.max( mx, my ), 75 + ( n.y - dy ) / Math.max( mx, my )
                         for e in n.edges
                             e.e.update_path( )
                     modal.destroy( )

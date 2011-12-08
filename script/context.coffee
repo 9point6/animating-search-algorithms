@@ -2,6 +2,7 @@ class Context
     defaults:
         x: 0
         y: 0
+        autoshow: true
 
     constructor: ( params ) ->
         @options = {}
@@ -15,24 +16,44 @@ class Context
         if @options.items
             for k,v of @options.items
                 item = $( "<li>#{k}</li>" )
-                item.click v
-                item.click ( e ) =>
-                    @destroy( )
+                # TODO: Finish this
+                if v instanceof Context
+                    item.hover ( ( e ) ->
+                        v.x = e.pageX
+                        v.y = e.pageY
+                        v.show( )
+                    ) , ( e ) ->
+                        v.hide( )
+                else
+                    item.click v
+                    item.click ( e ) =>
+                        @destroy( )
                 @ul.append item
         else
             throw "No menu items!"
 
-        $( 'body' ).append @div
-
+        @div.click ( e ) =>
+            @destroy( )
         @ul.css
             left: @options.x
             top: @options.y
             opacity: 0
+
+        if @options.autoshow
+            show( )
+
+    show: ->
+        $( 'body' ).append @div
+
         @ul.animate
             opacity: 1,
             250
-        @div.click ( e ) =>
-            @destroy( )
+
+    hide: ->
+        @ul.animate
+            opacity: 0,
+            250, 'linear', =>
+                @div.hide( )
 
     destroy: ->
         @ul.animate

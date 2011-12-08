@@ -144,12 +144,38 @@
       }
       return APP.context = new Context({
         items: {
+          'Edit': __bind(function() {
+            return this.edit();
+          }, this),
           'Remove': __bind(function() {
             return this.remove();
           }, this)
         },
         x: e.pageX,
         y: e.pageY
+      });
+    };
+    Edge.prototype.edit = function() {
+      var modal;
+      return modal = new Modal({
+        title: "Edit an edge",
+        fields: {
+          "weight": {
+            type: "text",
+            label: "Edge Weight",
+            "default": this.weight
+          },
+          "direction": {
+            type: "radio",
+            label: "Edge Direction",
+            values: {
+              "0": "Undirected",
+              "-1": "'" + this.nodeb.name + "' to '" + this.nodea.name + "'",
+              "1": "'" + this.nodea.name + "' to '" + this.nodeb.name + "'"
+            },
+            "default": this.direction
+          }
+        }
       });
     };
     Edge.prototype.spark = function(a2b) {

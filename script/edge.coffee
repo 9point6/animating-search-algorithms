@@ -183,10 +183,29 @@ class Edge
             APP.context.destroy( )
         APP.context = new Context
             items:
+                'Edit': =>
+                    @edit( )
                 'Remove': =>
                     @remove( )
             x: e.pageX
             y: e.pageY
+
+    edit: ->
+        modal = new Modal
+            title: "Edit an edge"
+            fields:
+                "weight":
+                    type: "text"
+                    label: "Edge Weight"
+                    default: @weight
+                "direction":
+                    type: "radio"
+                    label: "Edge Direction"
+                    values:
+                        "0": "Undirected"
+                        "-1": "'#{@nodeb.name}' to '#{@nodea.name}'"
+                        "1": "'#{@nodea.name}' to '#{@nodeb.name}'"
+                    default: @direction
 
     # ### connection.spark( )
     # Performs an animation along the edge. To be used when demonstrating the

@@ -6,8 +6,7 @@
     Graph.prototype.remove_mode = false;
     function Graph() {
       this.do_mouse_removal = __bind(this.do_mouse_removal, this);
-      this.do_mouse_connection = __bind(this.do_mouse_connection, this);
-      var _ref;
+      this.do_mouse_connection = __bind(this.do_mouse_connection, this);      var _ref;
       _ref = [[], []], this.nodes = _ref[0], this.edges = _ref[1];
       this.nodes_id_map = {};
       this.nodecount = 0;
@@ -145,7 +144,8 @@
                       "0": "Undirected",
                       "-1": "'" + this.edgenb.name + "' to '" + this.edgena.name + "'",
                       "1": "'" + this.edgena.name + "' to '" + this.edgenb.name + "'"
-                    }
+                    },
+                    "default": 0
                   }
                 },
                 callback: __bind(function(r) {

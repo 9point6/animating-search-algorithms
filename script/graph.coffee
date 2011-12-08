@@ -162,6 +162,7 @@ class Graph
                                         "0": "Undirected"
                                         "-1": "'#{@edgenb.name}' to '#{@edgena.name}'"
                                         "1": "'#{@edgena.name}' to '#{@edgenb.name}'"
+                                    default: 0
                             callback: ( r ) =>
                                 newedge = @connect @edgena, @edgenb, r.weight, r.direction
                                 @edgena.r.animate

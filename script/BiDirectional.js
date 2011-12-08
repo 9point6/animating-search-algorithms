@@ -47,21 +47,18 @@
     BiDirectional.prototype.search = function() {
       var item, item2, pointer, pointer2, _i, _j, _len, _len2, _ref, _ref2, _results;
       pointer = 0;
-      console.log(this.alg2.traverse_info);
       _ref = this.traverse_info_start;
       _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         item = _ref[_i];
         this.traverse_info.push(item);
         pointer++;
-        console.log(this.traverse_info);
         _ref2 = this.alg2.traverse_info;
         for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
           item2 = _ref2[_j];
           pointer2 = 0;
           if (item instanceof Node && item2 instanceof Node) {
             if (item.id === item2.id) {
-              this.traverse_info.push(item2);
               return;
             }
           }

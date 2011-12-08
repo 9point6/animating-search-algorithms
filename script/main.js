@@ -138,7 +138,7 @@
       $('#kamada').click(__bind(function(e) {
         var func, i, kamada, lim, modal;
         i = 0;
-        lim = prompt("how many iterations", 500);
+        lim = 150 * this.graph.nodecount;
         modal = new Modal({
           title: "Please wait",
           intro: "Running Kamada Kawai <span id=\"kkprog\">" + i + "/" + lim + "</span>",
@@ -180,7 +180,7 @@
             _ref3 = this.graph.nodes;
             for (_j = 0, _len2 = _ref3.length; _j < _len2; _j++) {
               n = _ref3[_j];
-              n.move(50 + (n.x - dx) / Math.max(mx, my), 50 + (n.y - dy) / Math.max(mx, my));
+              n.move(75 + (n.x - dx) / Math.max(mx, my), 75 + (n.y - dy) / Math.max(mx, my));
               _ref4 = n.edges;
               for (_k = 0, _len3 = _ref4.length; _k < _len3; _k++) {
                 e = _ref4[_k];
