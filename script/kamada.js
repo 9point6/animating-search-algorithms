@@ -70,10 +70,8 @@
     };
     KamadaKawai.prototype.shortest_paths = function() {
       var e, lim, m, n, p, q, qo, u, v, _i, _j, _k, _len, _len2, _len3, _ref, _ref2;
-      console.log("## shortest paths");
       this.paths = {};
       lim = Math.ceil(Math.sqrt(APP.graph.nodecount));
-      console.log("Calculating approximate APSP to depth " + lim);
       _ref = APP.graph.nodes;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         u = _ref[_i];
@@ -102,8 +100,6 @@
         }
         this.paths[u.id] = p;
       }
-      console.log("// shortest paths");
-      console.log(this.paths);
       return this.paths;
     };
     KamadaKawai.prototype.iterate = function() {

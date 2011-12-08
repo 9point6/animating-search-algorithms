@@ -68,11 +68,11 @@ class KamadaKawai
     # O(n2) + O(n3) - luckily only run once
     # tested + working on a cube
     shortest_paths: ->
-        console.log "## shortest paths"
+        # console.log "## shortest paths"
         @paths = {}
 
         lim = Math.ceil Math.sqrt APP.graph.nodecount
-        console.log "Calculating approximate APSP to depth " + lim
+        # console.log "Calculating approximate APSP to depth " + lim
         for u in APP.graph.nodes
             p = {}
             p[v.id] = lim + 10 * v.weight_to_travel( u ) for v in APP.graph.nodes
@@ -94,8 +94,8 @@ class KamadaKawai
                     q.push m
             @paths[u.id] = p
 
-        console.log "// shortest paths"
-        console.log @paths
+        # console.log "// shortest paths"
+        # console.log @paths
         @paths
 
     iterate: ( ) ->
