@@ -141,6 +141,21 @@ class Node
                 cx: @x
                 cy: @y
 
+    edit: ->
+        modal = new Modal
+            title: "Edit a node"
+            fields:
+                "name":
+                    type: "text"
+                    label: "Node Name"
+                    default: @name
+            cancel: "Cancel"
+            callback: ( r ) =>
+                @name = r.name
+                @label.attr
+                    text: @name
+        modal.show( )
+
     # ### point.click( )
     # Node click handler. What it does depends on the current state of the
     # `app` object's flag booleans.
@@ -175,6 +190,8 @@ class Node
                 if APP.design_mode
                     APP.context = new Context
                         items:
+                            'Edit': =>
+                                @edit( )
                             'Remove': =>
                                 @remove( )
                         x: e.pageX

@@ -143,6 +143,27 @@
         });
       }
     };
+    Node.prototype.edit = function() {
+      var modal;
+      modal = new Modal({
+        title: "Edit a node",
+        fields: {
+          "name": {
+            type: "text",
+            label: "Node Name",
+            "default": this.name
+          }
+        },
+        cancel: "Cancel",
+        callback: __bind(function(r) {
+          this.name = r.name;
+          return this.label.attr({
+            text: this.name
+          });
+        }, this)
+      });
+      return modal.show();
+    };
     Node.prototype.click = function(e) {
       if (APP.graph.connect_mode) {
         this.r.animate({
@@ -169,6 +190,9 @@
           if (APP.design_mode) {
             APP.context = new Context({
               items: {
+                'Edit': __bind(function() {
+                  return this.edit();
+                }, this),
                 'Remove': __bind(function() {
                   return this.remove();
                 }, this)
