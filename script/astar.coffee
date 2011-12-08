@@ -35,10 +35,6 @@ class AStar extends Algorithm
             # and add root_node to the list of open nodes
             @root_node.costSoFar = 0
             @root_node.estimatedTotalCost = 0 + @root_node.costSoFar + @heuristic.choice @heuristic_choice, @root_node, @goal_node
-            console.log @heuristic.choice @heuristic_choice, @root_node, @goal_node
-            console.log "heuristic_choice " + @heuristic_choice
-            console.log @root_node
-            console.log @goal_node
             openList.push @root_node
 
         while openList.length isnt 0
@@ -65,7 +61,12 @@ class AStar extends Algorithm
             #remove it from the closed list, this will force any connections dependant on this node to be reconsidered at a later time
 
             for connection in currentNode.edges
-                visitable = connection.e.visitable currentNode
+                #visitable = connection.e.visitable currentNode
+                if @is_from_goal?
+                        visitable = connection.e.visitable currentNode, true
+                    else
+                        visitable = connection.e.visitable currentNode
+
 
                 if visitable
                     endNode = connection.n
@@ -87,8 +88,6 @@ class AStar extends Algorithm
                         endNode.costSoFar = potentialCost
                         endNode.estimatedTotalCost = endNode.costSoFar + @heuristic.choice @heuristic_choice, endNode, @goal_node
                         openList.push endNode
-                        console.log "openList = "
-                        console.log openList
 
             @remove openList, currentNode
             closedList.push currentNode

@@ -17,8 +17,10 @@ class BiDirectional extends Algorithm
     name: "Bi-Directional Search"
 
     pre_run: ->
-        @alg1 = new DFS( )
-        @alg2 = new DFS( )
+        @alg1 = new BFS( )
+        @alg2 = new BFS( )
+        @alg1.heuristic_choice = 0
+        @alg2.heuristic_choice = 0
         @alg1.root_node = @root_node
         @alg1.goal_node = @goal_node
         @alg1.search( )
@@ -36,11 +38,13 @@ class BiDirectional extends Algorithm
         @traverse_info_goal = @alg2.traverse_info.slice(0)
 
     destroy: ->
-        for node in @explored_nodes
+        for node in APP.graph.nodes
             delete node.explored
         super
 
     search: ->
+        @traverse_info = []
+        @explored_nodes = []
         searched_from_goal = []
         searched_from_start = []
         combinedArrayLength = @traverse_info_start.length + @traverse_info_goal.length
@@ -85,8 +89,6 @@ class BiDirectional extends Algorithm
         while i--
             if a[i].id? and obj.id?
                 if a[i].id is obj.id
-                    console.log a[i]
-                    console.log obj
                     return true
         return false
 

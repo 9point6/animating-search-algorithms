@@ -16,8 +16,10 @@
     BiDirectional.prototype.name = "Bi-Directional Search";
     BiDirectional.prototype.pre_run = function() {
       var node, _i, _len, _ref;
-      this.alg1 = new DFS();
-      this.alg2 = new DFS();
+      this.alg1 = new BFS();
+      this.alg2 = new BFS();
+      this.alg1.heuristic_choice = 0;
+      this.alg2.heuristic_choice = 0;
       this.alg1.root_node = this.root_node;
       this.alg1.goal_node = this.goal_node;
       this.alg1.search();
@@ -37,7 +39,7 @@
     };
     BiDirectional.prototype.destroy = function() {
       var node, _i, _len, _ref;
-      _ref = this.explored_nodes;
+      _ref = APP.graph.nodes;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         node = _ref[_i];
         delete node.explored;
@@ -46,6 +48,8 @@
     };
     BiDirectional.prototype.search = function() {
       var combinedArrayLength, i, searched_from_goal, searched_from_start, _results;
+      this.traverse_info = [];
+      this.explored_nodes = [];
       searched_from_goal = [];
       searched_from_start = [];
       combinedArrayLength = this.traverse_info_start.length + this.traverse_info_goal.length;
@@ -102,8 +106,6 @@
       while (i--) {
         if ((a[i].id != null) && (obj.id != null)) {
           if (a[i].id === obj.id) {
-            console.log(a[i]);
-            console.log(obj);
             return true;
           }
         }
