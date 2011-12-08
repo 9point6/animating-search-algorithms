@@ -50,7 +50,13 @@ class Animate
             if current_item instanceof Node
                 # loop through all of the points connections
                 for edge in current_item.edges
-                    visitable = edge.e.visitable current_item
+                    if @algorithm.name is "Bi-Directional Search"
+                        if @pointer % 2 isnt 0
+                            visitable = edge.e.visitable current_item, true
+                        else
+                            visitable = edge.e.visitable current_item
+                    else
+                        visitable = edge.e.visitable current_item
 
                     # This stops overwriting the style of the previous element in the
                     # traverse_info array as it should be the only connection in the
@@ -102,7 +108,7 @@ class Animate
                         console.log("creating path")
                         @create_path (@pointer / 2)
                         for edge in current_item.edges
-                            if edge.n isnt @traverse_info[@pointer-2] and edge.e isnt last_viewed and not goal_reached
+                            if edge.n isnt @traverse_info[@pointer-2] and edge.e isnt last_viewed and not goal_reached and edge.e.visitable current_item
                                 edge.e.update_style "potential"
 
                     if current_item instanceof Edge
@@ -134,11 +140,11 @@ class Animate
             # create variable for current item pointer looks at in the array
             current_item = @traverse_info[@pointer]
 
-            if (@algorithm.name isnt "A* Search" and @algorithm.name isnt "Bi-Directional Search") or current_item instanceof Node
+            #if (@algorithm.name isnt "A* Search" and @algorithm.name isnt "Bi-Directional Search") or current_item instanceof Edge
                 # change the current item to a "normal" style
-                current_item.update_style "normal"
-            else
-                current_item.update_style "potential"
+            current_item.update_style "normal"
+            #else
+                #current_item.update_style "potential"
 
             # if the current item is a point then change all of it's potential
             # connections back to a normal style.
@@ -163,8 +169,16 @@ class Animate
                         @create_path((@pointer-1) / 2)
                     for edge in previous_item.edges
                         if edge.e.style isnt "visited"
+                            if @algorithm.name is "Bi-Directional Search"
+                                if @pointer % 2 is 0
+                                    visitable = edge.e.visitable previous_item, true
+                                else
+                                    visitable = edge.e.visitable previous_item
+                            else
+                                visitable = edge.e.visitable previous_item
+
                             if edge.e.style is "path"
-                            else if edge.e.visitable previous_item
+                            else if visitable
                                 edge.e.update_style "potential"
 
 

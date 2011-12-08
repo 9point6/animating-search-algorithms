@@ -25,7 +25,15 @@
           _ref = current_item.edges;
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {
             edge = _ref[_i];
-            visitable = edge.e.visitable(current_item);
+            if (this.algorithm.name === "Bi-Directional Search") {
+              if (this.pointer % 2 !== 0) {
+                visitable = edge.e.visitable(current_item, true);
+              } else {
+                visitable = edge.e.visitable(current_item);
+              }
+            } else {
+              visitable = edge.e.visitable(current_item);
+            }
             if (edge.e.style === "normal" && !goal_reached && visitable) {
               edge.e.update_style("potential");
             }
@@ -71,7 +79,7 @@
               _ref4 = current_item.edges;
               for (_k = 0, _len3 = _ref4.length; _k < _len3; _k++) {
                 edge = _ref4[_k];
-                if (edge.n !== this.traverse_info[this.pointer - 2] && edge.e !== last_viewed && !goal_reached) {
+                if (edge.n !== this.traverse_info[this.pointer - 2] && edge.e !== last_viewed && !goal_reached && edge.e.visitable(current_item)) {
                   edge.e.update_style("potential");
                 }
               }
@@ -91,16 +99,12 @@
       }
     };
     Animate.prototype.step_backward = function() {
-      var current_item, edge, previous_item, _i, _j, _len, _len2, _ref, _ref2, _results;
+      var current_item, edge, previous_item, visitable, _i, _j, _len, _len2, _ref, _ref2, _results;
       if ((this.algorithm.traverse_info != null) && this.pointer > 0) {
         this.pointer--;
         this.traverse_info = this.algorithm.traverse_info;
         current_item = this.traverse_info[this.pointer];
-        if ((this.algorithm.name !== "A* Search" && this.algorithm.name !== "Bi-Directional Search") || current_item instanceof Node) {
-          current_item.update_style("normal");
-        } else {
-          current_item.update_style("potential");
-        }
+        current_item.update_style("normal");
         if (current_item instanceof Node) {
           _ref = current_item.edges;
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -122,7 +126,7 @@
             _results = [];
             for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
               edge = _ref2[_j];
-              _results.push(edge.e.style !== "visited" ? edge.e.style === "path" ? void 0 : edge.e.visitable(previous_item) ? edge.e.update_style("potential") : void 0 : void 0);
+              _results.push(edge.e.style !== "visited" ? (this.algorithm.name === "Bi-Directional Search" ? this.pointer % 2 === 0 ? visitable = edge.e.visitable(previous_item, true) : visitable = edge.e.visitable(previous_item) : visitable = edge.e.visitable(previous_item), edge.e.style === "path" ? void 0 : visitable ? edge.e.update_style("potential") : void 0) : void 0);
             }
             return _results;
           }
