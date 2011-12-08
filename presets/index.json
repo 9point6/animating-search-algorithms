@@ -1,0 +1,18 @@
+{
+    "info": {
+        "name": "Presets",
+        "last-updated": "2011-12-06T12:05:23Z",
+    }
+    "graphs": [
+        {
+            "name": "4x4 Grid",
+            "url": "grid.searchomatic",
+            "params": {
+                "directed": false,
+                "weighted": false,
+                "cycles": true,
+                "connected": true
+            }
+        }
+    ]
+}
