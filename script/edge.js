@@ -18,7 +18,7 @@
       this.update_midpoint();
       this.r = this.raphael.path();
       this.wt = this.raphael.text(this.x, this.y - 20, this.weight);
-      $(this.wt.node).css("cursor", "default");
+      $(this.wt.node).css("cursor", "pointer");
       this.di = this.raphael.path();
       this.update_style("normal", true);
       this.update_path();
@@ -27,6 +27,7 @@
       this.wt.hover(this.hover_in, this.hover_out);
       this.r.click(this.click);
       this.di.click(this.click);
+      this.wt.click(this.click);
     }
     Edge.prototype.visitable = function(node, reverse) {
       var ret;

@@ -175,8 +175,6 @@
             dy = dyl;
             mx = (dxg - dxl) / 500;
             my = (dyg - dyl) / 500;
-            console.log("" + dxl + ", " + dyl + " - " + dxg + " - " + dyg);
-            console.log("" + dx + ", " + dy + " - " + mx + " - " + my);
             _ref3 = this.graph.nodes;
             for (_j = 0, _len2 = _ref3.length; _j < _len2; _j++) {
               n = _ref3[_j];

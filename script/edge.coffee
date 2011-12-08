@@ -37,7 +37,7 @@ class Edge
 
         # draw weight text
         @wt = @raphael.text @x, @y - 20, @weight
-        $( @wt.node ).css "cursor", "default"
+        $( @wt.node ).css "cursor", "pointer"
 
         # direction indicator
         @di = @raphael.path( )
@@ -53,6 +53,7 @@ class Edge
         @wt.hover @hover_in, @hover_out
         @r.click @click
         @di.click @click
+        @wt.click @click
 
     visitable: ( node, reverse = false ) ->
         if @direction is 0

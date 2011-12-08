@@ -233,8 +233,6 @@ class Main
                     # TODO: actual screen widths
                     mx = ( dxg - dxl ) / 500
                     my = ( dyg - dyl ) / 500
-                    console.log "#{dxl}, #{dyl} - #{dxg} - #{dyg}"
-                    console.log "#{dx}, #{dy} - #{mx} - #{my}"
                     for n in @graph.nodes
                         n.move 75 + ( n.x - dx ) / Math.max( mx, my ), 75 + ( n.y - dy ) / Math.max( mx, my )
                         for e in n.edges
