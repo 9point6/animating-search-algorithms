@@ -39,7 +39,7 @@
     };
     BiDirectional.prototype.destroy = function() {
       var node, _i, _len, _ref;
-      _ref = this.explored_nodes;
+      _ref = APP.graph.nodes;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         node = _ref[_i];
         delete node.explored;

@@ -38,7 +38,7 @@ class BiDirectional extends Algorithm
         @traverse_info_goal = @alg2.traverse_info.slice(0)
 
     destroy: ->
-        for node in @explored_nodes
+        for node in APP.graph.nodes
             delete node.explored
         super
 
