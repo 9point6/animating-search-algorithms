@@ -415,6 +415,7 @@ class Main
                             title: 'Upload a graph file'
                             intro: '<a id="loadfile">click here to choose file</a>'
                             okay: false
+                            cancel: "Cancel"
                         @modal.show( )
                         $( '#loadfile' ).upload
                             name: 'fileup'

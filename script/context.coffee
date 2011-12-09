@@ -3,6 +3,7 @@ class Context
         x: 0
         y: 0
         autoshow: true
+        zindex: 1000
 
     constructor: ( params ) ->
         @options = {}
@@ -18,12 +19,14 @@ class Context
                 item = $( "<li>#{k}</li>" )
                 # TODO: Finish this
                 if v instanceof Context
+                    item.append "<span class=\"submarker\">&gt;</span>"
                     item.hover ( ( e ) =>
                         v.ul.css
                             left: e.pageX
                             top: e.pageY
                         v.killthis = @
-                        v.show( )
+                        func = => v.show( )
+                        setTimeout func, 100
                     ) , ( e ) ->
                         # v.hide( )
                 else
@@ -35,6 +38,7 @@ class Context
             throw "No menu items!"
 
         @div.click ( e ) =>
+            @hide( )
             @destroy( )
         @ul.css
             left: @options.x
@@ -50,6 +54,8 @@ class Context
             @ul.css
                 left: $( root ).position( ).left
                 top: $( root ).position( ).top
+        $( @div.node ).css
+            "z-index": @options.zindex++
         @ul.animate
             opacity: 1,
             250
@@ -60,12 +66,12 @@ class Context
             250, 'linear', =>
                 @div.hide( )
 
-    destroy: ->
+    destroy: ( killparent = true ) ->
         @ul.animate
             opacity: 0,
             250, 'linear', =>
                 @div.remove( )
-                if @killthis
+                if @killthis and killparent
                     @killthis.destroy( )
                 delete @
 

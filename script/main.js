@@ -430,7 +430,8 @@
               this.modal = new Modal({
                 title: 'Upload a graph file',
                 intro: '<a id="loadfile">click here to choose file</a>',
-                okay: false
+                okay: false,
+                cancel: "Cancel"
               });
               this.modal.show();
               return $('#loadfile').upload({

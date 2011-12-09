@@ -5,7 +5,8 @@
     Context.prototype.defaults = {
       x: 0,
       y: 0,
-      autoshow: true
+      autoshow: true,
+      zindex: 1000
     };
     function Context(params) {
       var item, k, v, _ref;
@@ -21,13 +22,18 @@
           v = _ref[k];
           item = $("<li>" + k + "</li>");
           if (v instanceof Context) {
+            item.append("<span class=\"submarker\">&gt;</span>");
             item.hover((__bind(function(e) {
+              var func;
               v.ul.css({
                 left: e.pageX,
                 top: e.pageY
               });
               v.killthis = this;
-              return v.show();
+              func = __bind(function() {
+                return v.show();
+              }, this);
+              return setTimeout(func, 100);
             }, this)), function(e) {});
           } else {
             item.click(v);
@@ -41,6 +47,7 @@
         throw "No menu items!";
       }
       this.div.click(__bind(function(e) {
+        this.hide();
         return this.destroy();
       }, this));
       this.ul.css({
@@ -63,6 +70,9 @@
           top: $(root).position().top
         });
       }
+      $(this.div.node).css({
+        "z-index": this.options.zindex++
+      });
       return this.ul.animate({
         opacity: 1
       }, 250);
@@ -74,12 +84,15 @@
         return this.div.hide();
       }, this));
     };
-    Context.prototype.destroy = function() {
+    Context.prototype.destroy = function(killparent) {
+      if (killparent == null) {
+        killparent = true;
+      }
       return this.ul.animate({
         opacity: 0
       }, 250, 'linear', __bind(function() {
         this.div.remove();
-        if (this.killthis) {
+        if (this.killthis && killparent) {
           this.killthis.destroy();
         }
         return delete this;
