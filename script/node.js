@@ -297,7 +297,7 @@
           }, anim_speed, this.style = "normal");
         case "viewing":
           return this.r.animate({
-            fill: "#A40000"
+            fill: "#0C3"
           }, anim_speed, this.style = "viewing");
         case "visited":
           return this.r.animate({
@@ -305,7 +305,7 @@
           }, anim_speed, this.style = "visited");
         case "goal":
           return this.r.animate({
-            fill: "#FFFF00"
+            fill: "#FFFFFF"
           }, anim_speed, this.style = "goal");
       }
     };

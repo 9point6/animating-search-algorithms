@@ -309,7 +309,7 @@ class Node
             # The node is currently being 'looked at'
             when "viewing"
                 @r.animate
-                    fill: "#A40000",
+                    fill: "#0C3",
                     anim_speed
                     @style = "viewing"
             # The node has been visited by the algorithm
@@ -321,7 +321,7 @@ class Node
             # The node is the goal node
             when "goal"
                 @r.animate
-                    fill: "#FFFF00"
+                    fill: "#FFFFFF"
                     anim_speed
                     @style = "goal"
 

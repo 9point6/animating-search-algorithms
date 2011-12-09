@@ -188,16 +188,17 @@ class Edge
     # * Bring up a context menu to edit/remove the connection
     click: ( e ) =>
         # @spark( @direction >= 0 )
-        if APP.context
-            APP.context.destroy( )
-        APP.context = new Context
-            items:
-                'Edit': =>
-                    @edit( )
-                'Remove': =>
-                    @remove( )
-            x: e.pageX
-            y: e.pageY
+        if APP.design_mode
+            if APP.context
+                APP.context.destroy( )
+            APP.context = new Context
+                items:
+                    'Edit': =>
+                        @edit( )
+                    'Remove': =>
+                        @remove( )
+                x: e.pageX
+                y: e.pageY
 
     edit: ->
         modal = new Modal
@@ -271,7 +272,8 @@ class Edge
                     anim_speed
                 @di.animate
                     fill: "#666"
-                    stroke: "#666",
+                    stroke: "#666"
+                    "stroke-width": 1,
                     anim_speed
                 @wt.animate
                     stroke: "#000",
@@ -293,31 +295,55 @@ class Edge
                 @style = "hover"
             # The connection is currently being 'looked at'
             when "viewing"
+                colour = "#0C3"
                 @r.animate
-                    stroke: "#A40000"
+                    stroke: colour
                     "stroke-width": 10,
+                    anim_speed
+                @di.animate
+                    fill: colour
+                    stroke: colour
+                    "stroke-width": 7,
                     anim_speed
                 @style = "viewing"
             # The connection is an option for later in the algorithm
             when "potential"
+                colour = "#0247FE"
                 @r.animate
-                    stroke: "#0247FE"
+                    stroke: colour
                     "stroke-width": 5,
+                    anim_speed
+                @di.animate
+                    fill: colour
+                    stroke: colour
+                    "stroke-width": 3,
                     anim_speed
                 @style = "potential"
             # The connection has been visited by the algorithm
             when "visited"
+                colour = "#000"
                 @r.animate
                     #stroke: "#A40000"
-                    stroke: "#000"
+                    stroke: colour
                     "stroke-width": 3,
+                    anim_speed
+                @di.animate
+                    fill: colour
+                    stroke: colour
+                    "stroke-width": 1,
                     anim_speed
                 @style = "visited"
             when "path"
+                colour = "#F60"
                 @r.animate
-                    stroke: "#CDAD00"
+                    stroke: colour
                     "stroke-width": 5,
                     anim_speed
-                    @style = "path"
+                @di.animate
+                    fill: colour
+                    stroke: colour
+                    "stroke-width": 3,
+                    anim_speed
+                @style = "path"
 
 this.Edge = Edge

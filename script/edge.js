@@ -154,21 +154,23 @@
       }
     };
     Edge.prototype.click = function(e) {
-      if (APP.context) {
-        APP.context.destroy();
+      if (APP.design_mode) {
+        if (APP.context) {
+          APP.context.destroy();
+        }
+        return APP.context = new Context({
+          items: {
+            'Edit': __bind(function() {
+              return this.edit();
+            }, this),
+            'Remove': __bind(function() {
+              return this.remove();
+            }, this)
+          },
+          x: e.pageX,
+          y: e.pageY
+        });
       }
-      return APP.context = new Context({
-        items: {
-          'Edit': __bind(function() {
-            return this.edit();
-          }, this),
-          'Remove': __bind(function() {
-            return this.remove();
-          }, this)
-        },
-        x: e.pageX,
-        y: e.pageY
-      });
     };
     Edge.prototype.edit = function() {
       var modal;
@@ -230,7 +232,7 @@
       }
     };
     Edge.prototype.update_style = function(style_name, instant) {
-      var anim_speed;
+      var anim_speed, colour;
       if (instant == null) {
         instant = false;
       }
@@ -243,7 +245,8 @@
           }, anim_speed);
           this.di.animate({
             fill: "#666",
-            stroke: "#666"
+            stroke: "#666",
+            "stroke-width": 1
           }, anim_speed);
           this.wt.animate({
             stroke: "#000"
@@ -263,28 +266,53 @@
           }, anim_speed);
           return this.style = "hover";
         case "viewing":
+          colour = "#0C3";
           this.r.animate({
-            stroke: "#A40000",
+            stroke: colour,
             "stroke-width": 10
+          }, anim_speed);
+          this.di.animate({
+            fill: colour,
+            stroke: colour,
+            "stroke-width": 7
           }, anim_speed);
           return this.style = "viewing";
         case "potential":
+          colour = "#0247FE";
           this.r.animate({
-            stroke: "#0247FE",
+            stroke: colour,
             "stroke-width": 5
+          }, anim_speed);
+          this.di.animate({
+            fill: colour,
+            stroke: colour,
+            "stroke-width": 3
           }, anim_speed);
           return this.style = "potential";
         case "visited":
+          colour = "#000";
           this.r.animate({
-            stroke: "#000",
+            stroke: colour,
             "stroke-width": 3
+          }, anim_speed);
+          this.di.animate({
+            fill: colour,
+            stroke: colour,
+            "stroke-width": 1
           }, anim_speed);
           return this.style = "visited";
         case "path":
-          return this.r.animate({
-            stroke: "#CDAD00",
+          colour = "#F60";
+          this.r.animate({
+            stroke: colour,
             "stroke-width": 5
-          }, anim_speed, this.style = "path");
+          }, anim_speed);
+          this.di.animate({
+            fill: colour,
+            stroke: colour,
+            "stroke-width": 3
+          }, anim_speed);
+          return this.style = "path";
       }
     };
     return Edge;
