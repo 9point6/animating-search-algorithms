@@ -18,12 +18,14 @@ class Context
                 item = $( "<li>#{k}</li>" )
                 # TODO: Finish this
                 if v instanceof Context
-                    item.hover ( ( e ) ->
-                        v.x = e.pageX
-                        v.y = e.pageY
+                    item.hover ( ( e ) =>
+                        v.ul.css
+                            left: e.pageX
+                            top: e.pageY
+                        v.killthis = @
                         v.show( )
                     ) , ( e ) ->
-                        v.hide( )
+                        # v.hide( )
                 else
                     item.click v
                     item.click ( e ) =>
@@ -42,9 +44,12 @@ class Context
         if @options.autoshow
             @show( )
 
-    show: ->
+    show: ( root = null ) ->
         $( 'body' ).append @div
-
+        if root?
+            @ul.css
+                left: $( root ).position( ).left
+                top: $( root ).position( ).top
         @ul.animate
             opacity: 1,
             250
@@ -60,6 +65,8 @@ class Context
             opacity: 0,
             250, 'linear', =>
                 @div.remove( )
+                if @killthis
+                    @killthis.destroy( )
                 delete @
 
 this.Context = Context

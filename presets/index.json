@@ -1,8 +1,8 @@
 {
     "info": {
         "name": "Presets",
-        "last-updated": "2011-12-06T12:05:23Z",
-    }
+        "last-updated": "2011-12-06T12:05:23Z"
+    },
     "graphs": [
         {
             "name": "4x4 Grid",
@@ -13,7 +13,7 @@
                 "cycles": true,
                 "connected": true
             }
-        }
+        },
         {
             "name": "City Map",
             "url": "graph-citymap.searchomatic",
@@ -23,7 +23,7 @@
                 "cycles": true,
                 "connected": true
             }
-        }
+        },
         {
             "name": "Binary Tree Graph",
             "url": "BinaryTree.searchomatic",

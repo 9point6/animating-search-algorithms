@@ -21,13 +21,14 @@
           v = _ref[k];
           item = $("<li>" + k + "</li>");
           if (v instanceof Context) {
-            item.hover((function(e) {
-              v.x = e.pageX;
-              v.y = e.pageY;
+            item.hover((__bind(function(e) {
+              v.ul.css({
+                left: e.pageX,
+                top: e.pageY
+              });
+              v.killthis = this;
               return v.show();
-            }), function(e) {
-              return v.hide();
-            });
+            }, this)), function(e) {});
           } else {
             item.click(v);
             item.click(__bind(function(e) {
@@ -51,8 +52,17 @@
         this.show();
       }
     }
-    Context.prototype.show = function() {
+    Context.prototype.show = function(root) {
+      if (root == null) {
+        root = null;
+      }
       $('body').append(this.div);
+      if (root != null) {
+        this.ul.css({
+          left: $(root).position().left,
+          top: $(root).position().top
+        });
+      }
       return this.ul.animate({
         opacity: 1
       }, 250);
@@ -69,6 +79,9 @@
         opacity: 0
       }, 250, 'linear', __bind(function() {
         this.div.remove();
+        if (this.killthis) {
+          this.killthis.destroy();
+        }
         return delete this;
       }, this));
     };

@@ -18,6 +18,31 @@
         "margin-right": -300
       });
       this.setup_upload();
+      $.getJSON('presets/index.json', {
+        johnis: 'awesome'
+      }, __bind(function(r) {
+        var fdfdf, func, graph, i, _i, _len, _ref, _results;
+        this.presets = r.graphs;
+        i = 0;
+        _ref = this.presets;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          graph = _ref[_i];
+          func = function(g) {
+            return $.get("presets/" + g.url, {
+              johnis: 'still_awesome'
+            }, __bind(function(r) {
+              return g.data = r;
+            }, this));
+          };
+          func(graph);
+          fdfdf = __bind(function() {
+            return console.log(this.presets);
+          }, this);
+          _results.push(setTimeout(fdfdf, 250));
+        }
+        return _results;
+      }, this));
       $('#slidetoggle').hover((function(e) {
         $('#algohelptext').css("display", "block");
         return $('#algohelptext').css("opacity", 100);
@@ -335,25 +360,48 @@
         delete this.upload_obj;
         $('#load a').remove();
       }
-      return this.upload_obj = $('<a />').css({
-        width: "32px",
-        height: "32px",
-        display: "block"
-      }).appendTo('#load').upload({
-        name: 'fileup',
-        action: "io.php",
-        params: {
-          action: "load"
-        },
-        onComplete: __bind(function(response) {
-          var data;
-          data = $.parseJSON(response);
-          return this.graph.parse_string(data.data);
-        }, this),
-        onSelect: function() {
-          return this.submit();
+      return $('#load').click(__bind(function(e) {
+        var context, func, g, presets, _i, _len, _ref;
+        presets = {};
+        _ref = this.presets;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          g = _ref[_i];
+          func = __bind(function(gr) {
+            return presets[gr.name] = __bind(function() {
+              return this.graph.parse_string(gr.data);
+            }, this);
+          }, this);
+          func(g);
         }
-      });
+        context = new Context({
+          x: e.pageX,
+          y: e.pageY,
+          items: {
+            'Load from file...': __bind(function() {
+              return false;
+            }, this),
+            'Presets': new Context({
+              autoshow: false,
+              items: presets
+            })
+          }
+        });
+        return $('li:first', context.ul).upload({
+          name: 'fileup',
+          action: "io.php",
+          params: {
+            action: "load"
+          },
+          onComplete: __bind(function(response) {
+            var data;
+            data = $.parseJSON(response);
+            return this.graph.parse_string(data.data);
+          }, this),
+          onSelect: function() {
+            return this.submit();
+          }
+        });
+      }, this));
     };
     Main.prototype.fade_out_toolbar = function(text, cancel_callback) {
       var tb;
