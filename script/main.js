@@ -168,7 +168,7 @@
       $('#kamada').click(__bind(function(e) {
         var func, i, kamada, lim, modal;
         i = 0;
-        lim = 150 * this.graph.nodecount;
+        lim = 50 * this.graph.nodecount;
         modal = new Modal({
           title: "Please wait",
           intro: "Running Kamada Kawai <span id=\"kkprog\">" + i + "/" + lim + "</span>",

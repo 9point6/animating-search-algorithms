@@ -219,7 +219,7 @@ class Main
             @graph.do_mouse_connection( )
         $( '#kamada' ).click ( e ) =>
             i = 0
-            lim = 150 * @graph.nodecount
+            lim = 50 * @graph.nodecount
             modal = new Modal
                 title: "Please wait"
                 intro: "Running Kamada Kawai <span id=\"kkprog\">#{i}/#{lim}</span>"
