@@ -115,9 +115,14 @@ class DFS extends Algorithm
                 # correct connection which links to the next node in the
                 # exp_nodes array.
                 for edge in current_node.edges
+                    if @is_from_goal?
+                        visitable = edge.e.visitable current_node, true
+                    else
+                        visitable = edge.e.visitable current_node
+
                     # if the other node for the current connection is
                     # the node we are looking for.
-                    if edge.n.id is exp_nodes[0].id
+                    if edge.n.id is exp_nodes[0].id and visitable
                         # add connection to the traverse_info array.
                         @traverse_info.push edge.e
 
@@ -131,10 +136,15 @@ class DFS extends Algorithm
                         if not found
                             # look at previous nodes connections
                             for edge in node.edges
+                                if @is_from_goal?
+                                    visitable = edge.e.visitable node, true
+                                else
+                                    visitable = edge.e.visitable node
+
                                 # if the previous node is connected with the next node
                                 # then add the connection to the traverse_info array for
                                 # animation.
-                                if edge.n.id is exp_nodes[0].id
+                                if edge.n.id is exp_nodes[0].id and visitable
                                     @traverse_info.push edge.e
                                     found = true
                                     break

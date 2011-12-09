@@ -90,7 +90,7 @@ DFS = (function() {
         _ref = current_node.edges;
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           edge = _ref[_i];
-          if (edge.n.id === exp_nodes[0].id) this.traverse_info.push(edge.e);
+          if (edge.n.id === exp_nodes[0].id && edge.e.visitable(current_node)) this.traverse_info.push(edge.e);
         }
         if (this.traverse_info.slice(-1)[0] instanceof Node) {
           found = false;
@@ -106,7 +106,7 @@ DFS = (function() {
                   _results3 = [];
                   for (_k = 0, _len3 = _ref2.length; _k < _len3; _k++) {
                     edge = _ref2[_k];
-                    if (edge.n.id === exp_nodes[0].id) {
+                    if (edge.n.id === exp_nodes[0].id && edge.e.visitable(node)) {
                       this.traverse_info.push(edge.e);
                       found = true;
                       break;
