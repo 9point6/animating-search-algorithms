@@ -18,7 +18,7 @@ class BiDirectional extends Algorithm
 
     pre_run: ->
         @alg1 = new DFS( )
-        @alg2 = new BFS( )
+        @alg2 = new DFS( )
         @alg1.heuristic_choice = 0
         @alg2.heuristic_choice = 0
         @alg1.root_node = @root_node
@@ -58,9 +58,13 @@ class BiDirectional extends Algorithm
                     return
 
                 if @traverse_info[@traverse_info.length-1] instanceof Edge
-                    if @containsById searched_from_start, @traverse_info_start[i].nodea
-                        if @containsById searched_from_goal, @traverse_info_start[i].nodeb
-                            return
+                    if @traverse_info_start[i]?
+                        if @containsById searched_from_start, @traverse_info_start[i].nodea
+                            if @containsById searched_from_goal, @traverse_info_start[i].nodeb
+                                return
+                        else if @containsById searched_from_start, @traverse_info_start[i].nodeb
+                            if @containsById searched_from_goal, @traverse_info_start[i].nodea
+                                return
 
             if i < @traverse_info_goal.length
                 @traverse_info.push @traverse_info_goal[i]
@@ -70,9 +74,13 @@ class BiDirectional extends Algorithm
                     return
 
                 if @traverse_info[@traverse_info.length-1] instanceof Edge
-                    if @containsById searched_from_start, @traverse_info_start[i].nodea
-                        if @containsById searched_from_goal, @traverse_info_start[i].nodeb
-                            return
+                    if @traverse_info_start[i]?
+                        if @containsById searched_from_start, @traverse_info_start[i].nodea
+                            if @containsById searched_from_goal, @traverse_info_start[i].nodeb
+                                return
+                        else if @containsById searched_from_start, @traverse_info_start[i].nodeb
+                            if @containsById searched_from_goal, @traverse_info_start[i].nodea
+                                return
 
             i++
 

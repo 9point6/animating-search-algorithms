@@ -17,7 +17,7 @@
     BiDirectional.prototype.pre_run = function() {
       var node, _i, _len, _ref;
       this.alg1 = new DFS();
-      this.alg2 = new BFS();
+      this.alg2 = new DFS();
       this.alg1.heuristic_choice = 0;
       this.alg2.heuristic_choice = 0;
       this.alg1.root_node = this.root_node;
@@ -63,9 +63,15 @@
             return;
           }
           if (this.traverse_info[this.traverse_info.length - 1] instanceof Edge) {
-            if (this.containsById(searched_from_start, this.traverse_info_start[i].nodea)) {
-              if (this.containsById(searched_from_goal, this.traverse_info_start[i].nodeb)) {
-                return;
+            if (this.traverse_info_start[i] != null) {
+              if (this.containsById(searched_from_start, this.traverse_info_start[i].nodea)) {
+                if (this.containsById(searched_from_goal, this.traverse_info_start[i].nodeb)) {
+                  return;
+                }
+              } else if (this.containsById(searched_from_start, this.traverse_info_start[i].nodeb)) {
+                if (this.containsById(searched_from_goal, this.traverse_info_start[i].nodea)) {
+                  return;
+                }
               }
             }
           }
@@ -77,9 +83,15 @@
             return;
           }
           if (this.traverse_info[this.traverse_info.length - 1] instanceof Edge) {
-            if (this.containsById(searched_from_start, this.traverse_info_start[i].nodea)) {
-              if (this.containsById(searched_from_goal, this.traverse_info_start[i].nodeb)) {
-                return;
+            if (this.traverse_info_start[i] != null) {
+              if (this.containsById(searched_from_start, this.traverse_info_start[i].nodea)) {
+                if (this.containsById(searched_from_goal, this.traverse_info_start[i].nodeb)) {
+                  return;
+                }
+              } else if (this.containsById(searched_from_start, this.traverse_info_start[i].nodeb)) {
+                if (this.containsById(searched_from_goal, this.traverse_info_start[i].nodea)) {
+                  return;
+                }
               }
             }
           }

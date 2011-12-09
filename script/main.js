@@ -228,7 +228,8 @@
           this.graph.remove_root_and_goal_nodes();
           this.root_select_mode = false;
           this.goal_select_mode = false;
-          return this.fade_in_toolbar();
+          this.fade_in_toolbar();
+          return this.current_algo.traverse_info = [];
         }, this));
         return this.root_select_mode = true;
       }, this));
