@@ -36,7 +36,7 @@
       this.path_edges = [];
       this.is_found = false;
       this.traverse_info = [];
-      this._search(this.root_node, 3, this.root_node);
+      this._search(this.root_node, this.depth, this.root_node);
       return this.create_path_info();
     };
     DLS.prototype._search = function(node, depth, prev_node) {

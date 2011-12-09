@@ -18,7 +18,7 @@ class DLS extends Algorithm
         @path_edges = []
         @is_found = false
         @traverse_info = []
-        @_search @root_node, 3, @root_node
+        @_search @root_node, @depth, @root_node
         @create_path_info()
 
     _search: ( node, depth, prev_node ) ->
