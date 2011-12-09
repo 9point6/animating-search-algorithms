@@ -166,6 +166,14 @@ class Main
                                         @current_algo.traverse_info = []
                                     false
                             delete a
+                if alg.gen_info( )[4].indexOf( 'needsdepth' ) isnt -1
+                    extras.append li = $( "<li class=\"algoextra\" />" )
+                    li.append "<h3>Depth Limit</h3>"
+                    li.append text = $( "<input id=\"algodepth\" type=\"text\" value=\"3\" />" )
+                    @current_algo.depth = 3
+                    text.change ( e ) =>
+                        if @current_algo
+                            @current_algo.depth = $( e.target ).val( )
             delete alg
         $( '#new' ).click ( e ) =>
             @graph.clear_graph( )

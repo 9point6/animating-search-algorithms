@@ -24,7 +24,7 @@
       return IterativeDeepening.__super__.destroy.apply(this, arguments);
     };
     IterativeDeepening.prototype.search = function() {
-      var depth, max_depth, node, _i, _len, _ref;
+      var depth, node, _i, _len, _ref;
       _ref = this.explored_nodes;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         node = _ref[_i];
@@ -35,9 +35,9 @@
       this.path_edges = [];
       this.is_found = false;
       this.traverse_info = [];
-      max_depth = 3;
+      this.max_depth = 3;
       depth = 0;
-      while ((this.is_found === false) && (depth < max_depth)) {
+      while ((this.is_found === false) && (depth < this.max_depth)) {
         this._search(this.root_node, depth, this.root_node);
         depth = depth + 1;
       }

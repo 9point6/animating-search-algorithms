@@ -74,7 +74,7 @@
       }
     };
     DLS.prototype.gen_info = function() {
-      return ["Complete", "O(b<sup>m</sup>)", "O(bm)", "Not Optimal"];
+      return ["Complete", "O(b<sup>m</sup>)", "O(bm)", "Not Optimal", "needsdepth"];
     };
     DLS.prototype.run_info = function() {
       return alert("runtime information");

@@ -55,6 +55,7 @@ class DLS extends Algorithm
             "O(b<sup>m</sup>)"
             "O(bm)"
             "Not Optimal"
+            "needsdepth"
         ]
 
     run_info: ->

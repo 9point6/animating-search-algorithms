@@ -33,12 +33,12 @@ $imgloc = ../../img/developpers/PNG/
     box-shadow: $options
 
 @mixin border-radius($radius)
-    -webkit-border-radius: $radius
-    -moz-border-radius: $radius
-    border-radius: $radius
-    -moz-background-clip: padding
-    -webkit-background-clip: padding-box
-    background-clip: padding-box
+    -webkit-border-radius: $radius !important
+    -moz-border-radius: $radius !important
+    border-radius: $radius !important
+    -moz-background-clip: padding !important
+    -webkit-background-clip: padding-box !important
+    background-clip: padding-box !important
 
 @mixin transition($options)
     -webkit-transition: $options
@@ -208,12 +208,13 @@ div#algohelptext
                 font-size: 1.2em
                 margin: 0
 
-            select
+            select, input[type="text"]
                 width: 200px
                 padding: 2px
                 outline: 0px
                 font-size: 1.2em
-                @include linear-gradient(#ccc, #000)
+                /*border: #fff solid 2px*/ // TODO: Bug in chrome with the select. -webkit-appearance
+                @include linear-gradient(#ccc, #fff)
                 @include border-radius(5px)
 
 #helptext
