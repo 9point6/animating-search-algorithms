@@ -18,6 +18,8 @@ class Animate
     # Stores the algorithm currently being worked on in the UI environment.
     algorithm: null
 
+    path_diff: 0
+
     destroy: ->
         APP.graph.remove_styles( )
         delete @
@@ -70,7 +72,7 @@ class Animate
                 previous_item = @traverse_info[@pointer-1]
                 # if the previous item is in the "viewing" style (which it should
                 # be)
-                if previous_item.style is "viewing"
+                if previous_item.style is "viewing" and previous_item isnt current_item
                     # update previous items style to visited
                     previous_item.update_style "visited"
                     if previous_item instanceof Node
@@ -106,7 +108,12 @@ class Animate
                             @reset_path()
                         last_viewed = previous_item
                         console.log("creating path")
-                        @create_path (@pointer / 2)
+                        
+                        if previous_item instanceof Node
+                            @path_diff++
+                        
+                        @create_path (@pointer+@path_diff) / 2
+
                         for edge in current_item.edges
                             if edge.n isnt @traverse_info[@pointer-2] and edge.e isnt last_viewed and not goal_reached and edge.e.visitable current_item
                                 edge.e.update_style "potential"
@@ -116,7 +123,7 @@ class Animate
                         console.log(current_item.nodeb)
                         if current_item.nodea isnt previous_item and current_item.nodeb isnt previous_item
                             @reset_path()
-                            @create_path((@pointer+1)/2)
+                            @create_path (@pointer+@path_diff+1)/2
                             current_item.update_style "viewing"
 
 
@@ -165,8 +172,10 @@ class Animate
                 # to now be in a "potential" style.
                 if previous_item instanceof Node
                     if @algorithm.path_edges?
+                        if current_item instanceof Node
+                            @path_diff--
                         @reset_path()
-                        @create_path((@pointer-1) / 2)
+                        @create_path((@pointer+@path_diff-1) / 2)
                     for edge in previous_item.edges
                         if edge.e.style isnt "visited"
                             if @algorithm.name is "Bi-Directional Search"

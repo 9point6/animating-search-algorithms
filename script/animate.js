@@ -5,6 +5,7 @@
     function Animate() {}
     Animate.prototype.pointer = 0;
     Animate.prototype.algorithm = null;
+    Animate.prototype.path_diff = 0;
     Animate.prototype.destroy = function() {
       APP.graph.remove_styles();
       return delete this;
@@ -41,7 +42,7 @@
         }
         if (this.pointer !== 0) {
           previous_item = this.traverse_info[this.pointer - 1];
-          if (previous_item.style === "viewing") {
+          if (previous_item.style === "viewing" && previous_item !== current_item) {
             previous_item.update_style("visited");
             if (previous_item instanceof Node) {
               _ref2 = previous_item.edges;
@@ -75,7 +76,10 @@
               }
               last_viewed = previous_item;
               console.log("creating path");
-              this.create_path(this.pointer / 2);
+              if (previous_item instanceof Node) {
+                this.path_diff++;
+              }
+              this.create_path((this.pointer + this.path_diff) / 2);
               _ref4 = current_item.edges;
               for (_k = 0, _len3 = _ref4.length; _k < _len3; _k++) {
                 edge = _ref4[_k];
@@ -89,7 +93,7 @@
               console.log(current_item.nodeb);
               if (current_item.nodea !== previous_item && current_item.nodeb !== previous_item) {
                 this.reset_path();
-                this.create_path((this.pointer + 1) / 2);
+                this.create_path((this.pointer + this.path_diff + 1) / 2);
                 current_item.update_style("viewing");
               }
             }
@@ -119,8 +123,11 @@
           previous_item.update_style("viewing");
           if (previous_item instanceof Node) {
             if (this.algorithm.path_edges != null) {
+              if (current_item instanceof Node) {
+                this.path_diff--;
+              }
               this.reset_path();
-              this.create_path((this.pointer - 1) / 2);
+              this.create_path((this.pointer + this.path_diff - 1) / 2);
             }
             _ref2 = previous_item.edges;
             _results = [];
