@@ -37,6 +37,7 @@ class Main
                 <li id="remove" title="Remove a node" />
                 <li id="connect" title="Connect two nodes" />
                 <li id="kamada" title="Run Kamada Kawai graph layout algorithm" />
+                <li class="settings" title="Settings Dialog" />
                 <li id="search" title="Switch to search mode" />
             </ul>
             <ul id="runmode">
@@ -47,7 +48,7 @@ class Main
                 <li id="stop" title="Stop Animation" />
                 <li id="stepforward" title="Step Forward through animation" />
                 <li id="reset" title="Reset the animation" />
-                <li id="settings" title="Settings Dialog" />
+                <li class="settings" title="Settings Dialog" />
                 <li id="design" title="Switch to design mode" />
             </ul>
             <div id="helptext" />
@@ -324,8 +325,29 @@ class Main
             @animate_obj.step_forward( )
         $( '#reset' ).click ( e ) =>
             @animate_obj.reset( )
-        $( '#settings' ).click ( e ) =>
-            alert "not yet implemented"
+        $( '.settings' ).click ( e ) =>
+            modal = new Modal
+                title: "Settings"
+                fields:
+                    'shownames':
+                        type: 'radio'
+                        label: 'Show names'
+                        values:
+                            "false": "No"
+                            "true": "Yes"
+                        default: "false"
+                cancel: "Cancel"
+                callback: ( r ) =>
+                    if r.shownames is "true"
+                        @shownames = true
+                        for node in @graph.nodes
+                            node.showName true
+                    else
+                        @shownames = false
+                        for node in @graph.nodes
+                            node.showName false
+            modal.show( )
+
         $( '#design' ).click ( e ) =>
             @design_mode = true
             @graph.remove_root_and_goal_nodes( )

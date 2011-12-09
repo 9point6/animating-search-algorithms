@@ -301,9 +301,11 @@
       this.r.animate({
         r: 5
       }, 100);
-      return this.label.animate({
-        opacity: 0
-      }, 100);
+      if (!APP.shownames) {
+        return this.label.animate({
+          opacity: 0
+        }, 100);
+      }
     };
     Node.prototype.update_style = function(style_name) {
       var anim_speed;

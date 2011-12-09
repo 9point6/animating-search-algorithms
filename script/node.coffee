@@ -298,9 +298,10 @@ class Node
         @r.animate
             r: 5,
             100
-        @label.animate
-            opacity: 0,
-            100
+        if not APP.shownames
+            @label.animate
+                opacity: 0,
+                100
 
     # ### point.update_style( )
     # Changes the look of the node. Used by search algorithms.
