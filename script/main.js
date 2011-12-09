@@ -373,32 +373,40 @@
           }, this);
           func(g);
         }
-        context = new Context({
+        return context = new Context({
           x: e.pageX,
           y: e.pageY,
           items: {
             'Load from file...': __bind(function() {
-              return false;
+              this.modal = new Modal({
+                title: 'Upload a graph file',
+                intro: '<a id="loadfile">click here to choose file</a>',
+                okay: false
+              });
+              this.modal.show();
+              return $('#loadfile').upload({
+                name: 'fileup',
+                action: "io.php",
+                params: {
+                  action: "load"
+                },
+                onComplete: __bind(function(response) {
+                  var data;
+                  console.log("derp");
+                  data = $.parseJSON(response);
+                  this.graph.parse_string(data.data);
+                  return this.modal.destroy();
+                }, this),
+                onSelect: function() {
+                  console.log("herp");
+                  return this.submit();
+                }
+              });
             }, this),
             'Presets': new Context({
               autoshow: false,
               items: presets
             })
-          }
-        });
-        return $('li:first', context.ul).upload({
-          name: 'fileup',
-          action: "io.php",
-          params: {
-            action: "load"
-          },
-          onComplete: __bind(function(response) {
-            var data;
-            data = $.parseJSON(response);
-            return this.graph.parse_string(data.data);
-          }, this),
-          onSelect: function() {
-            return this.submit();
           }
         });
       }, this));

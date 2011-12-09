@@ -381,7 +381,24 @@ class Main
                 y: e.pageY
                 items:
                     'Load from file...': =>
-                        false
+                        @modal = new Modal
+                            title: 'Upload a graph file'
+                            intro: '<a id="loadfile">click here to choose file</a>'
+                            okay: false
+                        @modal.show( )
+                        $( '#loadfile' ).upload
+                            name: 'fileup'
+                            action: "io.php"
+                            params:
+                                action: "load"
+                            onComplete: ( response ) =>
+                                console.log "derp"
+                                data = $.parseJSON response
+                                @graph.parse_string data.data
+                                @modal.destroy( )
+                            onSelect: ( ) ->
+                                console.log "herp"
+                                @submit( )
                     'Presets': new Context
                         autoshow: false
                         items: presets
@@ -390,17 +407,6 @@ class Main
             #    height: "32px"
             #    display: "block"
             #).appendTo( '#load' ).upload
-            $( 'li:first', context.ul ).upload
-                name: 'fileup'
-                action: "io.php"
-                params:
-                    action: "load"
-                onComplete: ( response ) =>
-                    data = $.parseJSON response
-                    @graph.parse_string data.data
-                onSelect: ( ) ->
-                    @submit( )
-
     # ### app.fade*_*out_toolbar( )
     # Fades out toolbar and shows help text for the user when necessary.
     # #### Parameters
