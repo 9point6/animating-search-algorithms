@@ -188,7 +188,9 @@ class Edge
     # * Bring up a context menu to edit/remove the connection
     click: ( e ) =>
         # @spark( @direction >= 0 )
-        if APP.design_mode
+        if APP.graph.remove_mode
+            APP.graph.do_mouse_removal @
+        else if APP.design_mode
             if APP.context
                 APP.context.destroy( )
             APP.context = new Context

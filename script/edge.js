@@ -154,7 +154,9 @@
       }
     };
     Edge.prototype.click = function(e) {
-      if (APP.design_mode) {
+      if (APP.graph.remove_mode) {
+        return APP.graph.do_mouse_removal(this);
+      } else if (APP.design_mode) {
         if (APP.context) {
           APP.context.destroy();
         }

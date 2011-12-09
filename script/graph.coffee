@@ -193,7 +193,7 @@ class Graph
     do_mouse_removal: ( obj ) =>
         if @remove_mode is false
             @remove_mode = true
-            APP.fade_out_toolbar "Click a node to remove it", =>
+            APP.fade_out_toolbar "Click a node or edge to remove it", =>
                 @remove_mode = false
                 APP.fade_in_toolbar( )
         else

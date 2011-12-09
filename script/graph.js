@@ -179,7 +179,7 @@
     Graph.prototype.do_mouse_removal = function(obj) {
       if (this.remove_mode === false) {
         this.remove_mode = true;
-        return APP.fade_out_toolbar("Click a node to remove it", __bind(function() {
+        return APP.fade_out_toolbar("Click a node or edge to remove it", __bind(function() {
           this.remove_mode = false;
           return APP.fade_in_toolbar();
         }, this));
