@@ -83,6 +83,18 @@ class Node
                 return e.e.weight
         APP.graph.edgewavg * 2
 
+    showName: ( show = true ) ->
+        if show
+            func = =>
+                @label.animate
+                    opacity: 1,
+                    100
+            setTimeout func, 10
+        else
+            @label.animate
+                opacity: 0,
+                100
+
     # ### point.connect( )
     # Connect this `point` to another. Connections should be made from the main
     # app object. Used to allow easy navigation of connections from each node.

@@ -148,6 +148,8 @@ class Graph
                             not_connected = false
                     if not_connected
                         @edgenb = obj
+                        @edgena.showName true
+                        @edgenb.showName true
                         @modal = new Modal
                             title: "New connection"
                             fields:
@@ -174,6 +176,8 @@ class Graph
                                     fill: "#000",
                                     100
                                 newedge.spark( )
+                                @edgena.showName false
+                                @edgenb.showName false
                                 @connect_mode = false
                                 APP.fade_in_toolbar( )
                         @modal.show( )

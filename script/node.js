@@ -89,6 +89,24 @@
       }
       return APP.graph.edgewavg * 2;
     };
+    Node.prototype.showName = function(show) {
+      var func;
+      if (show == null) {
+        show = true;
+      }
+      if (show) {
+        func = __bind(function() {
+          return this.label.animate({
+            opacity: 1
+          }, 100);
+        }, this);
+        return setTimeout(func, 10);
+      } else {
+        return this.label.animate({
+          opacity: 0
+        }, 100);
+      }
+    };
     Node.prototype.connect = function(other_node, edge) {
       return this.edges.push({
         n: other_node,

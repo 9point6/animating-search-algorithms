@@ -129,6 +129,8 @@
             }
             if (not_connected) {
               this.edgenb = obj;
+              this.edgena.showName(true);
+              this.edgenb.showName(true);
               this.modal = new Modal({
                 title: "New connection",
                 fields: {
@@ -160,6 +162,8 @@
                     fill: "#000"
                   }, 100);
                   newedge.spark();
+                  this.edgena.showName(false);
+                  this.edgenb.showName(false);
                   this.connect_mode = false;
                   return APP.fade_in_toolbar();
                 }, this)
