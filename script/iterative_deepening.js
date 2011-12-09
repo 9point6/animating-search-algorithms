@@ -84,7 +84,7 @@ IterativeDeepening = (function() {
   IterativeDeepening.prototype.create_traverse_info = function() {};
 
   IterativeDeepening.prototype.gen_info = function() {
-    return ["Complete", "O(|V|+|E|, if well-balanced tree)", "O(|V|)", "Optimal if path cost is non-decreasing", "needsmaxdepth"];
+    return ["Complete", "O(|V|+|E|)", "O(|V|)", "Optimal", "needsmaxdepth"];
   };
 
   IterativeDeepening.prototype.run_info = function() {
