@@ -15,12 +15,22 @@
             }
         }
         {
-            "name": "City Map"
+            "name": "City Map",
             "url": "graph-citymap.searchomatic",
             "params": {
                 "directed": true,
                 "weighted": true,
                 "cycles": true,
+                "connected": true
+            }
+        }
+        {
+            "name": "Binary Tree Graph",
+            "url": "BinaryTree.searchomatic",
+            "params": {
+                "directed": false,
+                "weighted": false,
+                "cycles": false,
                 "connected": true
             }
         }
