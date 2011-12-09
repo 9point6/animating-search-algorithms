@@ -271,6 +271,7 @@ class Main
                 @fade_in_toolbar( )
                 # TODO: Might need more work for BiDi
                 @current_algo.traverse_info = []
+                @animate_obj.reset( )
             @root_select_mode = true
         $( '#process' ).click ( e ) =>
             if @current_algo.root_node? and @current_algo.goal_node?

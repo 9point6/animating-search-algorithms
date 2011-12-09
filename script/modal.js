@@ -79,9 +79,11 @@
         _ref = this.options.fields;
         for (fr in _ref) {
           field = _ref[fr];
-          if ((_ref2 = field["default"]) == null) {
+                    if ((_ref2 = field["default"]) != null) {
+            _ref2;
+          } else {
             field["default"] = "";
-          }
+          };
           label = $("<label />");
           fdiv.append(label);
           label.append("<span>" + field.label + ":</span>");

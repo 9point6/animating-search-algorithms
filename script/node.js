@@ -206,11 +206,15 @@
               items: {
                 'Set as Root Node': __bind(function() {
                   APP.graph.remove_root_and_goal_nodes(true, false);
-                  return APP.current_algo.root_node = this.setRoot();
+                  APP.current_algo.root_node = this.setRoot();
+                  APP.current_algo.traverse_info = [];
+                  return APP.animate_obj.reset();
                 }, this),
                 'Set as Goal Node': __bind(function() {
                   APP.graph.remove_root_and_goal_nodes(false, true);
-                  return APP.current_algo.goal_node = this.setGoal();
+                  APP.current_algo.goal_node = this.setGoal();
+                  APP.current_algo.traverse_info = [];
+                  return APP.animate_obj.reset();
                 }, this)
               },
               x: e.pageX,

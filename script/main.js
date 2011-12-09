@@ -229,7 +229,8 @@
           this.root_select_mode = false;
           this.goal_select_mode = false;
           this.fade_in_toolbar();
-          return this.current_algo.traverse_info = [];
+          this.current_algo.traverse_info = [];
+          return this.animate_obj.reset();
         }, this));
         return this.root_select_mode = true;
       }, this));

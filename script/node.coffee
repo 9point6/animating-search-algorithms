@@ -203,9 +203,13 @@ class Node
                             'Set as Root Node': =>
                                 APP.graph.remove_root_and_goal_nodes( true, false )
                                 APP.current_algo.root_node = @setRoot( )
+                                APP.current_algo.traverse_info = []
+                                APP.animate_obj.reset( )
                             'Set as Goal Node': =>
                                 APP.graph.remove_root_and_goal_nodes( false, true )
                                 APP.current_algo.goal_node = @setGoal( )
+                                APP.current_algo.traverse_info = []
+                                APP.animate_obj.reset( )
                         x: e.pageX
                         y: e.pageY
             @move_mode = false
