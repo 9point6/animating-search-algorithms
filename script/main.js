@@ -17,25 +17,7 @@
       $('#slideout').css({
         "margin-right": -300
       });
-      this.upload_obj = $('<a />').css({
-        width: "32px",
-        height: "32px",
-        display: "block"
-      }).appendTo('#load').upload({
-        name: 'fileup',
-        action: "io.php",
-        params: {
-          action: "load"
-        },
-        onComplete: __bind(function(response) {
-          var data;
-          data = $.parseJSON(response);
-          return this.graph.parse_string(data.data);
-        }, this),
-        onSelect: function() {
-          return this.submit();
-        }
-      });
+      this.setup_upload();
       $('#slidetoggle').hover((function(e) {
         $('#algohelptext').css("display", "block");
         return $('#algohelptext').css("opacity", 100);
@@ -348,6 +330,31 @@
       this.graph.connect(this.graph.nodes[3], this.graph.nodes[1], 2, 1);
       this.graph.sort_elements();
     }
+    Main.prototype.setup_upload = function() {
+      if (this.upload_obj) {
+        delete this.upload_obj;
+        $('#load a').remove();
+      }
+      return this.upload_obj = $('<a />').css({
+        width: "32px",
+        height: "32px",
+        display: "block"
+      }).appendTo('#load').upload({
+        name: 'fileup',
+        action: "io.php",
+        params: {
+          action: "load"
+        },
+        onComplete: __bind(function(response) {
+          var data;
+          data = $.parseJSON(response);
+          return this.graph.parse_string(data.data);
+        }, this),
+        onSelect: function() {
+          return this.submit();
+        }
+      });
+    };
     Main.prototype.fade_out_toolbar = function(text, cancel_callback) {
       var tb;
       tb = this.design_mode ? $('#designmode') : $('#runmode');

@@ -98,20 +98,7 @@ class Main
             "margin-right": -300
 
         # jQuery One-Click Upload for loading
-        @upload_obj = $( '<a />' ).css(
-            width: "32px"
-            height: "32px"
-            display: "block"
-        ).appendTo( '#load' ).upload
-            name: 'fileup'
-            action: "io.php"
-            params:
-                action: "load"
-            onComplete: ( response ) =>
-                data = $.parseJSON response
-                @graph.parse_string data.data
-            onSelect: ( ) ->
-                @submit( )
+        @setup_upload( )
 
         # Set events all UI stuff
         $( '#slidetoggle' ).hover ( ( e ) ->
@@ -362,6 +349,25 @@ class Main
 
         # Rearranges points so that they are above the connections in the canvas
         @graph.sort_elements( )
+
+    setup_upload: ->
+        if @upload_obj
+            delete @upload_obj
+            $( '#load a' ).remove( )
+        @upload_obj = $( '<a />' ).css(
+            width: "32px"
+            height: "32px"
+            display: "block"
+        ).appendTo( '#load' ).upload
+            name: 'fileup'
+            action: "io.php"
+            params:
+                action: "load"
+            onComplete: ( response ) =>
+                data = $.parseJSON response
+                @graph.parse_string data.data
+            onSelect: ( ) ->
+                @submit( )
 
     # ### app.fade*_*out_toolbar( )
     # Fades out toolbar and shows help text for the user when necessary.
