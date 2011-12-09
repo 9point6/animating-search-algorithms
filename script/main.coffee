@@ -176,6 +176,14 @@ class Main
                     text.change ( e ) =>
                         if @current_algo
                             @current_algo.depth = $( e.target ).val( )
+                if alg.gen_info( )[4].indexOf( 'needsmaxdepth' ) isnt -1
+                    extras.append li = $( "<li class=\"algoextra\" />" )
+                    li.append "<h3>Depth Limit</h3>"
+                    li.append text = $( "<input id=\"algomaxdepth\" type=\"text\" value=\"3\" />" )
+                    @current_algo.max_depth = 3
+                    text.change ( e ) =>
+                        if @current_algo
+                            @current_algo.max_depth = $( e.target ).val( )
             delete alg
         $( '#new' ).click ( e ) =>
             @graph.clear_graph( )

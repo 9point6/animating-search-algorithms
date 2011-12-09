@@ -30,7 +30,7 @@ class IterativeDeepening extends Algorithm
             #console.log(depth)
             @_search @root_node, depth, @root_node
             depth = depth + 1
-            
+
             #for node in @explored_nodes
             #    @temp_explored_nodes.push node
             #for node in @path_info
@@ -74,6 +74,7 @@ class IterativeDeepening extends Algorithm
             "O(b<sup>d+1</sup>)"
             "O(bd)"
             "Not Optimal"
+            "needsmaxdepth"
         ]
 
     run_info: ->

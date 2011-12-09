@@ -118,6 +118,17 @@
               }
             }, this));
           }
+          if (alg.gen_info()[4].indexOf('needsmaxdepth') !== -1) {
+            extras.append(li = $("<li class=\"algoextra\" />"));
+            li.append("<h3>Depth Limit</h3>");
+            li.append(text = $("<input id=\"algomaxdepth\" type=\"text\" value=\"3\" />"));
+            this.current_algo.max_depth = 3;
+            text.change(__bind(function(e) {
+              if (this.current_algo) {
+                return this.current_algo.max_depth = $(e.target).val();
+              }
+            }, this));
+          }
         }
         return delete alg;
       }, this));

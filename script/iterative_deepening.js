@@ -78,7 +78,7 @@
     };
     IterativeDeepening.prototype.create_traverse_info = function() {};
     IterativeDeepening.prototype.gen_info = function() {
-      return ["Complete", "O(b<sup>d+1</sup>)", "O(bd)", "Not Optimal"];
+      return ["Complete", "O(b<sup>d+1</sup>)", "O(bd)", "Not Optimal", "needsmaxdepth"];
     };
     IterativeDeepening.prototype.run_info = function() {
       return alert("runtime information");
