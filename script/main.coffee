@@ -128,7 +128,7 @@ class Main
                 goal = @current_algo.goal_node
                 @animate_obj.destroy( )
                 @current_algo.destroy( )
-                @current_algo = new ALGORITHMS[$( '#algoselection' ).prop "value"]
+                @current_algo = new ALGORITHMS[$( '#algoselection' ).prop "value"]( )
                 @current_algo.root_node = root
                 @current_algo.goal_node = goal
                 @animate_obj = new Animate
@@ -162,12 +162,25 @@ class Main
                             a = new al( )
                             if not ( a instanceof BiDirectional )
                                 combo.append "<option id=\"bd#{i}-alg#{al.name}\" value=\"#{j++}\">#{a.name}</option>"
-                                combo.change ( e ) =>
-                                    if @current_algo
-                                        @current_algo.alg1 = new ALGORITHMS[$( e.target ).val( )]
-                                        @current_algo.alg2 = new ALGORITHMS[$( e.target ).val( )]
-                                        @current_algo.traverse_info = []
-                                    false
+                                func = ( combo, al, a, i ) =>
+                                    combo.change ( e ) =>
+                                        if @current_algo
+                                            combobox = $( e.target ).attr( "id" ).substr 8, 1
+                                            @current_algo.alg[combobox] = new ALGORITHMS[parseInt( $( e.target ).val( ) )]( )
+                                            @current_algo.traverse_info = []
+                                            if a instanceof AStar
+                                                extras.append li1 = $( "<li class=\"algoextra\" />" )
+                                                li1.append "<h3>Heuristic #{i}</h3>"
+                                                li1.append combo1 = $( '<select id=\"algoheuristic#{i}\" />' )
+                                                combo1.append "<option selected=\"selected\" value=\"0\">None</option>"
+                                                combo1.append "<option value=\"1\">Euclidian</option>"
+                                                @current_algo.alg[combobox].heuristic_choice = 0
+                                                func1 = ( combobox, combo1 ) =>
+                                                    combo1.change ( e ) =>
+                                                        if @current_algo.alg[combobox]
+                                                            @current_algo.alg[combobox].heuristic_choice = $( e.target ).val( )
+                                                func1 combobox, combo1
+                                func( combo, al, a, i )
                             delete a
                 if alg.gen_info( )[4].indexOf( 'needsdepth' ) isnt -1
                     extras.append li = $( "<li class=\"algoextra\" />" )
@@ -261,12 +274,12 @@ class Main
             func( )
         $( '#search' ).click ( e ) =>
             @design_mode = false
-            @current_algo = new ALGORITHMS[$( '#algoselection' ).prop "value"]
+            @current_algo = new ALGORITHMS[$( '#algoselection' ).prop "value"]( )
             if @current_algo instanceof AStar
                 @current_algo.heuristic_choice = $( '#algoheuristic' ).val( )
             if @current_algo instanceof BiDirectional
-                @current_algo.alg1 = new ALGORITHMS[$( '#algobidi1' ).val( )]
-                @current_algo.alg2 = new ALGORITHMS[$( '#algobidi2' ).val( )]
+                @current_algo.alg[1] = new ALGORITHMS[parseInt( $( '#algobidi1' ).val( ) )]
+                @current_algo.alg[2] = new ALGORITHMS[parseInt( $( '#algobidi2' ).val( ) )]
                 @current_algo.traverse_info = []
             @animate_obj = new Animate
             @animate_obj.algorithm = @current_algo

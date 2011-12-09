@@ -16,26 +16,30 @@
 class BiDirectional extends Algorithm
     name: "Bi-Directional Search"
 
+    constructor: ->
+        @alg = []
+
     pre_run: ->
-#         @alg1 = new DFS( )
-#         @alg2 = new DFS( )
-        @alg1.heuristic_choice = 0
-        @alg2.heuristic_choice = 0
-        @alg1.root_node = @root_node
-        @alg1.goal_node = @goal_node
-        @alg1.search( )
-        @alg1.create_traverse_info( )
-        @traverse_info_start = @alg1.traverse_info.slice(0)
+        console.log @alg
+#         if @alg[1] instanceof AStar
+#             @alg[1].heuristic_choice = 0
+#         if @alg[2] instanceof AStar
+#             @alg[2].heuristic_choice = 0
+        @alg[1].root_node = @root_node
+        @alg[1].goal_node = @goal_node
+        @alg[1].search( )
+        @alg[1].create_traverse_info( )
+        @traverse_info_start = @alg[1].traverse_info.slice(0)
 
         for node in APP.graph.nodes
             node.explored = false
 
-        @alg2.root_node = @goal_node
-        @alg2.goal_node = @root_node
-        @alg2.is_from_goal = true
-        @alg2.search( )
-        @alg2.create_traverse_info( )
-        @traverse_info_goal = @alg2.traverse_info.slice(0)
+        @alg[2].root_node = @goal_node
+        @alg[2].goal_node = @root_node
+        @alg[2].is_from_goal = true
+        @alg[2].search( )
+        @alg[2].create_traverse_info( )
+        @traverse_info_goal = @alg[2].traverse_info.slice(0)
 
     destroy: ->
         for node in APP.graph.nodes

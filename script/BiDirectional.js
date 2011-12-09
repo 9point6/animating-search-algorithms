@@ -10,30 +10,29 @@
   };
   BiDirectional = (function() {
     __extends(BiDirectional, Algorithm);
-    function BiDirectional() {
-      BiDirectional.__super__.constructor.apply(this, arguments);
-    }
     BiDirectional.prototype.name = "Bi-Directional Search";
+    function BiDirectional() {
+      this.alg = [];
+    }
     BiDirectional.prototype.pre_run = function() {
       var node, _i, _len, _ref;
-      this.alg1.heuristic_choice = 0;
-      this.alg2.heuristic_choice = 0;
-      this.alg1.root_node = this.root_node;
-      this.alg1.goal_node = this.goal_node;
-      this.alg1.search();
-      this.alg1.create_traverse_info();
-      this.traverse_info_start = this.alg1.traverse_info.slice(0);
+      console.log(this.alg);
+      this.alg[1].root_node = this.root_node;
+      this.alg[1].goal_node = this.goal_node;
+      this.alg[1].search();
+      this.alg[1].create_traverse_info();
+      this.traverse_info_start = this.alg[1].traverse_info.slice(0);
       _ref = APP.graph.nodes;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         node = _ref[_i];
         node.explored = false;
       }
-      this.alg2.root_node = this.goal_node;
-      this.alg2.goal_node = this.root_node;
-      this.alg2.is_from_goal = true;
-      this.alg2.search();
-      this.alg2.create_traverse_info();
-      return this.traverse_info_goal = this.alg2.traverse_info.slice(0);
+      this.alg[2].root_node = this.goal_node;
+      this.alg[2].goal_node = this.root_node;
+      this.alg[2].is_from_goal = true;
+      this.alg[2].search();
+      this.alg[2].create_traverse_info();
+      return this.traverse_info_goal = this.alg[2].traverse_info.slice(0);
     };
     BiDirectional.prototype.destroy = function() {
       var node, _i, _len, _ref;

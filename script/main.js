@@ -50,13 +50,13 @@
         return $('#algohelptext').css("opacity", 0);
       });
       $('#algoselection').change(__bind(function(e) {
-        var a, al, alg, combo, extras, goal, i, j, li, root, text, _i, _len;
+        var a, al, alg, combo, extras, func, goal, i, j, li, root, text, _i, _len;
         if (this.current_algo) {
           root = this.current_algo.root_node;
           goal = this.current_algo.goal_node;
           this.animate_obj.destroy();
           this.current_algo.destroy();
-          this.current_algo = new ALGORITHMS[$('#algoselection').prop("value")];
+          this.current_algo = new ALGORITHMS[$('#algoselection').prop("value")]();
           this.current_algo.root_node = root;
           this.current_algo.goal_node = goal;
           this.animate_obj = new Animate;
@@ -94,14 +94,33 @@
                 a = new al();
                 if (!(a instanceof BiDirectional)) {
                   combo.append("<option id=\"bd" + i + "-alg" + al.name + "\" value=\"" + (j++) + "\">" + a.name + "</option>");
-                  combo.change(__bind(function(e) {
-                    if (this.current_algo) {
-                      this.current_algo.alg1 = new ALGORITHMS[$(e.target).val()];
-                      this.current_algo.alg2 = new ALGORITHMS[$(e.target).val()];
-                      this.current_algo.traverse_info = [];
-                    }
-                    return false;
-                  }, this));
+                  func = __bind(function(combo, al, a, i) {
+                    return combo.change(__bind(function(e) {
+                      var combo1, combobox, func1, li1;
+                      if (this.current_algo) {
+                        combobox = $(e.target).attr("id").substr(8, 1);
+                        this.current_algo.alg[combobox] = new ALGORITHMS[parseInt($(e.target).val())]();
+                        this.current_algo.traverse_info = [];
+                        if (a instanceof AStar) {
+                          extras.append(li1 = $("<li class=\"algoextra\" />"));
+                          li1.append("<h3>Heuristic " + i + "</h3>");
+                          li1.append(combo1 = $('<select id=\"algoheuristic#{i}\" />'));
+                          combo1.append("<option selected=\"selected\" value=\"0\">None</option>");
+                          combo1.append("<option value=\"1\">Euclidian</option>");
+                          this.current_algo.alg[combobox].heuristic_choice = 0;
+                          func1 = __bind(function(combobox, combo1) {
+                            return combo1.change(__bind(function(e) {
+                              if (this.current_algo.alg[combobox]) {
+                                return this.current_algo.alg[combobox].heuristic_choice = $(e.target).val();
+                              }
+                            }, this));
+                          }, this);
+                          return func1(combobox, combo1);
+                        }
+                      }
+                    }, this));
+                  }, this);
+                  func(combo, al, a, i);
                 }
                 delete a;
               }
@@ -222,13 +241,13 @@
       }, this));
       $('#search').click(__bind(function(e) {
         this.design_mode = false;
-        this.current_algo = new ALGORITHMS[$('#algoselection').prop("value")];
+        this.current_algo = new ALGORITHMS[$('#algoselection').prop("value")]();
         if (this.current_algo instanceof AStar) {
           this.current_algo.heuristic_choice = $('#algoheuristic').val();
         }
         if (this.current_algo instanceof BiDirectional) {
-          this.current_algo.alg1 = new ALGORITHMS[$('#algobidi1').val()];
-          this.current_algo.alg2 = new ALGORITHMS[$('#algobidi2').val()];
+          this.current_algo.alg[1] = new ALGORITHMS[parseInt($('#algobidi1').val())];
+          this.current_algo.alg[2] = new ALGORITHMS[parseInt($('#algobidi2').val())];
           this.current_algo.traverse_info = [];
         }
         this.animate_obj = new Animate;
