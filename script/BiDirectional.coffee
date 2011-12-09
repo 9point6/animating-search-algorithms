@@ -17,8 +17,8 @@ class BiDirectional extends Algorithm
     name: "Bi-Directional Search"
 
     pre_run: ->
-        @alg1 = new DFS( )
-        @alg2 = new DFS( )
+#         @alg1 = new DFS( )
+#         @alg2 = new DFS( )
         @alg1.heuristic_choice = 0
         @alg2.heuristic_choice = 0
         @alg1.root_node = @root_node

@@ -91,6 +91,7 @@
                     if (this.current_algo) {
                       this.current_algo.alg1 = new ALGORITHMS[$(e.target).val()];
                       this.current_algo.alg2 = new ALGORITHMS[$(e.target).val()];
+                      this.current_algo.traverse_info = [];
                     }
                     return false;
                   }, this));
@@ -199,6 +200,7 @@
         if (this.current_algo instanceof BiDirectional) {
           this.current_algo.alg1 = new ALGORITHMS[$('#algobidi1').val()];
           this.current_algo.alg2 = new ALGORITHMS[$('#algobidi2').val()];
+          this.current_algo.traverse_info = [];
         }
         this.animate_obj = new Animate;
         this.animate_obj.algorithm = this.current_algo;

@@ -163,6 +163,7 @@ class Main
                                     if @current_algo
                                         @current_algo.alg1 = new ALGORITHMS[$( e.target ).val( )]
                                         @current_algo.alg2 = new ALGORITHMS[$( e.target ).val( )]
+                                        @current_algo.traverse_info = []
                                     false
                             delete a
             delete alg
@@ -248,6 +249,7 @@ class Main
             if @current_algo instanceof BiDirectional
                 @current_algo.alg1 = new ALGORITHMS[$( '#algobidi1' ).val( )]
                 @current_algo.alg2 = new ALGORITHMS[$( '#algobidi2' ).val( )]
+                @current_algo.traverse_info = []
             @animate_obj = new Animate
             @animate_obj.algorithm = @current_algo
             $( '#designmode' ).animate
