@@ -117,8 +117,8 @@ class AStar extends Algorithm
     gen_info: ->
         [
             "Complete"
-            "O(log h<sup>*</sup>(x))"
-            "O(bm)"
+            "Variable"
+            "O(V)"
             "Optimal"
             "needsheuristic"
         ]

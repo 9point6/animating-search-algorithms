@@ -71,9 +71,9 @@ class IterativeDeepening extends Algorithm
     gen_info: ->
         [
             "Complete"
-            "O(b<sup>d+1</sup>)"
-            "O(bd)"
-            "Not Optimal"
+            "O(|V|+|E|, if well-balanced tree)"
+            "O(|V|)"
+            "Optimal if path cost is non-decreasing"
             "needsmaxdepth"
         ]
 

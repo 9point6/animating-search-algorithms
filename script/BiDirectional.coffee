@@ -106,10 +106,10 @@ class BiDirectional extends Algorithm
 
     gen_info: ->
         [
-            "Complete"
-            "O(b<sup>m</sup>)"
-            "O(bm)"
-            "Not Optimal"
+            "Variable"
+            "Variable"
+            "Variable"
+            "Variable"
             "bidi"
         ]
 

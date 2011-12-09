@@ -51,9 +51,9 @@ class DLS extends Algorithm
 
     gen_info: ->
         [
-            "Complete"
-            "O(b<sup>m</sup>)"
-            "O(bm)"
+            "Complete if depth bound correct"
+            "O(|V|+|E|)"
+            "O(|V|)"
             "Not Optimal"
             "needsdepth"
         ]

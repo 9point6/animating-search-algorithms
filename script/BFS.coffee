@@ -99,8 +99,8 @@ class BFS extends Algorithm
     gen_info: ->
         [
             "Complete"
-            "O(b<sup>d+1</sup>)"
-            "O(b<sup>d</sup>)"
+            "O(|V|+|E|)"
+            "O(|V|)"
             "Not Optimal"
         ]
 

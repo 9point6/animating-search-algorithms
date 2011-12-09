@@ -72,9 +72,9 @@ class DFS extends Algorithm
     # ### Parameters
     gen_info: ->
         [
-            "Complete"
-            "O(b<sup>m</sup>)"
-            "O(bm)"
+            "Complete, unless infinite paths"
+            "O(|V|+|E|)"
+            "O(|V|)"
             "Not Optimal"
         ]
 
