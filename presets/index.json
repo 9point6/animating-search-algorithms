@@ -14,5 +14,15 @@
                 "connected": true
             }
         }
+        {
+            "name": "City Map"
+            "url": "graph-citymap.searchomatic",
+            "params": {
+                "directed": true,
+                "weighted": true,
+                "cycles": true,
+                "connected": true
+            }
+        }
     ]
 }
