@@ -2,9 +2,17 @@
   var Animate;
   var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   Animate = (function() {
-    function Animate() {}
     Animate.prototype.pointer = 0;
     Animate.prototype.algorithm = null;
+    function Animate() {
+      this.VIEWING_CONST = "viewing";
+      this.POTENTIAL_CONST = "potential";
+      this.NORMAL_CONST = "normal";
+      this.VISITED_CONST = "visited";
+      this.GOAL_CONST = "goal";
+      this.PATH_CONST = "path";
+      this.BIDI_CONST = "Bi-Directional Search";
+    }
     Animate.prototype.path_diff = 0;
     Animate.prototype.destroy = function() {
       APP.graph.remove_styles();
@@ -16,17 +24,17 @@
         goal_reached = false;
         this.traverse_info = this.algorithm.traverse_info;
         current_item = this.traverse_info[this.pointer];
-        if (current_item === this.algorithm.goal_node && this.algorithm.name !== "Bi-Directional Search") {
-          current_item.update_style("goal");
+        if (current_item === this.algorithm.goal_node && this.algorithm.name !== this.BIDI_CONST) {
+          current_item.update_style(this.GOAL_CONST);
           goal_reached = true;
         } else {
-          current_item.update_style("viewing");
+          current_item.update_style(this.VIEWING_CONST);
         }
         if (current_item instanceof Node) {
           _ref = current_item.edges;
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {
             edge = _ref[_i];
-            if (this.algorithm.name === "Bi-Directional Search") {
+            if (this.algorithm.name === this.BIDI_CONST) {
               if (this.pointer % 2 !== 0) {
                 visitable = edge.e.visitable(current_item, true);
               } else {
@@ -35,20 +43,20 @@
             } else {
               visitable = edge.e.visitable(current_item);
             }
-            if (edge.e.style === "normal" && !goal_reached && visitable) {
-              edge.e.update_style("potential");
+            if (edge.e.style === this.NORMAL_CONST && !goal_reached && visitable) {
+              edge.e.update_style(this.POTENTIAL_CONST);
             }
           }
         }
         if (this.pointer !== 0) {
           previous_item = this.traverse_info[this.pointer - 1];
-          if (previous_item.style === "viewing" && previous_item !== current_item) {
-            previous_item.update_style("visited");
+          if (previous_item.style === this.VIEWING_CONST && previous_item !== current_item) {
+            previous_item.update_style(this.VISITED_CONST);
             if (previous_item instanceof Node) {
               _ref2 = previous_item.edges;
               for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
                 edge = _ref2[_j];
-                if ((this.algorithm.path_edges != null) && edge.e.style === "potential") {
+                if ((this.algorithm.path_edges != null) && edge.e.style === this.POTENTIAL_CONST) {
                   is_visited = false;
                   for (i = 0, _ref3 = this.pointer; 0 <= _ref3 ? i < _ref3 : i > _ref3; 0 <= _ref3 ? i++ : i--) {
                     if (this.traverse_info[i] === edge.e) {
@@ -57,13 +65,13 @@
                     }
                   }
                   if (is_visited === true) {
-                    edge.e.update_style("visited");
+                    edge.e.update_style(this.VISITED_CONST);
                   } else {
-                    edge.e.update_style("normal");
+                    edge.e.update_style(this.NORMAL_CONST);
                   }
                 }
-                if (edge.e.style === "potential") {
-                  edge.e.update_style("normal");
+                if (edge.e.style === this.POTENTIAL_CONST) {
+                  edge.e.update_style(this.NORMAL_CONST);
                 }
               }
             }
@@ -84,7 +92,7 @@
               for (_k = 0, _len3 = _ref4.length; _k < _len3; _k++) {
                 edge = _ref4[_k];
                 if (edge.n !== this.traverse_info[this.pointer - 2] && edge.e !== last_viewed && !goal_reached && edge.e.visitable(current_item)) {
-                  edge.e.update_style("potential");
+                  edge.e.update_style(this.POTENTIAL_CONST);
                 }
               }
             }
@@ -94,7 +102,7 @@
               if (current_item.nodea !== previous_item && current_item.nodeb !== previous_item) {
                 this.reset_path();
                 this.create_path((this.pointer + this.path_diff + 1) / 2);
-                current_item.update_style("viewing");
+                current_item.update_style(this.VIEWING_CONST);
               }
             }
           }
@@ -108,19 +116,19 @@
         this.pointer--;
         this.traverse_info = this.algorithm.traverse_info;
         current_item = this.traverse_info[this.pointer];
-        current_item.update_style("normal");
+        current_item.update_style(this.NORMAL_CONST);
         if (current_item instanceof Node) {
           _ref = current_item.edges;
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {
             edge = _ref[_i];
-            if (edge.e.style === "potential") {
-              edge.e.update_style("normal");
+            if (edge.e.style === this.POTENTIAL_CONST) {
+              edge.e.update_style(this.NORMAL_CONST);
             }
           }
         }
         if (this.pointer !== 0) {
           previous_item = this.traverse_info[this.pointer - 1];
-          previous_item.update_style("viewing");
+          previous_item.update_style(this.VIEWING_CONST);
           if (previous_item instanceof Node) {
             if (this.algorithm.path_edges != null) {
               if (current_item instanceof Node) {
@@ -133,7 +141,7 @@
             _results = [];
             for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
               edge = _ref2[_j];
-              _results.push(edge.e.style !== "visited" ? (this.algorithm.name === "Bi-Directional Search" ? this.pointer % 2 === 0 ? visitable = edge.e.visitable(previous_item, true) : visitable = edge.e.visitable(previous_item) : visitable = edge.e.visitable(previous_item), edge.e.style === "path" ? void 0 : visitable ? edge.e.update_style("potential") : void 0) : void 0);
+              _results.push(edge.e.style !== this.VISITED_CONST ? (this.algorithm.name === this.BIDI_CONST ? this.pointer % 2 === 0 ? visitable = edge.e.visitable(previous_item, true) : visitable = edge.e.visitable(previous_item) : visitable = edge.e.visitable(previous_item), edge.e.style === this.PATH_CONST ? void 0 : visitable ? edge.e.update_style(this.POTENTIAL_CONST) : void 0) : void 0);
             }
             return _results;
           }
@@ -148,7 +156,7 @@
       _results = [];
       for (_i = 0, _len = path.length; _i < _len; _i++) {
         edge = path[_i];
-        _results.push(edge.style !== "potential" ? edge.update_style("path") : void 0);
+        _results.push(edge.style !== this.POTENTIAL_CONST ? edge.update_style(this.PATH_CONST) : void 0);
       }
       return _results;
     };
@@ -159,7 +167,7 @@
       _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         edge = _ref[_i];
-        _results.push(edge.style === "path" ? edge.update_style("visited") : void 0);
+        _results.push(edge.style === this.PATH_CONST ? edge.update_style(this.VISITED_CONST) : void 0);
       }
       return _results;
     };

@@ -18,6 +18,16 @@ class Animate
     # Stores the algorithm currently being worked on in the UI environment.
     algorithm: null
 
+    constructor: ->
+        # Create local names
+        @VIEWING_CONST = "viewing"
+        @POTENTIAL_CONST = "potential"
+        @NORMAL_CONST = "normal"
+        @VISITED_CONST = "visited"
+        @GOAL_CONST = "goal"
+        @PATH_CONST = "path"
+        @BIDI_CONST = "Bi-Directional Search"
+
     path_diff: 0
 
     destroy: ->
@@ -40,19 +50,19 @@ class Animate
             # create a variable for storing the element the pointer represents
             current_item = @traverse_info[@pointer]
 
-            if current_item is @algorithm.goal_node and @algorithm.name isnt "Bi-Directional Search"
+            if current_item is @algorithm.goal_node and @algorithm.name isnt @BIDI_CONST
                 # update the current item pointed at to goal node animation
-                current_item.update_style "goal"
+                current_item.update_style @GOAL_CONST
                 goal_reached = true
             else
                 # update the current item pointed at to "viewing"
-                current_item.update_style "viewing"
+                current_item.update_style @VIEWING_CONST
 
             # if the current_item selected is a point object
             if current_item instanceof Node
                 # loop through all of the points connections
                 for edge in current_item.edges
-                    if @algorithm.name is "Bi-Directional Search"
+                    if @algorithm.name is @BIDI_CONST
                         if @pointer % 2 isnt 0
                             visitable = edge.e.visitable current_item, true
                         else
@@ -63,8 +73,8 @@ class Animate
                     # This stops overwriting the style of the previous element in the
                     # traverse_info array as it should be the only connection in the
                     # "viewing" state.
-                    if edge.e.style is "normal" and not goal_reached and visitable
-                        edge.e.update_style "potential"
+                    if edge.e.style is @NORMAL_CONST and not goal_reached and visitable
+                        edge.e.update_style @POTENTIAL_CONST
 
             # the current_item is not the first element in the array
             if @pointer isnt 0
@@ -72,32 +82,32 @@ class Animate
                 previous_item = @traverse_info[@pointer-1]
                 # if the previous item is in the "viewing" style (which it should
                 # be)
-                if previous_item.style is "viewing" and previous_item isnt current_item
+                if previous_item.style is @VIEWING_CONST and previous_item isnt current_item
                     # update previous items style to visited
-                    previous_item.update_style "visited"
+                    previous_item.update_style @VISITED_CONST
                     if previous_item instanceof Node
                         # change all of its connections back to normal unless it
                         # is an AStar algorithm. AStar works by keeping previous
                         # connections as "potentials" in an open set.
                         for edge in previous_item.edges
-                            if @algorithm.path_edges? and edge.e.style is "potential"
+                            if @algorithm.path_edges? and edge.e.style is @POTENTIAL_CONST
                                 is_visited = false
                                 for i in [0...@pointer]
                                     if @traverse_info[i] is edge.e
                                         is_visited = true
                                         break
                                 if is_visited is true
-                                    edge.e.update_style "visited"
+                                    edge.e.update_style @VISITED_CONST
                                 else
-                                    edge.e.update_style "normal"
+                                    edge.e.update_style @NORMAL_CONST
 
                             # change all of its connections back to normal unless it
                             # is an AStar algorithm. AStar works by keeping previous
                             # connections as "potentials" in an open set.
-                            if edge.e.style is "potential"
+                            if edge.e.style is @POTENTIAL_CONST
                                 #@algorithm.name isnt "A* Search" and
-                                #@algorithm.name isnt "Bi-Directional Search"
-                                edge.e.update_style "normal"
+                                #@algorithm.name isnt @BIDI_CONST
+                                edge.e.update_style @NORMAL_CONST
 
                 if @algorithm.path_edges?
                     #else
@@ -108,15 +118,15 @@ class Animate
                             @reset_path()
                         last_viewed = previous_item
                         console.log("creating path")
-                        
+
                         if previous_item instanceof Node
                             @path_diff++
-                        
+
                         @create_path (@pointer+@path_diff) / 2
 
                         for edge in current_item.edges
                             if edge.n isnt @traverse_info[@pointer-2] and edge.e isnt last_viewed and not goal_reached and edge.e.visitable current_item
-                                edge.e.update_style "potential"
+                                edge.e.update_style @POTENTIAL_CONST
 
                     if current_item instanceof Edge
                         console.log(current_item.nodea)
@@ -124,7 +134,7 @@ class Animate
                         if current_item.nodea isnt previous_item and current_item.nodeb isnt previous_item
                             @reset_path()
                             @create_path (@pointer+@path_diff+1)/2
-                            current_item.update_style "viewing"
+                            current_item.update_style @VIEWING_CONST
 
 
             # increase the pointer value
@@ -147,9 +157,9 @@ class Animate
             # create variable for current item pointer looks at in the array
             current_item = @traverse_info[@pointer]
 
-            #if (@algorithm.name isnt "A* Search" and @algorithm.name isnt "Bi-Directional Search") or current_item instanceof Edge
+            #if (@algorithm.name isnt "A* Search" and @algorithm.name isnt @BIDI_CONST) or current_item instanceof Edge
                 # change the current item to a "normal" style
-            current_item.update_style "normal"
+            current_item.update_style @NORMAL_CONST
             #else
                 #current_item.update_style "potential"
 
@@ -157,8 +167,8 @@ class Animate
             # connections back to a normal style.
             if current_item instanceof Node
                 for edge in current_item.edges
-                    if edge.e.style is "potential"
-                        edge.e.update_style "normal"
+                    if edge.e.style is @POTENTIAL_CONST
+                        edge.e.update_style @NORMAL_CONST
 
             # If there is an item before the current item in the traverse_info
             # array
@@ -166,7 +176,7 @@ class Animate
                 # Create a variable for storing the previous item
                 previous_item = @traverse_info[@pointer-1]
                 # Change it's style to "viewing"
-                previous_item.update_style "viewing"
+                previous_item.update_style @VIEWING_CONST
 
                 # if the previous item is a point change all of its connections
                 # to now be in a "potential" style.
@@ -177,8 +187,8 @@ class Animate
                         @reset_path()
                         @create_path((@pointer+@path_diff-1) / 2)
                     for edge in previous_item.edges
-                        if edge.e.style isnt "visited"
-                            if @algorithm.name is "Bi-Directional Search"
+                        if edge.e.style isnt @VISITED_CONST
+                            if @algorithm.name is @BIDI_CONST
                                 if @pointer % 2 is 0
                                     visitable = edge.e.visitable previous_item, true
                                 else
@@ -186,9 +196,9 @@ class Animate
                             else
                                 visitable = edge.e.visitable previous_item
 
-                            if edge.e.style is "path"
+                            if edge.e.style is @PATH_CONST
                             else if visitable
-                                edge.e.update_style "potential"
+                                edge.e.update_style @POTENTIAL_CONST
 
 
     create_path: (pointer) ->
@@ -196,16 +206,16 @@ class Animate
         console.log(pointer)
         console.log(path)
         for edge in path
-            if edge.style isnt "potential"
-                edge.update_style "path"
+            if edge.style isnt @POTENTIAL_CONST
+                edge.update_style @PATH_CONST
 
 
     reset_path: ->
         console.log("really resetting now...")
         for edge in APP.graph.edges
             #console.log(edge)
-            if edge.style is "path"
-                edge.update_style "visited"
+            if edge.style is @PATH_CONST
+                edge.update_style @VISITED_CONST
 
 
     # ### animate.traverse( )
