@@ -24,12 +24,6 @@
         goal_reached = false;
         this.traverse_info = this.algorithm.traverse_info;
         current_item = this.traverse_info[this.pointer];
-        if (current_item === this.algorithm.goal_node && this.algorithm.name !== this.BIDI_CONST) {
-          current_item.update_style(this.GOAL_CONST);
-          goal_reached = true;
-        } else {
-          current_item.update_style(this.VIEWING_CONST);
-        }
         this.update_current_item(current_item, goal_reached);
         this.update_previous_item(current_item, goal_reached);
         return this.pointer++;
@@ -99,6 +93,12 @@
     };
     Animate.prototype.update_current_item = function(current_item, goal_reached) {
       var edge, visitable, _i, _len, _ref, _results;
+      if (current_item === this.algorithm.goal_node && this.algorithm.name !== this.BIDI_CONST) {
+        current_item.update_style(this.GOAL_CONST);
+        goal_reached = true;
+      } else {
+        current_item.update_style(this.VIEWING_CONST);
+      }
       if (current_item instanceof Node) {
         _ref = current_item.edges;
         _results = [];

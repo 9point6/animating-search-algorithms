@@ -35,11 +35,13 @@ class DFS extends Algorithm
 
         #reset the explored_nodes array
         @explored_nodes = []
+
         #stack for nodes to be searched
         todo_list = []
 
         #push root (starting) node onto stack
         todo_list.push @root_node
+
         # while there are nodes still left to check
         while todo_list.length isnt 0
 
@@ -66,6 +68,7 @@ class DFS extends Algorithm
                     #visitable = neighbour.e.visitable current_node
                     if not neighbour.n.explored and visitable
                         todo_list.push neighbour.n
+
 
     # ### DFS.gen_info( )
     # Gives the general metrics for a BFS search
