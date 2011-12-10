@@ -18,6 +18,10 @@ class Animate
     # Stores the algorithm currently being worked on in the UI environment.
     algorithm: null
 
+    # ### Animate.constructor( )
+    # Constructor for the animate class. Defines some member variables for
+    # the names of styles etc.
+    # #### TODO
     constructor: ->
         # Create local names
         @VIEWING_CONST = "viewing"
@@ -30,55 +34,55 @@ class Animate
 
     path_diff: 0
 
+    # ### Animate.destroy( )
+    # gets rid of all the styles of each node/edge
+    # #### TODO
     destroy: ->
         APP.graph.remove_styles( )
         delete @
 
-    # ### animate.step_forward( )
-    # move forward one step in the traverse_info array for a given algorithm.
+    # ### Animate.step_forward( )
+    # Move forward one step in the traverse_info array for a given algorithm.
     # ### Parameters
-    #
     # #### TODO
     step_forward: ->
-        # check for null value in traverse_info. if the pointer has not
+        # Check for null value in traverse_info. if the pointer has not
         # reached the last element of the array already, then run the code.
         if @algorithm.traverse_info? and @pointer < @algorithm.traverse_info.length
-
+            # Boolean value checking whether the goal has been reached
             goal_reached = false
-            # create local variable for storing the array of points/connections
+            # Create local variable for storing the array of points/connections
             @traverse_info = @algorithm.traverse_info
-            # create a variable for storing the element the pointer represents
+            # Create a variable for storing the element the pointer represents
             current_item = @traverse_info[@pointer]
 
-            if current_item is @algorithm.goal_node and @algorithm.name isnt @BIDI_CONST
-                # update the current item pointed at to goal node animation
-                current_item.update_style @GOAL_CONST
-                goal_reached = true
-            else
-                # update the current item pointed at to "viewing"
-                current_item.update_style @VIEWING_CONST
-
+            # Update the current item and its edges styles
             @update_current_item current_item, goal_reached
 
+            # Update the previous item and its edges styles
             @update_previous_item current_item, goal_reached
 
-            # increase the pointer value
+            # Increase the pointer value
             @pointer++
 
+    # ### Animate.update_previous_item( )
+    # Updates the previous item in the @traverse_info array when stepping forward
+    # #### Parameters
+    # * `current_item` - the current item looked at
+    # * `goal_reached` - Boolean value checking if the goal has been reached
+    # #### TODO
     update_previous_item: (current_item, goal_reached) ->
-        # the current_item is not the first element in the array
+        # The current_item is not the first element in the array
         if @pointer isnt 0
-            # create a variable for storing the previous element.
+            # Create a variable for storing the previous element.
             previous_item = @traverse_info[@pointer-1]
-            # if the previous item is in the "viewing" style (which it should
+            # If the previous item is in the "viewing" style (which it should
             # be)
             if previous_item.style is @VIEWING_CONST and previous_item isnt current_item
-                # update previous items style to visited
+                # Update previous items style to visited
                 previous_item.update_style @VISITED_CONST
                 if previous_item instanceof Node
-                    # change all of its connections back to normal unless it
-                    # is an AStar algorithm. AStar works by keeping previous
-                    # connections as "potentials" in an open set.
+                    # Change all of its connections back to normal
                     for edge in previous_item.edges
                         if @algorithm.path_edges? and edge.e.style is @POTENTIAL_CONST
                             is_visited = false
@@ -91,14 +95,18 @@ class Animate
                             else
                                 edge.e.update_style @NORMAL_CONST
 
-                        # change all of its connections back to normal unless it
-                        # is an AStar algorithm. AStar works by keeping previous
-                        # connections as "potentials" in an open set.
                         if edge.e.style is @POTENTIAL_CONST
                             edge.e.update_style @NORMAL_CONST
 
             @update_path current_item, previous_item, goal_reached
 
+    # ### Animate.update_path( )
+    # Updates the path that is from the root node to the current node
+    # #### Parameters
+    # * `current_item` - Current item looked at
+    # * `previous_item` - Previous item looked at
+    # * `goal_reached` - boolean checking if the goal has been reached
+    # #### TODO
     update_path: (current_item, previous_item, goal_reached) ->
         if @algorithm.path_edges?
             if current_item instanceof Node
@@ -121,7 +129,22 @@ class Animate
                     @create_path (@pointer+@path_diff+1)/2
                     current_item.update_style @VIEWING_CONST
 
+    # ### Animate.update_current_item( )
+    # Updates the style of the current item looked at by the pointer
+    # #### Parameters
+    # * `current_item` - The current item looked at by the pointer
+    # * `goal_reached` - boolean checking if the goal has been reached
+    # #### TODO
     update_current_item: (current_item, goal_reached) ->
+        #Checks if the current_item is the goal node, if so then updates the nodes style
+        if current_item is @algorithm.goal_node and @algorithm.name isnt @BIDI_CONST
+            # update the current item pointed at to goal node animation
+            current_item.update_style @GOAL_CONST
+            goal_reached = true
+        else
+            # update the current item pointed at to "viewing"
+            current_item.update_style @VIEWING_CONST
+
         # if the current_item selected is a point object
         if current_item instanceof Node
             # loop through all of the points connections
@@ -141,9 +164,7 @@ class Animate
                     edge.e.update_style @POTENTIAL_CONST
 
     # ## animate.step_backward( )
-    # move backward one step in the traverse_info array for a given algorithm.
-    # ### Parameters
-    #
+    # Move backward one step in the traverse_info array for a given algorithm.
     # #### TODO
     step_backward: ->
         # Check for null value in traverse_info. Pointer has to be greater than
@@ -161,6 +182,11 @@ class Animate
 
             @update_previous_item_backwards current_item
 
+    # ### Animate.update_current_item_backwards( )
+    # Updates the current item pointed at by the @pointer backwards
+    # #### Parameters
+    # * `current_item` - Current item the pointer represents
+    # #### TODO
     update_current_item_backwards: (current_item) ->
         #if (@algorithm.name isnt "A* Search" and @algorithm.name isnt @BIDI_CONST) or current_item instanceof Edge
         # change the current item to a "normal" style
@@ -175,6 +201,11 @@ class Animate
                 if edge.e.style is @POTENTIAL_CONST
                     edge.e.update_style @NORMAL_CONST
 
+    # ### Animate.update_previous_item_backwards( )
+    # Updates the previous items style backwards
+    # #### Parameters
+    # * `current_item` - Current item the pointer represents
+    # #### TODO
     update_previous_item_backwards: (current_item) ->
         # If there is an item before the current item in the traverse_info
         # array
@@ -206,6 +237,11 @@ class Animate
                         else if visitable
                             edge.e.update_style @POTENTIAL_CONST
 
+    # ### Animate.create_path( )
+    # Update the path from root to a particular node
+    # #### Parameters
+    # * `pointer` - The node to place the path to
+    # #### TODO
     create_path: (pointer) ->
         path = @algorithm.path_edges[pointer]
         for edge in path
@@ -213,17 +249,18 @@ class Animate
                 edge.update_style @PATH_CONST
 
 
+    # ### Animate.reset_path( )
+    # Reset the path to visited style
+    # #### TODO
     reset_path: ->
         for edge in APP.graph.edges
             if edge.style is @PATH_CONST
                 edge.update_style @VISITED_CONST
 
 
-    # ### animate.traverse( )
+    # ### Animate.traverse( )
     # Loop through the given array, animating each given
     # node and connection in order.
-    # ### Parameters
-    #
     # #### TODO
     traverse: ->
         traverse_speed = 500
@@ -236,9 +273,15 @@ class Animate
             @_stop = false
             setTimeout doTraverse, traverse_speed
 
+    # ### Animate.stop( )
+    # Stop the animation
+    # #### TODO
     stop: ->
         @_stop = true
 
+    # ### Animate.reset( )
+    # Reset the animation to the start
+    # #### TODO
     reset: ->
         APP.graph.remove_styles( )
         @pointer = 0
