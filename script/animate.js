@@ -19,7 +19,7 @@
       return delete this;
     };
     Animate.prototype.step_forward = function() {
-      var current_item, edge, goal_reached, i, is_visited, last_viewed, previous_item, visitable, _i, _j, _k, _len, _len2, _len3, _ref, _ref2, _ref3, _ref4;
+      var current_item, goal_reached;
       if ((this.algorithm.traverse_info != null) && this.pointer < this.algorithm.traverse_info.length) {
         goal_reached = false;
         this.traverse_info = this.algorithm.traverse_info;
@@ -30,129 +30,143 @@
         } else {
           current_item.update_style(this.VIEWING_CONST);
         }
+        this.update_current_item(current_item, goal_reached);
+        this.update_previous_item(current_item, goal_reached);
+        return this.pointer++;
+      }
+    };
+    Animate.prototype.update_previous_item = function(current_item, goal_reached) {
+      var edge, i, is_visited, previous_item, _i, _len, _ref, _ref2;
+      if (this.pointer !== 0) {
+        previous_item = this.traverse_info[this.pointer - 1];
+        if (previous_item.style === this.VIEWING_CONST && previous_item !== current_item) {
+          previous_item.update_style(this.VISITED_CONST);
+          if (previous_item instanceof Node) {
+            _ref = previous_item.edges;
+            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+              edge = _ref[_i];
+              if ((this.algorithm.path_edges != null) && edge.e.style === this.POTENTIAL_CONST) {
+                is_visited = false;
+                for (i = 0, _ref2 = this.pointer; 0 <= _ref2 ? i < _ref2 : i > _ref2; 0 <= _ref2 ? i++ : i--) {
+                  if (this.traverse_info[i] === edge.e) {
+                    is_visited = true;
+                    break;
+                  }
+                }
+                if (is_visited === true) {
+                  edge.e.update_style(this.VISITED_CONST);
+                } else {
+                  edge.e.update_style(this.NORMAL_CONST);
+                }
+              }
+              if (edge.e.style === this.POTENTIAL_CONST) {
+                edge.e.update_style(this.NORMAL_CONST);
+              }
+            }
+          }
+        }
+        return this.update_path(current_item, previous_item, goal_reached);
+      }
+    };
+    Animate.prototype.update_path = function(current_item, previous_item, goal_reached) {
+      var edge, last_viewed, _i, _len, _ref;
+      if (this.algorithm.path_edges != null) {
         if (current_item instanceof Node) {
+          if (previous_item instanceof Edge) {
+            this.reset_path();
+          }
+          last_viewed = previous_item;
+          if (previous_item instanceof Node) {
+            this.path_diff++;
+          }
+          this.create_path((this.pointer + this.path_diff) / 2);
           _ref = current_item.edges;
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {
             edge = _ref[_i];
-            if (this.algorithm.name === this.BIDI_CONST) {
-              if (this.pointer % 2 !== 0) {
-                visitable = edge.e.visitable(current_item, true);
-              } else {
-                visitable = edge.e.visitable(current_item);
-              }
-            } else {
-              visitable = edge.e.visitable(current_item);
-            }
-            if (edge.e.style === this.NORMAL_CONST && !goal_reached && visitable) {
+            if (edge.n !== this.traverse_info[this.pointer - 2] && edge.e !== last_viewed && !goal_reached && edge.e.visitable(current_item)) {
               edge.e.update_style(this.POTENTIAL_CONST);
             }
           }
         }
-        if (this.pointer !== 0) {
-          previous_item = this.traverse_info[this.pointer - 1];
-          if (previous_item.style === this.VIEWING_CONST && previous_item !== current_item) {
-            previous_item.update_style(this.VISITED_CONST);
-            if (previous_item instanceof Node) {
-              _ref2 = previous_item.edges;
-              for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
-                edge = _ref2[_j];
-                if ((this.algorithm.path_edges != null) && edge.e.style === this.POTENTIAL_CONST) {
-                  is_visited = false;
-                  for (i = 0, _ref3 = this.pointer; 0 <= _ref3 ? i < _ref3 : i > _ref3; 0 <= _ref3 ? i++ : i--) {
-                    if (this.traverse_info[i] === edge.e) {
-                      is_visited = true;
-                      break;
-                    }
-                  }
-                  if (is_visited === true) {
-                    edge.e.update_style(this.VISITED_CONST);
-                  } else {
-                    edge.e.update_style(this.NORMAL_CONST);
-                  }
-                }
-                if (edge.e.style === this.POTENTIAL_CONST) {
-                  edge.e.update_style(this.NORMAL_CONST);
-                }
-              }
-            }
-          }
-          if (this.algorithm.path_edges != null) {
-            if (current_item instanceof Node) {
-              if (previous_item instanceof Edge) {
-                console.log("resetting path");
-                this.reset_path();
-              }
-              last_viewed = previous_item;
-              console.log("creating path");
-              if (previous_item instanceof Node) {
-                this.path_diff++;
-              }
-              this.create_path((this.pointer + this.path_diff) / 2);
-              _ref4 = current_item.edges;
-              for (_k = 0, _len3 = _ref4.length; _k < _len3; _k++) {
-                edge = _ref4[_k];
-                if (edge.n !== this.traverse_info[this.pointer - 2] && edge.e !== last_viewed && !goal_reached && edge.e.visitable(current_item)) {
-                  edge.e.update_style(this.POTENTIAL_CONST);
-                }
-              }
-            }
-            if (current_item instanceof Edge) {
-              console.log(current_item.nodea);
-              console.log(current_item.nodeb);
-              if (current_item.nodea !== previous_item && current_item.nodeb !== previous_item) {
-                this.reset_path();
-                this.create_path((this.pointer + this.path_diff + 1) / 2);
-                current_item.update_style(this.VIEWING_CONST);
-              }
-            }
+        if (current_item instanceof Edge) {
+          if (current_item.nodea !== previous_item && current_item.nodeb !== previous_item) {
+            this.reset_path();
+            this.create_path((this.pointer + this.path_diff + 1) / 2);
+            return current_item.update_style(this.VIEWING_CONST);
           }
         }
-        return this.pointer++;
+      }
+    };
+    Animate.prototype.update_current_item = function(current_item, goal_reached) {
+      var edge, visitable, _i, _len, _ref, _results;
+      if (current_item instanceof Node) {
+        _ref = current_item.edges;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          edge = _ref[_i];
+          if (this.algorithm.name === this.BIDI_CONST) {
+            if (this.pointer % 2 !== 0) {
+              visitable = edge.e.visitable(current_item, true);
+            } else {
+              visitable = edge.e.visitable(current_item);
+            }
+          } else {
+            visitable = edge.e.visitable(current_item);
+          }
+          _results.push(edge.e.style === this.NORMAL_CONST && !goal_reached && visitable ? edge.e.update_style(this.POTENTIAL_CONST) : void 0);
+        }
+        return _results;
       }
     };
     Animate.prototype.step_backward = function() {
-      var current_item, edge, previous_item, visitable, _i, _j, _len, _len2, _ref, _ref2, _results;
+      var current_item;
       if ((this.algorithm.traverse_info != null) && this.pointer > 0) {
         this.pointer--;
         this.traverse_info = this.algorithm.traverse_info;
         current_item = this.traverse_info[this.pointer];
-        current_item.update_style(this.NORMAL_CONST);
-        if (current_item instanceof Node) {
-          _ref = current_item.edges;
+        this.update_current_item_backwards(current_item);
+        return this.update_previous_item_backwards(current_item);
+      }
+    };
+    Animate.prototype.update_current_item_backwards = function(current_item) {
+      var edge, _i, _len, _ref, _results;
+      current_item.update_style(this.NORMAL_CONST);
+      if (current_item instanceof Node) {
+        _ref = current_item.edges;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          edge = _ref[_i];
+          _results.push(edge.e.style === this.POTENTIAL_CONST ? edge.e.update_style(this.NORMAL_CONST) : void 0);
+        }
+        return _results;
+      }
+    };
+    Animate.prototype.update_previous_item_backwards = function(current_item) {
+      var edge, previous_item, visitable, _i, _len, _ref, _results;
+      if (this.pointer !== 0) {
+        previous_item = this.traverse_info[this.pointer - 1];
+        previous_item.update_style(this.VIEWING_CONST);
+        if (previous_item instanceof Node) {
+          if (this.algorithm.path_edges != null) {
+            if (current_item instanceof Node) {
+              this.path_diff--;
+            }
+            this.reset_path();
+            this.create_path((this.pointer + this.path_diff - 1) / 2);
+          }
+          _ref = previous_item.edges;
+          _results = [];
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {
             edge = _ref[_i];
-            if (edge.e.style === this.POTENTIAL_CONST) {
-              edge.e.update_style(this.NORMAL_CONST);
-            }
+            _results.push(edge.e.style !== this.VISITED_CONST ? (this.algorithm.name === this.BIDI_CONST ? this.pointer % 2 === 0 ? visitable = edge.e.visitable(previous_item, true) : visitable = edge.e.visitable(previous_item) : visitable = edge.e.visitable(previous_item), edge.e.style === this.PATH_CONST ? void 0 : visitable ? edge.e.update_style(this.POTENTIAL_CONST) : void 0) : void 0);
           }
-        }
-        if (this.pointer !== 0) {
-          previous_item = this.traverse_info[this.pointer - 1];
-          previous_item.update_style(this.VIEWING_CONST);
-          if (previous_item instanceof Node) {
-            if (this.algorithm.path_edges != null) {
-              if (current_item instanceof Node) {
-                this.path_diff--;
-              }
-              this.reset_path();
-              this.create_path((this.pointer + this.path_diff - 1) / 2);
-            }
-            _ref2 = previous_item.edges;
-            _results = [];
-            for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
-              edge = _ref2[_j];
-              _results.push(edge.e.style !== this.VISITED_CONST ? (this.algorithm.name === this.BIDI_CONST ? this.pointer % 2 === 0 ? visitable = edge.e.visitable(previous_item, true) : visitable = edge.e.visitable(previous_item) : visitable = edge.e.visitable(previous_item), edge.e.style === this.PATH_CONST ? void 0 : visitable ? edge.e.update_style(this.POTENTIAL_CONST) : void 0) : void 0);
-            }
-            return _results;
-          }
+          return _results;
         }
       }
     };
     Animate.prototype.create_path = function(pointer) {
       var edge, path, _i, _len, _results;
       path = this.algorithm.path_edges[pointer];
-      console.log(pointer);
-      console.log(path);
       _results = [];
       for (_i = 0, _len = path.length; _i < _len; _i++) {
         edge = path[_i];
@@ -162,7 +176,6 @@
     };
     Animate.prototype.reset_path = function() {
       var edge, _i, _len, _ref, _results;
-      console.log("really resetting now...");
       _ref = APP.graph.edges;
       _results = [];
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
