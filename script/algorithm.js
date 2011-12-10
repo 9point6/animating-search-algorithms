@@ -21,6 +21,16 @@
     Algorithm.prototype.run_info = function() {
       throw "Run info not implemented";
     };
+    Algorithm.prototype.contains = function(a, obj) {
+      var i;
+      i = a.length;
+      while (i--) {
+        if (a[i] === obj) {
+          return true;
+        }
+      }
+      return false;
+    };
     return Algorithm;
   })();
   this.Algorithm = Algorithm;

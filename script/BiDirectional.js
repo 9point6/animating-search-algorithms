@@ -56,35 +56,35 @@
         if (i < this.traverse_info_start.length) {
           this.add_to_traverse_info(this.traverse_info_start, i);
           this.searched_from_start.push(this.get_last_element_of(this.traverse_info));
-          if (this.check_for_crossover(this.searched_from_goal, this.searched_from_start)) {
-            return;
-          }
+        }
+        if (this.check_for_crossover(this.searched_from_goal, this.searched_from_start)) {
+          break;
         }
         if (i < this.traverse_info_goal.length) {
           this.add_to_traverse_info(this.traverse_info_goal, i);
           this.searched_from_goal.push(this.get_last_element_of(this.traverse_info));
-          if (this.check_for_crossover(this.searched_from_start, this.searched_from_goal)) {
-            return;
-          }
+        }
+        if (this.check_for_crossover(this.searched_from_start, this.searched_from_goal)) {
+          break;
         }
         _results.push(i++);
       }
       return _results;
     };
     BiDirectional.prototype.check_for_crossover = function(array1, array2) {
+      var last_elem;
       if (this.contains(array1, this.get_last_element_of(array2))) {
         return true;
       }
-      if (this.get_last_element_of(this.traverse_info instanceof Edge)) {
-        if (this.traverse_info_start[i] != null) {
-          if (this.containsById(this.searched_from_start, this.traverse_info_start[i].nodea)) {
-            if (this.containsById(this.searched_from_goal, this.traverse_info_start[i].nodeb)) {
-              return true;
-            }
-          } else if (this.containsById(this.searched_from_start, this.traverse_info_start[i].nodeb)) {
-            if (this.containsById(this.searched_from_goal, this.traverse_info_start[i].nodea)) {
-              return true;
-            }
+      last_elem = this.get_last_element_of(this.traverse_info);
+      if (last_elem instanceof Edge) {
+        if (this.containsById(array1, last_elem.nodea)) {
+          if (this.containsById(array2, last_elem.nodeb)) {
+            return true;
+          }
+        } else if (this.containsById(array1, last_elem.nodeb)) {
+          if (this.containsById(array2, last_elem.nodea)) {
+            return true;
           }
         }
       }
@@ -94,19 +94,10 @@
       return obj[obj.length - 1];
     };
     BiDirectional.prototype.add_to_traverse_info = function(obj, i) {
-      return this.traverse_info.push(obj[i]);
-    };
-    BiDirectional.prototype.contains = function(a, obj) {
-      var i;
-      i = a.length;
-      while (i--) {
-        if ((a[i] != null) && (obj != null)) {
-          if (a[i] === obj) {
-            return true;
-          }
-        }
+      this.traverse_info.push(obj[i]);
+      if (obj[i] instanceof Node) {
+        return this.explored_nodes.push(obj[i]);
       }
-      return false;
     };
     BiDirectional.prototype.containsById = function(a, obj) {
       var i;

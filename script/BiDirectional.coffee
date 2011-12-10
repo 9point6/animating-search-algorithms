@@ -74,27 +74,25 @@ class BiDirectional extends Algorithm
         while i < combinedArrayLength
             # If we haven't reached the end of the array for algorithm 1
             if i < @traverse_info_start.length
-
                 # Add element to traverse_info
                 @add_to_traverse_info @traverse_info_start, i
                 # Add to list of already searched items from start node
                 @searched_from_start.push @get_last_element_of @traverse_info
 
-                # Check if there is a crossover after adding this item
-                if @check_for_crossover @searched_from_goal, @searched_from_start
-                    return
+            # Check if there is a crossover after adding this item
+            if @check_for_crossover @searched_from_goal, @searched_from_start
+                break
 
             # If we haven't reached the end of the array for algorithm 2
             if i < @traverse_info_goal.length
-
                 # Add element to traverse_info
                 @add_to_traverse_info @traverse_info_goal, i
                 # Add to list of already searched items from goal node
                 @searched_from_goal.push @get_last_element_of @traverse_info
 
-                # Check if there is a crossover after adding this item
-                if @check_for_crossover @searched_from_start, @searched_from_goal
-                    return
+            # Check if there is a crossover after adding this item
+            if @check_for_crossover @searched_from_start, @searched_from_goal
+                break
 
             # Loop through checking all items in
             # @traverse_info_start and @traverse_info_goal
@@ -114,14 +112,14 @@ class BiDirectional extends Algorithm
             return true
 
         # Same as previous check but for edges
-        if @get_last_element_of @traverse_info instanceof Edge
-            if @traverse_info_start[i]?
-                if @containsById @searched_from_start, @traverse_info_start[i].nodea
-                    if @containsById @searched_from_goal, @traverse_info_start[i].nodeb
-                        return true
-                else if @containsById @searched_from_start, @traverse_info_start[i].nodeb
-                    if @containsById @searched_from_goal, @traverse_info_start[i].nodea
-                        return true
+        last_elem = @get_last_element_of @traverse_info
+        if last_elem instanceof Edge
+            if @containsById array1, last_elem.nodea
+                if @containsById array2, last_elem.nodeb
+                    return true
+            else if @containsById array1, last_elem.nodeb
+                if @containsById array2, last_elem.nodea
+                    return true
 
         # Return false if there was no match between each array
         return false
@@ -143,20 +141,8 @@ class BiDirectional extends Algorithm
     # #### TODO
     add_to_traverse_info: (obj, i) ->
         @traverse_info.push obj[i]
-
-    # ### BiDirectional.contains( )
-    # Check to see if an object exists in an array
-    # #### Paramaeters
-    # * `a` - array to search in
-    # * `obj` - object to look for.
-    # #### TODO
-    contains: (a, obj) ->
-        i = a.length
-        while i--
-            if a[i]? and obj?
-                if a[i] is obj
-                    return true
-        return false
+        if obj[i] instanceof Node
+            @explored_nodes.push obj[i]
 
     # ### BiDirectional.containsById( )
     # Check to see if an object exists in an array using an id

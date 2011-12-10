@@ -1,25 +1,46 @@
-# Node class or point whatever the fuck its called, I'm gonna call it node
-# it makes more sense. needs extra variables for the A* search to work
-# costSoFar - this will be the cost to get to this node
-# estimatedTotalCost - this will be the estimate cost to get to the goal node
-# if we use this node in our path. It is equal to costSoFar + heuristic
-# fromNode - this is the record of the node we came from to get to this one
+# Part of the **Animating Search Algorithms** project
+#
+# ## Developers
+# * [Ian Brown] (http://www.csc.liv.ac.uk/~cs8jb/)
+# * [Jack Histon] (http://www.csc.liv.ac.uk/~cs8jrh/)
+# * [Colin Jackson] (http://www.csc.liv.ac.uk/~cs8cj/)
+# * [Jennifer Jones] (http://www.csc.liv.ac.uk/~cs8jlj/)
+# * [John Sanderson] (http://www.csc.liv.ac.uk/~cs8js/)
+#
+# Do not modify or distribute without permission.
+
+# ## Main Documentation
+
+# AStar algorithm class
 
 class AStar extends Algorithm
     name: "A* Search"
 
+    # ### AStar.destroy( )
+    # This resets every node to unexplored again
+    # #### TODO
     destroy: ->
         for node in @explored_nodes
             delete node.explored
         super
 
+    # ### AStar.search( )
+    # Calls the _search method which does the actual work
+    # #### TODO
     search: ->
         # Create the heuristic object for this particular search
         @heuristic = new Heuristics( )
 
         @_search( )
 
+    # ### AStar._search( )
+    # Searches form the root node for a goal node. Uses an A* Search method.
+    # #### TODO
     _search: ->
+        # costSoFar - this will be the cost to get to this node
+        # estimatedTotalCost - this will be the estimate cost to get to the goal node
+        # if we use this node in our path. It is equal to costSoFar + heuristic
+        # fromNode - this is the record of the node we came from to get to this one
 
         @destroy
         @explored_nodes = []
@@ -92,13 +113,6 @@ class AStar extends Algorithm
             closedList.push currentNode
             @prev_node = currentNode
 
-    contains: (a, obj) ->
-        i = a.length
-        while i--
-            if a[i] is obj
-                return true
-        return false
-
     remove: (a, obj) ->
         i = a.length
         while i--
@@ -125,7 +139,7 @@ class AStar extends Algorithm
     run_info: ->
         alert "run information"
 
-    # ### DFS.create_traverse_info
+    # ### astar.create_traverse_info( )
     # Populates the traverse_info array for use by the
     # animate class
     # ### Parameters
