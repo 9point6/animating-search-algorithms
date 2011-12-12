@@ -43,6 +43,7 @@ class Greedy extends Algorithm
 
         openList = []
 
+        # if root node is goal node finish
         if @root_node.id is @goal_node.id
             return
         else
@@ -51,15 +52,19 @@ class Greedy extends Algorithm
             openList.push @root_node
             currentNode = @root_node
 
+        # loop until there are no more options left
         while openList.length isnt 0
 
             openList = []
+            # mark the current node as explored
             currentNode.explored = true
             @explored_nodes.push currentNode
 
+            # If the current node chosen is the goal node then finish
             if currentNode is @goal_node
                 break
 
+            # Loop through the current nodes edges and go along the least costly
             if currentNode?
                 for connection in currentNode.edges
                     if @is_from_goal?
