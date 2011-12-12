@@ -35,7 +35,7 @@
       this.path_edges = [];
       this.is_found = false;
       this.traverse_info = [];
-      this.max_depth = 3;
+      //this.max_depth = 3;
       depth = 0;
       while ((this.is_found === false) && (depth < this.max_depth)) {
         this._search(this.root_node, depth, this.root_node);

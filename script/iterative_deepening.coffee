@@ -22,7 +22,7 @@ class IterativeDeepening extends Algorithm
         @traverse_info = []
 
 
-        @max_depth = 3
+        #@max_depth = 3
         depth = 0
         while ((@is_found is false) and (depth < @max_depth))
             #@explored_nodes = []
