@@ -55,7 +55,6 @@ class Greedy extends Algorithm
 
             openList = []
             currentNode.explored = true
-            console.log currentNode
             @explored_nodes.push currentNode
 
             if currentNode is @goal_node

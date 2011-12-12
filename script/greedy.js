@@ -44,7 +44,6 @@
       while (openList.length !== 0) {
         openList = [];
         currentNode.explored = true;
-        console.log(currentNode);
         this.explored_nodes.push(currentNode);
         if (currentNode === this.goal_node) {
           break;
