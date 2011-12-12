@@ -28,59 +28,48 @@
       return this._search();
     };
     Greedy.prototype._search = function() {
-      var closedList, connection, currentNode, endNode, openList, potentialCost, visitable, _i, _len, _ref, _results;
+      var connection, currentNode, endNode, openList, potentialCost, visitable, _i, _len, _ref, _results;
       this.destroy;
       this.explored_nodes = [];
       openList = [];
-      closedList = [];
       if (this.root_node.id === this.goal_node.id) {
         return;
       } else {
         this.root_node.costSoFar = 0;
         this.root_node.estimatedTotalCost = 0 + this.root_node.costSoFar + this.heuristic.choice(this.heuristic_choice, this.root_node, this.goal_node);
         openList.push(this.root_node);
+        currentNode = this.root_node;
       }
       _results = [];
       while (openList.length !== 0) {
-        currentNode = this.getSmallestElement(openList);
+        openList = [];
+        currentNode.explored = true;
+        console.log(currentNode);
         this.explored_nodes.push(currentNode);
         if (currentNode === this.goal_node) {
           break;
         }
-        _ref = currentNode.edges;
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          connection = _ref[_i];
-          if (this.is_from_goal != null) {
-            visitable = connection.e.visitable(currentNode, true);
-          } else {
-            visitable = connection.e.visitable(currentNode);
-          }
-          if (visitable) {
+        if (currentNode != null) {
+          _ref = currentNode.edges;
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            connection = _ref[_i];
+            if (this.is_from_goal != null) {
+              visitable = connection.e.visitable(currentNode, true);
+            } else {
+              visitable = connection.e.visitable(currentNode);
+            }
             endNode = connection.n;
-            potentialCost = currentNode.costSoFar + connection.e.weight;
-            /*
-                                if @contains closedList, endNode
-                                    if potentialCost < endNode.costSoFar
-                                        # endNode.estimatedTotalCost - endNode.costSoFar == the heuristic (OR SHOULD!)
-                                        endNode.estimatedTotalCost = endNode.estimatedTotalCost - endNode.costSoFar + potentialCost
-                                        endNode.costSoFar = potentialCost
-                                        @remove closedList, endNode
-                                        openList.push endNode
-                                else if @contains openList, endNode
-                                    if potentialCost < endNode.costSoFar
-                                        # endNode.estimatedTotalCost - endNode.costSoFar == the heuristic (OR SHOULD!)
-                                        endNode.estimatedTotalCost = endNode.estimatedTotalCost - endNode.costSoFar + potentialCost
-                                        endNode.costSoFar = potentialCost
-                                else
-                                */
-            endNode.costSoFar = potentialCost;
-            endNode.estimatedTotalCost = endNode.costSoFar + this.heuristic.choice(this.heuristic_choice, endNode, this.goal_node);
-            openList.push(endNode);
+            if (visitable && !endNode.explored) {
+              potentialCost = currentNode.costSoFar + connection.e.weight;
+              endNode.costSoFar = potentialCost;
+              endNode.estimatedTotalCost = endNode.costSoFar + this.heuristic.choice(this.heuristic_choice, endNode, this.goal_node);
+              openList.push(endNode);
+            }
           }
+        } else {
+          break;
         }
-        this.remove(openList, currentNode);
-        closedList.push(currentNode);
-        _results.push(this.prev_node = currentNode);
+        _results.push(currentNode = this.getSmallestElement(openList));
       }
       return _results;
     };

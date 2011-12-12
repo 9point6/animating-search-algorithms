@@ -72,7 +72,7 @@
     $('body').onselectstart = function() {
       return false;
     };
-    window.ALGORITHMS = [BFS, DFS, DLS, IterativeDeepening, AStar, BiDirectional];
+    window.ALGORITHMS = [BFS, DFS, DLS, IterativeDeepening, AStar, Greedy, BiDirectional];
     return window.APP = new Main;
   });
 }).call(this);

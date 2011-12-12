@@ -37,82 +37,48 @@ class Greedy extends Algorithm
     # Searches form the root node for a goal node. Uses an A* Search method.
     # #### TODO
     _search: ->
-        # costSoFar - this will be the cost to get to this node
-        # estimatedTotalCost - this will be the estimate cost to get to the goal node
-        # if we use this node in our path. It is equal to costSoFar + heuristic
-        # fromNode - this is the record of the node we came from to get to this one
 
         @destroy
         @explored_nodes = []
 
-        openList = []       # this contains the nodes that have been visited but not yet processed
-        closedList = []     # this is the list of processed nodes
+        openList = []
 
-        if @root_node.id is @goal_node.id # we're at the goal node so return
+        if @root_node.id is @goal_node.id
             return
         else
-            # initialise root_nodes cost so far as 0
-            # call the heuristic to estimate the total cost to the goal node
-            # and add root_node to the list of open nodes
             @root_node.costSoFar = 0
             @root_node.estimatedTotalCost = 0 + @root_node.costSoFar + @heuristic.choice @heuristic_choice, @root_node, @goal_node
             openList.push @root_node
+            currentNode = @root_node
 
         while openList.length isnt 0
 
-            # get the node with the smallest estimatedTotalCost
-            currentNode = @getSmallestElement openList
-            # find the edge that is connected to the previous node and the new current node and place
-            # on the traverse_info array for animation.
-            # for edge in currentNode.edges
-                #if edge.n is @prev_node
-                    #@traverse_info.push edge.n
-
+            openList = []
+            currentNode.explored = true
+            console.log currentNode
             @explored_nodes.push currentNode
 
             if currentNode is @goal_node
                 break
 
-            #for each connection from our current node
-            #if needed initialise or update costSoFar and estimatedTotalCost
-            #we also need to check if this connection leads to a node that already
-            #exists on the open or closed list
-            #if its on the open list compare values and update if neccessary, stays on open list
-            #if its on the closed list but this is a shorter path update values and put it back on the open list
-            #remove it from the closed list, this will force any connections dependant on this node to be reconsidered at a later time
-
-            for connection in currentNode.edges
-                #visitable = connection.e.visitable currentNode
-                if @is_from_goal?
-                    visitable = connection.e.visitable currentNode, true
-                else
-                    visitable = connection.e.visitable currentNode
-
-                if visitable
-                    endNode = connection.n
-                    potentialCost = currentNode.costSoFar + connection.e.weight
-                    ###
-                    if @contains closedList, endNode
-                        if potentialCost < endNode.costSoFar
-                            # endNode.estimatedTotalCost - endNode.costSoFar == the heuristic (OR SHOULD!)
-                            endNode.estimatedTotalCost = endNode.estimatedTotalCost - endNode.costSoFar + potentialCost
-                            endNode.costSoFar = potentialCost
-                            @remove closedList, endNode
-                            openList.push endNode
-                    else if @contains openList, endNode
-                        if potentialCost < endNode.costSoFar
-                            # endNode.estimatedTotalCost - endNode.costSoFar == the heuristic (OR SHOULD!)
-                            endNode.estimatedTotalCost = endNode.estimatedTotalCost - endNode.costSoFar + potentialCost
-                            endNode.costSoFar = potentialCost
+            if currentNode?
+                for connection in currentNode.edges
+                    if @is_from_goal?
+                        visitable = connection.e.visitable currentNode, true
                     else
-                    ###
-                    endNode.costSoFar = potentialCost
-                    endNode.estimatedTotalCost = endNode.costSoFar + @heuristic.choice @heuristic_choice, endNode, @goal_node
-                    openList.push endNode
+                        visitable = connection.e.visitable currentNode
 
-            @remove openList, currentNode
-            closedList.push currentNode
-            @prev_node = currentNode
+                    endNode = connection.n
+
+                    if visitable and not endNode.explored
+                        potentialCost = currentNode.costSoFar + connection.e.weight
+                        endNode.costSoFar = potentialCost
+                        endNode.estimatedTotalCost = endNode.costSoFar + @heuristic.choice @heuristic_choice, endNode, @goal_node
+                        openList.push endNode
+            else
+                break
+
+            currentNode = @getSmallestElement openList
 
     # ### Greedy.remove( )
     # Removes and element from an array

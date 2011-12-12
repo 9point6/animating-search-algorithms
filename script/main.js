@@ -101,7 +101,7 @@
                         combobox = $(e.target).attr("id").substr(8, 1);
                         this.current_algo.alg[combobox] = new ALGORITHMS[parseInt($(e.target).val())]();
                         this.current_algo.traverse_info = [];
-                        if (a instanceof AStar) {
+                        if (a instanceof AStar || Greedy) {
                           extras.append(li1 = $("<li class=\"algoextra\" />"));
                           li1.append("<h3>Heuristic " + i + "</h3>");
                           li1.append(combo1 = $('<select id=\"algoheuristic#{i}\" />'));
@@ -242,7 +242,7 @@
       $('#search').click(__bind(function(e) {
         this.design_mode = false;
         this.current_algo = new ALGORITHMS[$('#algoselection').prop("value")]();
-        if (this.current_algo instanceof AStar) {
+        if (this.current_algo instanceof AStar || Greedy) {
           this.current_algo.heuristic_choice = $('#algoheuristic').val();
         }
         if (this.current_algo instanceof BiDirectional) {
