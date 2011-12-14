@@ -32,6 +32,11 @@ class Animate
         @PATH_CONST = "path"
         @BIDI_CONST = "Bi-Directional Search"
 
+    # For creating a path we use path_edges which is (approx) half the length of
+    # traverse_info. In order to navigate path_edges using the traverse_info
+    # pointer we must half the value and make up the difference. Part of this difference
+    # indicates how many times we 'reset' our search, such as when iterative deepening
+    # restarts from a different depth.
     path_diff: 0
 
     # ### Animate.destroy( )
@@ -108,21 +113,36 @@ class Animate
     # * `goal_reached` - boolean checking if the goal has been reached
     # #### TODO
     update_path: (current_item, previous_item, goal_reached) ->
+        # check that path_edges has been populated. The algorithms that have no
+        # visual path will skip this method
         if @algorithm.path_edges?
+            
+            # if the current item in traverse_info is a node
             if current_item instanceof Node
+                # if the previous item is an edge, reset the path
+                # This allows BiDi to maintain one path while the other
+                # is amended
                 if previous_item instanceof Edge
                     @reset_path()
+                
                 last_viewed = previous_item
 
+                # if current item and previous item are nodes then
+                # path diff must be incremented
                 if previous_item instanceof Node
                     @path_diff++
 
+                # create the path
                 @create_path (@pointer+@path_diff) / 2
 
+                # update current item's edges to potential, unless it leads to our previous node and current item isn't the goal
                 for edge in current_item.edges
                     if edge.n isnt @traverse_info[@pointer-2] and edge.e isnt last_viewed and not goal_reached and edge.e.visitable current_item
                         edge.e.update_style @POTENTIAL_CONST
 
+            # if current item is an edge and the nodes on this edge are not the one we've just visited
+            # (ie, the path has jumped from one part of the graph to another) then reset the path, create
+            # a new path and make the current item 'viewing'
             if current_item instanceof Edge
                 if current_item.nodea isnt previous_item and current_item.nodeb isnt previous_item
                     @reset_path()
@@ -238,12 +258,14 @@ class Animate
                             edge.e.update_style @POTENTIAL_CONST
 
     # ### Animate.create_path( )
-    # Update the path from root to a particular node
+    # Create the path from root to a particular node
     # #### Parameters
-    # * `pointer` - The node to place the path to
-    # #### TODO
+    # * `pointer` - A pointer to current item's entry in path_edges
     create_path: (pointer) ->
+        # path stores all the appropriate edges we need to animate for this
+        # node
         path = @algorithm.path_edges[pointer]
+        # update all the edge that aren't potential to path 
         for edge in path
             if edge.style isnt @POTENTIAL_CONST
                 edge.update_style @PATH_CONST
