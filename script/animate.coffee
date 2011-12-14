@@ -116,7 +116,7 @@ class Animate
         # check that path_edges has been populated. The algorithms that have no
         # visual path will skip this method
         if @algorithm.path_edges?
-            
+
             # if the current item in traverse_info is a node
             if current_item instanceof Node
                 # if the previous item is an edge, reset the path
@@ -124,7 +124,7 @@ class Animate
                 # is amended
                 if previous_item instanceof Edge
                     @reset_path()
-                
+
                 last_viewed = previous_item
 
                 # if current item and previous item are nodes then
@@ -265,7 +265,7 @@ class Animate
         # path stores all the appropriate edges we need to animate for this
         # node
         path = @algorithm.path_edges[pointer]
-        # update all the edge that aren't potential to path 
+        # update all the edge that aren't potential to path
         for edge in path
             if edge.style isnt @POTENTIAL_CONST
                 edge.update_style @PATH_CONST

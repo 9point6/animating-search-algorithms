@@ -41,7 +41,7 @@ class DLS extends Algorithm
 
         #if a solution is found, return true
         @is_found = false
-        
+
         #Perform DLS search
         @_search @root_node, @depth, @root_node
 
@@ -74,7 +74,7 @@ class DLS extends Algorithm
 
             # For every edge connected to node
             for neighbour in node.edges
-                
+
                 # if edge is undirected or directed away from current node, mark is as visitable
                 if @is_from_goal?
                     visitable = neighbour.e.visitable node, true
@@ -91,7 +91,7 @@ class DLS extends Algorithm
                         # perform DLS search with new node from the other end of the edge, a decremented depth
                         # prev_node as the node we've just explored
                         @_search neighbour.n, depth-1, node
-                        
+
                         # if solution is found (ie, exiting the recursion), break the loop and terminate search
                         if @is_found
                             break
@@ -142,7 +142,7 @@ class DLS extends Algorithm
 
             # current stores the node we now want to find the parent of
             current = rev_explored_parents[i]
-            
+
             # explore all the edges connected to current until
             # we find the one that connects current to the
             # last node we added as part of the path - push this
@@ -150,7 +150,7 @@ class DLS extends Algorithm
             for edge in current.edges
                 if edge.n.id is out_sub.slice(-1)[0].id
                     out_edges.push edge.e
-            
+
             # traverse backwards through explored_parents
             # until we find current. This allows us to reset
             # current to be the parent of current, and repeat
@@ -164,7 +164,7 @@ class DLS extends Algorithm
                 if rev_explored[j].id is current.id
                     out_sub.push rev_explored[j]
                     current = rev_explored_parents[j]
-                    
+
                     # explore all the edges connected to current
                     # until we find the one that connects current
                     # to the last node we added as part of the path
@@ -172,7 +172,7 @@ class DLS extends Algorithm
                     for edge in current.edges
                         if edge.n.id is out_sub.slice(-1)[0].id
                             out_edges.push edge.e
-            
+
             # Store all the edges that are required to make a path from
             # explored_nodes[i] in path_edges[i]
             @path_edges[i] = out_edges.reverse()
