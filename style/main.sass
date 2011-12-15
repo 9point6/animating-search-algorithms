@@ -313,9 +313,23 @@ div#algohelptext
     height: 10px
     @include border-radius(0 0 5px 5px)
 
+#loadfile
+    text-align: center
+    display: block
+    padding: 5px
+    border: 1px #999 solid
+    color: #333
+    width: 200px
+    cursor: pointer
+
+    @include border-radius(5px)
+    @include linear-gradient(#ccc, #999)
+
+    &:hover
+        @include linear-gradient(#999, #666)
+
 .submarker
     float: right
-
 
 // Button Images
 // TODO: Convert to a sprite
