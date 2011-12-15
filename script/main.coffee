@@ -87,7 +87,35 @@ class Main
         <div id="copyright">
             <a href="doc">Project Home</a>
         <div>
-        ''' );
+        ''' )
+
+        @modal = new Modal
+            title: "Welcome to Searchr!"
+            intro: """
+                <p>
+                    Welcome to Searchr, the best damn search algorithm animation
+                    tool the world has ever seen*! We've designed it to be as
+                    intuitive as possible, but here's a quick start guide so you
+                    can get started as soon as possible.
+                </p>
+                <img src="img/welcome1.png" alt="Toolbar Diagram" />
+                <p>
+                    You can also manipulate node and edge properties by clicking
+                    directly on them where a context sensitive menu will pop up.
+                    Once you're in "run mode" the algorithm dialog will automatically
+                    open; from here you can switch algorithms and view or edit their
+                    properites
+                </p>
+                """
+            okay: "Don't show this again!"
+            cancel: "Okay, thanks!"
+            callback: ( r ) ->
+                setCookie "welcome", "false"
+        @modal.div.css
+            width: 600
+            "margin-left": -300
+        if "false" isnt getCookie "welcome"
+            @modal.show( )
 
         # Set the helptext div to be invisible for animation.
         $( '#helptext' ).css

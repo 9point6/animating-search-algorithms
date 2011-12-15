@@ -7,6 +7,22 @@
       this.design_mode = true;
       this.graph = new Graph();
       $('body').append('<div id="toolbar">\n    <h1>search<span>r</span></h1>\n    <ul id="designmode">\n        <li id="new" title="New Graph" />\n        <li id="save" title="Save Graph" />\n        <li id="load" title="Load Graph" />\n        <li id="add" title="Add a node" />\n        <li id="remove" title="Remove a node" />\n        <li id="connect" title="Connect two nodes" />\n        <li id="kamada" title="Run Kamada Kawai graph layout algorithm" />\n        <li class="settings" title="Settings Dialog" />\n        <li id="search" title="Switch to search mode" />\n    </ul>\n    <ul id="runmode">\n        <li id="setnodes" title="Set root and goal nodes" />\n        <li id="process" title="Process Graph" />\n        <li id="stepback" title="Step Back through animation" />\n        <li id="run" title="Run Animation" />\n        <li id="stop" title="Stop Animation" />\n        <li id="stepforward" title="Step Forward through animation" />\n        <li id="reset" title="Reset the animation" />\n        <li class="settings" title="Settings Dialog" />\n        <li id="design" title="Switch to design mode" />\n    </ul>\n    <div id="helptext" />\n</div>\n<div id="slidewrap">\n    <a id="slidetoggle">\n        <span>&#9679;</span>\n    </a>\n    <div id="slideout">\n        <h2 id="title">Algorithm</h2>\n        <ul id="list">\n            <li>\n                <h3>Algorithm:</h3>\n                <select id="algoselection" />\n            </li>\n            <li>\n                <h3>Completeness:</h3>\n                <p id="algodata_completeness">Blah</p>\n            </li>\n            <li>\n                <h3>Time Complexity:</h3>\n                <p id="algodata_time">Blah</p>\n            </li>\n            <li>\n                <h3>Space Complexity:</h3>\n                <p id="algodata_space">Blah</p>\n            </li>\n            <li>\n                <h3>Optimality:</h3>\n                <p id="algodata_optimality">Blah</p>\n            </li>\n        </ul>\n    </div>\n</div>\n<div id="algohelptext">Click for algorithm properties</div>\n<div id="copyright">\n    <a href="doc">Project Home</a>\n<div>');
+      this.modal = new Modal({
+        title: "Welcome to Searchr!",
+        intro: "<p>\n    Welcome to Searchr, the best damn search algorithm animation\n    tool the world has ever seen*! We've designed it to be as\n    intuitive as possible, but here's a quick start guide so you\n    can get started as soon as possible.\n</p>\n<img src=\"img/welcome1.png\" alt=\"Toolbar Diagram\" />\n<p>\n    You can also manipulate node and edge properties by clicking\n    directly on them where a context sensitive menu will pop up.\n    Once you're in \"run mode\" the algorithm dialog will automatically\n    open; from here you can switch algorithms and view or edit their\n    properites\n</p>",
+        okay: "Don't show this again!",
+        cancel: "Okay, thanks!",
+        callback: function(r) {
+          return setCookie("welcome", "false");
+        }
+      });
+      this.modal.div.css({
+        width: 600,
+        "margin-left": -300
+      });
+      if ("false" !== getCookie("welcome")) {
+        this.modal.show();
+      }
       $('#helptext').css({
         opacity: 0
       });

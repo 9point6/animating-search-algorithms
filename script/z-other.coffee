@@ -88,6 +88,29 @@ window.base64Decode = ( text ) ->
 
     result.join ""
 
+# Adapted from PPK's cookie methods
+window.setCookie = ( name, value, days ) ->
+    if days
+        date = new Date( )
+        date.setTime date.getTime( ) + ( days * 24 * 60 * 60 * 1000 )
+        expires = "; expires=#{date.toGMTString( )}"
+    else
+        expires = ""
+    document.cookie = "#{name}=#{value}#{expires}; path=/"
+
+window.getCookie = ( name ) ->
+    nameEQ = "#{name}="
+    ca = document.cookie.split ';'
+    for c in ca
+        while ' ' is c.charAt 0
+            c = c.substring 1, c.length
+        if 0 is c.indexOf nameEQ
+            return c.substring nameEQ.length, c.length
+    null
+
+window.deleteCookie = ( name ) ->
+    setCookie name, "", -1
+
 # ## Bootstrap Code
 # The stuff needed to get everything started!
 
