@@ -283,21 +283,7 @@ class Main
                 if i++ < lim
                     setTimeout func, 5
                 else
-                    [dxl,dyl,dxg,dyg] = [Infinity,Infinity,0,0]
-                    for n in @graph.nodes
-                        dxl = Math.min dxl, n.x
-                        dyl = Math.min dyl, n.y
-                        dxg = Math.max dxg, n.x
-                        dyg = Math.max dyg, n.y
-                    dx = dxl
-                    dy = dyl
-                    # TODO: actual screen widths
-                    mx = ( dxg - dxl ) / 500
-                    my = ( dyg - dyl ) / 500
-                    for n in @graph.nodes
-                        n.move 75 + ( n.x - dx ) / Math.max( mx, my ), 75 + ( n.y - dy ) / Math.max( mx, my )
-                        for e in n.edges
-                            e.e.update_path( )
+                    @graph.resize $( window ).width( ), $( window ).height( )
                     modal.destroy( )
             func( )
         $( '#search' ).click ( e ) =>

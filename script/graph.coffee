@@ -77,6 +77,24 @@ class Graph
         for node in @nodes
             node.unsetGoalRoot( root, goal )
 
+    resize: ( w, h, gutter = 75 ) ->
+        w -= 2 * gutter
+        h -= 2 * gutter
+        [dxl,dyl,dxg,dyg] = [Infinity,Infinity,0,0]
+        for n in @nodes
+            dxl = Math.min dxl, n.x
+            dyl = Math.min dyl, n.y
+            dxg = Math.max dxg, n.x
+            dyg = Math.max dyg, n.y
+        dx = dxl
+        dy = dyl
+        mx = ( dxg - dxl ) / w
+        my = ( dyg - dyl ) / h
+        for n in @nodes
+            n.move gutter + ( n.x - dx ) / Math.max( mx, my ), gutter + ( n.y - dy ) / Math.max( mx, my )
+            for e in n.edges
+                e.e.update_path( )
+
     # ### graph.add_point( )
     # Adds a node to the canvas.
     # #### Parameters
@@ -258,5 +276,9 @@ class Graph
         # Restore connections
         for edge in obj.edges
             @connect @nodes_id_map[edge.a], @nodes_id_map[edge.b], edge.weight, edge.direction
+
+        # Resize graph
+        # TODO: add option in settings to disable this
+        @resize $( window ).width( ), $( window ).height( )
 
 this.Graph = Graph

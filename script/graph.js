@@ -6,8 +6,7 @@
     Graph.prototype.remove_mode = false;
     function Graph() {
       this.do_mouse_removal = __bind(this.do_mouse_removal, this);
-      this.do_mouse_connection = __bind(this.do_mouse_connection, this);
-      var _ref;
+      this.do_mouse_connection = __bind(this.do_mouse_connection, this);      var _ref;
       _ref = [[], []], this.nodes = _ref[0], this.edges = _ref[1];
       this.nodes_id_map = {};
       this.nodecount = 0;
@@ -62,6 +61,44 @@
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         node = _ref[_i];
         _results.push(node.unsetGoalRoot(root, goal));
+      }
+      return _results;
+    };
+    Graph.prototype.resize = function(w, h, gutter) {
+      var dx, dxg, dxl, dy, dyg, dyl, e, mx, my, n, _i, _j, _len, _len2, _ref, _ref2, _ref3, _results;
+      if (gutter == null) {
+        gutter = 75;
+      }
+      w -= 2 * gutter;
+      h -= 2 * gutter;
+      _ref = [Infinity, Infinity, 0, 0], dxl = _ref[0], dyl = _ref[1], dxg = _ref[2], dyg = _ref[3];
+      _ref2 = this.nodes;
+      for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
+        n = _ref2[_i];
+        dxl = Math.min(dxl, n.x);
+        dyl = Math.min(dyl, n.y);
+        dxg = Math.max(dxg, n.x);
+        dyg = Math.max(dyg, n.y);
+      }
+      dx = dxl;
+      dy = dyl;
+      mx = (dxg - dxl) / w;
+      my = (dyg - dyl) / h;
+      _ref3 = this.nodes;
+      _results = [];
+      for (_j = 0, _len2 = _ref3.length; _j < _len2; _j++) {
+        n = _ref3[_j];
+        n.move(gutter + (n.x - dx) / Math.max(mx, my), gutter + (n.y - dy) / Math.max(mx, my));
+        _results.push((function() {
+          var _k, _len3, _ref4, _results2;
+          _ref4 = n.edges;
+          _results2 = [];
+          for (_k = 0, _len3 = _ref4.length; _k < _len3; _k++) {
+            e = _ref4[_k];
+            _results2.push(e.e.update_path());
+          }
+          return _results2;
+        })());
       }
       return _results;
     };
@@ -232,7 +269,7 @@
       return this.paper.clear();
     };
     Graph.prototype.parse_string = function(str) {
-      var edge, json, node, obj, _i, _j, _len, _len2, _ref, _ref2, _results;
+      var edge, json, node, obj, _i, _j, _len, _len2, _ref, _ref2;
       this.clear_graph();
       json = base64Decode(str);
       obj = $.parseJSON(json);
@@ -242,12 +279,11 @@
         this.add_node(node.x, node.y, node.name, node.id);
       }
       _ref2 = obj.edges;
-      _results = [];
       for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
         edge = _ref2[_j];
-        _results.push(this.connect(this.nodes_id_map[edge.a], this.nodes_id_map[edge.b], edge.weight, edge.direction));
+        this.connect(this.nodes_id_map[edge.a], this.nodes_id_map[edge.b], edge.weight, edge.direction);
       }
-      return _results;
+      return this.resize($(window).width(), $(window).height());
     };
     return Graph;
   })();
