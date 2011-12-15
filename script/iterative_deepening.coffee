@@ -1,3 +1,18 @@
+# Part of the **Animating Search Algorithms** project
+#
+# ## Developers
+# * [Ian Brown](http://www.csc.liv.ac.uk/~cs8ib/)
+# * [Jack Histon](http://www.csc.liv.ac.uk/~cs8jrh/)
+# * [Colin Jackson](http://www.csc.liv.ac.uk/~cs8cj/)
+# * [Jennifer Jones](http://www.csc.liv.ac.uk/~cs8jlj/)
+# * [John Sanderson](http://www.csc.liv.ac.uk/~cs8js/)
+#
+# Do not modify or distribute without permission.
+
+# ## Main Documentation
+
+# Main IterativeDeepening class
+
 class IterativeDeepening extends Algorithm
 
     name: "Iterative Deepening"
