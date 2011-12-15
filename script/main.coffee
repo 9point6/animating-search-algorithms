@@ -84,6 +84,13 @@ class Main
             else
                 $( '#slideout' ).animate
                     "margin-right": -300
+        $( '#legendtoggle' ).click ( e ) =>
+            if $( '#legendout' ).css( "margin-left" ) is "-300px"
+                $( '#legendout' ).animate
+                    "margin-left": 0
+            else
+                $( '#legendout' ).animate
+                    "margin-left": -300
 
         @algfield = 0
         @fill_algos( )
@@ -279,6 +286,7 @@ class Main
                 <span>&#9679;</span>
             </a>
             <div id="legendout">
+                <h2>Legend</h2>
                 <ul>
                     <li><span id="leg_normal" /> Normal</li>
                     <li><span id="leg_potential" /> Potential</li>
@@ -303,6 +311,9 @@ class Main
         # Hide algorithm slide-out dialog
         $( '#slideout' ).css
             "margin-right": -300
+        # Hide legend slide-out dialog
+        $( '#legendout' ).css
+            "margin-left": -300
 
     welcome_dialog: ->
         if "false" isnt getCookie "welcome"
@@ -473,6 +484,8 @@ class Main
                         opacity: 100
         $( '#slideout' ).animate
             "margin-right": 0
+        $( '#legendout' ).animate
+            "margin-left": 0
 
     design_click: ( e ) =>
         @design_mode = true
@@ -487,6 +500,8 @@ class Main
                         opacity: 100
         $( '#slideout' ).animate
             "margin-right": -300
+        $( '#legendout' ).animate
+            "margin-left": -300
 
     setnodes_click: ( e ) =>
         @graph.remove_root_and_goal_nodes( )

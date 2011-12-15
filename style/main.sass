@@ -140,16 +140,13 @@ body
     position: absolute
     bottom: 0
     z-index: 100
-    padding: 4px 0 0 12px
     overflow: hidden
     @include linear-gradient(#666, #999)
-    @include border-radius(40px 0 0 0)
 
     #slidetoggle, #legendtoggle
         display: block
         position: absolute
         top: 0
-        left: 1px
         height: 100%
         text-shadow: 0 0 10px #000
 
@@ -166,9 +163,19 @@ body
 
 #slidewrap
     right: 0
+    padding: 4px 0 0 12px
+    @include border-radius(40px 0 0 0)
+
+    #slidetoggle
+        left: 1px
 
 #legendwrap
     left: 0
+    padding: 4px 12px 0 0
+    @include border-radius(0 40px 0 0)
+
+    #legendtoggle
+        right: 1px
 
 div#algohelptext
     display: none
@@ -221,6 +228,12 @@ div#algohelptext
                 /*border: #fff solid 2px*/ // TODO: Bug in chrome with the select. -webkit-appearance
                 @include linear-gradient(#ccc, #fff)
                 @include border-radius(5px)
+
+#legendout
+    @include border-radius(0 40px 0 0)
+
+    h2
+        text-align: left
 
 #helptext
     line-height: 40px
@@ -344,7 +357,8 @@ div#algohelptext
         padding: 0
         list-style: none
     li
-        margin: 0
+        margin: 3px 0
+
         >span
             width: 16px
             height: 16px
