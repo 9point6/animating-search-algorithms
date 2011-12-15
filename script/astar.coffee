@@ -113,12 +113,23 @@ class AStar extends Algorithm
             closedList.push currentNode
             @prev_node = currentNode
 
+    # ### AStar.remove( )
+    # Remove an element from an array
+    # #### Parameters
+    # * `a` - The array to remove an element from
+    # * `obj` - the element to remove from the array
+    # #### TODO
     remove: (a, obj) ->
         i = a.length
         while i--
             if a[i] is obj
                 a.splice(i,1)
 
+    # ### AStar.getSmallestElement( )
+    # Get the element with the smallest estimatedTotalCost value.
+    # #### Parameters
+    # * `a` - the array to search in
+    # #### TODO
     getSmallestElement: (a) ->
         smallNode = a[0]
         for node in a
@@ -127,6 +138,9 @@ class AStar extends Algorithm
 
         return smallNode
 
+    # ### AStar.gen_info( )
+    # Metrics for the A* algorithm
+    # #### TODO
     gen_info: ->
         [
             "Complete"
@@ -136,6 +150,9 @@ class AStar extends Algorithm
             "needsheuristic"
         ]
 
+    # ### AStar.run_info( )
+    # Metrics for specific run of the algorithm
+    # #### TODO
     run_info: ->
         alert "run information"
 
