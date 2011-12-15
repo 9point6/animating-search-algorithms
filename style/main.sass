@@ -136,17 +136,16 @@ body
             opacity: 0.5
             cursor: pointer
 
-#slidewrap
+#slidewrap, #legendwrap
     position: absolute
     bottom: 0
-    right: 0
     z-index: 100
     padding: 4px 0 0 12px
     overflow: hidden
     @include linear-gradient(#666, #999)
     @include border-radius(40px 0 0 0)
 
-    #slidetoggle
+    #slidetoggle, #legendtoggle
         display: block
         position: absolute
         top: 0
@@ -165,6 +164,12 @@ body
             text-shadow: 0 0 10px rgba(0, 153, 255, 0.8)
             cursor: pointer
 
+#slidewrap
+    right: 0
+
+#legendwrap
+    left: 0
+
 div#algohelptext
     display: none
     position: absolute
@@ -176,7 +181,7 @@ div#algohelptext
     @include rotate(-90deg)
     @include transition(all 0.5s ease-out)
 
-#slideout
+#slideout, #legendout
     padding: 10px
     @include linear-gradient(#000, #333)
     @include border-radius(40px 0 0 0)
@@ -330,6 +335,35 @@ div#algohelptext
 
 .submarker
     float: right
+
+// Legend colours
+#legendwrap
+    ul
+        color: #fff
+        margin: 0
+        padding: 0
+        list-style: none
+    li
+        margin: 0
+        >span
+            width: 16px
+            height: 16px
+            display: block
+            margin: 0 10px
+            float: left
+            border: #fff 1px solid
+            @include border-radius( 5px )
+
+#leg_normal
+    background: #666
+#leg_potential
+    background: #0247fe
+#leg_visited
+    background: #000
+#leg_looking
+    background: #0c3
+#leg_path
+    background: #f60
 
 // Button Images
 // TODO: Convert to a sprite

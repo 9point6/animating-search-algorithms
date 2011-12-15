@@ -274,6 +274,20 @@ class Main
                 </ul>
             </div>
         </div>
+        <div id="legendwrap">
+            <a id="legendtoggle">
+                <span>&#9679;</span>
+            </a>
+            <div id="legendout">
+                <ul>
+                    <li><span id="leg_normal" /> Normal</li>
+                    <li><span id="leg_potential" /> Potential</li>
+                    <li><span id="leg_visited" /> Visited</li>
+                    <li><span id="leg_looking" /> Looking At</li>
+                    <li><span id="leg_path" /> Current Path</li>
+                </ul>
+            </div>
+        </div>
         <div id="algohelptext">Click for algorithm properties</div>
         <div id="copyright">
             <a href="doc">Project Home</a>
