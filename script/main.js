@@ -233,7 +233,7 @@
       if ("false" !== getCookie("welcome")) {
         this.modal = new Modal({
           title: "Welcome to Searchr!",
-          intro: "<p>\n    Welcome to Searchr, the best damn search algorithm animation\n    tool the world has ever seen*! We've designed it to be as\n    intuitive as possible, but here's a quick start guide so you\n    can get started as soon as possible.\n</p>\n<img src=\"img/welcome1.png\" alt=\"Toolbar Diagram\" />\n<p>\n    You can also manipulate node and edge properties by clicking\n    directly on them where a context sensitive menu will pop up.\n    Once you're in \"run mode\" the algorithm dialog will automatically\n    open; from here you can switch algorithms and view or edit their\n    properites\n</p>",
+          intro: "<p>\n    Welcome to Searchr, the best damn search algorithm animation\n    tool the world has ever seen*! We've designed it to be as\n    intuitive as possible, but here's a quick start guide so you\n    can get started as soon as possible.\n</p>\n<img src=\"img/welcome1.png\" alt=\"Toolbar Diagram\" />\n<p>\n    You can also manipulate node and edge properties by clicking\n    directly on them where a context sensitive menu will pop up.\n    Once you're in \"run mode\" the algorithm dialog will automatically\n    open; from here you can switch algorithms and view or edit their\n    properites\n</p>\n<p class=\"smalltext\">\n    * Well... We couldn't find any other equivelants.\n</p>",
           okay: "Don't show this again!",
           cancel: "Okay, thanks!",
           callback: function(r) {
@@ -248,7 +248,7 @@
       }
     };
     Main.prototype.algoselection_change = function(e) {
-      var a, al, alg, combo, extras, func, goal, i, j, li, root, text, _i, _len;
+      var a, al, alg, combo, extras, goal, i, j, li, root, text, _fn, _i, _len;
       if (this.current_algo) {
         root = this.current_algo.root_node;
         goal = this.current_algo.goal_node;
@@ -281,7 +281,18 @@
             }
           }, this));
         }
+        APP.bidifunctionlist = [{}, {}];
         if (alg.gen_info()[4].indexOf('bidi') !== -1) {
+          _fn = function(combo) {
+            return combo.change(__bind(function(e) {
+              var id, name;
+              console.log(combo);
+              console.log(id = $("option[value=\"" + ($(e.target).val()) + "\"]", combo).attr("id"));
+              console.log(i = id.substr(2, 1));
+              console.log(name = id.substr(7));
+              return APP.bidifunctionlist[i - 1][name](combo);
+            }, this));
+          };
           for (i = 1; i <= 2; i++) {
             extras.append(li = $("<li class=\"algoextra\" />"));
             li.append("<h3>Algorithm " + i + ":</h3>");
@@ -292,36 +303,41 @@
               a = new al();
               if (!(a instanceof BiDirectional)) {
                 combo.append("<option id=\"bd" + i + "-alg" + al.name + "\" value=\"" + (j++) + "\">" + a.name + "</option>");
-                func = __bind(function(combo, al, a, i) {
-                  return combo.change(__bind(function(e) {
-                    var combo1, combobox, func1, li1;
-                    if (this.current_algo) {
-                      combobox = $(e.target).attr("id").substr(8, 1);
-                      this.current_algo.alg[combobox] = new ALGORITHMS[parseInt($(e.target).val())]();
-                      this.current_algo.traverse_info = [];
-                      if (a instanceof AStar || Greedy) {
-                        extras.append(li1 = $("<li class=\"algoextra\" />"));
+                (__bind(function(combo, al, a, i) {
+                  return APP.bidifunctionlist[i - 1][al.name] = __bind(function(elem) {
+                    var combo1, combobox, li1;
+                    console.log("in combo " + a.name);
+                    if (APP.current_algo) {
+                      combobox = elem.attr("id").substr(8, 1);
+                      APP.current_algo.alg[combobox] = new ALGORITHMS[parseInt(elem.val())]();
+                      APP.current_algo.traverse_info = [];
+                      if ((a instanceof AStar) || (a instanceof Greedy)) {
+                        console.log("in asg " + a.name);
+                        $(".algoextraextra:not(#alghur" + (i === 1 ? 2 : 1) + ")").remove();
+                        extras.append(li1 = $("<li class=\"algoextra algoextraextra\" id=\"alghur" + i + "\" />"));
                         li1.append("<h3>Heuristic " + i + "</h3>");
-                        li1.append(combo1 = $('<select id=\"algoheuristic#{i}\" />'));
+                        li1.append(combo1 = $("<select id=\"algoheuristic" + i + "\" />"));
                         combo1.append("<option selected=\"selected\" value=\"0\">None</option>");
                         combo1.append("<option value=\"1\">Euclidian</option>");
-                        this.current_algo.alg[combobox].heuristic_choice = 0;
-                        func1 = __bind(function(combobox, combo1) {
+                        APP.current_algo.alg[combobox].heuristic_choice = 0;
+                        return (__bind(function(combobox, combo1) {
                           return combo1.change(__bind(function(e) {
-                            if (this.current_algo.alg[combobox]) {
-                              return this.current_algo.alg[combobox].heuristic_choice = $(e.target).val();
+                            if (APP.current_algo.alg[combobox]) {
+                              return APP.current_algo.alg[combobox].heuristic_choice = $(e.target).val();
                             }
                           }, this));
-                        }, this);
-                        return func1(combobox, combo1);
+                        }, this))(combobox, combo1);
+                      } else {
+                        return $("#alghur" + i).remove();
                       }
                     }
-                  }, this));
-                }, this);
-                func(combo, al, a, i);
+                  }, this);
+                }, this))(combo, al, a, i);
               }
               delete a;
             }
+            console.log(APP.bidifunctionlist);
+            _fn(combo);
           }
         }
         if (alg.gen_info()[4].indexOf('needsdepth') !== -1) {
@@ -359,7 +375,7 @@
         okay: false
       });
       this.modal.show();
-      $(".buttons", modal.div).css('text-align', 'left').append("<div id=\"kkprogbar\" />");
+      $(".buttons", this.modal.div).css('text-align', 'left').append("<div id=\"kkprogbar\" />");
       $('#kkprogbar').css({
         width: 0
       });
@@ -377,7 +393,7 @@
           return setTimeout(func, 5);
         } else {
           this.graph.resize($(window).width(), $(window).height());
-          return modal.destroy();
+          return this.modal.destroy();
         }
       }, this);
       return func();

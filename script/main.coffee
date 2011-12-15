@@ -104,6 +104,11 @@ class Main
         # Rearranges points so that they are above the connections in the canvas
         @graph.sort_elements( )
 
+    # ### app.fill_algos( )
+    # Fills a combo box control with all the available algorithms. by default
+    # it fills the algorithm selection box in the slide-out dialog.
+    # #### Parameters
+    # * `dest` - Destination element for the options.
     fill_algos: ( dest = false ) ->
         if not dest
             dest = $( '#algoselection' )
@@ -170,6 +175,7 @@ class Main
         tb.animate
             opacity: 0,
                 complete: ->
+                    # once the fade anim is complete show the text
                     $( @ ).css
                         height: 1
                         "margin-top": -100
@@ -190,6 +196,7 @@ class Main
         $( '#helptext' ).animate
             opacity: 0,
                 complete: ->
+                    # once the fade anim is complete show the toolbar
                     $( @ ).html ""
                     tb = if APP.design_mode then $( '#designmode' ) else $( '#runmode' )
                     tb.css(
@@ -198,9 +205,17 @@ class Main
                     ).animate
                         opacity: 100
 
+    # ### app.change*_*help_text( )
+    # Changes the help text when the toolbar is in either remove or connect
+    # mode.
+    # #### Parameters
+    # * `text` - Text to display
     change_help_text: ( text ) ->
         $( '#helptext' ).text text
 
+    # ### app.generate_dom( )
+    # Generates all the HTML for the application to function. This is mostly
+    # for the toolbars. Also applies extra CSS for initialisation stuff.
     generate_dom: ->
         $( 'body' ).append ( '''
         <div id="toolbar">
@@ -267,9 +282,11 @@ class Main
         # Set the helptext div to be invisible for animation.
         $( '#helptext' ).css
             opacity: 0
+        # Hide run mode toolbar
         $( '#runmode' ).css
             opacity: 0
             display: "none"
+        # Hide algorithm slide-out dialog
         $( '#slideout' ).css
             "margin-right": -300
 
@@ -291,6 +308,9 @@ class Main
                         Once you're in "run mode" the algorithm dialog will automatically
                         open; from here you can switch algorithms and view or edit their
                         properites
+                    </p>
+                    <p class="smalltext">
+                        * Well... We couldn't find any other equivelants.
                     </p>
                     """
                 okay: "Don't show this again!"
@@ -332,6 +352,8 @@ class Main
                 combo.change ( e ) =>
                     if @current_algo
                         @current_algo.heuristic_choice = $( e.target ).val( )
+            # TODO: this is a horrible hack
+            APP.bidifunctionlist = [{},{}]
             if alg.gen_info( )[4].indexOf( 'bidi' ) isnt -1
                 for i in [1..2]
                     extras.append li = $( "<li class=\"algoextra\" />" )
@@ -342,26 +364,39 @@ class Main
                         a = new al( )
                         if not ( a instanceof BiDirectional )
                             combo.append "<option id=\"bd#{i}-alg#{al.name}\" value=\"#{j++}\">#{a.name}</option>"
-                            func = ( combo, al, a, i ) =>
-                                combo.change ( e ) =>
-                                    if @current_algo
-                                        combobox = $( e.target ).attr( "id" ).substr 8, 1
-                                        @current_algo.alg[combobox] = new ALGORITHMS[parseInt( $( e.target ).val( ) )]( )
-                                        @current_algo.traverse_info = []
-                                        if a instanceof AStar or Greedy
-                                            extras.append li1 = $( "<li class=\"algoextra\" />" )
+                            ( ( combo, al, a, i ) =>
+                                APP.bidifunctionlist[i-1][al.name] = ( elem ) =>
+                                    console.log "in combo #{a.name}"
+                                    if APP.current_algo
+                                        combobox = elem.attr( "id" ).substr 8, 1
+                                        APP.current_algo.alg[combobox] = new ALGORITHMS[parseInt( elem.val( ) )]( )
+                                        APP.current_algo.traverse_info = []
+                                        if ( a instanceof AStar ) or ( a instanceof Greedy )
+                                            console.log "in asg #{a.name}"
+                                            $( ".algoextraextra:not(#alghur#{if i is 1 then 2 else 1})" ).remove( )
+                                            extras.append li1 = $( "<li class=\"algoextra algoextraextra\" id=\"alghur#{i}\" />" )
                                             li1.append "<h3>Heuristic #{i}</h3>"
-                                            li1.append combo1 = $( '<select id=\"algoheuristic#{i}\" />' )
+                                            li1.append combo1 = $( "<select id=\"algoheuristic#{i}\" />" )
                                             combo1.append "<option selected=\"selected\" value=\"0\">None</option>"
                                             combo1.append "<option value=\"1\">Euclidian</option>"
-                                            @current_algo.alg[combobox].heuristic_choice = 0
-                                            func1 = ( combobox, combo1 ) =>
+                                            APP.current_algo.alg[combobox].heuristic_choice = 0
+                                            ( ( combobox, combo1 ) =>
                                                 combo1.change ( e ) =>
-                                                    if @current_algo.alg[combobox]
-                                                        @current_algo.alg[combobox].heuristic_choice = $( e.target ).val( )
-                                            func1 combobox, combo1
-                            func( combo, al, a, i )
+                                                    if APP.current_algo.alg[combobox]
+                                                        APP.current_algo.alg[combobox].heuristic_choice = $( e.target ).val( )
+                                            ) combobox, combo1
+                                        else
+                                            $( "#alghur#{i}" ).remove( )
+                            ) combo, al, a, i
                         delete a
+                    console.log APP.bidifunctionlist
+                    ( ( combo ) -> combo.change ( e ) =>
+                        console.log combo
+                        console.log id = $( "option[value=\"#{$( e.target ).val( )}\"]", combo ).attr "id"
+                        console.log i = id.substr 2,1
+                        console.log name = id.substr 7
+                        APP.bidifunctionlist[i-1][name] combo
+                    ) combo
             if alg.gen_info( )[4].indexOf( 'needsdepth' ) isnt -1
                 extras.append li = $( "<li class=\"algoextra\" />" )
                 li.append "<h3>Depth Limit</h3>"
@@ -388,7 +423,7 @@ class Main
             intro: "Running Kamada Kawai <span id=\"kkprog\">#{i}/#{lim}</span>"
             okay: false
         @modal.show( )
-        $( ".buttons", modal.div ).css( 'text-align', 'left' ).append "<div id=\"kkprogbar\" />"
+        $( ".buttons", @modal.div ).css( 'text-align', 'left' ).append "<div id=\"kkprogbar\" />"
         $( '#kkprogbar' ).css
             width: 0
         kamada = new KamadaKawai
@@ -402,7 +437,7 @@ class Main
                 setTimeout func, 5
             else
                 @graph.resize $( window ).width( ), $( window ).height( )
-                modal.destroy( )
+                @modal.destroy( )
         func( )
 
     search_click: ( e ) =>
