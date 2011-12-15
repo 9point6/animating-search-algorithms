@@ -38,7 +38,7 @@ class Greedy extends Algorithm
     # #### TODO
     _search: ->
 
-        @destroy
+        @destroy( )
         @explored_nodes = []
 
         openList = []

@@ -29,7 +29,7 @@
     };
     Greedy.prototype._search = function() {
       var connection, currentNode, endNode, openList, potentialCost, visitable, _i, _len, _ref, _results;
-      this.destroy;
+      this.destroy();
       this.explored_nodes = [];
       openList = [];
       if (this.root_node.id === this.goal_node.id) {
