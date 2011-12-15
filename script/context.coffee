@@ -10,6 +10,8 @@ class Context
         $.extend @options, @defaults
         $.extend @options, params
 
+        [@options.x,@options.y] = @bounds @options.x, @options.y
+
         @div = $( '<div class="context" />' )
         @ul = $( '<ul />' )
         @div.append @ul
@@ -47,6 +49,13 @@ class Context
 
         if @options.autoshow
             @show( )
+
+    bounds: ( x, y, gutter = 75 ) ->
+        if x > $( window ).width( ) - gutter
+            x = $( window ).width( ) - gutter
+        if y > $( window ).height( ) - gutter
+            y = $( window ).height( ) - gutter
+        [x,y]
 
     show: ( root = null ) ->
         $( 'body' ).append @div

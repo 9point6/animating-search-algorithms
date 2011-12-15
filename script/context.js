@@ -9,17 +9,18 @@
       zindex: 1000
     };
     function Context(params) {
-      var item, k, v, _ref;
+      var item, k, v, _ref, _ref2;
       this.options = {};
       $.extend(this.options, this.defaults);
       $.extend(this.options, params);
+      _ref = this.bounds(this.options.x, this.options.y), this.options.x = _ref[0], this.options.y = _ref[1];
       this.div = $('<div class="context" />');
       this.ul = $('<ul />');
       this.div.append(this.ul);
       if (this.options.items) {
-        _ref = this.options.items;
-        for (k in _ref) {
-          v = _ref[k];
+        _ref2 = this.options.items;
+        for (k in _ref2) {
+          v = _ref2[k];
           item = $("<li>" + k + "</li>");
           if (v instanceof Context) {
             item.append("<span class=\"submarker\">&gt;</span>");
@@ -59,6 +60,18 @@
         this.show();
       }
     }
+    Context.prototype.bounds = function(x, y, gutter) {
+      if (gutter == null) {
+        gutter = 75;
+      }
+      if (x > $(window).width() - gutter) {
+        x = $(window).width() - gutter;
+      }
+      if (y > $(window).height() - gutter) {
+        y = $(window).height() - gutter;
+      }
+      return [x, y];
+    };
     Context.prototype.show = function(root) {
       if (root == null) {
         root = null;
