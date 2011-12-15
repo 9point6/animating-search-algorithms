@@ -1,5 +1,5 @@
 (function() {
-  var DFS;
+  var Greedy;
   var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
     for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
     function ctor() { this.constructor = child; }
@@ -8,67 +8,97 @@
     child.__super__ = parent.prototype;
     return child;
   };
-  DFS = (function() {
-    __extends(DFS, Algorithm);
-    function DFS() {
-      DFS.__super__.constructor.apply(this, arguments);
+  Greedy = (function() {
+    __extends(Greedy, Algorithm);
+    function Greedy() {
+      Greedy.__super__.constructor.apply(this, arguments);
     }
-    DFS.prototype.name = "Depth-First Search";
-    DFS.prototype.destroy = function() {
+    Greedy.prototype.name = "Greedy Search";
+    Greedy.prototype.destroy = function() {
       var node, _i, _len, _ref;
       _ref = this.explored_nodes;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         node = _ref[_i];
         delete node.explored;
       }
-      return DFS.__super__.destroy.apply(this, arguments);
+      return Greedy.__super__.destroy.apply(this, arguments);
     };
-    DFS.prototype.search = function() {
-      var current_node, neighbour, node, todo_list, visitable, _i, _len, _ref, _results;
-      _ref = this.explored_nodes;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        node = _ref[_i];
-        node.explored = false;
-      }
+    Greedy.prototype.search = function() {
+      this.heuristic = new Heuristics();
+      return this._search();
+    };
+    Greedy.prototype._search = function() {
+      var connection, currentNode, endNode, openList, potentialCost, visitable, _i, _len, _ref, _results;
+      this.destroy;
       this.explored_nodes = [];
-      todo_list = [];
-      todo_list.push(this.root_node);
+      openList = [];
+      if (this.root_node.id === this.goal_node.id) {
+        return;
+      } else {
+        this.root_node.costSoFar = 0;
+        this.root_node.estimatedTotalCost = 0 + this.root_node.costSoFar + this.heuristic.choice(this.heuristic_choice, this.root_node, this.goal_node);
+        openList.push(this.root_node);
+        currentNode = this.root_node;
+      }
       _results = [];
-      while (todo_list.length !== 0) {
-        current_node = todo_list.pop();
-        if (current_node.id === this.goal_node.id) {
-          this.explored_nodes.push(current_node);
+      while (openList.length !== 0) {
+        openList = [];
+        currentNode.explored = true;
+        this.explored_nodes.push(currentNode);
+        if (currentNode === this.goal_node) {
           break;
         }
-        _results.push((function() {
-          var _j, _len2, _ref2, _results2;
-          if (!current_node.explored) {
-            current_node.explored = true;
-            this.explored_nodes.push(current_node);
-            _ref2 = current_node.edges;
-            _results2 = [];
-            for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
-              neighbour = _ref2[_j];
-              if (this.is_from_goal != null) {
-                visitable = neighbour.e.visitable(current_node, true);
-              } else {
-                visitable = neighbour.e.visitable(current_node);
-              }
-              _results2.push(!neighbour.n.explored && visitable ? todo_list.push(neighbour.n) : void 0);
+        if (currentNode != null) {
+          _ref = currentNode.edges;
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            connection = _ref[_i];
+            if (this.is_from_goal != null) {
+              visitable = connection.e.visitable(currentNode, true);
+            } else {
+              visitable = connection.e.visitable(currentNode);
             }
-            return _results2;
+            endNode = connection.n;
+            if (visitable && !endNode.explored) {
+              potentialCost = currentNode.costSoFar + connection.e.weight;
+              endNode.costSoFar = potentialCost;
+              endNode.estimatedTotalCost = endNode.costSoFar + this.heuristic.choice(this.heuristic_choice, endNode, this.goal_node);
+              openList.push(endNode);
+            }
           }
-        }).call(this));
+        } else {
+          break;
+        }
+        _results.push(currentNode = this.getSmallestElement(openList));
       }
       return _results;
     };
-    DFS.prototype.gen_info = function() {
-      return ["Complete, unless infinite paths", "O(|V|+|E|)", "O(|V|)", "Not Optimal"];
+    Greedy.prototype.remove = function(a, obj) {
+      var i, _results;
+      i = a.length;
+      _results = [];
+      while (i--) {
+        _results.push(a[i] === obj ? a.splice(i, 1) : void 0);
+      }
+      return _results;
     };
-    DFS.prototype.run_info = function() {
-      return alert("runtime information");
+    Greedy.prototype.getSmallestElement = function(a) {
+      var node, smallNode, _i, _len;
+      smallNode = a[0];
+      for (_i = 0, _len = a.length; _i < _len; _i++) {
+        node = a[_i];
+        if (smallNode.estimatedTotalCost > node.estimatedTotalCost) {
+          smallNode = node;
+        }
+      }
+      return smallNode;
     };
-    DFS.prototype.create_traverse_info = function() {
+    Greedy.prototype.gen_info = function() {
+      return ["Complete", "Variable", "O(V)", "Optimal", "needsheuristic"];
+    };
+    Greedy.prototype.run_info = function() {
+      return alert("run information");
+    };
+    Greedy.prototype.create_traverse_info = function() {
       var current_node, edge, exp_nodes, fork, found, node, visitable, _results;
       this.traverse_info = [];
       fork = [];
@@ -127,7 +157,7 @@
       }
       return _results;
     };
-    return DFS;
+    return Greedy;
   })();
-  this.DFS = DFS;
+  this.Greedy = Greedy;
 }).call(this);

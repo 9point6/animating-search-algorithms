@@ -58,4 +58,17 @@ class Algorithm
     run_info: ->
         throw "Run info not implemented"
 
+    # ### algorithm.contains( )
+    # Check to see if an object exists in an array
+    # #### Paramaeters
+    # * `a` - array to search in
+    # * `obj` - object to look for.
+    # #### TODO
+    contains: (a, obj) ->
+        i = a.length
+        while i--
+            if a[i] is obj
+                return true
+        return false
+
 this.Algorithm = Algorithm

@@ -125,6 +125,7 @@ $ ->
         DLS
         IterativeDeepening
         AStar
+        Greedy
         BiDirectional
     ]
 

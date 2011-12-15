@@ -196,7 +196,7 @@ class Main
                                             combobox = $( e.target ).attr( "id" ).substr 8, 1
                                             @current_algo.alg[combobox] = new ALGORITHMS[parseInt( $( e.target ).val( ) )]( )
                                             @current_algo.traverse_info = []
-                                            if a instanceof AStar
+                                            if a instanceof AStar or Greedy
                                                 extras.append li1 = $( "<li class=\"algoextra\" />" )
                                                 li1.append "<h3>Heuristic #{i}</h3>"
                                                 li1.append combo1 = $( '<select id=\"algoheuristic#{i}\" />' )
@@ -303,7 +303,7 @@ class Main
         $( '#search' ).click ( e ) =>
             @design_mode = false
             @current_algo = new ALGORITHMS[$( '#algoselection' ).prop "value"]( )
-            if @current_algo instanceof AStar
+            if @current_algo instanceof AStar or Greedy
                 @current_algo.heuristic_choice = $( '#algoheuristic' ).val( )
             if @current_algo instanceof BiDirectional
                 @current_algo.alg[1] = new ALGORITHMS[parseInt( $( '#algobidi1' ).val( ) )]

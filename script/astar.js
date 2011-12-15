@@ -83,16 +83,6 @@
       }
       return _results;
     };
-    AStar.prototype.contains = function(a, obj) {
-      var i;
-      i = a.length;
-      while (i--) {
-        if (a[i] === obj) {
-          return true;
-        }
-      }
-      return false;
-    };
     AStar.prototype.remove = function(a, obj) {
       var i, _results;
       i = a.length;
@@ -114,13 +104,13 @@
       return smallNode;
     };
     AStar.prototype.gen_info = function() {
-      return ["Complete", "O(log h<sup>*</sup>(x))", "O(bm)", "Optimal", "needsheuristic"];
+      return ["Complete", "Variable", "O(V)", "Optimal", "needsheuristic"];
     };
     AStar.prototype.run_info = function() {
       return alert("run information");
     };
     AStar.prototype.create_traverse_info = function() {
-      var current_node, edge, exp_nodes, fork, found, node, _results;
+      var current_node, edge, exp_nodes, fork, found, node, visitable, _results;
       this.traverse_info = [];
       fork = [];
       exp_nodes = this.explored_nodes.slice(0);
@@ -135,7 +125,12 @@
             _ref = current_node.edges;
             for (_i = 0, _len = _ref.length; _i < _len; _i++) {
               edge = _ref[_i];
-              if (edge.n.id === exp_nodes[0].id) {
+              if (this.is_from_goal != null) {
+                visitable = edge.e.visitable(current_node, true);
+              } else {
+                visitable = edge.e.visitable(current_node);
+              }
+              if (edge.n.id === exp_nodes[0].id && visitable) {
                 this.traverse_info.push(edge.e);
               }
             }
@@ -151,7 +146,12 @@
                     _results3 = [];
                     for (_k = 0, _len3 = _ref2.length; _k < _len3; _k++) {
                       edge = _ref2[_k];
-                      if (edge.n.id === exp_nodes[0].id) {
+                      if (this.is_from_goal != null) {
+                        visitable = edge.e.visitable(node, true);
+                      } else {
+                        visitable = edge.e.visitable(node);
+                      }
+                      if (edge.n.id === exp_nodes[0].id && visitable) {
                         this.traverse_info.push(edge.e);
                         found = true;
                         break;

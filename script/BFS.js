@@ -84,7 +84,7 @@
       return false;
     };
     BFS.prototype.gen_info = function() {
-      return ["Complete", "O(b<sup>d+1</sup>)", "O(b<sup>d</sup>)", "Not Optimal"];
+      return ["Complete", "O(|V|+|E|)", "O(|V|)", "Not Optimal"];
     };
     BFS.prototype.run_info = function() {
       return alert("Run information");

@@ -11,83 +11,123 @@
 
 # ## Main Documentation
 
-# DFS algorithm class
-class DFS extends Algorithm
-    name: "Depth-First Search"
+# Greedy algorithm class
 
-    # ### DFS.destroy( )
-    # deletes the explored variable from each node.
-    # ### Parameters
+class Greedy extends Algorithm
+    name: "Greedy Search"
+
+    # ### Greedy.destroy( )
+    # This resets every node to unexplored again
+    # #### TODO
     destroy: ->
         for node in @explored_nodes
             delete node.explored
         super
 
-    # ### DFS.search( )
-    # executes a depth first search given
-    # a particular set of nodes, starting from
-    # the root_node (only works on a tree graph)
-    # #### Parameters
+    # ### Greedy.search( )
+    # Calls the _search method which does the actual work
+    # #### TODO
     search: ->
-        # reset all the explored values for each node
-        for node in @explored_nodes
-            node.explored = false
+        # Create the heuristic object for this particular search
+        @heuristic = new Heuristics( )
 
-        #reset the explored_nodes array
+        @_search( )
+
+    # ### Greedy._search( )
+    # Searches form the root node for a goal node. Uses an A* Search method.
+    # #### TODO
+    _search: ->
+
+        @destroy
         @explored_nodes = []
 
-        #stack for nodes to be searched
-        todo_list = []
+        openList = []
 
-        #push root (starting) node onto stack
-        todo_list.push @root_node
+        # if root node is goal node finish
+        if @root_node.id is @goal_node.id
+            return
+        else
+            @root_node.costSoFar = 0
+            @root_node.estimatedTotalCost = 0 + @root_node.costSoFar + @heuristic.choice @heuristic_choice, @root_node, @goal_node
+            openList.push @root_node
+            currentNode = @root_node
 
-        # while there are nodes still left to check
-        while todo_list.length isnt 0
+        # loop until there are no more options left
+        while openList.length isnt 0
 
-            #pull a node from the stack
-            current_node = todo_list.pop( )
+            openList = []
+            # mark the current node as explored
+            currentNode.explored = true
+            @explored_nodes.push currentNode
 
-            #if current node is goal node, end the search
-            if current_node.id is @goal_node.id
-                @explored_nodes.push current_node
+            # If the current node chosen is the goal node then finish
+            if currentNode is @goal_node
                 break
 
-            if not current_node.explored
-                current_node.explored = true
-
-                #add current node to explored nodes list
-                @explored_nodes.push current_node
-
-                for neighbour in current_node.edges
+            # Loop through the current nodes edges and go along the least costly
+            if currentNode?
+                for connection in currentNode.edges
                     if @is_from_goal?
-                        visitable = neighbour.e.visitable current_node, true
+                        visitable = connection.e.visitable currentNode, true
                     else
-                        visitable = neighbour.e.visitable current_node
+                        visitable = connection.e.visitable currentNode
 
-                    #visitable = neighbour.e.visitable current_node
-                    if not neighbour.n.explored and visitable
-                        todo_list.push neighbour.n
+                    endNode = connection.n
 
+                    if visitable and not endNode.explored
+                        potentialCost = currentNode.costSoFar + connection.e.weight
+                        endNode.costSoFar = potentialCost
+                        endNode.estimatedTotalCost = endNode.costSoFar + @heuristic.choice @heuristic_choice, endNode, @goal_node
+                        openList.push endNode
+            else
+                break
 
-    # ### DFS.gen_info( )
-    # Gives the general metrics for a BFS search
-    # ### Parameters
+            currentNode = @getSmallestElement openList
+
+    # ### Greedy.remove( )
+    # Removes and element from an array
+    # #### Parameters
+    # * `a` - Array to search in
+    # * `obj` - the object to search for
+    # #### TODO
+    remove: (a, obj) ->
+        i = a.length
+        while i--
+            if a[i] is obj
+                a.splice(i,1)
+
+    # ### Greedy.getSmallestElement( )
+    # Gets the element with the smallest "estimatedTotalCost" in the array given
+    # #### Parameters
+    # * `a` - the array to search in
+    # #### TODO
+    getSmallestElement: (a) ->
+        smallNode = a[0]
+        for node in a
+            if smallNode.estimatedTotalCost > node.estimatedTotalCost
+                smallNode = node
+
+        return smallNode
+
+    # ### Greedy.gen_info( )
+    # General information about the greedy search method
+    # #### TODO
     gen_info: ->
         [
-            "Complete, unless infinite paths"
-            "O(|V|+|E|)"
-            "O(|V|)"
-            "Not Optimal"
+            "Complete"
+            "Variable"
+            "O(V)"
+            "Optimal"
+            "needsheuristic"
         ]
 
-    # ### DFS.run_info( )
-    # Shows the specific metrics for a particular instance.
-    # ### Parameters
+    # ### Greedy.run_info( )
+    # Running information for the specific instance of this algorithm
+    # #### TODO
     run_info: ->
-        alert "runtime information"
+        alert "run information"
 
-    # ### DFS.create_traverse_info
+    # ### Greedy.create_traverse_info( )
     # Populates the traverse_info array for use by the
     # animate class
     # ### Parameters
@@ -152,4 +192,4 @@ class DFS extends Algorithm
                                     found = true
                                     break
 
-this.DFS = DFS
+this.Greedy = Greedy
